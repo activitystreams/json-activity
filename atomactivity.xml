@@ -229,7 +229,7 @@
       specification.</t>
 
       <section anchor="objecttypeelement"
-               title="The activity:object-type Element">
+               title="The activity:object-type Extension Element">
         <t>The content of the activity:verb element MUST be an IRI as defined
         by <xref target="RFC3987"></xref>. Note that the definition of IRI
         excludes relative references. Although the IRI might use a
