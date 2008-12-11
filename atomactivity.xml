@@ -117,7 +117,9 @@
       specification that represents an activity. The subject of the activity
       entry is the author of the entry. The verb and object of the activity
       are identified explicitly in the activity entry as described in the
-      following sections.</t>
+      following sections. An Atom entry is considered to be an Activity Entry
+      if and only if it has both an activity:verb and an activity:object child
+      element as described in the following sections.</t>
 
       <section anchor="titlesummarydetail"
                title="Activity Title, Summary and Detail">
@@ -159,10 +161,10 @@
         link to the user.</t>
       </section>
 
-      <section title="The activity:verb Extension Element">
-        <t>The presence of the activity:verb element in an atom:entry element
-        indicates that the entry is an activity entry. All activity entries
-        MUST have at least one activity:verb element.</t>
+      <section anchor="activityverbelement"
+               title="The activity:verb Extension Element">
+        <t>All activity entries MUST have at least one activity:verb
+        element.</t>
 
         <t>The content of the activity:verb element MUST be an IRI as defined
         by <xref target="RFC3987"></xref>. Note that the definition of IRI
@@ -188,9 +190,10 @@
       <section anchor="activityobjectelement"
                title="The activity:object Extension Element">
         <t>The activity:object element contains information about the object
-        of the activity. The content model of activity:object is identical to
-        that of atom:entry when used in an object entry as described in <xref
-        target="objectentries"></xref>.</t>
+        of the activity. All activity entries must have exactly one
+        activity:object element. The content model of activity:object is
+        identical to that of atom:entry when used in an object entry as
+        described in <xref target="objectentries"></xref>.</t>
 
         <t>activity:object MUST contain an atom:id element. If this object is
         also published in an Object Entry, the atom:id value MUST be the same
@@ -206,12 +209,13 @@
         href attribute containing the URL of the HTML representation of the
         object if available.</t>
 
-        <t>activity:object MAY also contain an atom:source element describing
-        the object feed where this object resides, if any. Processors MAY use
-        this information to give context to the activity. For example, if the
-        source feed has a title of "Claire's Weblog", a processor may include
-        the text "in Claire's Weblog" at the end of a sentence describing the
-        activity to the user.</t>
+        <t>activity:object MAY also contain an atom:source element, as
+        described by the Atom specification, describing the object feed where
+        this object resides, if any. Processors MAY use this information to
+        give context to the activity. For example, if the source feed has a
+        title of "Claire's Weblog", a processor may include the text "in
+        Claire's Weblog" at the end of a sentence describing the activity to
+        the user.</t>
 
         <t>All other elements included in activity:object SHOULD reflect
         elements in the Object Entry for this object, if one exists.</t>
@@ -260,17 +264,29 @@
         'My Cat'".</t>
       </section>
 
-      <section anchor="impliedpost" title="Implied Post Activity">
+      <section title="The activity:verb Extension Element">
+        <t>When appearing as a child of an Object Entry (that is, an entry
+        that does not also have an activity:object child element), the
+        activity:verb element defines the verb of the implied activity for the
+        object entry, as defined in <xref target="impliedpost"></xref>. When
+        used in this way the content model is identical to when used in an
+        Activity Entry as described in <xref
+        target="activityverbelement"></xref>.</t>
+      </section>
+
+      <section anchor="impliedpost" title="Implied Activity">
         <t>When used alone, outside of the context of an explicit Activity
-        Entry, an Object Entry has an implied 'post' activity. The implied
-        Activity Entry for an Object Entry is constructed as follows:</t>
+        Entry, an Object Entry has an implied activity. The implied Activity
+        Entry for an Object Entry is constructed as follows:</t>
 
         <t><list style="numbers">
             <t>Create an empty atom:entry element. This is the Activity Entry
             element.</t>
 
-            <t>Insert into the Activity Entry element a new activity:verb
-            element containing the IRI of the post verb as described in <xref
+            <t>If the Object Entry has at least one activity:verb element,
+            copy all such elements into the Activity Entry element. Otherwise,
+            insert into the Activity Entry element a new activity:verb element
+            containing the IRI of the post verb as described in <xref
             target="postverb"></xref>.</t>
 
             <t>Copy the atom:published element from the Object Entry element
@@ -280,8 +296,12 @@
             element.</t>
 
             <t>Do a deep copy of all child elements of the Object Entry
-            element into the activity:object element, making sure to preserve
-            all XML namespaces.</t>
+            element into the activity:object element, excluding activity:verb
+            and atom:published.</t>
+
+            <t>If the Activity Entry contains an activity:verb element
+            containing the IRI of the post verb, copy the atom:published
+            element from the Object Entry to the activity:object element.</t>
           </list></t>
 
         <t>Processors SHOULD generate suitable human-readable descriptions of
@@ -289,15 +309,25 @@
         target="titlesummarydetail"></xref>.</t>
 
         <t>If the resulting entry will be published, generators SHOULD
-        generate values for all other elements that the Atom specification
-        requires as children of atom:entry. In particular, an atom:id value
-        SHOULD be generated; this value MUST NOT be the same as that of the
-        Object Entry.</t>
+        generate where possible suitable values for all other elements that
+        the Atom specification requires as children of atom:entry. In
+        particular, an atom:id value SHOULD be generated; this value MUST NOT
+        be the same as that of the Object Entry.</t>
 
         <t>If the resulting entry is to be published, generators MAY omit
         elements from the generated activity:object element to reduce
         overhead. Such generators SHOULD bear in mind the requirements in
         <xref target="activityobjectelement"></xref>.</t>
+
+        <t>Processors expecting Activity Entries SHOULD apply the above
+        transformation to any Object Entries they encounter in order to
+        process them as activities, or at least act as if they have done
+        so.</t>
+
+        <t>Note that due to the way it is constructed there is no way to
+        represent additional properties for the verb(s) of an implied
+        activity. If a particular verb requires additional properties then it
+        MUST NOT be used in an implied activity.</t>
       </section>
     </section>
 
@@ -308,6 +338,8 @@
       MAY create an Activity Entry representing the implied post activity of
       an Object Entry (see <xref target="impliedpost"></xref>) in order to
       synthesize an Activity Feed from a traditional Atom feed.</t>
+
+      <t>A feed MAY contain both activity and object entries.</t>
 
       <section title="A Note about Legacy Feeds">
         <t>This section is non-normative.</t>
@@ -343,8 +375,8 @@
       posted or published.</t>
 
       <t>This verb is used when creating the implied post activity for a
-      standalone Object Entry. It MAY also be used as the value of
-      activity:verb in an explicit Activity Entry.</t>
+      standalone Object Entry that has no explicit verb. It MAY also be used
+      as the value of activity:verb in an explicit Activity Entry.</t>
 
       <t>In an Activity Entry which has the 'post' verb, the value of the
       atom:published element SHOULD be the same as the atom:published element
