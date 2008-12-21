@@ -12,7 +12,7 @@
 <?rfc subcompact="no"?>
 <rfc category="exp" docName="atomactivity-00" ipr="none">
   <front>
-    <title abbrev="AtomActivity">Atom Activity Extensions</title>
+    <title abbrev="AtomActivity">Atom Activity Extensions (Draft)</title>
 
     <author fullname="Martin Atkins" initials="M." surname="Atkins">
       <organization>Six Apart Ltd</organization>
@@ -118,7 +118,8 @@
       entry is the author of the entry. The verb and object of the activity
       are identified explicitly in the activity entry as described in the
       following sections. An Atom entry is considered to be an Activity Entry
-      if and only if it has both an activity:verb and an activity:object child
+      if and only if it has at least one <spanx style="verb">activity:verb</spanx>
+      child element and one <spanx style="verb">activity:object</spanx> child
       element as described in the following sections.</t>
 
       <section anchor="titlesummarydetail"
@@ -283,11 +284,11 @@
             <t>Create an empty atom:entry element. This is the Activity Entry
             element.</t>
 
-            <t>If the Object Entry has at least one activity:verb element,
-            copy all such elements into the Activity Entry element. Otherwise,
-            insert into the Activity Entry element a new activity:verb element
-            containing the IRI of the post verb as described in <xref
-            target="postverb"></xref>.</t>
+            <t>If the Object Entry has as a child at least one activity:verb
+            element, copy all such elements into the Activity Entry element.
+            Otherwise, insert into the Activity Entry element a new
+            activity:verb element containing the IRI of the post verb as
+            described in <xref target="postverb"></xref>.</t>
 
             <t>Copy the atom:published element from the Object Entry element
             into the Activity Entry element.</t>
@@ -299,7 +300,7 @@
             element into the activity:object element, excluding activity:verb
             and atom:published.</t>
 
-            <t>If the Activity Entry contains an activity:verb element
+            <t>If the Activity Entry has as a child an activity:verb element
             containing the IRI of the post verb, copy the atom:published
             element from the Object Entry to the activity:object element.</t>
           </list></t>
@@ -328,6 +329,136 @@
         represent additional properties for the verb(s) of an implied
         activity. If a particular verb requires additional properties then it
         MUST NOT be used in an implied activity.</t>
+      </section>
+
+      <section title="Object Entries in RSS">
+        <t>For compatibility with existing deployments, this specification
+        also defines a subset of the activity markup that may be used in RSS
+        2.0 feeds to add verb and object type annotations to objects published
+        in RSS rather than Atom feeds.</t>
+
+        <t>Objects published as RSS 2.0 <spanx style="verb">item</spanx>
+        elements MAY use the <spanx style="verb">activity:verb</spanx> and
+        <spanx style="verb">activity:object-type</spanx> elements with
+        equivalent content models and semantics as described above for their
+        use in Atom object entries.</t>
+
+        <t>Activity processors MUST use the following process to construct the
+        implied activity for an object entry published as an RSS 2.0 <spanx
+        style="verb">item</spanx> element, or must act as if they have done
+        so:</t>
+
+        <t><list style="numbers">
+            <t>Create an empty atom:entry element. This is the Activity Entry
+            element.</t>
+
+            <t>If the Object Entry has as a child at least one activity:verb
+            element, copy all such elements into the Activity Entry element.
+            Otherwise, insert into the Activity Entry element a new
+            activity:verb element containing the IRI of the post verb as
+            described in <xref target="postverb"></xref>.</t>
+
+            <t>If the Object Entry has as a child an RSS <spanx style="verb">pubDate</spanx>
+            element, parse its content as per the RSS 2.0 specification to
+            obtain a date and time value. Create an <spanx style="verb">atom:published</spanx>
+            element whose content is the serialization of this data and time
+            value as described in <xref target="RFC3339"></xref>, and insert
+            this element into the Activity Entry element.</t>
+
+            <t>Insert into the Activity Entry element a new <spanx
+            style="verb">activity:object</spanx> element.</t>
+
+            <t>If the Object Entry has as a child an RSS title element, create
+            an atom:title element whose text content matches the text content
+            of that element element and insert the new element into the <spanx
+            style="verb">activity:object</spanx> element.</t>
+
+            <t>If the Object Entry has as a child a <spanx style="verb">content</spanx>
+            element in the namespace <spanx style="verb">http://purl.org/rss/1.0/modules/content/</spanx>,
+            create an <spanx style="verb">atom:content </spanx>element whose
+            text content matches the text content of that element and which
+            has the attribute <spanx style="verb">type</spanx> with the value
+            <spanx style="verb">html</spanx>. Otherwise, if the Object Entry
+            has as a child an RSS <spanx style="verb">description</spanx>
+            element, create an <spanx style="verb">atom:content</spanx>
+            element whose text content matches the text content of that
+            element and which has the attribute <spanx style="verb">type</spanx>
+            with the value <spanx style="verb">html</spanx>. In both cases,
+            insert the created <spanx style="verb">atom:content</spanx>
+            element into the <spanx style="verb">activity:object</spanx>
+            element.</t>
+
+            <t>If the Object Entry has as a child an RSS <spanx style="verb">link</spanx>
+            element, create an <spanx style="verb">atom:link</spanx> element
+            with a <spanx style="verb">href</spanx> attribute whose value is
+            the text content of the RSS <spanx style="verb">link</spanx>
+            element, and with a <spanx style="verb">type</spanx> attribute
+            whose value is <spanx style="verb">text/html</spanx>. Insert the
+            <spanx style="verb">atom:link</spanx> element into the <spanx
+            style="verb">activity:object</spanx> element.</t>
+
+            <t>If the Object Entry has as a child one or more RSS <spanx
+            style="verb">enclosure</spanx> elements, create for each an <spanx
+            style="verb">atom:link</spanx> element with a <spanx style="verb">href</spanx>
+            attribute whose value is the text content of the <spanx
+            style="verb">enclosure</spanx> element's <spanx style="verb">url</spanx>
+            attribute, a <spanx style="verb">rel</spanx> attribute whose value
+            is <spanx style="verb">enclosure</spanx>, a <spanx style="verb">type</spanx>
+            attribute whose value is the text content of the <spanx
+            style="verb">enclosure</spanx> element's <spanx style="verb">type</spanx>
+            attribute, and a <spanx style="verb">length</spanx> attribute
+            whose value is the text content of the <spanx style="verb">enclosure</spanx>
+            element's <spanx style="verb">length</spanx> attribute. If any of
+            these attributes are not present on the <spanx style="verb">enclosure</spanx>
+            element, the equivalent attribute on the <spanx style="verb">atom:link</spanx>
+            element MUST NOT be created. Insert the created <spanx
+            style="verb">atom:link</spanx> elements into the <spanx
+            style="verb">activity:object</spanx> element.</t>
+
+            <t>If the Object Entry has a <spanx>descendent</spanx> one or more
+            <spanx style="verb">thumbnail</spanx> elements in the namespace
+            <spanx style="verb">http://search.yahoo.com/mrss/</spanx>, create
+            for each an <spanx style="verb">atom:link</spanx> element with a
+            <spanx style="verb">href</spanx> attribute whose value is the text
+            content of the <spanx style="verb">thumbnail</spanx> element's url
+            attribute, a <spanx style="verb">rel</spanx> attribute whose value
+            is <spanx style="verb">preview</spanx>, a <spanx style="verb">width</spanx>
+            attribute in the namespace <spanx style="verb">http://purl.org/syndication/atommedia</spanx>
+            whose value is the text content of the <spanx style="verb">thumbnail</spanx>
+            element's <spanx style="verb">width</spanx> attribute, and a
+            <spanx style="verb">height</spanx> attribute in the namespace
+            <spanx style="verb">http://purl.org/syndication/atommedia</spanx>
+            whose value is the text content of the <spanx style="verb">thumbnail</spanx>
+            element's <spanx style="verb">height</spanx> attribute. If any of
+            these attributes are not present on the <spanx style="verb">thumbnail</spanx>
+            element, the equivalent attribute on the <spanx style="verb">atom:link</spanx>
+            element MUST NOT be created. Insert the created <spanx
+            style="verb">atom:link</spanx> elements into the <spanx
+            style="verb">activity:object</spanx> element.</t>
+
+            <t>If the Object Entry has as a child an RSS <spanx style="verb">guid</spanx>
+            element, create an <spanx style="verb">atom:id</spanx> element
+            whose text content matches the text content of that element. If
+            the <spanx style="verb">guid</spanx> element has an attribute
+            <spanx style="verb">isPermaLink</spanx> with the value <spanx
+            style="verb">true</spanx>, additionally create an <spanx
+            style="verb">atom:link</spanx> element with a <spanx style="verb">href</spanx>
+            attribute containing the text content of the <spanx style="verb">guid</spanx>
+            element and a type attribute whose value is <spanx style="verb">text/html</spanx>.
+            In both cases, insert the created element into the <spanx
+            style="verb">activity:object</spanx> element.</t>
+
+            <t>If the Activity Entry has as a child an <spanx style="verb">activity:verb</spanx>
+            element containing the IRI of the post verb, copy the <spanx
+            style="verb">atom:published</spanx> element from the Activity
+            Entry to the <spanx style="verb">activity:object</spanx>
+            element.</t>
+          </list></t>
+
+        <t>If the above procedure results in an activity entry that is not
+        valid as per this specification or the Atom specification, processors
+        MUST treat the result as they would had the invalid entry arrived in a
+        real feed rather than having been sythesized.</t>
       </section>
     </section>
 
@@ -433,6 +564,18 @@
           </author>
 
           <date />
+        </front>
+      </reference>
+
+      <reference anchor="RFC3339">
+        <front>
+          <title>Date and Time on the Internet: Timestamps</title>
+
+          <author fullname="Graham Klyne" initials="G." surname="Klyne">
+            <organization></organization>
+          </author>
+
+          <date month="July" year="2002" />
         </front>
       </reference>
     </references>
