@@ -43,7 +43,7 @@
     <section title="Notational Conventions">
       <t>The XML Namespaces URI [W3C.REC-xml-names-19990114] for the XML
       elements and attributes described in this specification is: <spanx
-      style="verb">http://activitystrea.ms/spec/1.0</spanx>.</t>
+      style="verb">http://activitystrea.ms/spec/1.0/</spanx>.</t>
 
       <t>In this document, the namespace prefix "activity:" is used for the
       above Namespace URI. The namespace prefix "atom:" is used for the
@@ -498,7 +498,7 @@
 
     <section anchor="postverb" title="The 'post' Verb">
       <t>This specification defines a single verb, which has the IRI <spanx
-      style="verb">http://activitystrea.ms/schema/1.0/post</spanx>.</t>
+      style="verb">http://activitystrea.ms/schema/1.0/post/</spanx>.</t>
 
       <t>This verb describes the act of posting or publishing an object on the
       web. The implication is that before this activity occured the object was
