@@ -119,8 +119,8 @@
       are identified explicitly in the activity entry as described in the
       following sections. An Atom entry is considered to be an Activity Entry
       if and only if it has at least one <spanx style="verb">activity:verb</spanx>
-      child element and one <spanx style="verb">activity:object</spanx> child
-      element as described in the following sections.</t>
+      child element and one or more <spanx style="verb">activity:object</spanx>
+      child element as described in the following sections.</t>
 
       <section anchor="titlesummarydetail"
                title="Activity Title, Summary and Detail">
@@ -191,7 +191,7 @@
       <section anchor="activityobjectelement"
                title="The activity:object Extension Element">
         <t>The activity:object element contains information about the object
-        of the activity. All activity entries must have exactly one
+        of the activity. All activity entries MUST have one or more
         activity:object element. The content model of activity:object is
         identical to that of atom:entry when used in an object entry as
         described in <xref target="objectentries"></xref>.</t>
