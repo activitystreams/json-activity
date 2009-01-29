@@ -113,121 +113,6 @@
       indirect object of the activity.</t>
     </section>
 
-    <section anchor="activityentries" title="Activity Entries">
-      <t>An Activity entry is an entry element as described by the Atom
-      specification that represents an Activity. The subject of the Activity
-      entry is the author of the entry. The Verb and Object of the Activity
-      are identified explicitly in the Activity entry as described in the
-      following sections. An Atom entry is considered to be an Activity entry
-      if and only if it has at least one <spanx style="verb">activity:verb</spanx>
-      child element and one or more <spanx style="verb">activity:object</spanx>
-      child elements as described in the following sections.</t>
-
-      <section anchor="titlesummarydetail"
-               title="Activity Title, Summary and Detail">
-        <t>In an Activity entry, the <spanx style="verb">atom:title</spanx>,
-        <spanx style="verb">atom:summary</spanx> and <spanx style="verb">atom:content</spanx>
-        elements as described by <xref target="RFC4287"></xref> MUST contain a
-        human-readable description of the Activity. This text will be used by
-        general Atom processors that do not understand this extension. This
-        text MAY also be used by feed processors that do not recognize the
-        Verb.  Any other non-activity elements may be used in an activity
-        entry to effect a desired handling by non-activity processors.</t>
-
-        <t>Feed producers MAY use information from outside sources to choose a
-        suitable language to use for the Action description. For example, a
-        feed producer responding to an HTTP request might use the HTTP
-        Accept-Language header or a user preference otherwise determined to
-        select a language. Feed producers SHOULD use <spanx style="verb">xml:lang</spanx>
-        as described in <xref target="RFC4287"></xref> Section 2 to identify
-        the language used.</t>
-      </section>
-
-      <section title="Time of the Activity">
-        <t>The time that an activity occured is represented in the
-        atom:published element within each Activity Entry. An Activity Entry
-        MUST have exactly one atom:published element.</t>
-
-        <t>Note well that the time stored herein is the time that the activity
-        occured, <spanx>not</spanx> the time that the associated activity
-        object was published. Feed processors MAY use this element to sort a
-        list of Activity Entries into chronological order.</t>
-      </section>
-
-      <section title="Activity Link">
-        <t>An Activity Entry should include an atom:link element with a link
-        relationship of "alternate", a type of "text/html" and a href
-        attribute containing the URL of an HTML-based representation of this
-        activity or the associated object. Though this link does not have any
-        special significance in this specification, general Atom processors
-        that do not support the activity extensions will often present such a
-        link to the user.</t>
-      </section>
-
-      <section anchor="activityverbelement"
-               title="The activity:verb Extension Element">
-        <t>All activity entries MUST have at least one activity:verb
-        element.</t>
-
-        <t>The content of the activity:verb element MUST be an IRI as defined
-        by <xref target="RFC3987"></xref>. Note that the definition of IRI
-        excludes relative references. Although the IRI might use a
-        dereferencable scheme, processors must not assume that it can be
-        dereferenced.</t>
-
-        <t>The IRI within this element defines a verb for this action. A given
-        activity entry MAY have more than one activity:verb element, which
-        indicates that there are several verbs describing this activity. Where
-        multiple verbs are used, all verbs MUST be generalizations or
-        specializations of one another. For example, the general verb "to
-        experience" might be specialized by a verb "to listen to".</t>
-
-        <t>Activity feed processors SHOULD use the most specific verb that
-        they understand within each entry. If none of the activity's verbs are
-        understood by the processor, the processor MAY use other information
-        to infer the verb, or the processor MAY use the content of the
-        atom:title, atom:summary and/or atom:content to obtain a sentence
-        describing the activity.</t>
-      </section>
-
-      <section anchor="activityobjectelement"
-               title="The activity:object Extension Element">
-        <t>The activity:object element contains information about the object
-        of the activity. All activity entries MUST have one or more
-        activity:object elements. The content model of activity:object is
-        identical to that of atom:entry when used in an object entry as
-        described in <xref target="objectentries"></xref>.</t>
-
-        <t>activity:object MUST contain an atom:id element. If this object is
-        also published in an Object Entry, the atom:id value MUST be the same
-        as in the Object Entry.</t>
-
-        <t>activity:object SHOULD contain an atom:title element, which MAY be
-        used by feed processors to identify the object to the user, for
-        example as the text of a link to the HTML representation of the
-        object.</t>
-
-        <t>activity:object SHOULD also contain an atom:link element with a
-        link relationship of "alternate" and the type "text/html", with the
-        href attribute containing the URL of the HTML representation of the
-        object if available.</t>
-
-        <t>activity:object MAY also contain an atom:source element, as
-        described by the Atom specification, describing the object feed where
-        this object resides, if any. Processors MAY use this information to
-        give context to the activity. For example, if the source feed has a
-        title of "Claire's Weblog", a processor may include the text "in
-        Claire's Weblog" at the end of a sentence describing the activity to
-        the user.</t>
-
-        <t>All other elements included in activity:object SHOULD reflect
-        elements in the Object Entry for this object, if one exists.</t>
-
-        <t>An Activity Entry and its associated Object Entry MUST NOT share
-        the same atom:id value.</t>
-      </section>
-    </section>
-
     <section anchor="objectentries" title="Object Entries">
       <t>An Object Entry is an entry element as described by the Atom
       specification that represents the object of an activity. Any entry that
@@ -461,6 +346,121 @@
         valid as per this specification or the Atom specification, processors
         MUST treat the result as they would had the invalid entry arrived in a
         real feed rather than having been sythesized.</t>
+      </section>
+    </section>
+
+    <section anchor="activityentries" title="Activity Entries">
+      <t>An Activity entry is an entry element as described by the Atom
+      specification that represents an Activity. The subject of the Activity
+      entry is the author of the entry. The Verb and Object of the Activity
+      are identified explicitly in the Activity entry as described in the
+      following sections. An Atom entry is considered to be an Activity entry
+      if and only if it has at least one <spanx style="verb">activity:verb</spanx>
+      child element and one or more <spanx style="verb">activity:object</spanx>
+      child elements as described in the following sections.</t>
+
+      <section anchor="titlesummarydetail"
+               title="Activity Title, Summary and Detail">
+        <t>In an Activity entry, the <spanx style="verb">atom:title</spanx>,
+        <spanx style="verb">atom:summary</spanx> and <spanx style="verb">atom:content</spanx>
+        elements as described by <xref target="RFC4287"></xref> MUST contain a
+        human-readable description of the Activity. This text will be used by
+        general Atom processors that do not understand this extension. This
+        text MAY also be used by feed processors that do not recognize the
+        Verb. Any other non-activity elements may be used in an activity entry
+        to effect a desired handling by non-activity processors.</t>
+
+        <t>Feed producers MAY use information from outside sources to choose a
+        suitable language to use for the Action description. For example, a
+        feed producer responding to an HTTP request might use the HTTP
+        Accept-Language header or a user preference otherwise determined to
+        select a language. Feed producers SHOULD use <spanx style="verb">xml:lang</spanx>
+        as described in <xref target="RFC4287"></xref> Section 2 to identify
+        the language used.</t>
+      </section>
+
+      <section title="Time of the Activity">
+        <t>The time that an activity occured is represented in the
+        atom:published element within each Activity Entry. An Activity Entry
+        MUST have exactly one atom:published element.</t>
+
+        <t>Note well that the time stored herein is the time that the activity
+        occured, <spanx>not</spanx> the time that the associated activity
+        object was published. Feed processors MAY use this element to sort a
+        list of Activity Entries into chronological order.</t>
+      </section>
+
+      <section title="Activity Link">
+        <t>An Activity Entry should include an atom:link element with a link
+        relationship of "alternate", a type of "text/html" and a href
+        attribute containing the URL of an HTML-based representation of this
+        activity or the associated object. Though this link does not have any
+        special significance in this specification, general Atom processors
+        that do not support the activity extensions will often present such a
+        link to the user.</t>
+      </section>
+
+      <section anchor="activityverbelement"
+               title="The activity:verb Extension Element">
+        <t>All activity entries MUST have at least one activity:verb
+        element.</t>
+
+        <t>The content of the activity:verb element MUST be an IRI as defined
+        by <xref target="RFC3987"></xref>. Note that the definition of IRI
+        excludes relative references. Although the IRI might use a
+        dereferencable scheme, processors must not assume that it can be
+        dereferenced.</t>
+
+        <t>The IRI within this element defines a verb for this action. A given
+        activity entry MAY have more than one activity:verb element, which
+        indicates that there are several verbs describing this activity. Where
+        multiple verbs are used, all verbs MUST be generalizations or
+        specializations of one another. For example, the general verb "to
+        experience" might be specialized by a verb "to listen to".</t>
+
+        <t>Activity feed processors SHOULD use the most specific verb that
+        they understand within each entry. If none of the activity's verbs are
+        understood by the processor, the processor MAY use other information
+        to infer the verb, or the processor MAY use the content of the
+        atom:title, atom:summary and/or atom:content to obtain a sentence
+        describing the activity.</t>
+      </section>
+
+      <section anchor="activityobjectelement"
+               title="The activity:object Extension Element">
+        <t>The activity:object element contains information about the object
+        of the activity. All activity entries MUST have one or more
+        activity:object elements. The content model of activity:object is
+        identical to that of atom:entry when used in an object entry as
+        described in <xref target="objectentries"></xref>.</t>
+
+        <t>activity:object MUST contain an atom:id element. If this object is
+        also published in an Object Entry, the atom:id value MUST be the same
+        as in the Object Entry.</t>
+
+        <t>activity:object SHOULD contain an atom:title element, which MAY be
+        used by feed processors to identify the object to the user, for
+        example as the text of a link to the HTML representation of the
+        object.</t>
+
+        <t>activity:object SHOULD also contain an atom:link element with a
+        link relationship of "alternate" and the type "text/html", with the
+        href attribute containing the URL of the HTML representation of the
+        object if available.</t>
+
+        <t>activity:object MAY also contain an atom:source element, as
+        described by the Atom specification, describing the object feed where
+        this object resides, if any. Processors MAY use this information to
+        give context to the activity. For example, if the source feed has a
+        title of "Claire's Weblog", a processor may include the text "in
+        Claire's Weblog" at the end of a sentence describing the activity to
+        the user.</t>
+
+        <t>All other elements included in activity:object SHOULD reflect
+        elements in the Object Entry for this object, if one exists.</t>
+
+        <t>An Activity Entry and its associated Object Entry MUST NOT share
+        the same atom:id value.</t>
       </section>
     </section>
 
