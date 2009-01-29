@@ -96,41 +96,43 @@
     </section>
 
     <section title="Verbs and Object Types">
-      <t>Verbs and object types are identified by IRIs as defined by <xref
-      target="RFC3987"></xref>. One verb identifier is defined by this
+      <t>Verbs and Object Types are identified by IRIs (Verb and Object
+      Identifiers) as defined by <xref target="RFC3987"></xref> though these
+      IRIs MAY not resolve to any useful resource. One Verb is defined by this
       specification in <xref target="postverb"></xref>.</t>
 
-      <t>Other specifications may define further verb and object type IRIs.
-      Such specifications MUST define the meaning of these IRIs, and SHOULD
-      also describe how any additional properties of the verb or object type
-      are to be encoded in an Atom entry.</t>
+      <t>Other specifications MAY define further Verb and Object types with
+      corresponding IRIs. Such specifications MUST define the meaning of these
+      Verb and Object Identifiers, and SHOULD also describe how any additional
+      properties of the Verb or Object type are to be encoded in an Atom
+      entry.</t>
 
-      <t>The properties of an object type are properties shared by all objects
-      of that type. For example, a photo might have a property containing the
-      URL of a thumbnail of the photo.</t>
+      <t>The properties of an Object Type are properties shared by all Objects
+      of that Type. For example, a photo Object might have a property
+      containing the URL of a thumbnail of the photo.</t>
 
-      <t>The properties of a verb are modifiers of the verb, such as the
-      indirect object of the activity.</t>
+      <t>The properties of a Verb are modifiers to that Verb, such as the
+      Indirect Object of the Activity.</t>
     </section>
 
     <section anchor="objectentries" title="Object Entries">
       <t>An Object Entry is an entry element as described by the Atom
-      specification that represents the object of an activity. Any entry that
+      specification that represents the Object of an Activity. Any entry that
       is not an Activity Entry as described in <xref
       target="activityentries"></xref> is considered an Object Entry by this
       specification.</t>
 
       <section anchor="objecttypeelement"
                title="The activity:object-type Extension Element">
-        <t>The content of the activity:verb element MUST be an IRI as defined
-        by <xref target="RFC3987"></xref>. Note that the definition of IRI
-        excludes relative references. Although the IRI might use a
-        dereferencable scheme, processors must not assume that it can be
-        dereferenced.</t>
+        <t>The content of the activity:object-type element MUST be an Object
+        Identifier (an IRI as defined by <xref target="RFC3987"></xref>). Note
+        that the definition of IRI excludes relative references. Although the
+        IRI MAY use a dereferencable scheme, processors must not assume that
+        it can be dereferenced.</t>
 
-        <t>The IRI within this element defines the type of the object
-        described by this Object Entry. A given Object Entry MAY have more
-        than one activity:object-type element, which indicates that this
+        <t>The Object Identifier within this element defines the type of the
+        Object described by this Object Entry. A given Object Entry MAY have
+        more than one activity:object-type element, which indicates that this
         object has several types. Where multiple types are used, all types
         MUST be generalizaions or specializations of one another. For example,
         the general type "web page" might be specialized by a type "weblog
@@ -139,14 +141,14 @@
         <t>An Object Entry SHOULD have at least one activity:object-type
         element.</t>
 
-        <t>Activity feed processors SHOULD use the most specific object type
-        that they understand within each entry. If none of the activity's
-        types are understood by the processor, the processor MAY use other
-        information to infer the type, or the processor MAY act as if no
-        activity:object-type element is present.</t>
+        <t>Activity feed processors SHOULD use the most specific Object Type
+        that they understand within each entry. If none of the Object Types
+        are understood by the processor, the processor MAY use other
+        information to infer the Object Type, or the processor MAY act as if
+        no activity:object-type element is present.</t>
 
-        <t>If no activity:object-type element is present, the object has no
-        defined type. Processors SHOULD refer to such objects only by their
+        <t>If no activity:object-type element is present, the Object has no
+        defined type. Processors SHOULD refer to such Objects only by their
         titles. For example, when forming an activity sentence a processor
         might say "Johan posted 'My Cat'" rather than "Johan posted a photo:
         'My Cat'".</t>
@@ -154,17 +156,17 @@
 
       <section title="The activity:verb Extension Element">
         <t>When appearing as a child of an Object Entry (that is, an entry
-        that does not also have an activity:object child element), the
-        activity:verb element defines the verb of the implied activity for the
-        object entry, as defined in <xref target="impliedpost"></xref>. When
-        used in this way the content model is identical to when used in an
-        Activity Entry as described in <xref
+        that does not also have an activity:object child element), the content
+        of the activity:verb element MUST be the Verb Type of the implied
+        Activity for the Object entry, as defined in <xref
+        target="impliedpost"></xref>. When used in this way, the content model
+        is identical to when used in an Activity Entry as described in <xref
         target="activityverbelement"></xref>.</t>
       </section>
 
       <section anchor="impliedpost" title="Implied Activity">
         <t>When used alone, outside of the context of an explicit Activity
-        Entry, an Object Entry has an implied activity. The implied Activity
+        Entry, an Object Entry has an Implied Activity. The Implied Activity
         Entry for an Object Entry is constructed as follows:</t>
 
         <t><list style="numbers">
@@ -174,8 +176,8 @@
             <t>If the Object Entry has as a child at least one activity:verb
             element, copy all such elements into the Activity Entry element.
             Otherwise, insert into the Activity Entry element a new
-            activity:verb element containing the IRI of the post verb as
-            described in <xref target="postverb"></xref>.</t>
+            activity:verb element containing the Verb Identifier of the post
+            Verb as described in <xref target="postverb"></xref>.</t>
 
             <t>Copy the atom:published element from the Object Entry element
             into the Activity Entry element.</t>
@@ -188,41 +190,42 @@
             and atom:published.</t>
 
             <t>If the Activity Entry has as a child an activity:verb element
-            containing the IRI of the post verb, copy the atom:published
-            element from the Object Entry to the activity:object element.</t>
+            containing the Verb Identifier of the post Verb, copy the
+            atom:published element from the Object Entry to the
+            activity:object element.</t>
           </list></t>
 
         <t>Processors SHOULD generate suitable human-readable descriptions of
-        the action and insert them as described in <xref
+        the Action and insert them as described in <xref
         target="titlesummarydetail"></xref>.</t>
 
-        <t>If the resulting entry will be published, generators SHOULD
-        generate where possible suitable values for all other elements that
-        the Atom specification requires as children of atom:entry. In
-        particular, an atom:id value SHOULD be generated; this value MUST NOT
-        be the same as that of the Object Entry.</t>
+        <t>If the resulting entry will be published, processors SHOULD
+        generate suitable values for all other elements that the Atom
+        specification requires as children of atom:entry. In particular, an
+        atom:id value SHOULD be generated; this value MUST NOT be the same as
+        that of the Object Entry's atom:id.</t>
 
-        <t>If the resulting entry is to be published, generators MAY omit
+        <t>If the resulting entry is to be published, processors MAY omit
         elements from the generated activity:object element to reduce
-        overhead. Such generators SHOULD bear in mind the requirements in
+        overhead. Such processors SHOULD bear in mind the requirements in
         <xref target="activityobjectelement"></xref>.</t>
 
         <t>Processors expecting Activity Entries SHOULD apply the above
         transformation to any Object Entries they encounter in order to
-        process them as activities, or at least act as if they have done
+        process them as Activities, or at least act as if they have done
         so.</t>
 
-        <t>Note that due to the way it is constructed there is no way to
-        represent additional properties for the verb(s) of an implied
-        activity. If a particular verb requires additional properties then it
-        MUST NOT be used in an implied activity.</t>
+        <t>Note that due to the way it is constructed, there is no way to
+        represent additional properties for the Verb(s) of an Implied
+        Activity. If a particular Verb requires additional properties then it
+        MUST NOT be used in an Implied Activity.</t>
       </section>
 
       <section anchor="rss" title="Object Entries in RSS">
         <t>For compatibility with existing deployments, this specification
-        also defines a subset of the activity markup that may be used in RSS
-        2.0 feeds to add verb and object type annotations to objects published
-        in RSS rather than Atom feeds.</t>
+        also defines a subset of the Activity markup that may be used in <xref
+        target="RSS_2.0">RSS 2.0</xref> feeds to add verb and object type
+        annotations to objects published in RSS rather than Atom feeds.</t>
 
         <t>Objects published as RSS 2.0 <spanx style="verb">item</spanx>
         elements MAY use the <spanx style="verb">activity:verb</spanx> and
@@ -231,8 +234,8 @@
         use in Atom object entries.</t>
 
         <t>Activity processors MUST use the following process to construct the
-        implied activity for an object entry published as an RSS 2.0 <spanx
-        style="verb">item</spanx> element, or must act as if they have done
+        Implied Activity for an Object entry published as an RSS 2.0 <spanx
+        style="verb">item</spanx> element, or MUST act as if they have done
         so:</t>
 
         <t><list style="numbers">
@@ -242,15 +245,16 @@
             <t>If the Object Entry has as a child at least one activity:verb
             element, copy all such elements into the Activity Entry element.
             Otherwise, insert into the Activity Entry element a new
-            activity:verb element containing the IRI of the post verb as
-            described in <xref target="postverb"></xref>.</t>
+            activity:verb element containing the Verb Identifier of the post
+            Verb as described in <xref target="postverb"></xref>.</t>
 
-            <t>If the Object Entry has as a child an RSS <spanx style="verb">pubDate</spanx>
-            element, parse its content as per the RSS 2.0 specification to
-            obtain a date and time value. Create an <spanx style="verb">atom:published</spanx>
-            element whose content is the serialization of this data and time
-            value as described in <xref target="RFC3339"></xref>, and insert
-            this element into the Activity Entry element.</t>
+            <t>If the Object Entry has a RSS <spanx style="verb">pubDate</spanx>
+            element as a child, parse its content as per the RSS 2.0
+            specification to obtain a date and time value. Create an <spanx
+            style="verb">atom:published</spanx> element whose content is the
+            serialization of this data and time value as described in <xref
+            target="RFC3339"></xref>, and insert this element into the
+            Activity Entry element.</t>
 
             <t>Insert into the Activity Entry element a new <spanx
             style="verb">activity:object</spanx> element.</t>
@@ -275,22 +279,22 @@
             element into the <spanx style="verb">activity:object</spanx>
             element.</t>
 
-            <t>If the Object Entry has as a child an RSS <spanx style="verb">link</spanx>
-            element, create an <spanx style="verb">atom:link</spanx> element
-            with a <spanx style="verb">href</spanx> attribute whose value is
-            the text content of the RSS <spanx style="verb">link</spanx>
+            <t>If the Object Entry a RSS <spanx style="verb">link</spanx>
+            element as as a child, create an <spanx style="verb">atom:link</spanx>
+            element with a <spanx style="verb">href</spanx> attribute whose
+            value is the text content of the RSS <spanx style="verb">link</spanx>
             element, and with a <spanx style="verb">type</spanx> attribute
             whose value is <spanx style="verb">text/html</spanx>. Insert the
             <spanx style="verb">atom:link</spanx> element into the <spanx
             style="verb">activity:object</spanx> element.</t>
 
-            <t>If the Object Entry has as a child one or more RSS <spanx
-            style="verb">enclosure</spanx> elements, create for each an <spanx
-            style="verb">atom:link</spanx> element with a <spanx style="verb">href</spanx>
-            attribute whose value is the text content of the <spanx
-            style="verb">enclosure</spanx> element's <spanx style="verb">url</spanx>
-            attribute, a <spanx style="verb">rel</spanx> attribute whose value
-            is <spanx style="verb">enclosure</spanx>, a <spanx style="verb">type</spanx>
+            <t>If the Object Entry has one or more RSS <spanx style="verb">enclosure</spanx>
+            elements as children, create for each an <spanx style="verb">atom:link</spanx>
+            element with a <spanx style="verb">href</spanx> attribute whose
+            value is the text content of the <spanx style="verb">enclosure</spanx>
+            element's <spanx style="verb">url</spanx> attribute, a <spanx
+            style="verb">rel</spanx> attribute whose value is <spanx
+            style="verb">enclosure</spanx>, a <spanx style="verb">type</spanx>
             attribute whose value is the text content of the <spanx
             style="verb">enclosure</spanx> element's <spanx style="verb">type</spanx>
             attribute, and a <spanx style="verb">length</spanx> attribute
@@ -342,7 +346,7 @@
             element.</t>
           </list></t>
 
-        <t>If the above procedure results in an activity entry that is not
+        <t>If the above procedure results in an Activity Entry that is not
         valid as per this specification or the Atom specification, processors
         MUST treat the result as they would had the invalid entry arrived in a
         real feed rather than having been sythesized.</t>
@@ -350,9 +354,9 @@
     </section>
 
     <section anchor="activityentries" title="Activity Entries">
-      <t>An Activity entry is an entry element as described by the Atom
-      specification that represents an Activity. The subject of the Activity
-      entry is the author of the entry. The Verb and Object of the Activity
+      <t>An Activity Entry is an entry element as described by the Atom
+      specification that represents an Activity. The Subject of the Activity
+      Entry is the author of the entry. The Verb and Object of the Activity
       are identified explicitly in the Activity entry as described in the
       following sections. An Atom entry is considered to be an Activity entry
       if and only if it has at least one <spanx style="verb">activity:verb</spanx>
@@ -380,13 +384,13 @@
       </section>
 
       <section title="Time of the Activity">
-        <t>The time that an activity occured is represented in the
+        <t>The time that an Activity occured is represented in the
         atom:published element within each Activity Entry. An Activity Entry
         MUST have exactly one atom:published element.</t>
 
-        <t>Note well that the time stored herein is the time that the activity
-        occured, <spanx>not</spanx> the time that the associated activity
-        object was published. Feed processors MAY use this element to sort a
+        <t>Note that the time stored herein is the time that the Activity
+        occured, <spanx>not</spanx> the time that the associated Activity
+        Object was published. Feed processors MAY use this element to sort a
         list of Activity Entries into chronological order.</t>
       </section>
 
@@ -394,7 +398,7 @@
         <t>An Activity Entry should include an atom:link element with a link
         relationship of "alternate", a type of "text/html" and a href
         attribute containing the URL of an HTML-based representation of this
-        activity or the associated object. Though this link does not have any
+        Activity or the associated Object. Though this link does not have any
         special significance in this specification, general Atom processors
         that do not support the activity extensions will often present such a
         link to the user.</t>
@@ -405,59 +409,60 @@
         <t>All activity entries MUST have at least one activity:verb
         element.</t>
 
-        <t>The content of the activity:verb element MUST be an IRI as defined
-        by <xref target="RFC3987"></xref>. Note that the definition of IRI
-        excludes relative references. Although the IRI might use a
-        dereferencable scheme, processors must not assume that it can be
-        dereferenced.</t>
+        <t>The content of the activity:verb element MUST be an Object
+        Identifier (an IRI as defined by <xref target="RFC3987"></xref>). Note
+        that the definition of IRI excludes relative references. Although the
+        IRI MAY use a dereferencable scheme, processors must not assume that
+        it can be dereferenced.</t>
 
-        <t>The IRI within this element defines a verb for this action. A given
-        activity entry MAY have more than one activity:verb element, which
-        indicates that there are several verbs describing this activity. Where
-        multiple verbs are used, all verbs MUST be generalizations or
-        specializations of one another. For example, the general verb "to
-        experience" might be specialized by a verb "to listen to".</t>
+        <t>The Verb Identifier within this element defines the Verb for this
+        Activity. A given Activity Entry MAY have more than one activity:verb
+        element, which indicates that there are several verbs describing this
+        activity. Where multiple verbs are used, all verbs MUST be
+        generalizations or specializations of one another. For example, the
+        general verb "to experience" might be specialized by a verb "to listen
+        to".</t>
 
-        <t>Activity feed processors SHOULD use the most specific verb that
-        they understand within each entry. If none of the activity's verbs are
+        <t>Activity feed processors SHOULD use the most specific Verb that
+        they understand within each entry. If none of the Activity's Verbs are
         understood by the processor, the processor MAY use other information
-        to infer the verb, or the processor MAY use the content of the
+        to infer the Verb, or the processor MAY use the content of the
         atom:title, atom:summary and/or atom:content to obtain a sentence
-        describing the activity.</t>
+        describing the Activity.</t>
       </section>
 
       <section anchor="activityobjectelement"
                title="The activity:object Extension Element">
-        <t>The activity:object element contains information about the object
-        of the activity. All activity entries MUST have one or more
+        <t>The activity:object element contains information about the Object
+        of the Activity. All Activity Entries MUST have one or more
         activity:object elements. The content model of activity:object is
         identical to that of atom:entry when used in an object entry as
         described in <xref target="objectentries"></xref>.</t>
 
-        <t>activity:object MUST contain an atom:id element. If this object is
+        <t>activity:object MUST contain an atom:id element. If this Object is
         also published in an Object Entry, the atom:id value MUST be the same
         as in the Object Entry.</t>
 
         <t>activity:object SHOULD contain an atom:title element, which MAY be
-        used by feed processors to identify the object to the user, for
+        used by feed processors to identify the Object to the user, for
         example as the text of a link to the HTML representation of the
         object.</t>
 
         <t>activity:object SHOULD also contain an atom:link element with a
         link relationship of "alternate" and the type "text/html", with the
         href attribute containing the URL of the HTML representation of the
-        object if available.</t>
+        Object if available.</t>
 
         <t>activity:object MAY also contain an atom:source element, as
-        described by the Atom specification, describing the object feed where
-        this object resides, if any. Processors MAY use this information to
+        described by the Atom specification, describing the Object feed where
+        this Object resides, if any. Processors MAY use this information to
         give context to the activity. For example, if the source feed has a
         title of "Claire's Weblog", a processor may include the text "in
         Claire's Weblog" at the end of a sentence describing the activity to
         the user.</t>
 
         <t>All other elements included in activity:object SHOULD reflect
-        elements in the Object Entry for this object, if one exists.</t>
+        elements in the Object Entry for this Object, if one exists.</t>
 
         <t>An Activity Entry and its associated Object Entry MUST NOT share
         the same atom:id value.</t>
@@ -468,11 +473,11 @@
       <t>This specification defines no extensions to the atom:feed element as
       defined by the Atom specification. Therefore an Activity Feed is simply
       a standard Atom feed which contains only Activity Entries. Processors
-      MAY create an Activity Entry representing the implied post activity of
-      an Object Entry (see <xref target="impliedpost"></xref>) in order to
+      MAY create an Activity Entry representing the implied post Verb of an
+      Object Entry (see <xref target="impliedpost"></xref>) in order to
       synthesize an Activity Feed from a traditional Atom feed.</t>
 
-      <t>A feed MAY contain both activity and object entries.</t>
+      <t>A feed MAY contain both Activity and Object entries.</t>
 
       <section title="A Note about Legacy Feeds">
         <t>This section is non-normative.</t>
@@ -499,16 +504,16 @@
     </section>
 
     <section anchor="postverb" title="The 'post' Verb">
-      <t>This specification defines a single verb, which has the IRI <spanx
-      style="verb">http://activitystrea.ms/schema/1.0/post/</spanx>.</t>
+      <t>This specification defines a single Verb, which has the Verb
+      Identifier IRI <spanx style="verb">http://activitystrea.ms/schema/1.0/post/</spanx>.</t>
 
-      <t>This verb describes the act of posting or publishing an object on the
-      web. The implication is that before this activity occured the object was
-      not posted, and after the activity has occured it <spanx>is</spanx>
+      <t>This Verb describes the act of posting or publishing an Object on the
+      web. The implication is that before this Activity occured the Object was
+      not posted, and after the Activity has occured it <spanx>is</spanx>
       posted or published.</t>
 
-      <t>This verb is used when creating the implied post activity for a
-      standalone Object Entry that has no explicit verb. It MAY also be used
+      <t>This Verb is used when creating the Implied post Activity for a
+      standalone Object Entry that has no explicit Verb. It MAY also be used
       as the value of activity:verb in an explicit Activity Entry.</t>
 
       <t>In an Activity Entry which has the 'post' verb, the value of the
@@ -520,43 +525,43 @@
 
     <section title="Requirements for Activity Re-publishers">
       <t>An Activity Re-publisher is any system that produces feeds that
-      contain activities or objects that were obtained from another feed or
+      contain Activities or Objects that were obtained from another feed or
       feed-like data source. This section contains requirements for such
       systems that aim to allow consumers of such feeds to process the
-      activities described in such feeds in a way similar to how they would
-      have processed the activities when obtained directly from the source,
-      and to allow consumers to detect duplicate items obtained via multiple
-      feeds.</t>
+      Activities described in such feeds in a way similar to how they would
+      have processed the Activities when obtained directly from the source,
+      and to allow consumers to detect duplicate Activities or Objects
+      obtained via multiple feeds.</t>
 
       <t>An Activity Re-publisher may choose to produce either Object Entries
-      or Activity Entries, except where the the re-publisher is re-publishing
-      an activity entry, in which case an activity entry MUST be produced to
-      avoid loss of information that cannot be expressed in an object
-      entry.</t>
+      or Activity Entries, except where the the Re-Publisher is re-publishing
+      an Activity Entry, in which case the Activity Entry MUST be produced to
+      avoid loss of information that cannot be expressed in an Object
+      Entry.</t>
 
-      <t>Where a re-publisher produces a full activity entry from a source
-      object entry, the mapping process described in <xref
-      target="impliedpost"></xref> MUST be used. A re-publisher MAY perform
+      <t>Where a Re-Publisher produces a full Activity Entry from a source
+      Object Entry, the mapping process described in <xref
+      target="impliedpost"></xref> MUST be used. A Re-Publisher MAY perform
       additional mapping steps when doing this conversion.</t>
 
-      <t>Where a re-publisher produces a full activity entry from a source RSS
+      <t>Where a Re-Publisher produces a full Activity Entry from a source RSS
       object entry, the mapping process described in <xref
-      target="rss"></xref> MUST be used. A re-publisher MAY perform additional
+      target="rss"></xref> MUST be used. A Re-Publisher MAY perform additional
       mapping steps when doing this conversion.</t>
 
-      <t>If a source object entry does not contain verb or object type
-      information, a re-publisher MAY use information obtained elsewhere to
-      synthesize appropriate verb or object type annotations.</t>
+      <t>If a source Object entry does not contain Verb or Object type
+      information, a Re-Publisher MAY use information obtained elsewhere to
+      synthesize appropriate Verb or Object type annotations.</t>
 
-      <t>When a re-publisher reproduces a source Activity Entry, the publisher
+      <t>When a Re-Publisher reproduces a source Activity Entry, the publisher
       MUST copy the atom:id and atom:published elements from the source
       Activity Entry without modification, and MUST similarly preserve the
       contents of all elements in the AtomActivity namespace where these
       elements are used correctly as per this specification.</t>
 
-      <t>When a re-publisher reproduces an entry, the atom:source element MUST
+      <t>When a Re-Publisher reproduces an entry, the atom:source element MUST
       be used in accordance with its definition in the Atom specification. A
-      re-publisher SHOULD re-publish as much information as possible from the
+      Re-Publisher SHOULD include as much information as possible from the
       source entry, paying special attention to data that is of significance
       to the object type(s) and/or verb(s) used on the entry where these are
       known to the re-publisher.</t>
@@ -614,6 +619,19 @@
       </reference>
 
       <reference anchor="RFC3339">
+        <front>
+          <title>Date and Time on the Internet: Timestamps</title>
+
+          <author fullname="Graham Klyne" initials="G." surname="Klyne">
+            <organization></organization>
+          </author>
+
+          <date month="July" year="2002" />
+        </front>
+      </reference>
+
+      <reference anchor="RSS_2.0"
+                 target="http://www.rssboard.org/rss-specification">
         <front>
           <title>Date and Time on the Internet: Timestamps</title>
 
