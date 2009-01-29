@@ -193,8 +193,8 @@
       <section anchor="activityobjectelement"
                title="The activity:object Extension Element">
         <t>The activity:object element contains information about the object
-        of the activity. All activity entries must have exactly one
-        activity:object element. The content model of activity:object is
+        of the activity. All activity entries MUST have one or more
+        activity:object elements. The content model of activity:object is
         identical to that of atom:entry when used in an object entry as
         described in <xref target="objectentries"></xref>.</t>
 
