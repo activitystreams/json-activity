@@ -122,9 +122,16 @@
     <section anchor="objectentries" title="Object Entries">
       <t>An Object Entry is an entry element as described by the Atom
       specification that represents the Object of an Activity. Any entry that
-      is not an Activity Entry as described in <xref
-      target="activityentries"></xref> is considered an Object Entry by this
-      specification.</t>
+      does not meet the criteria for being an Activity Entry as described in
+      <xref target="activityentries"></xref> is considered an Object Entry by
+      this specification. In particular, this means that valid Atom entries
+      without any activity annotations are considered to be Object Entries by
+      this specification.</t>
+
+      <t>Object Entries are intended to be used by feeds that describe the
+      creation of content. In a valid object entry, all Atom elements should
+      describe the object that was created or otherwise the object of an
+      activity, rather than describing the activity itself.</t>
 
       <section anchor="objecttypeelement"
                title="The activity:object-type Extension Element">
@@ -148,8 +155,8 @@
         <t>Activity feed processors SHOULD use the most specific Object Type
         that they understand within each entry. If none of the Object Types
         are understood by the processor, the processor MAY use other
-        information to infer the Object Type, or the processor MAY act as if
-        no activity:object-type element is present.</t>
+        information to infer the Object Type, or otherwise the processor MUST
+        act as if no activity:object-type element is present.</t>
 
         <t>If no activity:object-type element is present, the Object has no
         defined type. Processors SHOULD refer to such Objects only by their
@@ -367,6 +374,14 @@
       child element and one or more <spanx style="verb">activity:object</spanx>
       child elements as described in the following sections.</t>
 
+      <t>Activity Entries are intended to be published by activity
+      aggregators, because such aggregators often wish to include a sentence
+      describing the activity in the entry title rather than just the title as
+      would be expected in an object entry. The Activity Entry structure
+      allows non-activity feed processors to consume an entry that describes
+      the activity while making the underlying activity and object metadata
+      also available for activity-aware feed processors.</t>
+
       <section anchor="titlesummarydetail"
                title="Activity Title, Summary and Detail">
         <t>In an Activity entry, the <spanx style="verb">atom:title</spanx>,
@@ -470,6 +485,18 @@
 
         <t>An Activity Entry and its associated Object Entry MUST NOT share
         the same atom:id value.</t>
+
+        <t>An activity entry with more than one activity:object element is
+        considered, for the purposes of activity processing, to be equivalent
+        in meaning to a sequence of activity entries each with a single
+        activity:object and the same verb. Activity processors SHOULD handle
+        multi-object activities as distinct activities, though they MAY
+        perform any coalescing of activities they deem appropriate when
+        displaying activity data to users. Feed producers MUST NOT create
+        coalesced activity entries except where the rules in this paragraph
+        hold. Coalesced activity entries hold no special meaning to activity
+        processors and are supported only for the benefit of non-activity feed
+        consumers which are not capable of doing any automatic coalescing.</t>
       </section>
     </section>
 
