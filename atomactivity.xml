@@ -74,7 +74,7 @@
       specification uses the atomCommonAttributes, atomMediaType, and atomURI
       patterns, defined in [RFC4287].</t>
 
-      <t>However, the text of this specification provides the sole definition
+      <t>The text of this specification provides the sole definition
       of conformance.</t>
 
       <t>This specification uses "the Atom specification" to refer to <xref
@@ -85,7 +85,7 @@
       <t>For the purpose of this specification, an Activity is a description
       of an action that was performed (the Verb) at some instant in time by
       some actor (the Subject), usually on some social object (the Object). An
-      Activity Feed is therefore a feed of such Activities.</t>
+      Activity Feed is a feed of such Activities.</t>
 
       <t>An Activity may also have an Indirect Object. The Indirect Object is
       considered for the purposes of this specification to be a modifier of
@@ -94,7 +94,7 @@
       <t>It is expected that in many cases consumers of Activity Feeds will
       use them to turn machine readable descriptions of Activities into
       human-readable sentences such as "Joanne posted a Photo: 'My Cat'".
-      However, the process for forming such sentences is not defined by this
+      The process for forming such sentences is not defined by this
       specification.</t>
     </section>
 
@@ -112,7 +112,10 @@
 
       <t>The properties of an Object Type are properties shared by all Objects
       of that Type. For example, a photo Object might have a property
-      containing the URL of a thumbnail of the photo.</t>
+      containing the URL of a thumbnail of the photo.
+
+      TODO: the previous sentence may indicate that all properties are
+      required; reword?</t>
 
       <t>The properties of a Verb are modifiers to that Verb, such as the
       Indirect Object of the Activity.</t>
@@ -128,23 +131,26 @@
       this specification.</t>
 
       <t>Object Entries are intended to be used by feeds that describe the
-      creation of content. In a valid object entry, all Atom elements should
+      creation of content. In a valid object entry, all Atom elements SHOULD
       describe the object that was created or otherwise the object of an
       activity, rather than describing the activity itself.</t>
 
       <section anchor="objecttypeelement"
                title="The activity:object-type Extension Element">
+        <t>TODO: this should appear after the description of the Object
+        element (<xref target="activityobjectelement"></xref>).</t>
+								
         <t>The content of the activity:object-type element MUST be an Object
-        Identifier (an IRI as defined by <xref target="RFC3987"></xref>). Note
-        that the definition of IRI excludes relative references. Although the
-        IRI MAY use a dereferencable scheme, processors must not assume that
+        Identifier (an IRI as defined by <xref target="RFC3987"></xref>). The
+        definition of IRI excludes relative references. Though the
+        IRI MAY use a dereferenceable scheme, processors MUST not assume that
         it can be dereferenced.</t>
 
         <t>The Object Identifier within this element defines the type of the
         Object described by this Object Entry. A given Object Entry MAY have
         more than one activity:object-type element, which indicates that this
         object has several types. Where multiple types are used, all types
-        MUST be generalizaions or specializations of one another. For example,
+        MUST be generalizations or specializations of one another. For example,
         the general type "web page" might be specialized by a type "weblog
         entry".</t>
 
@@ -152,10 +158,11 @@
         element.</t>
 
         <t>Activity feed processors SHOULD use the most specific Object Type
-        that they understand within each entry. If none of the Object Types
-        are understood by the processor, the processor MAY use other
-        information to infer the Object Type, or otherwise the processor MUST
-        act as if no activity:object-type element is present.</t>
+        that they understand within each entry. The processor MAY use other
+        information to infer the Object Type if it cannot understand any of
+        the Object Types given. If it cannot so infer the Object Type, a
+        processor MUST act as though no activity:object-type element is
+        present.</t>
 
         <t>If no activity:object-type element is present, the Object has no
         defined type. Processors SHOULD refer to such Objects only by their
@@ -165,6 +172,9 @@
       </section>
 
       <section title="The activity:verb Extension Element">
+				<t>TODO: this should appear after the description of the Verb
+				element (<xref target="activityverbelement"></xref>).</t>
+				
         <t>When appearing as a child of an Object Entry (that is, an entry
         that does not also have an activity:object child element), the content
         of the activity:verb element MUST be the Verb Type of the implied
@@ -232,6 +242,9 @@
       </section>
 
       <section anchor="rss" title="Object Entries in RSS">
+        <t>TODO: this "alternate representation" section should appear after
+        the full description of the "normal" ATOM representation.</t>
+
         <t>For compatibility with existing deployments, this specification
         also defines a subset of the Activity markup that may be used in <xref
         target="RSS_2.0">RSS 2.0</xref> feeds to add verb and object type
@@ -359,7 +372,7 @@
         <t>If the above procedure results in an Activity Entry that is not
         valid as per this specification or the Atom specification, processors
         MUST treat the result as they would had the invalid entry arrived in a
-        real feed rather than having been sythesized.</t>
+        real feed rather than having been synthesized.</t>
       </section>
     </section>
 
@@ -379,7 +392,10 @@
       would be expected in an object entry. The Activity Entry structure
       allows non-activity feed processors to consume an entry that describes
       the activity while making the underlying activity and object metadata
-      also available for activity-aware feed processors.</t>
+      also available for activity-aware feed processors.
+
+      TODO: the preceding sentence is very convoluted. Can it be simplified?
+      What is it trying to say?  Would an example be better?</t>
 
       <section anchor="titlesummarydetail"
                title="Activity Title, Summary and Detail">
@@ -402,18 +418,18 @@
       </section>
 
       <section title="Time of the Activity">
-        <t>The time that an Activity occured is represented in the
+        <t>The time at which an Activity occurred is represented in the
         atom:published element within each Activity Entry. An Activity Entry
         MUST have exactly one atom:published element.</t>
 
         <t>The time stored herein is the time that the Activity
-        occured, <spanx>not</spanx> the time that the associated Activity
+        occurred, <spanx>not</spanx> the time that the associated Activity
         Object was published. Feed processors MAY use this element to sort a
         list of Activity Entries into chronological order.</t>
       </section>
 
       <section title="Activity Link">
-        <t>An Activity Entry should include an atom:link element with a link
+        <t>An Activity Entry SHOULD include an atom:link element with a link
         relationship of "alternate", a type of "text/html" and a href
         attribute containing the URL of an HTML-based representation of this
         Activity or the associated Object. Though this link does not have any
@@ -457,19 +473,19 @@
         identical to that of atom:entry when used in an object entry as
         described in <xref target="objectentries"></xref>.</t>
 
-        <t>activity:object MUST contain an atom:id element. If this Object is
-        also published in an Object Entry, the atom:id value MUST be the same
-        as in the Object Entry.</t>
+        <t>activity:object MUST contain exactly one atom:id element. If this
+        Object is also published in an Object Entry, the atom:id value MUST be
+        the same as in the Object Entry.</t>
 
-        <t>activity:object SHOULD contain an atom:title element, which MAY be
-        used by feed processors to identify the Object to the user, for
-        example as the text of a link to the HTML representation of the
-        object.</t>
+        <t>activity:object SHOULD contain exactly one atom:title element,
+        which MAY be used by feed processors to identify the Object to the
+        user -- for example as the text of a link to the HTML representation
+        of the object.</t>
 
-        <t>activity:object SHOULD also contain an atom:link element with a
-        link relationship of "alternate" and the type "text/html", with the
-        href attribute containing the URL of the HTML representation of the
-        Object if available.</t>
+        <t>activity:object SHOULD also contain exactly one atom:link element
+        with a link relationship of "alternate" and the type "text/html", with
+        the href attribute containing the URL of the HTML representation of
+        the Object if available.</t>
 
         <t>activity:object MAY also contain an atom:source element, as
         described by the Atom specification, describing the Object feed where
@@ -520,15 +536,16 @@
         specification, most such feeds serve to describe the activity of
         posting an item such as a weblog entry or a photo.</t>
 
-        <t>It is acknowledged, however, that there do exist feeds that have
+        <t>It is acknowledged, however, that there exist feeds that have
         other meanings, such as a list of a particular user's "favorite"
         objects. When applying the advice for processing feeds without
-        activity extensions to such feeds, a processor will of course
-        mis-interpret the nature of the activity. However, in practice it
+        activity extensions to such feeds, a processor will likely
+        misinterpret the nature of the activity. In practice, however, it
         seems that most feeds of this kind include something in the title
-        indicating their nature, so rendering such a mis-interpreted activity
-        to a sentence will lead to something such as <spanx>Joe posted "Funny Cats" in "Joe's Favorite Videos"</spanx>,
-        which is while not ideal an acceptable result in situations where
+        indicating their nature, so rendering such a misinterpreted activity
+        to a sentence will lead to something such as
+        <spanx>Joe posted "Funny Cats" in "Joe's Favorite Videos"</spanx>,
+        which, while not ideal, is an acceptable result in situations where
         activities are primarily for human consumption.</t>
       </section>
     </section>
@@ -538,8 +555,8 @@
       Identifier IRI <spanx style="verb">http://activitystrea.ms/schema/1.0/post/</spanx>.</t>
 
       <t>This Verb describes the act of posting or publishing an Object on the
-      web. The implication is that before this Activity occured the Object was
-      not posted, and after the Activity has occured it <spanx>is</spanx>
+      web. The implication is that before this Activity occurred the Object was
+      not posted, and after the Activity has occurred it <spanx>is</spanx>
       posted or published.</t>
 
       <t>This Verb is used when creating the Implied post Activity for a
