@@ -52,9 +52,8 @@
       <t>In this document, this namespace is referred to as "the AtomActivity
       namespace", and the namespace prefix "activity:" is used for the above
       Namespace URI. The namespace prefix "atom:" is used for the namespace
-      URI <spanx style="verb">http://www.w3.org/2005/Atom</spanx>. Note that
-      the choices of namespace prefix are arbitrary and not semantically
-      significant.</t>
+      URI <spanx style="verb">http://www.w3.org/2005/Atom</spanx>. The choices
+ 			of namespace prefix are arbitrary and not semantically significant.</t>
 
       <t>This specification uses a shorthand form of terms from the XML
       Infoset [W3C.REC-xml-infoset-20040204]. The phrase "Information Item" is
@@ -226,7 +225,7 @@
         process them as Activities, or at least act as if they have done
         so.</t>
 
-        <t>Note that due to the way it is constructed, there is no way to
+        <t>Due to the way it is constructed, there is no way to
         represent additional properties for the Verb(s) of an Implied
         Activity. If a particular Verb requires additional properties then it
         MUST NOT be used in an Implied Activity.</t>
@@ -407,7 +406,7 @@
         atom:published element within each Activity Entry. An Activity Entry
         MUST have exactly one atom:published element.</t>
 
-        <t>Note that the time stored herein is the time that the Activity
+        <t>The time stored herein is the time that the Activity
         occured, <spanx>not</spanx> the time that the associated Activity
         Object was published. Feed processors MAY use this element to sort a
         list of Activity Entries into chronological order.</t>
