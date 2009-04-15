@@ -53,7 +53,7 @@
       namespace", and the namespace prefix "activity:" is used for the above
       Namespace URI. The namespace prefix "atom:" is used for the namespace
       URI <spanx style="verb">http://www.w3.org/2005/Atom</spanx>. The choices
- 			of namespace prefix are arbitrary and not semantically significant.</t>
+      of namespace prefix are arbitrary and not semantically significant.</t>
 
       <t>This specification uses a shorthand form of terms from the XML
       Infoset [W3C.REC-xml-infoset-20040204]. The phrase "Information Item" is
@@ -74,8 +74,8 @@
       specification uses the atomCommonAttributes, atomMediaType, and atomURI
       patterns, defined in [RFC4287].</t>
 
-      <t>The text of this specification provides the sole definition
-      of conformance.</t>
+      <t>The text of this specification provides the sole definition of
+      conformance.</t>
 
       <t>This specification uses "the Atom specification" to refer to <xref
       target="RFC4287"></xref>.</t>
@@ -93,8 +93,8 @@
 
       <t>It is expected that in many cases consumers of Activity Feeds will
       use them to turn machine readable descriptions of Activities into
-      human-readable sentences such as "Joanne posted a Photo: 'My Cat'".
-      The process for forming such sentences is not defined by this
+      human-readable sentences such as "Joanne posted a Photo: 'My Cat'". The
+      process for forming such sentences is not defined by this
       specification.</t>
     </section>
 
@@ -112,10 +112,8 @@
 
       <t>The properties of an Object Type are properties shared by all Objects
       of that Type. For example, a photo Object might have a property
-      containing the URL of a thumbnail of the photo.
-
-      TODO: the previous sentence may indicate that all properties are
-      required; reword?</t>
+      containing the URL of a thumbnail of the photo. TODO: the previous
+      sentence may indicate that all properties are required; reword?</t>
 
       <t>The properties of a Verb are modifiers to that Verb, such as the
       Indirect Object of the Activity.</t>
@@ -139,20 +137,20 @@
                title="The activity:object-type Extension Element">
         <t>TODO: this should appear after the description of the Object
         element (<xref target="activityobjectelement"></xref>).</t>
-								
+
         <t>The content of the activity:object-type element MUST be an Object
         Identifier (an IRI as defined by <xref target="RFC3987"></xref>). The
-        definition of IRI excludes relative references. Though the
-        IRI MAY use a dereferenceable scheme, processors MUST not assume that
-        it can be dereferenced.</t>
+        definition of IRI excludes relative references. Though the IRI MAY use
+        a dereferenceable scheme, processors MUST not assume that it can be
+        dereferenced.</t>
 
         <t>The Object Identifier within this element defines the type of the
         Object described by this Object Entry. A given Object Entry MAY have
         more than one activity:object-type element, which indicates that this
         object has several types. Where multiple types are used, all types
-        MUST be generalizations or specializations of one another. For example,
-        the general type "web page" might be specialized by a type "weblog
-        entry".</t>
+        MUST be generalizations or specializations of one another. For
+        example, the general type "web page" might be specialized by a type
+        "weblog entry".</t>
 
         <t>An Object Entry SHOULD have at least one activity:object-type
         element.</t>
@@ -172,9 +170,9 @@
       </section>
 
       <section title="The activity:verb Extension Element">
-				<t>TODO: this should appear after the description of the Verb
-				element (<xref target="activityverbelement"></xref>).</t>
-				
+        <t>TODO: this should appear after the description of the Verb element
+        (<xref target="activityverbelement"></xref>).</t>
+
         <t>When appearing as a child of an Object Entry (that is, an entry
         that does not also have an activity:object child element), the content
         of the activity:verb element MUST be the Verb Type of the implied
@@ -235,10 +233,10 @@
         process them as Activities, or at least act as if they have done
         so.</t>
 
-        <t>Due to the way it is constructed, there is no way to
-        represent additional properties for the Verb(s) of an Implied
-        Activity. If a particular Verb requires additional properties then it
-        MUST NOT be used in an Implied Activity.</t>
+        <t>Due to the way it is constructed, there is no way to represent
+        additional properties for the Verb(s) of an Implied Activity. If a
+        particular Verb requires additional properties then it MUST NOT be
+        used in an Implied Activity.</t>
       </section>
 
       <section anchor="rss" title="Object Entries in RSS">
@@ -392,10 +390,9 @@
       would be expected in an object entry. The Activity Entry structure
       allows non-activity feed processors to consume an entry that describes
       the activity while making the underlying activity and object metadata
-      also available for activity-aware feed processors.
-
-      TODO: the preceding sentence is very convoluted. Can it be simplified?
-      What is it trying to say?  Would an example be better?</t>
+      also available for activity-aware feed processors. TODO: the preceding
+      sentence is very convoluted. Can it be simplified? What is it trying to
+      say? Would an example be better?</t>
 
       <section anchor="titlesummarydetail"
                title="Activity Title, Summary and Detail">
@@ -422,10 +419,10 @@
         atom:published element within each Activity Entry. An Activity Entry
         MUST have exactly one atom:published element.</t>
 
-        <t>The time stored herein is the time that the Activity
-        occurred, <spanx>not</spanx> the time that the associated Activity
-        Object was published. Feed processors MAY use this element to sort a
-        list of Activity Entries into chronological order.</t>
+        <t>The time stored herein is the time that the Activity occurred,
+        <spanx>not</spanx> the time that the associated Activity Object was
+        published. Feed processors MAY use this element to sort a list of
+        Activity Entries into chronological order.</t>
       </section>
 
       <section title="Activity Link">
@@ -504,14 +501,61 @@
         <t>An activity entry with more than one activity:object element is
         considered, for the purposes of activity processing, to be equivalent
         in meaning to a sequence of activity entries each with a single
-        activity:object and the same verb. Activity processors SHOULD handle
-        multi-object activities as distinct activities, though they MAY
-        perform any coalescing of activities they deem appropriate when
-        displaying activity data to users. Feed producers MUST NOT create
-        coalesced activity entries except where the rules in this paragraph
-        hold. Coalesced activity entries hold no special meaning to activity
-        processors and are supported only for the benefit of non-activity feed
-        consumers which are not capable of doing any automatic coalescing.</t>
+        activity:object and the same verb, actor and target. Activity
+        processors SHOULD handle multi-object activities as distinct
+        activities, though they MAY perform any coalescing of activities they
+        deem appropriate when displaying activity data to users. Feed
+        producers MUST NOT create coalesced activity entries except where the
+        rules in this paragraph hold. Coalesced activity entries hold no
+        special meaning to activity processors and are supported only for the
+        benefit of non-activity feed consumers which are not capable of doing
+        any automatic coalescing.</t>
+
+        <section title="Collection Objects">
+          <t>Some objects types are conceptually containers for other kinds of
+          objects. TODO: Write some more about this, including how their
+          members may be represented via a feed, etc.</t>
+        </section>
+      </section>
+
+      <section title="The activity:target Extension Element">
+        <t>The activity:target element contains information about the target
+        of the activity, for verbs that support a target. The target is the
+        object that the action was done to. The content model of <spanx
+        style="verb">activity:target</spanx> and the meaning of its child
+        elements are identical to that of <spanx style="verb">activity:object</spanx>.
+        The precise meaning of the target as relates to the activity depends
+        on the verb in use, but its meaning is somewhat similar to the English
+        preposition "to". The activity:target extension element MUST NOT be
+        used for indirect objects that are not targets.</t>
+
+        <t>TODO: Write some more here. This is very vaugue.</t>
+      </section>
+
+      <section title="The activity:actor Extension Element">
+        <t>The activity:actor element MAY be used to describe the object that
+        performed the activity. This element, if present, MUST describe the
+        same object as is described by the atom:author element. The content
+        model and the meaning of its child elements are identical to that of
+        <spanx style="verb">activity:object</spanx>. If the actor is not a
+        person, the <spanx style="verb">activity:actor</spanx> element SHOULD
+        be used to describe the actor.</t>
+
+        <t>FIXME: Also describe the activity:subject element at the feed level
+        which gives the id of the actor that is considered to "own" a
+        particular feed.</t>
+      </section>
+
+      <section title="Contextual Information about an Activity">
+        <t>Some publishers include contextual information about an activity,
+        such as what tool was used to perform the activity, or the location of
+        the user at the time the activity occured. Such contextual information
+        SHOULD be provided via extension elements in the activity entry. This
+        specification defines no specific context extensions, but
+        specifications defining such extensions SHOULD ensure that contextual
+        information about the activity in the activity entry itself is not
+        confused with properties of the object, which will appear as extension
+        elements of the object rather than of the activity.</t>
       </section>
     </section>
 
@@ -536,15 +580,14 @@
         specification, most such feeds serve to describe the activity of
         posting an item such as a weblog entry or a photo.</t>
 
-        <t>It is acknowledged, however, that there exist feeds that have
-        other meanings, such as a list of a particular user's "favorite"
-        objects. When applying the advice for processing feeds without
-        activity extensions to such feeds, a processor will likely
-        misinterpret the nature of the activity. In practice, however, it
-        seems that most feeds of this kind include something in the title
-        indicating their nature, so rendering such a misinterpreted activity
-        to a sentence will lead to something such as
-        <spanx>Joe posted "Funny Cats" in "Joe's Favorite Videos"</spanx>,
+        <t>It is acknowledged, however, that there exist feeds that have other
+        meanings, such as a list of a particular user's "favorite" objects.
+        When applying the advice for processing feeds without activity
+        extensions to such feeds, a processor will likely misinterpret the
+        nature of the activity. In practice, however, it seems that most feeds
+        of this kind include something in the title indicating their nature,
+        so rendering such a misinterpreted activity to a sentence will lead to
+        something such as <spanx>Joe posted "Funny Cats" in "Joe's Favorite Videos"</spanx>,
         which, while not ideal, is an acceptable result in situations where
         activities are primarily for human consumption.</t>
       </section>
@@ -555,8 +598,8 @@
       Identifier IRI <spanx style="verb">http://activitystrea.ms/schema/1.0/post/</spanx>.</t>
 
       <t>This Verb describes the act of posting or publishing an Object on the
-      web. The implication is that before this Activity occurred the Object was
-      not posted, and after the Activity has occurred it <spanx>is</spanx>
+      web. The implication is that before this Activity occurred the Object
+      was not posted, and after the Activity has occurred it <spanx>is</spanx>
       posted or published.</t>
 
       <t>This Verb is used when creating the Implied post Activity for a
@@ -566,6 +609,10 @@
       <t>In an Activity Entry which has the 'post' verb, the value of the
       atom:published element SHOULD be the same as the atom:published element
       in the associated Object Entry.</t>
+
+      <t>If an activity using this verb has an <spanx style="verb">activity:target</spanx>
+      element, the target object is the collection in which the item was
+      posted.</t>
 
       <t>The 'post' verb has no additional properties or modifiers.</t>
     </section>
