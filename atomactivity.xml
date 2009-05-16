@@ -15,11 +15,23 @@
     <title abbrev="AtomActivity">Atom Activity Extensions (Draft)</title>
 
     <author fullname="Martin Atkins" initials="M." surname="Atkins">
-      <organization>Six Apart Ltd</organization>
+      <organization>Six Apart</organization>
     </author>
 
     <author fullname="David Recordon" initials="D." surname="Recordon">
-      <organization>Six Apart Ltd</organization>
+      <organization>Six Apart</organization>
+    </author>
+
+    <author fullname="Chris Messina" initials="C." surname="Messina">
+      <organization>DiSo Project</organization>
+    </author>
+
+    <author fullname="Monica Keller" initials="M." surname="Keller">
+      <organization>MySpace</organization>
+    </author>
+
+    <author fullname="Ari Steinberg" initials="A." surname="Steinberg">
+      <organization>Facebook</organization>
     </author>
 
     <date />
@@ -627,7 +639,7 @@
 
     <section anchor="postverb" title="The 'post' Verb">
       <t>This specification defines a single Verb, which has the Verb
-      Identifier IRI <spanx style="verb">http://activitystrea.ms/schema/1.0/post/</spanx>.</t>
+      Identifier IRI <spanx style="verb">http://activitystrea.ms/schema/1.0/post</spanx>.</t>
 
       <t>This Verb describes the act of posting or publishing an Object on the
       web. The implication is that before this Activity occurred the Object
