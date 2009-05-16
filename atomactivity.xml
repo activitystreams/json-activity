@@ -560,14 +560,46 @@
     </section>
 
     <section title="Activity Feeds">
-      <t>This specification defines no extensions to the atom:feed element as
-      defined by the Atom specification. Therefore an Activity Feed is simply
-      a standard Atom feed which contains only Activity Entries. Processors
-      MAY create an Activity Entry representing the implied post Verb of an
-      Object Entry (see <xref target="impliedpost"></xref>) in order to
-      synthesize an Activity Feed from a traditional Atom feed.</t>
+      <t>This specification defines no required extensions to the atom:feed
+      element as defined by the Atom specification. Therefore a standard Atom
+      feed that contains only activity entries as defined above can be
+      considered to be an activity feed. Processors MAY create an Activity
+      Entry representing the implied post Verb of an Object Entry (see <xref
+      target="impliedpost"></xref>) in order to synthesize an Activity Feed
+      from a traditional Atom feed.</t>
 
       <t>A feed MAY contain both Activity and Object entries.</t>
+
+      <section title="The activity:subject Extension Element">
+        <t>The activity:subject extension element, when used as a child of an
+        atom:feed element, gives information about the object that the feed is
+        describing. An atom:feed element MUST have zero or one
+        activity:subject elements.</t>
+
+        <t>The content model of the activity:subject element is the same as
+        that of the activity:object element as described in <xref
+        target="activityobjectelement"></xref>.</t>
+
+        <t>When the activity:subject extension element is used, the value of
+        its atom:id element can be compared with the corresponding atom:id
+        elements in activity:object, activity:actor and activity:target
+        entry-level elements to determine which role the feed's actor played
+        in an activity. Publishers MAY, when using activity:subject, publish
+        activities in which the feed subject is the object or target rather
+        than the actor; consumers MUST NOT assume that the subject of an
+        activity feed is the actor in all of its constituent activities.</t>
+
+        <t>If no activity:subject element is provided then the feed has no
+        subject. Consumers MAY make use of information obtained from another
+        source to determine the subject.</t>
+
+        <t>activity:object, activity:target and activity:actor elements which
+        share the same id as the feed's activity:subject SHOULD include only
+        the atom:id element; consumers MUST use the elements of the
+        activity:subject element in place of the elements of the referring
+        element. This minimizes duplication of information in a feed that is
+        about a single subject.</t>
+      </section>
 
       <section title="A Note about Legacy Feeds">
         <t>This section is non-normative.</t>
@@ -659,6 +691,15 @@
       source entry, paying special attention to data that is of significance
       to the object type(s) and/or verb(s) used on the entry where these are
       known to the re-publisher.</t>
+
+      <t>When a Re-Publisher produces a feed of activities aggregated from
+      multiple sources but known via some externally-obtained information to
+      be by the same actor, even if that actor is represented by a different
+      object in different source feeds, the Re-Publisher SHOULD create a
+      feed-level activity:subject element that describes the Re-Publisher's
+      representation of the actor and then substitute this representation in
+      any activity:actor, activity:object or activity:target element known to
+      represent the same actor.</t>
     </section>
 
     <section title="Security Considerations">
