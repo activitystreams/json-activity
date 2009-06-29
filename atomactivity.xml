@@ -96,8 +96,9 @@
     <section title="Activity Concepts">
       <t>For the purpose of this specification, an Activity is a description
       of an action that was performed (the Verb) at some instant in time by
-      some actor (the Subject), usually on some social object (the Object). An
-      Activity Feed is a feed of such Activities.</t>
+      some actor (the Subject see <xref target="activitysubject"></xref> ),
+      usually on some social object (the Object). An Activity Feed is a feed
+      of such Activities.</t>
 
       <t>An Activity may also have an Indirect Object. The Indirect Object is
       considered for the purposes of this specification to be a modifier of
@@ -108,48 +109,106 @@
       human-readable sentences such as "Joanne posted a Photo: 'My Cat'". The
       process for forming such sentences is not defined by this
       specification.</t>
-    </section>
 
-    <section title="Verbs and Object Types">
-      <t>Verbs and Object Types are identified by IRIs (Verb and Object
-      Identifiers) as defined by <xref target="RFC3987"></xref> though these
-      IRIs MAY not resolve to any useful resource. One Verb is defined by this
-      specification in <xref target="postverb"></xref>.</t>
+      <section anchor="activitysubject" title="Activity Subject">
+        <t>The activity:subject extension element, when used as a child of an
+        atom:feed element, gives information about the object that the feed is
+        describing. An atom:feed element MUST have zero or one
+        activity:subject elements.</t>
 
-      <t>Other specifications MAY define further Verb and Object types with
-      corresponding IRIs. Such specifications MUST define the meaning of these
-      Verb and Object Identifiers, and SHOULD also describe how any additional
-      properties of the Verb or Object type are to be encoded in an Atom
-      entry.</t>
+        <t>The content model of the activity:subject element is the same as
+        that of the activity:object element as described in <xref
+        target="activityobjectelement"></xref>.</t>
 
-      <t>The properties of an Object Type are properties shared by all Objects
-      of that Type. For example, a photo Object might have a property
-      containing the URL of a thumbnail of the photo. TODO: the previous
-      sentence may indicate that all properties are required; reword?</t>
+        <t>When the activity:subject extension element is used, the value of
+        its atom:id element can be compared with the corresponding atom:id
+        elements in activity:object, activity:actor and activity:target
+        entry-level elements to determine which role the feed's actor played
+        in an activity. Publishers MAY, when using activity:subject, publish
+        activities in which the feed subject is the object or target rather
+        than the actor; consumers MUST NOT assume that the subject of an
+        activity feed is the actor in all of its constituent activities.</t>
 
-      <t>The properties of a Verb are modifiers to that Verb, such as the
-      Indirect Object of the Activity.</t>
+        <t>If no activity:subject element is provided then the feed has no
+        subject. Consumers MAY make use of information obtained from another
+        source to determine the subject.</t>
+
+        <t>activity:object, activity:target and activity:actor elements which
+        share the same id as the feed's activity:subject SHOULD include only
+        the atom:id element; consumers MUST use the elements of the
+        activity:subject element in place of the elements of the referring
+        element. This minimizes duplication of information in a feed that is
+        about a single subject.</t>
+
+        <section title="Example">
+          <t>For example, if we present an atom activity feed which contain
+          all of the photos Chris Messina has uploaded to Flickr then we would
+          expect the feed to contain ths subject as seen in this example:</t>
+
+          <figure>
+            <artwork><![CDATA[<feed xml:lang="en-US" xml:base="http://api.flickr.com/v1/users/4859568/activities.atom" xmlns:activity="http://activitystrea.ms/schema/1.0/" xmlns="http://www.w3.org/2005/Atom">
+  <title type="text">Recent activities from Chris Messina at Flickr</title>
+  <subtitle type="text">This feed contains all of the activities for a single Flickr user</subtitle>
+  <id>tag:flickr.com,2009:user/4859568/activities</id>
+  <rights type="text">Copyright (c) 2003-2009, flickr.com</rights>
+  <updated>2009-06-24T03:46:14Z</updated>
+  <author>
+    <name>Chris Messina</name>
+    <uri>http://www.factoryjoe.com</uri>
+  </author>
+  <generator>PersonalActivitiesSyndicationFeedApi.1.1</generator>
+  <link rel="self" href="http://api.flickr.com/v1/users/4859568/activities.atom" />
+  <activity:subject>
+    <activity:object-type>http://activitystrea.ms/schema/1.0/person</activity:object-type>
+    <id>tag:flickr.com,2009:/Person/4859568</id>
+    <title>Chris Messina</title>
+    <link rel="alternate" type="text/html" href="http://www.factoryjoe.com" />
+    <link rel="preview" type="image/jpeg" href="http://c3.ac-images.flickr.com/images02/100/s_454bd37fd5bd4787bd03ea11dcec4cbe.jpg" />
+  </activity:subject>
+.
+.
+.
+</feed>
+]]></artwork>
+          </figure>
+
+          <t></t>
+        </section>
+      </section>
+
+      <section title="Verbs and Object Types">
+        <t>Verbs and Object Types are identified by IRIs (Verb and Object
+        Identifiers) as defined by <xref target="RFC3987"></xref> though these
+        IRIs MAY not resolve to any useful resource. One Verb is defined by
+        this specification in <xref target="postverb"></xref>.</t>
+
+        <t>Other specifications MAY define further Verb and Object types with
+        corresponding IRIs. Such specifications MUST define the meaning of
+        these Verb and Object Identifiers, and SHOULD also describe how any
+        additional properties of the Verb or Object type are to be encoded in
+        an Atom entry.</t>
+
+        <t>Verbs and Object Types MAY derive from other Verbs and Object
+        Types. In this case the atom:entry should list of all the parent Verbs
+        and the activity:object will should list of all the parent Object
+        Types. The properties required by the parents will also be required by
+        the derived types. For example: If we have an Object Type Photo which
+        derives from Object Type Image and Image has a required property the
+        Thumbnail then this is also a required property for Photo. This will
+        allow consumers of the activity stream feeds to have a fallback
+        behavior when new ObjectTypes or Verbs are introduced.</t>
+      </section>
     </section>
 
     <section anchor="activityentries" title="Activity Entries">
       <t>An Activity Entry is an entry element as described by the Atom
-      specification that represents an Activity. The Subject of the Activity
+      specification that represents an Activity. The Actor of the Activity
       Entry is the author of the entry. The Verb and Object of the Activity
       are identified explicitly in the Activity entry as described in the
       following sections. An Atom entry is considered to be an Activity entry
       if and only if it has at least one <spanx style="verb">activity:verb</spanx>
       child element and one or more <spanx style="verb">activity:object</spanx>
       child elements as described in the following sections.</t>
-
-      <t>Activity Entries are intended to be published by activity
-      aggregators, because such aggregators often wish to include a sentence
-      describing the activity in the entry title rather than just the title as
-      would be expected in an object entry. The Activity Entry structure
-      allows non-activity feed processors to consume an entry that describes
-      the activity while making the underlying activity and object metadata
-      also available for activity-aware feed processors. TODO: the preceding
-      sentence is very convoluted. Can it be simplified? What is it trying to
-      say? Would an example be better?</t>
 
       <section anchor="titlesummarydetail"
                title="Activity Title, Summary and Detail">
@@ -192,10 +251,9 @@
         link to the user.</t>
       </section>
 
-      <section anchor="activityverbelement"
-               title="The activity:verb Extension Element">
-        <t>All activity entries MUST have at least one activity:verb
-        element.</t>
+      <section anchor="activityverbelement" title="Activity Verb">
+        <t>The verb is represented using the activity:verb Extension Element.
+        All activity entries MUST have at least one activity:verb element.</t>
 
         <t>The content of the activity:verb element MUST be an Object
         Identifier (an IRI as defined by <xref target="RFC3987"></xref>). Note
@@ -204,12 +262,12 @@
         it can be dereferenced.</t>
 
         <t>The Verb Identifier within this element defines the Verb for this
-        Activity. A given Activity Entry MAY have more than one activity:verb
-        element, which indicates that there are several verbs describing this
-        activity. Where multiple verbs are used, all verbs MUST be
-        generalizations or specializations of one another. For example, the
-        general verb "to experience" might be specialized by a verb "to listen
-        to".</t>
+        Activity. As described in section 5, a given Activity Entry MAY have
+        more than one activity:verb element, which indicates that there are
+        several verbs describing this activity. Where multiple verbs are used,
+        all verbs MUST be generalizations or specializations of one another.
+        For example, the general verb "to experience" might be specialized by
+        a verb "to listen to".</t>
 
         <t>Activity feed processors SHOULD use the most specific Verb that
         they understand within each entry. If none of the Activity's Verbs are
@@ -217,13 +275,43 @@
         to infer the Verb, or the processor MAY use the content of the
         atom:title, atom:summary and/or atom:content to obtain a sentence
         describing the Activity.</t>
+
+        <t>Example: To syndicate changes made to a source code repository we
+        need a way of conveying the creation of a change. This can be
+        considered a specialization of the Post verb. Since Commit is not an
+        approved list of verbs, publishers syndicating commit activities
+        should include the generalized case.</t>
+
+        <figure>
+          <artwork><![CDATA[<entry>
+<id>tag:github.org,2009:/commit/fae50d1ddec31148e37d6f5fec0240f2219317a1</id>
+<published>2009-06-01T12:54:00Z</published> 
+<title>Monica Keller committed a change to activity-streams-specs</title>
+<content type="xhtml">Monica Keller just committed a change to activity-streams-specs on GitHub - 
+<a href="http://github.com/apparentlymart/activity-streams-specs/commit/fae50d1ddec31148e37d6f5fec0240f2219317a1" 
+rel=nofollow>Punctuation Changeset</a>
+</content>
+<link rel="alternate" type="text/html" href="http://github.com/apparentlymart/activity-streams-specs/commit/fae50d1ddec31148e37d6f5fec0240f2219317a1" /> 
+<activity:verb>http://activitystrea.ms/schema/1.0/post</activity:verb>
+<activity:verb>http://www.github.org/schema/1.0/commit</activity:verb>
+<activity:object>
+  <activity:object-type>http://activitystrea.ms/schema/1.0/changeset</activity:object-type> 
+  <id>tag:github.org,2009:/change/fae50d1ddec31148e37d6f5fec0240f2219317a1</id> 
+  <title>Punctuation Changeset</title>
+  <summary>Fixing punctuation because it makes it more readable.</summary> 
+  <link rel="alternate" type="text/html" href="...." /> 
+</activity:object>
+</entry>]]></artwork>
+        </figure>
+
+        <t></t>
       </section>
 
-      <section anchor="activityobjectelement"
-               title="The activity:object Extension Element">
-        <t>The activity:object element contains information about the Object
-        of the Activity. All Activity Entries MUST have one or more
-        activity:object elements. The content model of activity:object is
+      <section anchor="activityobjectelement" title="Activity Object">
+        <t>The object is represented using the activity:object Extension
+        Element. The activity:object element contains information about the
+        main object of the Activity. All Activity Entries MUST have one or
+        more activity:object elements. The content model of activity:object is
         identical to that of atom:entry when used in an object entry as
         described in <xref target="objectentries"></xref>.</t>
 
@@ -268,14 +356,51 @@
         benefit of non-activity feed consumers which are not capable of doing
         any automatic coalescing.</t>
 
-        <section title="Collection Objects">
-          <t>Some objects types are conceptually containers for other kinds of
-          objects. TODO: Write some more about this, including how their
-          members may be represented via a feed, etc.</t>
-        </section>
+        <figure>
+          <artwork><![CDATA[<entry>
+    <id>tag:myspace.com,2009:/activity/4859568/PhotoAdd/2519358/2009171</id>
+    <title type="text">Tennis Player added 2 new photos to the Smokin Aces album.</title>
+    <published>2009-06-21T00:28:35Z</published>
+    <author>
+      <name>Tennis Player</name>
+      <uri>http://profile.myspace.com/index.cfm?fuseaction=user.viewprofile&amp;friendid=4859568</uri>
+    </author>
+    <link rel="alternate" type="text/html" href="http://viewmorepics.myspace.com/index.cfm?fuseaction=viewImage&amp;friendID=4859568&amp;albumID=2519358&amp;imageID=60764840" />
+    <content type="xhtml">...</content>
+    <activity:actor>
+      <activity:object-type>http://activitystrea.ms/schema/1.0/person</activity:object-type>
+      <id>tag:myspace.com,2009:/Person/4859568</id>
+      <title>Tennis Player</title>
+      <link rel="alternate" type="text/html" href="http://profile.myspace.com/index.cfm?fuseaction=user.viewprofile&amp;friendid=4859568" />
+    </activity:actor>
+    <activity:target>
+      <activity:object-type>http://activitystrea.ms/schema/1.0/photo-album</activity:object-type>
+      <id>tag:myspace.com,2009:/Photo_Album/2519358</id>
+      <title>Smokin Aces</title>
+      <link rel="alternate" type="text/html" href="http://viewmorepics.myspace.com/index.cfm?fuseaction=user.viewPicture&amp;friendID=4859568&amp;albumId=2519358" />
+    </activity:target>
+    <activity:object>
+      <activity:object-type>http://activitystrea.ms/schema/1.0/photo</activity:object-type>
+      <activity:object-type>http://activitystrea.ms/schema/1.0/image</activity:object-type>
+      <id>tag:myspace.com,2009:/Photo/2519358/60764840</id>
+      <title></title>
+      <link rel="alternate" type="text/html" href="http://viewmorepics.myspace.com/index.cfm?fuseaction=viewImage&amp;friendID=4859568&amp;albumID=2519358&amp;imageID=60764840" />
+      <link rel="preview" type="image/jpeg" href="http://c4.ac-images.myspacecdn.com/images02/77/s_6772160ada0d4575b688d77f8017bf4b.jpg" />
+    </activity:object>
+    <activity:object>
+      <activity:object-type>http://activitystrea.ms/schema/1.0/photo</activity:object-type>
+      <activity:object-type>http://activitystrea.ms/schema/1.0/image</activity:object-type>
+      <id>tag:myspace.com,2009:/Photo/2519358/60764844</id>
+      <title></title>
+      <link rel="alternate" type="text/html" href="http://viewmorepics.myspace.com/index.cfm?fuseaction=viewImage&amp;friendID=4859568&amp;albumID=2519358&amp;imageID=60764844" />
+      <link rel="preview" type="image/jpeg" href="http://c3.ac-images.myspacecdn.com/images02/80/s_6c4b1de2da6a4f24a533bf4446623f12.jpg" />
+    </activity:object>
+</entry>
+]]></artwork>
+        </figure>
       </section>
 
-      <section title="The activity:target Extension Element">
+      <section title="Activity Target">
         <t>The activity:target element contains information about the target
         of the activity, for verbs that support a target. The target is the
         object that the action was done to. The content model of <spanx
@@ -286,10 +411,11 @@
         preposition "to". The activity:target extension element MUST NOT be
         used for indirect objects that are not targets.</t>
 
-        <t>TODO: Write some more here. This is very vaugue.</t>
+        <t>In the example above the target is a photo album to which photos
+        were added.</t>
       </section>
 
-      <section title="The activity:actor Extension Element">
+      <section title="Activity Actor">
         <t>The activity:actor element MAY be used to describe the object that
         performed the activity. This element, if present, MUST describe the
         same object as is described by the atom:author element. The content
@@ -297,22 +423,6 @@
         <spanx style="verb">activity:object</spanx>. If the actor is not a
         person, the <spanx style="verb">activity:actor</spanx> element SHOULD
         be used to describe the actor.</t>
-
-        <t>FIXME: Also describe the activity:subject element at the feed level
-        which gives the id of the actor that is considered to "own" a
-        particular feed.</t>
-      </section>
-
-      <section title="Contextual Information about an Activity">
-        <t>Some publishers include contextual information about an activity,
-        such as what tool was used to perform the activity, or the location of
-        the user at the time the activity occured. Such contextual information
-        SHOULD be provided via extension elements in the activity entry. This
-        specification defines no specific context extensions, but
-        specifications defining such extensions SHOULD ensure that contextual
-        information about the activity in the activity entry itself is not
-        confused with properties of the object, which will appear as extension
-        elements of the object rather than of the activity.</t>
       </section>
     </section>
 
@@ -581,37 +691,6 @@
       from a traditional Atom feed.</t>
 
       <t>A feed MAY contain both Activity and Object entries.</t>
-
-      <section title="The activity:subject Extension Element">
-        <t>The activity:subject extension element, when used as a child of an
-        atom:feed element, gives information about the object that the feed is
-        describing. An atom:feed element MUST have zero or one
-        activity:subject elements.</t>
-
-        <t>The content model of the activity:subject element is the same as
-        that of the activity:object element as described in <xref
-        target="activityobjectelement"></xref>.</t>
-
-        <t>When the activity:subject extension element is used, the value of
-        its atom:id element can be compared with the corresponding atom:id
-        elements in activity:object, activity:actor and activity:target
-        entry-level elements to determine which role the feed's actor played
-        in an activity. Publishers MAY, when using activity:subject, publish
-        activities in which the feed subject is the object or target rather
-        than the actor; consumers MUST NOT assume that the subject of an
-        activity feed is the actor in all of its constituent activities.</t>
-
-        <t>If no activity:subject element is provided then the feed has no
-        subject. Consumers MAY make use of information obtained from another
-        source to determine the subject.</t>
-
-        <t>activity:object, activity:target and activity:actor elements which
-        share the same id as the feed's activity:subject SHOULD include only
-        the atom:id element; consumers MUST use the elements of the
-        activity:subject element in place of the elements of the referring
-        element. This minimizes duplication of information in a feed that is
-        about a single subject.</t>
-      </section>
 
       <section title="A Note about Legacy Feeds">
         <t>This section is non-normative.</t>
