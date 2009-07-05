@@ -110,7 +110,7 @@
       process for forming such sentences is not defined by this
       specification.</t>
 
-      <section anchor="activitysubject" title="Activity Subject">
+      <section anchor="activitysubject" title="Feed Subject">
         <t>The activity:subject extension element, when used as a child of an
         atom:feed element, gives information about the object that the feed is
         describing. An atom:feed element MUST have zero or one
@@ -141,12 +141,10 @@
         about a single subject.</t>
 
         <section title="Example">
-          <t>For example, if we present an atom activity feed which contain
-          all of the photos Chris Messina has uploaded to Flickr then we would
-          expect the feed to contain ths subject as seen in this example:</t>
-
           <figure>
-            <artwork><![CDATA[<feed xml:lang="en-US" xml:base="http://api.flickr.com/v1/users/4859568/activities.atom" xmlns:activity="http://activitystrea.ms/schema/1.0/" xmlns="http://www.w3.org/2005/Atom">
+            <artwork><![CDATA[<feed xml:lang="en-US"
+      xmlns:activity="http://activitystrea.ms/schema/1.0/"
+      xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Recent activities from Geraldine at PhotoPanic</title>
   <id>tag:photopanic.example.com,2009:user/4859568/activities</id>
   <updated>2009-06-24T03:46:14Z</updated>
@@ -162,8 +160,12 @@
 .
 .
 .
-</feed>
-]]></artwork>
+</feed>]]></artwork>
+
+            <postamble>Example: If we present an atom activity feed which
+            contain all of the photos that Geraldine has uploaded to
+            PhotoPanic then PhotoPanic may publish a feed that begins as
+            illustrated.</postamble>
           </figure>
         </section>
       </section>
@@ -268,12 +270,6 @@
         atom:title, atom:summary and/or atom:content to obtain a sentence
         describing the Activity.</t>
 
-        <t>Example: To syndicate changes made to a source code repository we
-        need a way of conveying the creation of a change. This can be
-        considered a specialization of the Post verb. Since Commit is not an
-        approved list of verbs, publishers syndicating commit activities
-        should include the generalized case.</t>
-
         <figure>
           <artwork><![CDATA[<entry>
 <id>tag:versioncentral.example.org,2009:/commit/1643245</id>
@@ -292,9 +288,14 @@
   <link rel="alternate" type="text/html" href="..." /> 
 </activity:object>
 </entry>]]></artwork>
-        </figure>
 
-        <t></t>
+          <postamble>Example: To syndicate changes made to a source code
+          repository we need a way of conveying the creation of a change. This
+          can be considered a specialization of the Post verb. Since, in this
+          examle, commit is not a verb found in the main schema specification,
+          activity entries carrying this verb should also include the general
+          post verb.</postamble>
+        </figure>
       </section>
 
       <section anchor="activityobjectelement" title="Activity Object">
@@ -345,59 +346,6 @@
         special meaning to activity processors and are supported only for the
         benefit of non-activity feed consumers which are not capable of doing
         any automatic coalescing.</t>
-
-        <figure>
-          <artwork><![CDATA[<entry>
-    <id>tag:photopanic.example.com,2009:/activity/4859568/PhotoAdd/2519358/2009171</id>
-    <title type="text">Geraldine added two new photos to the My Pets album.</title>
-    <published>2009-06-21T00:28:35Z</published>
-    <author>
-      <name>Geraldine</name>
-      <uri>http://photopanic.example.com/</uri>
-    </author>
-    <link rel="alternate" type="text/html"
-          href="/geraldine/activities/1234" />
-    <content type="xhtml">...</content>
-    <activity:actor>
-      <activity:object-type>http://activitystrea.ms/schema/1.0/person</activity:object-type>
-      <id>tag:photopanic.example.com,2009:/Person/4859568</id>
-      <title>Geraldine</title>
-      <link rel="alternate" type="text/html"
-            href="/geraldine" />
-    </activity:actor>
-    <activity:target>
-      <activity:object-type>http://activitystrea.ms/schema/1.0/photo-album</activity:object-type>
-      <id>tag:photopanic.example.com,2009:/Photo_Album/2519358</id>
-      <title>My Pets</title>
-      <link rel="alternate" type="text/html"
-            href="/geraldine/albums/pets" />
-    </activity:target>
-    <activity:object>
-      <activity:object-type>http://activitystrea.ms/schema/1.0/photo</activity:object-type>
-      <activity:object-type>http://activitystrea.ms/schema/1.0/image</activity:object-type>
-      <id>tag:photopanic.example.com,2009:/Photo/2519358/60764840</id>
-      <title>My Cat</title>
-      <link rel="alternate" type="text/html"
-            href="/geraldine/photos/1643" />
-      <link rel="preview" type="image/jpeg"
-            href="/geraldine/photos/1643/thumb.jpg" />
-      <link rel="enclosure" type="image/jpeg"
-            href="/geraldine/photos/1643/full.jpg" />
-    </activity:object>
-    <activity:object>
-      <activity:object-type>http://activitystrea.ms/schema/1.0/image</activity:object-type>
-      <activity:object-type>http://activitystrea.ms/schema/1.0/photo</activity:object-type>
-      <id>tag:photopanic.example.com,2009:/Photo/2519358/60764844</id>
-      <title></title>
-      <link rel="alternate" type="text/html"
-            href="/geraldine/photos/1634" />
-      <link rel="preview" type="image/jpeg"
-            href="/geraldine/photos/1634/thumb.jpg" />
-      <link rel="enclosure" type="image/jpeg"
-            href="/geraldine/photos/1634/full.jpg" />
-    </activity:object>
-</entry>]]></artwork>
-        </figure>
       </section>
 
       <section title="Activity Target">
@@ -411,8 +359,8 @@
         preposition "to". The activity:target extension element MUST NOT be
         used for indirect objects that are not targets.</t>
 
-        <t>In the example above the target is a photo album to which photos
-        were added.</t>
+        <t>In <xref target="activityentrycomplex"></xref> the target is a
+        photo album to which photos were added.</t>
       </section>
 
       <section title="Activity Actor">
@@ -880,8 +828,8 @@
       style="verb">xmlns="http://www.w3.org/2005/Atom" xmlns:activity="http://activitystrea.ms/spec/1.0"</spanx>
       are in scope.</t>
 
-      <section anchor="activityentryexample" title="Activity Entry Example">
-        <figure>
+      <section anchor="activityentryexample" title="Activity Entry Examples">
+        <figure anchor="activityentrysimple">
           <preamble>A typical activity entry</preamble>
 
           <artwork><![CDATA[<entry>
@@ -925,11 +873,70 @@
           titled 'My Cat' in Geraldine's Photos", with the photo title and the
           source feed title presented as links.</postamble>
         </figure>
+
+        <figure anchor="activityentrycomplex">
+          <artwork><![CDATA[<entry>
+    <id>tag:photopanic.example.com,2009:/activity/4859568/PhotoAdd/2519358/2009171</id>
+    <title type="text">Geraldine added two new photos to the My Pets album.</title>
+    <published>2009-06-21T00:28:35Z</published>
+    <author>
+      <name>Geraldine</name>
+      <uri>http://photopanic.example.com/</uri>
+    </author>
+    <link rel="alternate" type="text/html"
+          href="/geraldine/activities/1234" />
+    <content type="xhtml">...</content>
+    <activity:actor>
+      <activity:object-type>http://activitystrea.ms/schema/1.0/person</activity:object-type>
+      <id>tag:photopanic.example.com,2009:/Person/4859568</id>
+      <title>Geraldine</title>
+      <link rel="alternate" type="text/html"
+            href="/geraldine" />
+    </activity:actor>
+    <activity:target>
+      <activity:object-type>http://activitystrea.ms/schema/1.0/photo-album</activity:object-type>
+      <id>tag:photopanic.example.com,2009:/Photo_Album/2519358</id>
+      <title>My Pets</title>
+      <link rel="alternate" type="text/html"
+            href="/geraldine/albums/pets" />
+    </activity:target>
+    <activity:object>
+      <activity:object-type>http://activitystrea.ms/schema/1.0/photo</activity:object-type>
+      <activity:object-type>http://activitystrea.ms/schema/1.0/image</activity:object-type>
+      <id>tag:photopanic.example.com,2009:/Photo/2519358/60764840</id>
+      <title>My Cat</title>
+      <link rel="alternate" type="text/html"
+            href="/geraldine/photos/1643" />
+      <link rel="preview" type="image/jpeg"
+            href="/geraldine/photos/1643/thumb.jpg" />
+      <link rel="enclosure" type="image/jpeg"
+            href="/geraldine/photos/1643/full.jpg" />
+    </activity:object>
+    <activity:object>
+      <activity:object-type>http://activitystrea.ms/schema/1.0/image</activity:object-type>
+      <activity:object-type>http://activitystrea.ms/schema/1.0/photo</activity:object-type>
+      <id>tag:photopanic.example.com,2009:/Photo/2519358/60764844</id>
+      <title></title>
+      <link rel="alternate" type="text/html"
+            href="/geraldine/photos/1634" />
+      <link rel="preview" type="image/jpeg"
+            href="/geraldine/photos/1634/thumb.jpg" />
+      <link rel="enclosure" type="image/jpeg"
+            href="/geraldine/photos/1634/full.jpg" />
+    </activity:object>
+</entry>]]></artwork>
+
+          <postamble>Example: An activity entry showing the use of the actor,
+          verb, object and target elements. Also illustrated is the use of
+          multiple objects in a single activity entry, which serves as a
+          shorthand for publishing multiple consecutive activities with the
+          same verb and target.</postamble>
+        </figure>
       </section>
 
       <section anchor="objectentryexample" title="Object Entry Example">
         <figure>
-          <preamble>A typical object entry</preamble>
+          <preamble>A simple object entry</preamble>
 
           <artwork><![CDATA[<entry>
    <id>tag:photopanic.example.com,2008:photo01</id>
