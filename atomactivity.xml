@@ -147,23 +147,17 @@
 
           <figure>
             <artwork><![CDATA[<feed xml:lang="en-US" xml:base="http://api.flickr.com/v1/users/4859568/activities.atom" xmlns:activity="http://activitystrea.ms/schema/1.0/" xmlns="http://www.w3.org/2005/Atom">
-  <title type="text">Recent activities from Chris Messina at Flickr</title>
-  <subtitle type="text">This feed contains all of the activities for a single Flickr user</subtitle>
-  <id>tag:flickr.com,2009:user/4859568/activities</id>
-  <rights type="text">Copyright (c) 2003-2009, flickr.com</rights>
+  <title type="text">Recent activities from Geraldine at PhotoPanic</title>
+  <id>tag:photopanic.example.com,2009:user/4859568/activities</id>
   <updated>2009-06-24T03:46:14Z</updated>
   <author>
-    <name>Chris Messina</name>
-    <uri>http://www.factoryjoe.com</uri>
+    <name>Geraldine</name>
   </author>
-  <generator>PersonalActivitiesSyndicationFeedApi.1.1</generator>
-  <link rel="self" href="http://api.flickr.com/v1/users/4859568/activities.atom" />
   <activity:subject>
+    <id>tag:photopanic.example.com,2009:/Person/4859568</id>
+    <title>Geraldine</title>
     <activity:object-type>http://activitystrea.ms/schema/1.0/person</activity:object-type>
-    <id>tag:flickr.com,2009:/Person/4859568</id>
-    <title>Chris Messina</title>
-    <link rel="alternate" type="text/html" href="http://www.factoryjoe.com" />
-    <link rel="preview" type="image/jpeg" href="http://c3.ac-images.flickr.com/images02/100/s_454bd37fd5bd4787bd03ea11dcec4cbe.jpg" />
+    <link rel="alternate" type="text/html" href="/geraldine" />
   </activity:subject>
 .
 .
@@ -171,8 +165,6 @@
 </feed>
 ]]></artwork>
           </figure>
-
-          <t></t>
         </section>
       </section>
 
@@ -284,22 +276,20 @@
 
         <figure>
           <artwork><![CDATA[<entry>
-<id>tag:github.org,2009:/commit/fae50d1ddec31148e37d6f5fec0240f2219317a1</id>
+<id>tag:versioncentral.example.org,2009:/commit/1643245</id>
 <published>2009-06-01T12:54:00Z</published> 
-<title>Monica Keller committed a change to activity-streams-specs</title>
-<content type="xhtml">Monica Keller just committed a change to activity-streams-specs on GitHub - 
-<a href="http://github.com/apparentlymart/activity-streams-specs/commit/fae50d1ddec31148e37d6f5fec0240f2219317a1" 
-rel=nofollow>Punctuation Changeset</a>
-</content>
-<link rel="alternate" type="text/html" href="http://github.com/apparentlymart/activity-streams-specs/commit/fae50d1ddec31148e37d6f5fec0240f2219317a1" /> 
+<title>Geraldine committed a change to yate</title>
+<content type="xhtml">Geraldine just committed a change to yate on VersionCentral</content>
+<link rel="alternate" type="text/html"
+      href="http://versioncentral.example.org/geraldine/yate/commit/1643245" /> 
 <activity:verb>http://activitystrea.ms/schema/1.0/post</activity:verb>
 <activity:verb>http://www.github.org/schema/1.0/commit</activity:verb>
 <activity:object>
   <activity:object-type>http://activitystrea.ms/schema/1.0/changeset</activity:object-type> 
-  <id>tag:github.org,2009:/change/fae50d1ddec31148e37d6f5fec0240f2219317a1</id> 
+  <id>tag:versioncentral.example.org,2009:/change/1643245</id> 
   <title>Punctuation Changeset</title>
   <summary>Fixing punctuation because it makes it more readable.</summary> 
-  <link rel="alternate" type="text/html" href="...." /> 
+  <link rel="alternate" type="text/html" href="..." /> 
 </activity:object>
 </entry>]]></artwork>
         </figure>
@@ -358,45 +348,55 @@ rel=nofollow>Punctuation Changeset</a>
 
         <figure>
           <artwork><![CDATA[<entry>
-    <id>tag:myspace.com,2009:/activity/4859568/PhotoAdd/2519358/2009171</id>
-    <title type="text">Tennis Player added 2 new photos to the Smokin Aces album.</title>
+    <id>tag:photopanic.example.com,2009:/activity/4859568/PhotoAdd/2519358/2009171</id>
+    <title type="text">Geraldine added two new photos to the My Pets album.</title>
     <published>2009-06-21T00:28:35Z</published>
     <author>
-      <name>Tennis Player</name>
-      <uri>http://profile.myspace.com/index.cfm?fuseaction=user.viewprofile&amp;friendid=4859568</uri>
+      <name>Geraldine</name>
+      <uri>http://photopanic.example.com/</uri>
     </author>
-    <link rel="alternate" type="text/html" href="http://viewmorepics.myspace.com/index.cfm?fuseaction=viewImage&amp;friendID=4859568&amp;albumID=2519358&amp;imageID=60764840" />
+    <link rel="alternate" type="text/html"
+          href="/geraldine/activities/1234" />
     <content type="xhtml">...</content>
     <activity:actor>
       <activity:object-type>http://activitystrea.ms/schema/1.0/person</activity:object-type>
-      <id>tag:myspace.com,2009:/Person/4859568</id>
-      <title>Tennis Player</title>
-      <link rel="alternate" type="text/html" href="http://profile.myspace.com/index.cfm?fuseaction=user.viewprofile&amp;friendid=4859568" />
+      <id>tag:photopanic.example.com,2009:/Person/4859568</id>
+      <title>Geraldine</title>
+      <link rel="alternate" type="text/html"
+            href="/geraldine" />
     </activity:actor>
     <activity:target>
       <activity:object-type>http://activitystrea.ms/schema/1.0/photo-album</activity:object-type>
-      <id>tag:myspace.com,2009:/Photo_Album/2519358</id>
-      <title>Smokin Aces</title>
-      <link rel="alternate" type="text/html" href="http://viewmorepics.myspace.com/index.cfm?fuseaction=user.viewPicture&amp;friendID=4859568&amp;albumId=2519358" />
+      <id>tag:photopanic.example.com,2009:/Photo_Album/2519358</id>
+      <title>My Pets</title>
+      <link rel="alternate" type="text/html"
+            href="/geraldine/albums/pets" />
     </activity:target>
     <activity:object>
       <activity:object-type>http://activitystrea.ms/schema/1.0/photo</activity:object-type>
       <activity:object-type>http://activitystrea.ms/schema/1.0/image</activity:object-type>
-      <id>tag:myspace.com,2009:/Photo/2519358/60764840</id>
-      <title></title>
-      <link rel="alternate" type="text/html" href="http://viewmorepics.myspace.com/index.cfm?fuseaction=viewImage&amp;friendID=4859568&amp;albumID=2519358&amp;imageID=60764840" />
-      <link rel="preview" type="image/jpeg" href="http://c4.ac-images.myspacecdn.com/images02/77/s_6772160ada0d4575b688d77f8017bf4b.jpg" />
+      <id>tag:photopanic.example.com,2009:/Photo/2519358/60764840</id>
+      <title>My Cat</title>
+      <link rel="alternate" type="text/html"
+            href="/geraldine/photos/1643" />
+      <link rel="preview" type="image/jpeg"
+            href="/geraldine/photos/1643/thumb.jpg" />
+      <link rel="enclosure" type="image/jpeg"
+            href="/geraldine/photos/1643/full.jpg" />
     </activity:object>
     <activity:object>
-      <activity:object-type>http://activitystrea.ms/schema/1.0/photo</activity:object-type>
       <activity:object-type>http://activitystrea.ms/schema/1.0/image</activity:object-type>
-      <id>tag:myspace.com,2009:/Photo/2519358/60764844</id>
+      <activity:object-type>http://activitystrea.ms/schema/1.0/photo</activity:object-type>
+      <id>tag:photopanic.example.com,2009:/Photo/2519358/60764844</id>
       <title></title>
-      <link rel="alternate" type="text/html" href="http://viewmorepics.myspace.com/index.cfm?fuseaction=viewImage&amp;friendID=4859568&amp;albumID=2519358&amp;imageID=60764844" />
-      <link rel="preview" type="image/jpeg" href="http://c3.ac-images.myspacecdn.com/images02/80/s_6c4b1de2da6a4f24a533bf4446623f12.jpg" />
+      <link rel="alternate" type="text/html"
+            href="/geraldine/photos/1634" />
+      <link rel="preview" type="image/jpeg"
+            href="/geraldine/photos/1634/thumb.jpg" />
+      <link rel="enclosure" type="image/jpeg"
+            href="/geraldine/photos/1634/full.jpg" />
     </activity:object>
-</entry>
-]]></artwork>
+</entry>]]></artwork>
         </figure>
       </section>
 
