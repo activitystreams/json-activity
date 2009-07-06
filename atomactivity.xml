@@ -277,7 +277,7 @@
         <t>An activity entry with more than one activity:object element is
         considered, for the purposes of activity processing, to be equivalent
         in meaning to a sequence of activity entries each with a single
-        activity:object and the same verb, actor and target. Activity
+        activity:object and the same verb, actor, target and context. Activity
         processors SHOULD handle multi-object activities as distinct
         activities, though they MAY perform any coalescing of activities they
         deem appropriate when displaying activity data to users. Feed
@@ -311,6 +311,15 @@
         <spanx style="verb">activity:object</spanx>. If the actor is not a
         person, the <spanx style="verb">activity:actor</spanx> element SHOULD
         be used to describe the actor.</t>
+      </section>
+
+      <section title="Activity Context">
+        <t>The activity:context element is a container for additional
+        contextual information about an activity. This information will often
+        be orthogonal to the verb and object type and supply additional
+        information about the situation in which the activity was performed.
+        For example, an activity entry could contain information about the
+        actor's location at the time of the activity.</t>
       </section>
     </section>
 
