@@ -100,8 +100,8 @@
     <section title="Activity Concepts">
       <t>For the purpose of this specification, an activity is a description
       of an action that was performed (the verb) at some instant in time by
-      some actor (the subject, as described in <xref
-      target="activitysubject"></xref> ), usually on some social object (the
+      some actor (the actor, as described in <xref
+      target="activityactor"></xref> ), usually on some social object (the
       object). An activity feed is a feed of such activities.</t>
 
       <t>An activity may also have an indirect object. The indirect object is
@@ -308,7 +308,7 @@
         photo album to which photos were added.</t>
       </section>
 
-      <section title="Activity Actor">
+      <section anchor="activityactor" title="Activity Actor">
         <t>The activity:actor element MAY be used to describe the object that
         performed the activity. This element, if present, MUST describe the
         same object as is described by the atom:author element. The content
