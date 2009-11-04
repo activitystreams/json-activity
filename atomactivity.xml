@@ -236,9 +236,9 @@
           <postamble>Example: To syndicate changes made to a source code
           repository we need a way of conveying the creation of a change. This
           can be considered a specialization of the Post verb. Since, in this
-          examle, commit is not a verb found in the main schema specification,
-          activity entries carrying this verb should also include the general
-          post verb.</postamble>
+          example, commit is not a verb found in the main schema
+          specification, activity entries carrying this verb should also
+          include the general post verb.</postamble>
         </figure>
       </section>
 
