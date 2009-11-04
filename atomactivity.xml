@@ -12,7 +12,7 @@
 <?rfc subcompact="no"?>
 <rfc category="exp" docName="atomactivity-00" ipr="none">
   <front>
-    <title abbrev="AtomActivity">Atom Activity Extensions version 1</title>
+    <title abbrev="AtomActivity">Atom Activity Extensions (Draft)</title>
 
     <author fullname="Martin Atkins" initials="M." surname="Atkins">
       <organization>Six Apart</organization>
