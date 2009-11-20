@@ -632,7 +632,7 @@
         <section title="Example">
           <figure>
             <artwork><![CDATA[<feed xml:lang="en-US"
-      xmlns:activity="http://activitystrea.ms/schema/1.0/"
+      xmlns:activity="http://activitystrea.ms/spec/1.0/"
       xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Recent activities from Geraldine at PhotoPanic</title>
   <id>tag:photopanic.example.com,2009:user/4859568/activities</id>
@@ -844,7 +844,7 @@
     <section title="Examples">
       <t>This appendix is non-normative. Where these examples include
       fragments of XML documents, assume the namespace declarations <spanx
-      style="verb">xmlns="http://www.w3.org/2005/Atom" xmlns:activity="http://activitystrea.ms/spec/1.0"</spanx>
+      style="verb">xmlns="http://www.w3.org/2005/Atom" xmlns:activity="http://activitystrea.ms/spec/1.0/"</spanx>
       are in scope.</t>
 
       <section anchor="activityentryexample" title="Activity Entry Examples">
