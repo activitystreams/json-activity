@@ -96,12 +96,12 @@
       <t>For the purpose of this specification, an activity is a description
       of an action that was performed (the verb) at some instant in time by
       some actor (the actor, as described in <xref
-      target="activityactor"></xref> ), usually on some social object (the
-      object). An activity feed is a feed of such activities.</t>
+      target="activityactor"></xref> ), with some social object (the object).
+      An activity feed is a feed of such activities.</t>
 
-      <t>An activity may also have an indirect object. The indirect object is
-      considered for the purposes of this specification to be a modifier of
-      the activity and does not exist as a first-class object.</t>
+      <t>An activity may also have a target, which is the object into which or
+      to which the action was done. Whether a target is allowed and the
+      specific meaning of a target is defined by each verb.</t>
 
       <t>It is expected that in many cases consumers of activity feeds will
       use them to turn machine readable descriptions of activities into
