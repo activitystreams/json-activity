@@ -85,13 +85,8 @@
       be mapped to a URI using the steps in Section 3.1 of [RFC3987]. When an
       IRI is serving as an identifier, it MUST NOT be so mapped.</t>
 
-      <t>Some sections of this specification are illustrated with a
-      non-normative RELAX NG Compact schema [RELAXNG]. In those sections, this
-      specification uses the atomCommonAttributes, atomMediaType, and atomURI
-      patterns, defined in [RFC4287].</t>
-
       <t>The text of this specification provides the sole definition of
-      conformance.</t>
+      conformance. Examples in this specification are non-normative.</t>
 
       <t>This specification uses "the Atom specification" to refer to <xref
       target="RFC4287"></xref>.</t>
