@@ -122,15 +122,12 @@
         an Atom entry.</t>
 
         <t>Verbs and object types MAY derive from other verbs and object
-        types. In this case the atom:entry should list of all the parent verbs
-        and the activity:object will should list of all the parent object
         types. The properties required by the parents will also be required by
-        the derived types. For example, If we have an object type named photo
-        which derives from an object type named image and image has a required
-        property containing the URL of a thumbnail version of the image then
-        this is also a required property for photo. This allows activity
-        consumers to have a fallback behavior when new object types or verbs
-        are introduced.</t>
+        the derived types. For example, if there is a base object type image
+        and a derived type of photo, all properties that are defined for image
+        are also defined for photo. Consumers that do not support the photo
+        object type may use their recognition of the image object type as a
+        fallback when processing an object of type photo.</t>
       </section>
     </section>
 
@@ -186,29 +183,31 @@
       </section>
 
       <section anchor="activityverbelement" title="Activity Verb">
-        <t>The verb is represented using the activity:verb Extension Element.
+        <t>Verbs are represented using the activity:verb Extension Element.
         All activity entries MUST have at least one activity:verb element.</t>
 
-        <t>The content of the activity:verb element MUST be an object
-        identifier (an IRI as defined by <xref target="RFC3987"></xref>). Note
-        that the definition of IRI excludes relative references. Although the
-        IRI MAY use a dereferencable scheme, processors must not assume that
-        it can be dereferenced.</t>
+        <t>The content of the activity:verb element MUST be a verb identifier
+        (an IRI as defined by <xref target="RFC3987"></xref>). Note that the
+        definition of IRI excludes relative references. Although the IRI MAY
+        use a dereferencable scheme, processors must not assume that it can be
+        dereferenced.</t>
 
-        <t>The verb Identifier within this element defines the verb for this
-        Activity. As described in section 5, a given activity entry MAY have
-        more than one activity:verb element, which indicates that there are
-        several verbs describing this activity. Where multiple verbs are used,
-        all verbs MUST be generalizations or specializations of one another.
-        For example, the general verb "to experience" might be specialized by
-        a verb "to listen to".</t>
+        <t>The verb identifier within this element defines a verb for this
+        activity. A given activity entry MAY have more than one activity:verb
+        element, which indicates that there are several verbs describing this
+        activity. Where multiple verbs are used, all verbs MUST be
+        generalizations or specializations of one another. For example, the
+        general verb "to experience" might be specialized by a verb "to listen
+        to". If a derived verb is used, publishers SHOULD also include all of
+        its ancestor types so that a consumer may use the most specific verb
+        it understands.</t>
 
         <t>An activity feed processor SHOULD use the most specific verb it
         understands within each entry. If none of the activity's verbs are
         understood by the processor, the processor MAY use other information
         to infer the verb, or the processor MAY use the content of the
-        atom:title, atom:summary and/or atom:content to obtain a sentence
-        describing the activity.</t>
+        atom:title, atom:summary and/or atom:content to obtain a
+        human-readable description of the activity as a fallback.</t>
 
         <figure>
           <artwork><![CDATA[<entry>
@@ -219,9 +218,9 @@
 <link rel="alternate" type="text/html"
       href="http://versioncentral.example.org/geraldine/yate/commit/1643245" /> 
 <activity:verb>http://activitystrea.ms/schema/1.0/post</activity:verb>
-<activity:verb>http://www.github.org/schema/1.0/commit</activity:verb>
+<activity:verb>http://versioncentral.example.org/activity/commit</activity:verb>
 <activity:object>
-  <activity:object-type>http://activitystrea.ms/schema/1.0/changeset</activity:object-type> 
+  <activity:object-type>http://versioncentral.example.org/activity/changeset</activity:object-type> 
   <id>tag:versioncentral.example.org,2009:/change/1643245</id> 
   <title>Punctuation Changeset</title>
   <summary>Fixing punctuation because it makes it more readable.</summary> 
@@ -229,12 +228,13 @@
 </activity:object>
 </entry>]]></artwork>
 
-          <postamble>Example: To syndicate changes made to a source code
-          repository we need a way of conveying the creation of a change. This
-          can be considered a specialization of the Post verb. Since, in this
-          example, commit is not a verb found in the main schema
-          specification, activity entries carrying this verb should also
-          include the general post verb.</postamble>
+          <postamble>Example: This example introduces a "changeset" object
+          type and a "commit" verb, both ficticious, invented for the
+          ficticious example service "VersionCentral". Since the "commit" verb
+          is a derived type of "post", VersionCentral's activity entries
+          include both the "post" verb and the "commit" verb so that consumers
+          which do not support their proprietary extension may fall back on
+          the "post" verb.</postamble>
         </figure>
       </section>
 
@@ -286,6 +286,41 @@
         special meaning to activity processors and are supported only for the
         benefit of non-activity feed consumers which are not capable of doing
         any automatic coalescing.</t>
+
+        <section anchor="objecttypeelement"
+                 title="The activity:object-type Extension Element">
+          <t>The content of the activity:object-type element MUST be an object
+          identifier (an IRI as defined by <xref target="RFC3987"></xref>).
+          The definition of IRI excludes relative references. Though the IRI
+          MAY use a dereferenceable scheme, processors MUST not assume that it
+          can be dereferenced.</t>
+
+          <t>The object identifier within this element gives an object type
+          for the object described by this object entry. A given object entry
+          MAY have more than one activity:object-type element, which indicates
+          that this object has several types. Where multiple types are used,
+          all types MUST be generalizations or specializations of one another.
+          For example, the general type "web page" might be specialized by a
+          type "weblog entry". If a derived type is used, publishers SHOULD
+          also include all of its ancestor types so that a consumer may use
+          the most specific type it understands.</t>
+
+          <t>An object entry SHOULD have at least one activity:object-type
+          element.</t>
+
+          <t>Activity feed processors SHOULD use the most specific object type
+          that they understand within each entry. The processor MAY use other
+          information to infer the object type if it cannot understand any of
+          the object types given. If it cannot so infer the object type, a
+          processor MUST act as though no activity:object-type element is
+          present.</t>
+
+          <t>If no activity:object-type element is present, the object has no
+          specific type. Processors SHOULD refer to such objects only by their
+          titles. For example, when forming an activity sentence a processor
+          might say "Johan posted 'My Cat'" rather than "Johan posted a photo:
+          'My Cat'".</t>
+        </section>
       </section>
 
       <section title="Activity Target">
@@ -337,54 +372,9 @@
       describe the object that was created or otherwise the object of an
       activity, rather than describing the activity itself.</t>
 
-      <section anchor="objecttypeelement"
-               title="The activity:object-type Extension Element">
-        <t>TODO: this should appear after the description of the object
-        element (<xref target="activityobjectelement"></xref>).</t>
-
-        <t>The content of the activity:object-type element MUST be an object
-        identifier (an IRI as defined by <xref target="RFC3987"></xref>). The
-        definition of IRI excludes relative references. Though the IRI MAY use
-        a dereferenceable scheme, processors MUST not assume that it can be
-        dereferenced.</t>
-
-        <t>The object identifier within this element defines the type of the
-        object described by this object entry. A given object entry MAY have
-        more than one activity:object-type element, which indicates that this
-        object has several types. Where multiple types are used, all types
-        MUST be generalizations or specializations of one another. For
-        example, the general type "web page" might be specialized by a type
-        "weblog entry".</t>
-
-        <t>An object entry SHOULD have at least one activity:object-type
-        element.</t>
-
-        <t>Activity feed processors SHOULD use the most specific object type
-        that they understand within each entry. The processor MAY use other
-        information to infer the object type if it cannot understand any of
-        the object types given. If it cannot so infer the object type, a
-        processor MUST act as though no activity:object-type element is
-        present.</t>
-
-        <t>If no activity:object-type element is present, the object has no
-        defined type. Processors SHOULD refer to such objects only by their
-        titles. For example, when forming an activity sentence a processor
-        might say "Johan posted 'My Cat'" rather than "Johan posted a photo:
-        'My Cat'".</t>
-      </section>
-
-      <section title="The activity:verb Extension Element">
-        <t>TODO: this should appear after the description of the verb element
-        (<xref target="activityverbelement"></xref>).</t>
-
-        <t>When appearing as a child of an object entry (that is, an entry
-        that does not also have an activity:object child element), the content
-        of the activity:verb element MUST be the verb type of the implied
-        activity for the object entry, as defined in <xref
-        target="impliedpost"></xref>. When used in this way, the content model
-        is identical to when used in an activity entry as described in <xref
-        target="activityverbelement"></xref>.</t>
-      </section>
+      <t>The content model of an object entry is the same as that of an <spanx
+      style="verb">activity:object</spanx> element used within an activity
+      entry, as defined in <xref target="activityobjectelement"></xref>.</t>
 
       <section anchor="impliedpost" title="Implied Activity">
         <t>When used alone, outside of the context of an explicit activity
@@ -441,6 +431,17 @@
         additional properties for the verb(s) of an implied activity. If a
         particular verb requires additional properties then it MUST NOT be
         used in an implied activity.</t>
+
+        <section title="The verbs for the Implied Activity">
+          <t>When appearing as a child of an object entry (that is, an entry
+          that does not also have an activity:object child element), the
+          content of the <spanx style="verb">activity:verb</spanx> element
+          MUST be the verb type of the implied activity for the object entry,
+          as defined in <xref target="impliedpost"></xref>. When used in this
+          way, the content model is identical to when used in an activity
+          entry as described in <xref
+          target="activityverbelement"></xref>.</t>
+        </section>
       </section>
 
       <section anchor="rss" title="Object Entries in RSS">
