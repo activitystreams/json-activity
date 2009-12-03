@@ -340,6 +340,9 @@
         information about the situation in which the activity was performed.
         For example, an activity entry could contain information about the
         actor's location at the time of the activity.</t>
+
+        <t>The content of this element is arbitrary XML elements whose meaning
+        is defined by other specifications.</t>
       </section>
     </section>
 
