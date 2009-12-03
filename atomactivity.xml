@@ -265,24 +265,16 @@
         the activity. If an atom:source element is not present, the feed which
         contains the object is the source.</t>
 
-        <t>All other elements included in activity:object SHOULD reflect
-        elements in the object entry for this Object, if one exists.</t>
-
         <t>An activity entry and its associated object entry MUST NOT share
         the same atom:id value.</t>
 
-        <t>An activity entry with more than one activity:object element is
-        considered, for the purposes of activity processing, to be equivalent
-        in meaning to a sequence of activity entries each with a single
-        activity:object and the same verb, actor, target and context. Activity
-        processors SHOULD handle multi-object activities as distinct
-        activities, though they MAY perform any coalescing of activities they
-        deem appropriate when displaying activity data to users. Feed
-        producers MUST NOT create coalesced activity entries except where the
-        rules in this paragraph hold. Coalesced activity entries hold no
-        special meaning to activity processors and are supported only for the
-        benefit of non-activity feed consumers which are not capable of doing
-        any automatic coalescing.</t>
+        <t>If an activity entry contains more than one activity:object
+        element, that activity entry represents several activities. These
+        activities all share the same actor, target, verbs, context and time
+        but use each activity:object element in turn. When a set of activities
+        is coalesced in this way it holds no special meaning to activity
+        processors; it is intended to allow publishers to provide
+        pre-coalesced activities to generic Atom consumers.</t>
 
         <section anchor="objecttypeelement"
                  title="The activity:object-type Extension Element">
@@ -331,18 +323,14 @@
         preposition "to". The activity:target extension element MUST NOT be
         used for indirect objects that are not targets.</t>
 
-        <t>In <xref target="activityentrycomplex"></xref> the target is a
-        photo album to which photos were added.</t>
+        <t>For example, in <xref target="activityentrycomplex"></xref> the
+        target is a photo album to which photos were added.</t>
       </section>
 
       <section anchor="activityactor" title="Activity Actor">
         <t>The activity:actor element MAY be used to describe the object that
-        performed the activity. This element, if present, MUST describe the
-        same object as is described by the atom:author element. The content
-        model and the meaning of its child elements are identical to that of
-        <spanx style="verb">activity:object</spanx>. If the actor is not a
-        person, the <spanx style="verb">activity:actor</spanx> element SHOULD
-        be used to describe the actor.</t>
+        performed the activity. The content model and the meaning of its child
+        elements are identical to that of <spanx style="verb">activity:object</spanx>.</t>
       </section>
 
       <section title="Activity Context">
