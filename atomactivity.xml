@@ -351,8 +351,8 @@
       specification that represents the object of an activity. Any entry that
       does not meet the criteria for being an activity entry as described in
       <xref target="activityentries"></xref> is considered an object entry by
-      this specification. In particular, this means that valid Atom entries
-      without any activity annotations are considered to be object entries by
+      this specification. In particular, this means that a valid Atom entry
+      without any activity annotations is considered to be an object entry by
       this specification.</t>
 
       <t>Object entries are intended to be used by feeds that describe the
