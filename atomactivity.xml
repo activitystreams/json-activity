@@ -243,17 +243,16 @@
         element. The activity:object element contains information about the
         main object of the activity. All activity entries MUST have one or
         more activity:object elements. The content model of activity:object is
-        identical to that of atom:entry when used in an object entry as
+        identical to that of atom:entry when used to describe an object as
         described in <xref target="objectentries"></xref>.</t>
 
         <t>activity:object MUST contain exactly one atom:id element. If this
-        object is also published in an object entry, the atom:id value MUST be
-        the same as in the object entry.</t>
+        object is also published elsewhere, the atom:id value SHOULD be the
+        same in all representations.</t>
 
         <t>activity:object SHOULD contain exactly one atom:title element,
-        which MAY be used by feed processors to identify the object to the
-        user -- for example as the text of a link to the HTML representation
-        of the object.</t>
+        whose value provides the human-readable display name for the
+        object.</t>
 
         <t>activity:object SHOULD also contain exactly one atom:link element
         with a link relationship of "alternate" and the type "text/html", with
@@ -261,12 +260,10 @@
         the object if available.</t>
 
         <t>activity:object MAY also contain an atom:source element, as
-        described by the Atom specification, describing the object feed where
-        this object resides, if any. Processors MAY use this information to
-        give context to the activity. For example, if the source feed has a
-        title of "Claire's Weblog", a processor may include the text "in
-        Claire's Weblog" at the end of a sentence describing the activity to
-        the user.</t>
+        described by the Atom specification, describing the feed where this
+        object resides. Processors MAY use this information to give context to
+        the activity. If an atom:source element is not present, the feed which
+        contains the object is the source.</t>
 
         <t>All other elements included in activity:object SHOULD reflect
         elements in the object entry for this Object, if one exists.</t>
