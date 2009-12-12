@@ -343,9 +343,15 @@
         performed the activity. This element, if present, MUST describe the
         same object as is described by the atom:author element. The content
         model and the meaning of its child elements are identical to that of
-        <spanx style="verb">activity:object</spanx>. If the actor is not a
-        person, the <spanx style="verb">activity:actor</spanx> element SHOULD
-        be used to describe the actor.</t>
+        <spanx style="verb">activity:object</spanx></t>
+
+        <t>In a feed which has an activity:subject element, the activity:actor
+        element MAY be omitted from one or more activity entries, in which
+        case the actor is implied to be the subject of the feed. If the feed
+        has no subject, activity:actor MUST be present.</t>
+
+        <t>Each activity entry MUST have zero or one activity:actor
+        elements.</t>
       </section>
 
       <section title="Activity Context">
