@@ -214,7 +214,7 @@
 <id>tag:versioncentral.example.org,2009:/commit/1643245</id>
 <published>2009-06-01T12:54:00Z</published> 
 <title>Geraldine committed a change to yate</title>
-<content type="text/html">Geraldine just committed a change to yate on VersionCentral</content>
+<content type="html">Geraldine just committed a change to yate on VersionCentral</content>
 <link rel="alternate" type="text/html"
       href="http://versioncentral.example.org/geraldine/yate/commit/1643245" /> 
 <activity:verb>http://activitystrea.ms/schema/1.0/post</activity:verb>
