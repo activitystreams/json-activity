@@ -23,7 +23,7 @@
     </author>
 
     <author fullname="Chris Messina" initials="C." surname="Messina">
-      <organization>Diso Project</organization>
+      <organization>Citizen Agency</organization>
     </author>
 
     <author fullname="Monica Keller" initials="M." surname="Keller">
@@ -214,7 +214,7 @@
 <id>tag:versioncentral.example.org,2009:/commit/1643245</id>
 <published>2009-06-01T12:54:00Z</published> 
 <title>Geraldine committed a change to yate</title>
-<content type="xhtml">Geraldine just committed a change to yate on VersionCentral</content>
+<content type="html">Geraldine just committed a change to yate on VersionCentral</content>
 <link rel="alternate" type="text/html"
       href="http://versioncentral.example.org/geraldine/yate/commit/1643245" /> 
 <activity:verb>http://activitystrea.ms/schema/1.0/post</activity:verb>
@@ -329,8 +329,18 @@
 
       <section anchor="activityactor" title="Activity Actor">
         <t>The activity:actor element MAY be used to describe the object that
-        performed the activity. The content model and the meaning of its child
-        elements are identical to that of <spanx style="verb">activity:object</spanx>.</t>
+        performed the activity. This element, if present, MUST describe the
+        same object as is described by the atom:author element. The content
+        model and the meaning of its child elements are identical to that of
+        <spanx style="verb">activity:object</spanx></t>
+
+        <t>In a feed which has an activity:subject element, the activity:actor
+        element MAY be omitted from one or more activity entries, in which
+        case the actor is implied to be the subject of the feed. If the feed
+        has no subject, activity:actor MUST be present.</t>
+
+        <t>Each activity entry MUST have zero or one activity:actor
+        elements.</t>
       </section>
 
       <section title="Activity Context">
