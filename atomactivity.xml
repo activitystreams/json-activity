@@ -68,7 +68,9 @@
       <t>In this document, this namespace is referred to as "the AtomActivity
       namespace", and the namespace prefix "activity:" is used for the above
       namespace URI. The namespace prefix "atom:" is used for the namespace
-      URI <spanx style="verb">http://www.w3.org/2005/Atom</spanx>. The choices
+      URI <spanx style="verb">http://www.w3.org/2005/Atom</spanx>. The
+      namespace prefix "thr:" is used for the namespace URI <spanx
+      style="verb">http://purl.org/syndication/thread/1.0</spanx>. The choices
       of namespace prefix are arbitrary and not semantically significant.</t>
 
       <t>This specification uses a shorthand form of terms from the XML
@@ -264,6 +266,15 @@
         object resides. Processors MAY use this information to give context to
         the activity. If an atom:source element is not present, the feed which
         contains the object is the source.</t>
+
+        <t>activity:object MAY also contain a thr:in-reply-to element, as
+        described by <xref target="RFC4685"></xref>, identifying a second
+        object that this object is considered to be in reply to.</t>
+
+        <t>activity:object MAY contain additional elements whose meaning
+        depends on the definition of the object types identified in the
+        activity:object-type element as described in <xref
+        target="objecttypeelement"></xref>.</t>
 
         <t>An activity entry and its associated object entry MUST NOT share
         the same atom:id value.</t>
@@ -773,23 +784,63 @@
         <front>
           <title>The Atom Syndication Format</title>
 
-          <author>
+          <author fullname="Mark Nottingham" initials="M."
+                  surname="Nottingham">
             <organization></organization>
           </author>
 
-          <date />
+          <author fullname="Robert Sayre" initials="R." surname="Sayre">
+            <organization></organization>
+
+            <address>
+              <postal>
+                <street></street>
+
+                <city></city>
+
+                <region></region>
+
+                <code></code>
+
+                <country></country>
+              </postal>
+
+              <phone></phone>
+
+              <facsimile></facsimile>
+
+              <email></email>
+
+              <uri></uri>
+            </address>
+          </author>
+
+          <date month="December" year="2005" />
+        </front>
+      </reference>
+
+      <reference anchor="RFC4685">
+        <front>
+          <title>Atom Threading Extensions</title>
+
+          <author fullname="James Snell" initials="J." surname="Snell">
+            <organization></organization>
+          </author>
+
+          <date month="September" year="2006" />
         </front>
       </reference>
 
       <reference anchor="RFC2119">
         <front>
-          <title>RFC 2119</title>
+          <title>Key words for use in RFCs to Indicate Requirement
+          Levels</title>
 
-          <author>
+          <author fullname="Scott Bradner" initials="S." surname="Bradner">
             <organization></organization>
           </author>
 
-          <date />
+          <date month="March" year="1997" />
         </front>
       </reference>
 
@@ -797,11 +848,37 @@
         <front>
           <title>Internationalized Resource Identifiers (IRIs)</title>
 
-          <author>
+          <author fullname="Martin Duerst" initials="M." surname="Duerst">
             <organization></organization>
           </author>
 
-          <date />
+          <author fullname="Michel Suignard" initials="M." surname="Suignard">
+            <organization></organization>
+
+            <address>
+              <postal>
+                <street></street>
+
+                <city></city>
+
+                <region></region>
+
+                <code></code>
+
+                <country></country>
+              </postal>
+
+              <phone></phone>
+
+              <facsimile></facsimile>
+
+              <email></email>
+
+              <uri></uri>
+            </address>
+          </author>
+
+          <date month="January" year="2005" />
         </front>
       </reference>
 
