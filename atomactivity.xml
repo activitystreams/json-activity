@@ -591,7 +591,32 @@
       Format, it is subject to the same security considerations defined in
       <xref target="RFC4287"></xref>.</t>
 
-      <t>[TODO: Write some more here.]</t>
+      <t>
+        Publishers or Consumers implementing Activity Streams as a stream
+        of public data may also want to consider the potential for unsolicited
+        commercial or malicious content and should take preventative measures
+        to recognize such content and either identify it or not include it in
+        their stream implementations.
+      </t>
+
+      <t>
+        Publishers should take reasonable measures to make sure potentially
+        malicious user input such as cross-site scripting attacks are not
+        included in the Activity Streams data they publish.
+      </t>
+
+      <t>
+        Consumers that re-emit ingested content to end-users MUST take
+        reasonable measures if emitting ingested content to make sure
+        potentially malicious ingested input is not re-emitted.
+      </t>
+
+      <t>
+        Consumers that re-emit ingested content for crawling by search engines
+        should take reasonable measures to limit any use of their site as a
+        Search Engine Optimization loophole.  This may include converting
+        un-trusted hyperlinks to text or including a rel="nofollow" attribute.
+      </t>
     </section>
 
     <section title="IANA Considerations">
