@@ -339,19 +339,20 @@
       </section>
 
       <section anchor="activityactor" title="Activity Actor">
-        <t>The activity:actor element MAY be used to describe the object that
-        performed the activity. This element, if present, MUST describe the
-        same object as is described by the atom:author element. The content
-        model and the meaning of its child elements are identical to that of
-        <spanx style="verb">activity:object</spanx></t>
+        <t>
+          The actor of an activity is identified by the atom:author element of the
+          activity entry.  The Atom specification defines the atom:author element to
+          identify the author of an entry, feed, or source feed.  This specification
+          extends the object model of atom:author to include the additional elements
+          defined for activity:object.
+        </t>
 
-        <t>In a feed which has an activity:subject element, the activity:actor
-        element MAY be omitted from one or more activity entries, in which
-        case the actor is implied to be the subject of the feed. If the feed
-        has no subject, activity:actor MUST be present.</t>
+        <t>
+          If an activity entry does not contain an atom:author element, a consumer
+          SHOULD use the atom:author of the contained atom:source element or of the
+          containing atom:feed, as defined in Section 4.2.1 of the Atom specification.
+        </t>
 
-        <t>Each activity entry MUST have zero or one activity:actor
-        elements.</t>
       </section>
 
       <section title="Activity Context">
@@ -616,71 +617,6 @@
       feed from a traditional Atom feed.</t>
 
       <t>A feed MAY contain both activity and object entries.</t>
-
-      <section anchor="activitysubject" title="Feed Subject">
-        <t>The activity:subject extension element, when used as a child of an
-        atom:feed element, gives information about the object that the feed is
-        describing. An atom:feed element MUST have zero or one
-        activity:subject elements.</t>
-
-        <t>The content model of the activity:subject element is the same as
-        that of the activity:object element as described in <xref
-        target="activityobjectelement"></xref>.</t>
-
-        <t>When the activity:subject extension element is used, the value of
-        its atom:id element can be compared with the corresponding atom:id
-        elements in activity:object, activity:actor and activity:target
-        entry-level elements to determine which role the feed's actor played
-        in an activity. Publishers MAY, when using activity:subject, publish
-        activities in which the feed subject is the object or target rather
-        than the actor; consumers MUST NOT assume that the subject of an
-        activity feed is the actor in all of its constituent activities.</t>
-
-        <t>If no activity:subject element is provided then the feed has no
-        subject. Consumers MAY make use of information obtained from another
-        source to determine the subject.</t>
-
-        <t>activity:object, activity:target and activity:actor elements which
-        share the same id as the feed's activity:subject SHOULD include only
-        the atom:id element; consumers MUST use the elements of the
-        activity:subject element in place of the elements of the referring
-        element. This minimizes duplication of information in a feed that is
-        about a single subject.</t>
-
-        <t>activity:subject MAY be used as a child of any element where
-        feed-level elements are expected, including atom:source. When used in
-        this way, its relationship to the parent element is the same as that
-        of other feed-level elements appearing as its sibling elements.</t>
-
-        <section title="Example">
-          <figure>
-            <artwork><![CDATA[<feed xml:lang="en-US"
-      xmlns:activity="http://activitystrea.ms/spec/1.0/"
-      xmlns="http://www.w3.org/2005/Atom">
-  <title type="text">Recent activities from Geraldine at PhotoPanic</title>
-  <id>tag:photopanic.example.com,2009:user/4859568/activities</id>
-  <updated>2009-06-24T03:46:14Z</updated>
-  <author>
-    <name>Geraldine</name>
-  </author>
-  <activity:subject>
-    <id>tag:photopanic.example.com,2009:/Person/4859568</id>
-    <title>Geraldine</title>
-    <activity:object-type>http://activitystrea.ms/schema/1.0/person</activity:object-type>
-    <link rel="alternate" type="text/html" href="/geraldine" />
-  </activity:subject>
-.
-.
-.
-</feed>]]></artwork>
-
-            <postamble>Example: If we present an atom activity feed which
-            contain all of the photos that Geraldine has uploaded to
-            PhotoPanic then PhotoPanic may publish a feed that begins as
-            illustrated.</postamble>
-          </figure>
-        </section>
-      </section>
 
       <section title="A Note about Legacy Feeds">
         <t>This section is non-normative.</t>
