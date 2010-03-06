@@ -365,6 +365,24 @@
         <t>The content of this element is arbitrary XML elements whose meaning
         is defined by other specifications.</t>
       </section>
+
+      <section title="Activity Generator">
+        <t>
+          The atom:generator element is defined by the Atom specification as a
+          feed-level element for identifying the agent used to generate a feed.
+          This specification defines an additional use of the atom:generator
+          element as a child element of an activity.  In this context, it
+          identifies the agent used to create that individual activity entry.
+        </t>
+
+        <t>
+          If an activity entry does not contain an atom:generator element, then
+          the atom:generator of the contained atom:source element is considered to
+          apply.  In an Activity Feed Document, the atom:generator element of the
+          containing atom:feed element are considered to apply to the entry if
+          there are no atom:generator elements in the locations described above.
+        </t>
+      </section>
     </section>
 
     <section anchor="objectentries" title="Object Entries">
@@ -1051,3 +1069,4 @@
     </section>
   </back>
 </rfc>
+<!-- vim: set expandtab sw=2 ts=2: -->
