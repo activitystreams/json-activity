@@ -580,9 +580,9 @@
       multiple sources but known via some externally-obtained information to
       be by the same actor, even if that actor is represented by a different
       object in different source feeds, the re-publisher SHOULD create a
-      feed-level activity:subject element that describes the re-publisher's
+      feed-level atom:author element that describes the re-publisher's
       representation of the actor and then substitute this representation in
-      any activity:actor, activity:object or activity:target element known to
+      any atom:author, activity:object or activity:target element known to
       represent the same actor.</t>
     </section>
 
@@ -773,7 +773,7 @@
    <title>Geraldine posted a Photo on PhotoPanic</title>
    <published>2008-11-02T15:29:00Z</published>
    <link rel="alternate" type="text/html"
-         href="/geraldine/activities/1" />
+     href="http://example.com/geraldine/activities/1" />
    <activity:verb>
       http://activitystrea.ms/schema/1.0/post
    </activity:verb>
@@ -782,16 +782,16 @@
       <title>My Cat</title>
       <published>2008-11-02T15:29:00Z</published>
       <link rel="alternate" type="text/html"
-            href="/geraldine/photos/1" />
+        href="http://example.com/geraldine/photos/1" />
       <activity:object-type>
           tag:atomactivity.example.com,2008:photo
       </activity:object-type>
       <source>
           <title>Geraldine's Photos</title>
           <link rel="self" type="application/atom+xml"
-                href="/geraldine/photofeed.xml" />
+            href="http://example.com/geraldine/photofeed.xml" />
           <link rel="alternate" type="text/html"
-                href="/geraldine/" />
+            href="http://example.com/geraldine/" />
       </source>
    </activity:object>
    <content type="html">
@@ -817,18 +817,17 @@
     <published>2009-06-21T00:28:35Z</published>
     <author>
       <name>Geraldine</name>
-      <uri>http://photopanic.example.com/</uri>
+      <uri>http://example.com/geraldine</uri>
+      <id>tag:photopanic.example.com,2009:/Person/4859568</id>
+      <activity:object-type>
+        http://activitystrea.ms/schema/1.0/person
+      </activity:object-type>
+      <link rel="alternate" type="text/html"
+        href="http://example.com/geraldine" />
     </author>
     <link rel="alternate" type="text/html"
-          href="/geraldine/activities/1234" />
+      href="http://example.com/geraldine/activities/1234" />
     <content type="xhtml">...</content>
-    <activity:actor>
-      <activity:object-type>http://activitystrea.ms/schema/1.0/person</activity:object-type>
-      <id>tag:photopanic.example.com,2009:/Person/4859568</id>
-      <title>Geraldine</title>
-      <link rel="alternate" type="text/html"
-            href="/geraldine" />
-    </activity:actor>
     <activity:target>
       <activity:object-type>http://activitystrea.ms/schema/1.0/photo-album</activity:object-type>
       <id>tag:photopanic.example.com,2009:/Photo_Album/2519358</id>
