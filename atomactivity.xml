@@ -281,7 +281,7 @@
 
         <t>If an activity entry contains more than one activity:object
         element, that activity entry represents several activities. These
-        activities all share the same actor, target, verbs, context and time
+        activities all share the same actor, target, verbs, and time
         but use each activity:object element in turn. When a set of activities
         is coalesced in this way it holds no special meaning to activity
         processors; it is intended to allow publishers to provide
@@ -353,18 +353,6 @@
           containing atom:feed, as defined in Section 4.2.1 of the Atom specification.
         </t>
 
-      </section>
-
-      <section title="Activity Context">
-        <t>The activity:context element is a container for additional
-        contextual information about an activity. This information will often
-        be orthogonal to the verb and object type and supply additional
-        information about the situation in which the activity was performed.
-        For example, an activity entry could contain information about the
-        actor's location at the time of the activity.</t>
-
-        <t>The content of this element is arbitrary XML elements whose meaning
-        is defined by other specifications.</t>
       </section>
 
       <section title="Activity Generator">
@@ -567,7 +555,9 @@
       MUST copy the atom:id and atom:published elements from the source
       activity entry without modification, and MUST similarly preserve the
       contents of all elements in the AtomActivity namespace where these
-      elements are used correctly as per this specification.</t>
+      elements are used correctly as per this specification.  Additionally, 
+      the re-publisher SHOULD copy the entry's atom:generator element without 
+      modification, if present.</t>
 
       <t>When a re-publisher reproduces an entry, the atom:source element MUST
       be used in accordance with its definition in the Atom specification. A
