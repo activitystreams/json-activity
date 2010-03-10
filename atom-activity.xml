@@ -10,7 +10,7 @@
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
-<rfc category="exp" docName="atomactivity-00" ipr="none">
+<rfc category="exp" docName="atom-activity-01" ipr="none">
   <front>
     <title abbrev="AtomActivity">Atom Activity Extensions (Draft)</title>
 
