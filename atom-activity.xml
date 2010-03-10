@@ -147,7 +147,7 @@
           activity.</t>
         </section>
 
-        <section anchor="Activity-Object" title="Object (one or more)">
+        <section anchor="Activity-Object" title="Object (exactly one)">
           <t>This [Object Construct] identifies the primary object of the
           activity.</t>
         </section>
