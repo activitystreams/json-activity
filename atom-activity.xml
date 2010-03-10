@@ -18,20 +18,16 @@
       <organization>Six Apart</organization>
     </author>
 
-    <author fullname="David Recordon" initials="D." surname="Recordon">
-      <organization>Facebook</organization>
+    <author fullname="Will Norris" initials="W." surname="Norris">
+      <organization>Google</organization>
     </author>
 
     <author fullname="Chris Messina" initials="C." surname="Messina">
-      <organization>Citizen Agency</organization>
+      <organization>Citizen Agency, Google</organization>
     </author>
 
     <author fullname="Monica Keller" initials="M." surname="Keller">
-      <organization>Facebook</organization>
-    </author>
-
-    <author fullname="Ari Steinberg" initials="A." surname="Steinberg">
-      <organization>Facebook</organization>
+      <organization>MySpace, Facebook</organization>
     </author>
 
     <author fullname="Rob Dolin" initials="R." surname="Dolin">
@@ -54,6 +50,24 @@
   </front>
 
   <middle>
+    <section title="Introduction">
+      <t>The Atom Syndication Format, as defined in <xref
+      target="RFC4287"></xref>, is widely used to transmit various types of
+      web content such as weblog posts, news headlines, as well as user
+      activities within social sites. In the case of user activities, Atom
+      lacks the ability to express much of the activity-specific metadata in a
+      machine-parseable format. Activity Streams is an XML format designed to
+      allow this additional activity metadata to be expressed within existing
+      Atom entries and feeds.</t>
+
+      <t>It is a goal of this specification to provide sufficient metadata
+      about an activity such that a consumer of the data can present it to a
+      user in a rich human-friendly format. This may include constructing
+      readable sentences about the activity that occurred, visual
+      representations of the activity, or combining similar activities for
+      display.</t>
+    </section>
+
     <section title="Notational Conventions">
       <t>The XML Namespaces URI [W3C.REC-xml-names-19990114] for the XML
       elements and attributes described in this specification is: <spanx
