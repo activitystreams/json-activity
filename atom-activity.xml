@@ -112,20 +112,20 @@
       <section anchor="Activity" title="The Activity Construct">
         <t>An activity consists of the following logical components:</t>
 
-        <section anchor="Activity-Id" title="Id (required)">
+        <section anchor="Activity-Id" title="Id (exactly one)">
           <t>An absolute URI value that conveys a permanent, universally
           unique identifier for the activity. (TODO: Still some question as to
           whether this should be part of the Activity Construct, rather than
           just part of the Atom representation)</t>
         </section>
 
-        <section anchor="Activity-Time" title="Time (required)">
+        <section anchor="Activity-Time" title="Time (exactly one)">
           <t>A [Date Construct] that identifies the time at which the activity
           occurred. It is important to note that this is not necessarily the
           same as the time at which the activity was published.</t>
         </section>
 
-        <section anchor="Activity-Actor" title="Actor (required)">
+        <section anchor="Activity-Actor" title="Actor (exactly one)">
           <t>An [Object Construct] that identifies the entity that performed
           the activity.</t>
         </section>
@@ -178,18 +178,18 @@
         activity, or the entity on which the activity was performed. An object
         consists of the following logical components:</t>
 
-        <section anchor="Object-Id" title="Id (required)">
+        <section anchor="Object-Id" title="Id (exactly one)">
           <t>The id of an object construct is an absolute URI that uniquely
           identifies the object.</t>
         </section>
 
-        <section anchor="Object-title" title="Title (optional)">
+        <section anchor="Object-title" title="Title (zero or one)">
           <t>This string value provides a human readable display name for the
           object. Activity publishers SHOULD include a title for all
           objects.</t>
         </section>
 
-        <section anchor="Object-link" title="Link (optional)">
+        <section anchor="Object-link" title="Link (zero or one)">
           <t>This URI value identifies an HTML representation of the
           object.</t>
         </section>
