@@ -237,7 +237,41 @@
         target="impliedactivityentry"></xref>.</t>
 
         <section anchor="fullactivityentry" title="Full Activity Entry">
-          <t></t>
+          <t>A full activity entry represents a selection of one or more
+          activities which refer to different objects but all share the same
+          values for the other activity properties.</t>
+
+          <t>The atom:author element which applies to the entry, as defined by
+          section 4.2.1 of <xref target="RFC4287"></xref>, represents the
+          actor of the represented activities. This element MUST be processed
+          into an object construct as defined in <xref
+          target="objectasauthor"></xref>.</t>
+
+          <t>If the entry element has as a direct child an activity:target
+          element then this element represents the target of the represented
+          activities. This element MUST be processed into an object construct
+          as defined in <xref target="objectasobject"></xref>.</t>
+
+          <t>The atom:published chlid element of the entry, as defined in
+          section 4.2.9 of <xref target="RFC4287"></xref>, represents the time
+          of the represented activities.</t>
+
+          <t>Each activity:verb child element of the entry represents a verb
+          for the represented activities.</t>
+
+          <t>If the entry has as a direct child an atom:generator element then
+          it MUST be processed as defined in section 4.2.4 of <xref
+          target="RFC4287"></xref> and its name and URI used for the generator
+          property of the represented activities.</t>
+
+          <t>Each activity:object child element of the entry represents the
+          object of an activity whose other properties are represented as
+          described above. Each element MUST be processed into an object
+          construct as defined in <xref target="objectasobject"></xref>.</t>
+
+          <t>The set of activities represented by a full activity entry is the
+          set of activities created by combining the object represented by
+          each activity:object element with the other common properties.</t>
         </section>
 
         <section anchor="impliedactivityentry"
@@ -251,15 +285,18 @@
         context. All of these representations encode the data model described
         for the object construct in <xref target="Object"></xref>.</t>
 
-        <section title="Object represented as atom:entry">
+        <section anchor="objectasentry"
+                 title="Object represented as atom:entry">
           <t></t>
         </section>
 
-        <section title="Object represented as atom:author">
+        <section anchor="objectasauthor"
+                 title="Object represented as atom:author">
           <t></t>
         </section>
 
-        <section title="Object represented as activity:object or activity:target">
+        <section anchor="objectasobject"
+                 title="Object represented as activity:object or activity:target">
           <t></t>
         </section>
       </section>
