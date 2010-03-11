@@ -183,13 +183,12 @@
           identifies the object.</t>
         </section>
 
-        <section anchor="Object-title" title="Title (zero or one)">
+        <section anchor="Object-Name" title="Name (zero or one)">
           <t>This string value provides a human readable display name for the
-          object. Activity publishers SHOULD include a title for all
-          objects.</t>
+          object, if the object has a name.</t>
         </section>
 
-        <section anchor="Object-link" title="Link (zero or one)">
+        <section anchor="Object-Url" title="URL (zero or one)">
           <t>This URI value identifies an HTML representation of the
           object.</t>
         </section>
@@ -224,7 +223,8 @@
       using atom:entry elements but may exist in one of two forms, an Activity
       Entry or an Object Entry.</t>
 
-      <section title="Activity represented as atom:entry">
+      <section anchor="activityasentry"
+               title="Activity represented as atom:entry">
         <t>Any valid Atom entry as defined by section 4.1.2 of <xref
         target="RFC4287"></xref> is a representation of one or more activities
         as defined in <xref target="Activity"></xref>.</t>
@@ -328,11 +328,39 @@
       <section title="Object Representations">
         <t>Objects can be represented in a variety of forms depending on
         context. All of these representations encode the data model described
-        for the object construct in <xref target="Object"></xref>.</t>
+        for the object construct in <xref target="Object"></xref>. These
+        representations are used in various contexts within the Atom
+        representation of an activity as described in <xref
+        target="activityasentry"></xref>.</t>
 
         <section anchor="objectasentry"
                  title="Object represented as atom:entry">
-          <t></t>
+          <t>In this section, "the entry" refers to the atom:entry element
+          which is representing the object.</t>
+
+          <t>The title of the entry, determined as defined in section 4.2.14
+          of <xref target="RFC4287"></xref>, represents the title of the
+          represented object.</t>
+
+          <t>The publication time of the entry as defined in section 4.2.9 of
+          <xref target="RFC4287"></xref>, unless elided from processing as
+          defined in <xref target="impliedactivityentry"></xref>, represents
+          the publication time of the represented object.</t>
+
+          <t>The id of the entry, as defined in section 4.2.6 of <xref
+          target="RFC4287"></xref>, represents the id of the represented
+          object.</t>
+
+          <t>The href attribute of the first atom:link element in document
+          order that is a child of the entry whose link relation type is
+          "alternate" represents the URL of the represented object.</t>
+
+          <t>Each activity:object-type element which is a direct child of the
+          entry represents an object type for the represented object.</t>
+
+          <t>Other descendent elements of the entry may represent other
+          extension properties defined by the object types of the represented
+          object.</t>
         </section>
 
         <section anchor="objectasauthor"
