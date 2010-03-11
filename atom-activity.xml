@@ -236,6 +236,14 @@
         activity shorthand entry and MUST be processed as described in <xref
         target="impliedactivityentry"></xref>.</t>
 
+        <t>Although there is not a one-to-one mapping between an Atom entry
+        and an activity, consumers SHOULD retain the value of the atom:id
+        element from which each activity was produced such that these
+        activities can be identified should an entry be referred to by another
+        Atom feature which is not aware of the extensions defined in this
+        specification. This id is not unique across all activities and has no
+        semantic singificance for Activity Streams processing.</t>
+
         <section anchor="fullactivityentry" title="Full Activity Entry">
           <t>A full activity entry represents a selection of one or more
           activities which refer to different objects but all share the same
@@ -276,7 +284,44 @@
 
         <section anchor="impliedactivityentry"
                  title="Implied Activity Shorthand">
-          <t></t>
+          <t>An implied activity shorthand entry represents exactly one
+          activity in terms of its object.</t>
+
+          <t>The atom:published chlid element of the entry, as defined in
+          section 4.2.9 of <xref target="RFC4287"></xref>, represents the time
+          of the represented activity.</t>
+
+          <t>If the entry has as direct children one or more activity:verb
+          elements, each of these elements represents a verb for the
+          represented activity. If the entry has no activity:verb child
+          elements, the represented activity is implied to have only the
+          "post" verb as defined in [TODO: write this section and xref].</t>
+
+          <t>If the entry has as a direct child an atom:generator element then
+          it MUST be processed as defined in section 4.2.4 of <xref
+          target="RFC4287"></xref> and its name and URI used for the generator
+          property of the represented activity.</t>
+
+          <t>If the set of verbs for the represented activity includes the
+          "post" verb, the atom:author element which applies to the entry, as
+          defined by section 4.2.1 of <xref target="RFC4287"></xref>,
+          represents the actor of the represented activity. If the set of
+          verbs does not include the "post" verb then the containing atom:feed
+          element MUST have an atom:author element as its direct child and
+          this element represents the actor of the represented activity. This
+          appropriate atom:author element MUST be processed into an object
+          construct as defined in <xref target="objectasauthor"></xref>.</t>
+
+          <t>The atom:entry element itself MUST also be processed into an
+          object construct as defined in <xref target="objectasentry"></xref>
+          and used as the object of the represented activity. If the set of
+          verbs for the represented activity does not include the "post" verb
+          then the atom:published child element MUST be ignored when doing
+          this processing, because the date therein represents the date of the
+          activity and not the publication date of the object.</t>
+
+          <t>The represented activity of an implied activity shorthand entry
+          does not have a target.</t>
         </section>
       </section>
 
