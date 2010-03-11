@@ -224,118 +224,43 @@
       using atom:entry elements but may exist in one of two forms, an Activity
       Entry or an Object Entry.</t>
 
-      <section title="Activity Entry">
-        <t>An Activity Entry is one in which the activity itself is
-        represented by the atom:entry element, and the components of the
-        activity (the actor, verb, object, etc) are represented by child
-        elements of the entry. To be identified as an Activity Entry, an
-        atom:entry MUST have one or more verb and one or more object
-        explicitly declared, as specified below. The components of an Activity
-        Entry are represented as follows:</t>
+      <section title="Activity represented as atom:entry">
+        <t>Any valid Atom entry as defined by section 4.1.2 of <xref
+        target="RFC4287"></xref> is a representation of one or more activities
+        as defined in <xref target="Activity"></xref>.</t>
 
-        <t><list style="hanging">
-            <t hangText="time">The time of the activity is represented by the
-            atom:published element of the entry.</t>
+        <t>If the atom:entry contains at least one activity:verb element and
+        at least one activity:object element then it is a full activity entry
+        and MUST be processed as described in <xref
+        target="fullactivityentry"></xref>. Otherwise the entry is an implied
+        activity shorthand entry and MUST be processed as described in <xref
+        target="impliedactivityentry"></xref>.</t>
 
-            <t hangText="actor">The activity actor is represented by the
-            atom:author element of the entry, whose contents are defined by
-            [Object Representation].</t>
+        <section anchor="fullactivityentry" title="Full Activity Entry">
+          <t></t>
+        </section>
 
-            <t hangText="verb">An activity verb URI is represented by the text
-            content of an activity:verb element. If no activity:verb elements
-            are specified, then the activity has the implied verb 'post', as
-            defined by [Post Verb].</t>
-
-            <t hangText="object">An activity object is represented by an
-            activity:object element, whose contents are defined by [Object
-            Representation].</t>
-
-            <t hangText="target">The target of an activity is represented by
-            an activity:target element, whose contents are defined by [Object
-            Representation].</t>
-          </list></t>
-
-        <t>While Atom allows for multiple author elements to be present within
-        an entry, this specification defines only a single actor for an
-        activity. Use of multiple author elements within an activity entry is
-        therefore undefined. If an atom:entry does not contain an atom:author
-        element, then the atom:author elements of the contained atom:source
-        element or the containing atom:feed element apply, as defined by
-        Section 4.2.1 of [Atom].</t>
+        <section anchor="impliedactivityentry"
+                 title="Implied Activity Shorthand">
+          <t></t>
+        </section>
       </section>
 
-      <section title="Object Representation">
-        <t>Object Constructs are used to identify the activity actor as well
-        as the object and target of the activity. Depending on the context in
-        which the Object Construct is used, its root element will differ,
-        however almost all of its child elements will be the same in all
-        contexts. The one exception to this is the Object's title, as
-        specified below. The components of an Object Construct are represented
-        in Atom as follows:</t>
+      <section title="Object Representations">
+        <t>Objects can be represented in a variety of forms depending on
+        context. All of these representations encode the data model described
+        for the object construct in <xref target="Object"></xref>.</t>
 
-        <t><list style="hanging">
-            <t hangText="id">The object ID is represented by the atom:id
-            element.</t>
+        <section title="Object represented as atom:entry">
+          <t></t>
+        </section>
 
-            <t hangText="title">When an object is used to identify the
-            activity actor (using the atom:author element), the title of the
-            object is represented by the atom:name element. In all other
-            cases, the object title is represented by the atom:title
-            element.</t>
+        <section title="Object represented as atom:author">
+          <t></t>
+        </section>
 
-            <t hangText="link">The object link is represented by the href
-            attribute of an atom:link element. The atom:link MUST have a rel
-            attribute value of "alternate" and a type attribute value of
-            "text/html". (TODO: add a note here that atom:url SHOULD be
-            populated for atom:author as well?)</t>
-
-            <t hangText="object type">An object's type URI is represented by
-            the text content of an activity:object-type element.</t>
-          </list></t>
-      </section>
-
-      <section title="Object Entry">
-        <t>An Object Entry is one in which the object of the activity is
-        represented by the atom:entry element, and the other components of the
-        activity are either represented by child elements, or are implied. Any
-        atom:entry that does not meet the criteria for being an Activity Entry
-        as described in [Section X] is considered to be an Object Entry. In
-        particular, this means that a valid atom:entry without any explicit
-        activity metadata is considered to be an Object Entry.</t>
-
-        <section title="Implied Activity">
-          <t>Because an Object Entry primarily represents the object of an
-          activity, the activity to which it belongs is implied. The implied
-          Activity Entry for an Object Entry is constructed as follows:<list
-              style="numbers">
-              <t>Create an empty atom:entry element. This is the Activity
-              Entry element.</t>
-
-              <t>If the Object Entry has one or more activity:verb elements,
-              copy all such elements into the Activity Entry element.
-              Otherwise, insert a new activity:verb element into the Activity
-              Entry element containing the implied verb as defined in
-              [Activity Entry].</t>
-
-              <t>If the Object Entry contains an atom:published element, copy
-              it into the Activity Entry element. (TODO: What do we do if the
-              object entry doesn't have an atom:published element? Copy from
-              atom:updated, which is required by Atom to be present?)</t>
-
-              <t>Insert a new activity:object element into the Activity Entry
-              element.</t>
-
-              <t>Do a deep copy of all child elements of the Object Entry into
-              the activity:object element, excluding any activity:verb and
-              atom:published elements. (TODO: are there other elements that
-              should be excluded, like location?)</t>
-
-              <t>If one of the verbs of the Activity Entry is the [Post Verb],
-              copy the atom:published element from the Object Entry to the
-              activity:object element.</t>
-            </list></t>
-
-          <t>(additional text from current spec)</t>
+        <section title="Object represented as activity:object or activity:target">
+          <t></t>
         </section>
       </section>
     </section>
