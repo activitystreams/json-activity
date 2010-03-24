@@ -352,7 +352,7 @@
           object.</t>
 
           <t>The href attribute of the first atom:link element in document
-          order that is a child of the entry whose link relation type is
+          order that is a child of the entry and whose link relation type is
           "alternate" represents the URL of the represented object.</t>
 
           <t>Each activity:object-type element which is a direct child of the
@@ -396,7 +396,37 @@
 
         <section anchor="objectasobject"
                  title="Object represented as activity:object or activity:target">
-          <t></t>
+          <t>In this section, "the object element" refers to the
+          activity:object or activity:target element which is representing the
+          object.</t>
+
+          <t>The title of the object element, determined in the same way as
+          defined for the atom:entry element in section 4.2.14 of <xref
+          target="RFC4287"></xref>, represents the title of the represented
+          object.</t>
+
+          <t>The publication time of the object element, determined in the
+          same way as as defined for the atom:entry element in section 4.2.9
+          of <xref target="RFC4287"></xref>, represents the publication time
+          of the represented object.</t>
+
+          <t>The id of the entry, determined in the same way as defined for
+          the atom:entry element in section 4.2.6 of <xref
+          target="RFC4287"></xref>, represents the id of the represented
+          object.</t>
+
+          <t>The href attribute of the first atom:link element in document
+          order that is a child of the object entry and whose link relation
+          type is "alternate" represents the URL of the represented
+          object.</t>
+
+          <t>Each activity:object-type element which is a direct child of the
+          object element represents an object type for the represented
+          object.</t>
+
+          <t>Other descendent elements of the entry may represent other
+          extension properties defined by the object types of the represented
+          object.</t>
         </section>
       </section>
     </section>
