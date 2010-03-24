@@ -365,7 +365,33 @@
 
         <section anchor="objectasauthor"
                  title="Object represented as atom:author">
-          <t></t>
+          <t>In this section, "the author element" refers to the atom:author
+          element which is representing the object.</t>
+
+          <t>The name of the author element, determined as defined in section
+          3.2.1 of <xref target="RFC4287"></xref>, represents the title of the
+          represented object.</t>
+
+          <t>The first atom:id child element of the author element, processed
+          as defined in section 4.2.6 of <xref target="RFC4287"></xref>,
+          represents the id of hte represented object. The use of atom:id as a
+          child of atom:author is an extension defined by this
+          specification.</t>
+
+          <t>If the author element contains any atom:link child elements whose
+          link relation types are "alternate", the href attribute of the first
+          such element represents the URL of the represented object.
+          Otherwise, the value of the first atom:uri child element, as defined
+          in section 3.2.2 of <xref target="RFC4287"></xref>, represents the
+          URL of the represented object.</t>
+
+          <t>Each activity:object-type element which is a direct child of the
+          author element represents an object type for the represented
+          object.</t>
+
+          <t>Other descendent elements of the entry may represent other
+          extension properties defined by the object types of the represented
+          object.</t>
         </section>
 
         <section anchor="objectasobject"
