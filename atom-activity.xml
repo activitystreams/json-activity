@@ -35,7 +35,7 @@
       <organization>Microsoft</organization>
     </author>
 
-    <date month="March" year="2010" />
+    <date />
 
     <abstract>
       <t>This document presents an extension that allows activities on social
@@ -113,27 +113,34 @@
       <section anchor="Activity" title="The Activity Construct">
         <t>An activity consists of the following logical components:</t>
 
-        <section anchor="Activity-Id" title="Id (exactly one)">
-          <t>An absolute URI value that conveys a permanent, universally
-          unique identifier for the activity. (TODO: Still some question as to
-          whether this should be part of the Activity Construct, rather than
-          just part of the Atom representation)</t>
+        <section anchor="Activity-Id" title="ID">
+          <t>This absolute URI value conveys a permanent, universally
+          unique identifier for the activity.  An Activity construct MUST have
+          exactly one ID value.</t>
+
+          <t>(TODO: Still some question as to whether this should be part of
+          the Activity construct, rather than just part of the Atom
+          representation)</t>
         </section>
 
-        <section anchor="Activity-Time" title="Time (exactly one)">
+        <section anchor="Activity-Time" title="Time">
           <t>A [Date Construct] that identifies the time at which the activity
           occurred. It is important to note that this is not necessarily the
-          same as the time at which the activity was published.</t>
+          same as the time at which the activity was published.  An Activity
+          construct MUST have exactly one Time value.</t>
         </section>
 
-        <section anchor="Activity-Actor" title="Actor (exactly one)">
+        <section anchor="Activity-Actor" title="Actor">
           <t>An [Object Construct] that identifies the entity that performed
-          the activity.</t>
+          the activity.  An Activity construct MUST have exactly one actor.</t>
         </section>
 
-        <section anchor="Activity-Verb" title="Verb (one or more)">
+        <section anchor="Activity-Verb" title="Verb">
           <t>An absolute URI value that identifies the action of the activity.
-          If an activity contains more than one verb, all verbs MUST be
+          An Activity construct MUST have at least one verb, and MAY have more
+          than one.</t>
+
+          <t>If an activity contains more than one verb, all verbs MUST be
           generalizations or specializations of one another. For example, the
           general verb "to experience" might be specialized by a verb "to
           listen to". If a more specific verb is used, publishers SHOULD also
@@ -148,12 +155,12 @@
           activity.</t>
         </section>
 
-        <section anchor="Activity-Object" title="Object (exactly one)">
+        <section anchor="Activity-Object" title="Object">
           <t>This [Object Construct] identifies the primary object of the
-          activity.</t>
+          activity.  An Activity construct MUST have exactly one object.</t>
         </section>
 
-        <section anchor="Activity-Target" title="Target (zero or one)">
+        <section anchor="Activity-Target" title="Target">
           <t>The target of an activity is an [Object Construct] that
           represents the object to which the activity was performed. The exact
           meaning of an activity's target is dependent on the verb of the
@@ -161,7 +168,8 @@
           "to". For example, in the activity "John saved a movie to his
           wishlist", the target of the activity is 'wishlist'. The activity
           target MUST NOT be used to identify an indirect object that is not a
-          target of the activity.</t>
+          target of the activity.  An Activity construct MAY have a target, but
+          MUST NOT have more than one.</t>
         </section>
 
         <section anchor="Activity-Generator" title="Generator">
@@ -169,7 +177,8 @@
           separate from the service the activity is published to. For example,
           a third-party application on a mobile phone may be used to post a
           photo to a photo sharing service. The activity generator is
-          identified by a name and optional URI.</t>
+          identified by a name and optional URI.  An Activity construct MAY
+          have a generator, but MUST NOT have more than one.</t>
         </section>
       </section>
 
