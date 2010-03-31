@@ -173,12 +173,13 @@
         </section>
 
         <section anchor="Activity-Generator" title="Generator">
-          <t>Oftentimes, an activity is created by an application that is
-          separate from the service the activity is published to. For example,
-          a third-party application on a mobile phone may be used to post a
-          photo to a photo sharing service. The activity generator is
-          identified by a name and optional URI.  An Activity construct MAY
-          have a generator, but MUST NOT have more than one.</t>
+          <t>The generator of an activity identifies that application which
+          created it, which may be separate from the service to which the
+          activity is published.  For example, a third-party application on a
+          mobile phone may be used to post a photo to a photo sharing service.
+          The activity generator is identified by a name and optional URI.
+          An Activity construct MAY have a generator, but MUST NOT have more
+          than one.</t>
         </section>
       </section>
 
@@ -188,24 +189,29 @@
         activity, or the entity on which the activity was performed. An object
         consists of the following logical components:</t>
 
-        <section anchor="Object-Id" title="Id (exactly one)">
+        <section anchor="Object-Id" title="ID">
           <t>The id of an object construct is an absolute URI that uniquely
-          identifies the object.</t>
+          identifies the object.  An Object construct MUST have exactly one
+          ID value.</t>
         </section>
 
-        <section anchor="Object-Name" title="Name (zero or one)">
+        <section anchor="Object-Name" title="Name">
           <t>This string value provides a human readable display name for the
-          object, if the object has a name.</t>
+          object, if the object has a name.  An Object construct MAY have a
+          name, but MUST NOT have more than one.</t>
         </section>
 
-        <section anchor="Object-Url" title="URL (zero or one)">
+        <section anchor="Object-Url" title="URL">
           <t>This URI value identifies an HTML representation of the
-          object.</t>
+          object.  An Object construct MAY have a URL, but MUST NOT have more
+          than one.</t>
         </section>
 
-        <section anchor="Object-ObjectType" title="Object Type (zero or more)">
-          <t>An absolute URI that identifies the type of object. If an object
-          contains more than one object type, all types MUST be
+        <section anchor="Object-ObjectType" title="Object Type">
+          <t>This absolute URI identifies the type of object.  An Object
+          construct MAY have one or more types.</t>
+
+          <t>If an object contains more than one object type, all types MUST be
           generalizations or specializations of one another. For example, the
           general type "article" might be specialized by the type "weblog
           entry". If a more specific type is used, publishers SHOULD also
@@ -214,7 +220,7 @@
 
           <t>Activity consumers SHOULD use the most specific object type that
           they understand within each entry. The consumer MAY use other
-          information to infer the object type if it cannot understand any of
+          information to infer the object type if it does not recognize any of
           the object types given. If it cannot infer the object type, a
           consumer MUST act as though no object type is present.</t>
 
