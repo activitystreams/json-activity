@@ -218,8 +218,8 @@
     </section>
 
     <section title="Atom Representation">
-      <t>Activities are represented in an Atom document using a combination of
-      conventions and custom extension elements. Activities are represented
+      <t>Activities can be represented in an Atom document using a combination
+      of conventions and custom extension elements. Activities are represented
       using atom:entry elements but may exist in one of two forms, an Activity
       Entry or an Object Entry.</t>
 
@@ -431,6 +431,72 @@
       </section>
     </section>
 
+    <section anchor="rss2representation" title="RSS 2.0 Representation">
+      <t>Activities can be represented in an RSS 2.0.11 document, as defined
+      by <xref target="RSS2"></xref>, using a combination of conventions and
+      custom extension elements. An activity is represented using an RSS
+      "item" element. The RSS serialization only supports a subset of the
+      activity data model allowing descriptions of simple activities that have
+      only a verb and an object. This serialization is optimized for posting
+      activities describing the creation of new objects. Publishers with a
+      need for representing other fields that are not catered for by this
+      serialization are recommended to use the Atom serialization instead for
+      best results. This RSS serialization is defined only as a means for
+      those already publishing streams of objects as RSS to produce minimally
+      useful list of activities for activity-aware consumers.</t>
+
+      <t>A specific RSS document has a single activity actor that applies to
+      all activities it represents. This actor has no known id, name, url or
+      object type but it is assumed that all activities in the feed share the
+      same actor and therefore consumers MAY use information obtained from
+      another source, such as the user account which is assumed to be the
+      subject of the feed, to populate these properties.</t>
+
+      <section title="Activity Represented as RSS &quot;item&quot;">
+        <t>In this section, "the item" refers to the RSS "item" element which
+        is representing the activity.</t>
+
+        <t>An RSS "item" element represents exactly one activity in terms of
+        its object.</t>
+
+        <t>The first pubDate child element of the item, as defined in <xref
+        target="RSS2"></xref>, represents the time of the represented
+        activity.</t>
+
+        <t>If the item has as direct children one or more activity:verb
+        elements, each of these elements represents a verb for the represented
+        activity. If the entry has no activity:verb child elements, the
+        represented activity is implied to have only the "post" verb as
+        defined in [TODO: write this section and xref].</t>
+
+        <t>The author of the activity is the feed-wide actor as described in
+        <xref target="rss2representation"></xref>.</t>
+
+        <t>The first title child element of the item, as defined in <xref
+        target="RSS2"></xref>, represents the title of the activity's
+        object.</t>
+
+        <t>If and only if the set of verbs for the activity includes the
+        "post" verb, the first pubDate child element of the item, as defined
+        in <xref target="RSS2"></xref>, also represents the publication time
+        of the activity's object.</t>
+
+        <t>The first link child element of the item, as defined in <xref
+        target="RSS2"></xref>, represents the URL of the activity's object. If
+        no such element is present, the first guid child element which is
+        marked as a permalink, as defined in <xref target="RSS2"></xref>,
+        represents the URL of the activity's object.</t>
+
+        <t>The first guid child element of the item, as defined in <xref
+        target="RSS2"></xref>, represents the id of the activity's object if
+        and only if its value conforms to the syntax for an IRI as defined in
+        <xref target="RFC3987"></xref>. If it does not conform to this syntax,
+        the activity's object has no id.</t>
+
+        <t>The activity represented by the item has no target.</t>
+      </section>
+    </section>
+
     <section title="Security Considerations">
       <t>As this specification defines an extension to the Atom Syndication
       Format, it is subject to the same security considerations defined in
@@ -578,16 +644,15 @@
         </front>
       </reference>
 
-      <reference anchor="RSS_2.0"
-                 target="http://www.rssboard.org/rss-specification">
+      <reference anchor="RSS2" target="http://www.rssboard.org/rss-2-0-11">
         <front>
-          <title>Date and Time on the Internet: Timestamps</title>
+          <title>RSS 2.0 Specification</title>
 
-          <author fullname="Graham Klyne" initials="G." surname="Klyne">
+          <author fullname="RSS Advisory Board">
             <organization></organization>
           </author>
 
-          <date month="July" year="2002" />
+          <date day="30" month="March" year="2009" />
         </front>
       </reference>
     </references>
