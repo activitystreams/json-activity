@@ -387,35 +387,51 @@
           object.</t>
         </section>
 
-        <section anchor="objectasauthor"
-                 title="Object represented as atom:author">
-          <t>In this section, "the author element" refers to the atom:author
-          element which is representing the object.</t>
+        <section anchor="objectasauthor" title="Object represented as atom:author">
 
-          <t>The name of the author element, determined as defined in section
-          3.2.1 of <xref target="RFC4287"></xref>, represents the title of the
-          represented object.</t>
+          <t>
+            When used to identify the <xref target="activity.actor">Actor
+            of an Activity</xref>, an Object is represented using the
+            <spanx style="verb">atom:author</spanx> element (see section 4.2.1 of
+            <xref target="RFC4287"/>).  The components of the Object are
+            represented using child elements as follows:
+          </t>
 
-          <t>The first atom:id child element of the author element, processed
-          as defined in section 4.2.6 of <xref target="RFC4287"></xref>,
-          represents the id of hte represented object. The use of atom:id as a
-          child of atom:author is an extension defined by this
-          specification.</t>
+          <list style="hanging">
+            <t hangText="Name">
+              The name of the Object is represented by the content of an
+              <spanx style="verb">atom:name</spanx> element (see section 3.2.1
+              of <xref target="RFC4287"></xref>).
+            </t>
 
-          <t>If the author element contains any atom:link child elements whose
-          link relation types are "alternate", the href attribute of the first
-          such element represents the URL of the represented object.
-          Otherwise, the value of the first atom:uri child element, as defined
-          in section 3.2.2 of <xref target="RFC4287"></xref>, represents the
-          URL of the represented object.</t>
+            <t hangText="ID">
+              The ID of the Object is represented by the content of an
+              <spanx style="verb">atom:id</spanx> element (see section 4.2.6 of
+              <xref target="RFC4287"></xref>).
+            </t>
 
-          <t>Each activity:object-type element which is a direct child of the
-          author element represents an object type for the represented
-          object.</t>
+            <t hangText="URL">
+              The URL of the Object is represented by the href attribute of an
+              <spanx style="verb">atom:link</spanx> element, whose
+              rel attribute value is "alternate" and a whose type attribute value
+              is "text/html".  If no such <spanx style="verb">atom:link</spanx>
+              element is present, consumers SHOULD accept the content of the
+              <spanx style="verb">atom:uri</spanx> element as representing the
+              Object URL.
+            </t>
 
-          <t>Other descendent elements of the entry may represent other
-          extension properties defined by the object types of the represented
-          object.</t>
+            <t hangText="Object Type">
+              Each Object Type URL for the Object is represented as the content
+              of an <spanx style="verb">activty:object-type</spanx> element.
+            </t>
+          </list>
+
+          <t>
+            The <spanx style="verb">atom:author</spanx> element used to represent
+            the Object MAY have additional child elements that represent properties
+            defined by the Object Types of the Object or by other extensions.
+          </t>
+
         </section>
 
         <section anchor="objectasobject"
