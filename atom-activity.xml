@@ -213,11 +213,16 @@
           name, but MUST NOT have more than one.</t>
         </section>
 
-        <section anchor="object.image" title="Representative Image">
+        <section anchor="object.summary" title="Summary">
+          <t>This string value provides a human readable description or
+          summary of the Object.  An Object construct MAY have a summary,
+          but MUST NOT have more than one.</t>
+        </section>
+
+        <section anchor="object.image" title="Image">
           <t>This URI value identifies an image resource which provides a visual
           representation of the object, intended for human consumption.  An
-          Object construct MAY have a representative image, but MUST NOT have
-          more than one.</t>
+          Object construct MAY have a image, but MUST NOT have more than one.</t>
         </section>
 
         <section anchor="object.permalink" title="Permalink URL">
@@ -288,12 +293,12 @@
           section 4.2.1 of <xref target="RFC4287"></xref>, represents the
           actor of the represented activities. This element MUST be processed
           into an object construct as defined in <xref
-          target="objectasauthor"></xref>.</t>
+          target="object-as-author"></xref>.</t>
 
           <t>If the entry element has as a direct child an activity:target
           element then this element represents the target of the represented
           activities. This element MUST be processed into an object construct
-          as defined in <xref target="objectasobject"></xref>.</t>
+          as defined in <xref target="object-as-object"></xref>.</t>
 
           <t>The atom:published chlid element of the entry, as defined in
           section 4.2.9 of <xref target="RFC4287"></xref>, represents the time
@@ -310,7 +315,7 @@
           <t>Each activity:object child element of the entry represents the
           object of an activity whose other properties are represented as
           described above. Each element MUST be processed into an object
-          construct as defined in <xref target="objectasobject"></xref>.</t>
+          construct as defined in <xref target="object-as-object"></xref>.</t>
 
           <t>The set of activities represented by a full activity entry is the
           set of activities created by combining the object represented by
@@ -346,10 +351,10 @@
           element MUST have an atom:author element as its direct child and
           this element represents the actor of the represented activity. This
           appropriate atom:author element MUST be processed into an object
-          construct as defined in <xref target="objectasauthor"></xref>.</t>
+          construct as defined in <xref target="object-as-author"></xref>.</t>
 
           <t>The atom:entry element itself MUST also be processed into an
-          object construct as defined in <xref target="objectasentry"></xref>
+          object construct as defined in <xref target="object-as-entry"></xref>
           and used as the object of the represented activity. If the set of
           verbs for the represented activity does not include the "post" verb
           then the atom:published child element MUST be ignored when doing
@@ -369,8 +374,7 @@
         representation of an activity as described in <xref
         target="activityasentry"></xref>.</t>
 
-        <section anchor="objectasentry"
-                 title="Object represented as atom:entry">
+        <section anchor="object-as-entry" title="Object represented as atom:entry">
           <t>In this section, "the entry" refers to the atom:entry element
           which is representing the object.</t>
 
@@ -399,7 +403,7 @@
           object.</t>
         </section>
 
-        <section anchor="objectasauthor" title="Object represented as atom:author">
+        <section anchor="object-as-author" title="Object represented as atom:author">
 
           <t>
             When used to identify the <xref target="activity.actor">Actor
@@ -446,8 +450,7 @@
 
         </section>
 
-        <section anchor="objectasobject"
-                 title="Object represented as activity:object or activity:target">
+        <section anchor="object-as-object" title="Object represented as activity:object or activity:target">
           <t>In this section, "the object element" refers to the
           activity:object or activity:target element which is representing the
           object.</t>
