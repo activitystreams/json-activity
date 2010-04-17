@@ -124,6 +124,14 @@
           just part of the Atom representation</t>
         </section>
 
+        <section anchor="activity.icon" title="Icon">
+          <t>This URI value identifies an image resource which provides a visual
+          representation of the activity, intended for human consumption.  The
+          image SHOULD be square and SHOULD be suitable for presentation at a
+          small size.  An Activity construct MAY have an icon, but MUST NOT
+          have more than one.</t>
+        </section>
+
         <section anchor="activity.time" title="Time">
           <t>A Date Construct, as defined in section 3.3 of <xref target="RFC4287" />,
           that identifies the time at which the activity
@@ -205,13 +213,17 @@
           name, but MUST NOT have more than one.</t>
         </section>
 
-        <section anchor="object.url" title="URL">
-          <t>This URI value identifies an HTML representation of the
-          object.  An Object construct MAY have a URL, but MUST NOT have more
-          than one.</t>
+        <section anchor="object.image" title="Representative Image">
+          <t>This URI value identifies an image resource which provides a visual
+          representation of the object, intended for human consumption.  An
+          Object construct MAY have a representative image, but MUST NOT have
+          more than one.</t>
+        </section>
 
-          <t><spanx style="strong">TODO:</spanx> this last sentence is
-          confusing because we are talking about a very specific URL.</t>
+        <section anchor="object.permalink" title="Permalink URL">
+          <t>This URI value identifies a resource which provides an HTML
+          representation of the object.  An Object construct MAY have a Permalink
+          URL, but MUST NOT have more than one.</t>
         </section>
 
         <section anchor="object.object-type" title="Object Type">
@@ -417,7 +429,7 @@
               is "text/html".  If no such <spanx style="verb">atom:link</spanx>
               element is present, consumers SHOULD accept the content of the
               <spanx style="verb">atom:uri</spanx> element as representing the
-              Object URL.
+              Object Permalink URL.
             </t>
 
             <t hangText="Object Type">
