@@ -219,7 +219,7 @@
           but MUST NOT have more than one.</t>
         </section>
 
-        <section anchor="object.image" title="Image">
+        <section anchor="object.image" title="Representative Image">
           <t>This URI value identifies an image resource which provides a visual
           representation of the object, intended for human consumption.  An
           Object construct MAY have a image, but MUST NOT have more than one.</t>
@@ -375,36 +375,64 @@
         target="activityasentry"></xref>.</t>
 
         <section anchor="object-as-entry" title="Object represented as atom:entry">
-          <t>In this section, "the entry" refers to the atom:entry element
-          which is representing the object.</t>
+          <t>
+            When used to identify the object of an
+            <xref target="impliedactivityentry">Implied Activity</xref>, an object is
+            represented using the <spanx style="verb">atom:entry</spanx> element.
+            The components of the object are represented using child elements as
+            follows:
+          </t>
 
-          <t>The title of the entry, determined as defined in section 4.2.14
-          of <xref target="RFC4287"></xref>, represents the title of the
-          represented object.</t>
+          <t>
+            <list style="hanging">
+              <t hangText="ID">
+                The <xref target="object.id">ID</xref> of the object is represented by the
+                content of an <spanx style="verb">atom:id</spanx> element (see section
+                4.2.6 of <xref target="RFC4287"></xref>).
+              </t>
 
-          <t>The publication time of the entry as defined in section 4.2.9 of
-          <xref target="RFC4287"></xref>, unless elided from processing as
-          defined in <xref target="impliedactivityentry"></xref>, represents
-          the publication time of the represented object.</t>
+              <t hangText="Name">
+                The <xref target="object.name">name</xref> of the object is represented
+                by the content of an <spanx style="verb">atom:title</spanx> element (see
+                section 3.2.1 of <xref target="RFC4287"></xref>).
+              </t>
 
-          <t>The id of the entry, as defined in section 4.2.6 of <xref
-          target="RFC4287"></xref>, represents the id of the represented
-          object.</t>
+              <t hangText="Summary">
+                The <xref target="object.summary">summary</xref> of the object is represented
+                by the content of an <spanx style="verb">atom:summary</spanx> element (see
+                section 4.2.13 of <xref target="RFC4287"></xref>).
+              </t>
 
-          <t>The href attribute of the first atom:link element in document
-          order that is a child of the entry and whose link relation type is
-          "alternate" represents the URL of the represented object.</t>
+              <t hangText="Representative Image">
+                The <xref target="object.image">representative image</xref> of the object is
+                represented by the href attribute of an <spanx style="verb">atom:link</spanx>
+                element, whose rel attribute value is "preview" and a whose type attribute
+                value is an appropriate image media type.
+              </t>
 
-          <t>Each activity:object-type element which is a direct child of the
-          entry represents an object type for the represented object.</t>
+              <t hangText="Permalink URL">
+                The <xref target="object.permalink">permalink URL</xref> of the object is
+                represented by the href attribute of an <spanx style="verb">atom:link</spanx>
+                element, whose rel attribute value is "alternate" and whose type attribute
+                value is "text/html".
+              </t>
 
-          <t>Other descendent elements of the entry may represent other
-          extension properties defined by the object types of the represented
-          object.</t>
+              <t hangText="Object Type">
+                Each <xref target="object.object-type">object type URL</xref> of the object
+                is represented as the content of an <spanx style="verb">activty:object-type</spanx>
+                element.
+              </t>
+            </list>
+          </t>
+
+          <t>
+            The <spanx style="verb">atom:entry</spanx> element used to represent
+            the object MAY have additional child elements that represent properties
+            defined by the object types of the object or by other extensions.
+          </t>
         </section>
 
         <section anchor="object-as-author" title="Object represented as atom:author">
-
           <t>
             When used to identify the <xref target="activity.actor">Actor
             of an Activity</xref>, an Object is represented using the
@@ -413,6 +441,7 @@
             represented using child elements as follows:
           </t>
 
+          <t>
           <list style="hanging">
             <t hangText="Name">
               The name of the Object is represented by the content of an
@@ -441,6 +470,7 @@
               of an <spanx style="verb">activty:object-type</spanx> element.
             </t>
           </list>
+          </t>
 
           <t>
             The <spanx style="verb">atom:author</spanx> element used to represent
@@ -450,39 +480,36 @@
 
         </section>
 
-        <section anchor="object-as-object" title="Object represented as activity:object or activity:target">
-          <t>In this section, "the object element" refers to the
-          activity:object or activity:target element which is representing the
-          object.</t>
+        <section anchor="object-as-object" title="Object represented as activity:object">
+          <t>
+            When used to identify the <xref target="activity.object">Object of an Activity</xref>,
+            an Object is represented using the <spanx style="verb">activity:object</spanx>
+            element.  The components of the Object are represented using child
+            elements as defined in <xref target="object-as-entry" />.
+          </t>
 
-          <t>The title of the object element, determined in the same way as
-          defined for the atom:entry element in section 4.2.14 of <xref
-          target="RFC4287"></xref>, represents the title of the represented
-          object.</t>
-
-          <t>The publication time of the object element, determined in the
-          same way as as defined for the atom:entry element in section 4.2.9
-          of <xref target="RFC4287"></xref>, represents the publication time
-          of the represented object.</t>
-
-          <t>The id of the entry, determined in the same way as defined for
-          the atom:entry element in section 4.2.6 of <xref
-          target="RFC4287"></xref>, represents the id of the represented
-          object.</t>
-
-          <t>The href attribute of the first atom:link element in document
-          order that is a child of the object entry and whose link relation
-          type is "alternate" represents the URL of the represented
-          object.</t>
-
-          <t>Each activity:object-type element which is a direct child of the
-          object element represents an object type for the represented
-          object.</t>
-
-          <t>Other descendent elements of the entry may represent other
-          extension properties defined by the object types of the represented
-          object.</t>
+          <t>
+            The <spanx style="verb">activity:object</spanx> element used to represent
+            the Object MAY have additional child elements that represent properties
+            defined by the Object Types of the Object or by other extensions.
+          </t>
         </section>
+
+        <section anchor="object-as-target" title="Object represented as activity:target">
+          <t>
+            When used to identify the <xref target="activity.target">Target of an Activity</xref>,
+            an Object is represented using the <spanx style="verb">activity:target</spanx>
+            element.  The components of the Object are represented using child
+            elements as defined in <xref target="object-as-entry" />.
+          </t>
+
+          <t>
+            The <spanx style="verb">activity:target</spanx> element used to represent
+            the Object MAY have additional child elements that represent properties
+            defined by the Object Types of the Object or by other extensions.
+          </t>
+        </section>
+
       </section>
     </section>
 
@@ -589,8 +616,7 @@
         <front>
           <title>The Atom Syndication Format</title>
 
-          <author fullname="Mark Nottingham" initials="M."
-                  surname="Nottingham">
+          <author fullname="Mark Nottingham" initials="M." surname="Nottingham">
             <organization></organization>
           </author>
 
@@ -602,6 +628,7 @@
         </front>
       </reference>
 
+      <!--
       <reference anchor="RFC4685">
         <front>
           <title>Atom Threading Extensions</title>
@@ -613,6 +640,7 @@
           <date month="September" year="2006" />
         </front>
       </reference>
+      -->
 
       <reference anchor="RFC2119">
         <front>
@@ -631,10 +659,15 @@
         <front>
           <title>Uniform Resource Identifiers (URI): Generic Syntax</title>
 
-          <author fullname="Tim Berners-Lee" initials="T." 
-            surname="Berners-Lee" />
-          <author fullname="Roy Fielding" initials="R." surname="Fielding" />
-          <author fullname="Larry Masinter" initials="L." surname="Masinter" />
+          <author fullname="Tim Berners-Lee" initials="T." surname="Berners-Lee">
+            <organization></organization>
+          </author>
+          <author fullname="Roy Fielding" initials="R." surname="Fielding">
+            <organization></organization>
+          </author>
+          <author fullname="Larry Masinter" initials="L." surname="Masinter">
+            <organization></organization>
+          </author>
 
           <date month="January" year="2005" />
         </front>
@@ -656,6 +689,7 @@
         </front>
       </reference>
 
+      <!--
       <reference anchor="RFC3339">
         <front>
           <title>Date and Time on the Internet: Timestamps</title>
@@ -667,6 +701,7 @@
           <date month="July" year="2002" />
         </front>
       </reference>
+      -->
 
       <reference anchor="RSS2" target="http://www.rssboard.org/rss-2-0-11">
         <front>
