@@ -128,8 +128,7 @@
           <t>This URI value identifies an image resource which provides a visual
           representation of the activity, intended for human consumption.  The
           image SHOULD be square and SHOULD be suitable for presentation at a
-          small size.  An Activity construct MAY have an icon, but MUST NOT
-          have more than one.</t>
+          small size.  An Activity construct MAY have zero or one icon.</t>
         </section>
 
         <section anchor="activity.time" title="Time">
