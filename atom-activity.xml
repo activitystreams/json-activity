@@ -148,8 +148,7 @@
 
         <section anchor="activity.verb" title="Verb">
           <t>An absolute URI value that identifies the action of the activity.
-          An Activity construct MUST have at least one verb, and MAY have more
-          than one.</t>
+          An Activity construct MUST have one or more verbs.</t>
 
           <t>If an activity contains more than one verb, all verbs MUST be
           generalizations or specializations of one another. For example, the
