@@ -107,7 +107,7 @@
     <section anchor="concepts" title="Activity Concepts">
       <t>In its simplest form, an activity consists of an actor, a verb, and
       an object. It tells the story of a person performing an action on or
-      with an object -- "Geraldine posted an photo" or "John shared a video".
+      with an object -- "Geraldine posted a photo" or "John shared a video".
       In most cases these elements will be explicitly declared, but they may
       also be implied.</t>
 
@@ -118,10 +118,6 @@
           <t>This absolute URI value conveys a permanent, universally
           unique identifier for the activity.  An Activity construct MUST have
           exactly one ID value.</t>
-
-          <t><spanx style="strong">TODO:</spanx> Still some question as to
-          whether this should be part of the Activity construct, rather than
-          just part of the Atom representation</t>
         </section>
 
         <section anchor="activity.icon" title="Icon">
@@ -178,8 +174,8 @@
           "to". For example, in the activity "John saved a movie to his
           wishlist", the target of the activity is 'wishlist'. The activity
           target MUST NOT be used to identify an indirect object that is not a
-          target of the activity.  An Activity construct MAY have a target, but
-          MUST NOT have more than one.</t>
+          target of the activity.  An Activity construct MAY have a zero or one 
+          target.</t>
         </section>
 
         <section anchor="activity.generator" title="Generator">
@@ -188,8 +184,7 @@
           activity is published.  For example, a third-party application on a
           mobile phone may be used to post a photo to a photo sharing service.
           The activity generator is identified by a name and optional URI.
-          An Activity construct MAY have a generator, but MUST NOT have more
-          than one.</t>
+          An Activity construct MAY have zero or one generator.</t>
         </section>
       </section>
 
@@ -365,40 +360,85 @@
       </section>
 
       <section title="Object Representations">
-        <t>Objects can be represented in a variety of forms depending on
-        context. All of these representations encode the data model described
-        for the object construct in <xref target="object"></xref>. These
-        representations are used in various contexts within the Atom
-        representation of an activity as described in <xref
-        target="activityasentry"></xref>.</t>
+        <t>
+          <xref target="object">Object constructs</xref> are used to identify a number of different
+          components in an activity, including the <xref target="activity.actor">Actor</xref> and
+          <xref target="activity.target">Object</xref> of an activity, among others.  Depending on
+          what an object is used to identify, it is rendered in Atom using a different root
+          element, as defined in <xref target="object-element" />.  The components of the object
+          are represented using child elements as defined in <xref target="object-components" />.
+        </t>
 
-        <section anchor="object-as-entry" title="Object represented as atom:entry">
+        <section anchor="object-element" title="Object element">
           <t>
-            When used to identify the object of an
-            <xref target="impliedactivityentry">Implied Activity</xref>, an object is
-            represented using the <spanx style="verb">atom:entry</spanx> element.
-            The components of the object are represented using child elements as
-            follows:
+            Object constructs can be represented using the following elements:
+          </t>
+
+          <t>
+            <list style="hanging">
+              <t hangText="atom:entry">
+                When used to identify the object of an
+                <xref target="impliedactivityentry">Implied Activity</xref>, an object is
+                represented using the <spanx style="verb">atom:entry</spanx> element, as defined in
+                <xref target="impliedactivityentry" />.
+              </t>
+
+              <t hangText="atom:author">
+                When used to identify the <xref target="activity.actor">Actor of an Activity</xref>,
+                an Object is represented using the <spanx style="verb">atom:author</spanx> element,
+                as defined in <xref target="object-as-author"/>.
+              </t>
+
+              <t hangText="activity:object">
+                When used to identify the <xref target="activity.object">Object of an Activity</xref>,
+                an Object is represented using the <spanx style="verb">activity:object</spanx>
+                element.
+              </t>
+
+              <t hangText="activity:target">
+                When used to identify the <xref target="activity.target">Target of an Activity</xref>,
+                an Object is represented using the <spanx style="verb">activity:target</spanx>
+                element.
+              </t>
+
+              <t hangText="other elements">
+                Other specifications or object types may define additional elements that can be 
+                used to represent objects.
+              </t>
+            </list>
+          </t>
+
+          <t>
+            The element used to represent the Object MAY have additional attributes and child
+            elements that represent properties defined by the Object Types of the Object or by
+            other extensions.
+          </t>
+        </section>
+
+        <section anchor="object-components" title="Object components">
+          <t>
+            Unless specified otherwise, the components of an object are represented using child
+            elements as follows, regardless of the element used to identify the object:
           </t>
 
           <t>
             <list style="hanging">
               <t hangText="ID">
-                The <xref target="object.id">ID</xref> of the object is represented by the
-                content of an <spanx style="verb">atom:id</spanx> element (see section
-                4.2.6 of <xref target="RFC4287"></xref>).
+                The <xref target="object.id">ID</xref> of the object is represented using the
+                <spanx style="verb">atom:id</spanx> element, as defined in section 4.2.6 of
+                <xref target="RFC4287"></xref>.
               </t>
 
               <t hangText="Name">
-                The <xref target="object.name">name</xref> of the object is represented
-                by the content of an <spanx style="verb">atom:title</spanx> element (see
-                section 3.2.1 of <xref target="RFC4287"></xref>).
+                The <xref target="object.name">name</xref> of the object is represented using
+                the <spanx style="verb">atom:title</spanx> element, as defined in section
+                3.2.1 of <xref target="RFC4287"></xref>.
               </t>
 
               <t hangText="Summary">
                 The <xref target="object.summary">summary</xref> of the object is represented
-                by the content of an <spanx style="verb">atom:summary</spanx> element (see
-                section 4.2.13 of <xref target="RFC4287"></xref>).
+                using the <spanx style="verb">atom:summary</spanx> element, as defined in section
+                4.2.13 of <xref target="RFC4287"></xref>).
               </t>
 
               <t hangText="Representative Image">
@@ -422,90 +462,46 @@
               </t>
             </list>
           </t>
-
-          <t>
-            The <spanx style="verb">atom:entry</spanx> element used to represent
-            the object MAY have additional child elements that represent properties
-            defined by the object types of the object or by other extensions.
-          </t>
         </section>
 
         <section anchor="object-as-author" title="Object represented as atom:author">
           <t>
-            When used to identify the <xref target="activity.actor">Actor
-            of an Activity</xref>, an Object is represented using the
-            <spanx style="verb">atom:author</spanx> element (see section 4.2.1 of
-            <xref target="RFC4287"/>).  The components of the Object are
-            represented using child elements as follows:
+            When used to identify the <xref target="activity.actor">Actor of an Activity</xref>,
+            an Object is represented using the <spanx style="verb">atom:author</spanx> element
+            (see section 4.2.1 of <xref target="RFC4287"/>).  The components of the Object are
+            represented using child elements as defined in <xref target="object-components" />,
+            with the following exceptions:
           </t>
 
           <t>
-          <list style="hanging">
-            <t hangText="Name">
-              The name of the Object is represented by the content of an
-              <spanx style="verb">atom:name</spanx> element (see section 3.2.1
-              of <xref target="RFC4287"></xref>).
-            </t>
+            <list style="hanging">
+              <t hangText="Name">
+                The name of the Object is represented using the <spanx style="verb">atom:name</spanx>
+                element, as defined in  section 3.2.1 of <xref target="RFC4287"></xref>.
+              </t>
 
-            <t hangText="ID">
-              The ID of the Object is represented by the content of an
-              <spanx style="verb">atom:id</spanx> element (see section 4.2.6 of
-              <xref target="RFC4287"></xref>).
-            </t>
-
-            <t hangText="URL">
-              The URL of the Object is represented by the href attribute of an
-              <spanx style="verb">atom:link</spanx> element, whose
-              rel attribute value is "alternate" and a whose type attribute value
-              is "text/html".  If no such <spanx style="verb">atom:link</spanx>
-              element is present, consumers SHOULD accept the content of the
-              <spanx style="verb">atom:uri</spanx> element as representing the
-              Object Permalink URL.
-            </t>
-
-            <t hangText="Object Type">
-              Each Object Type URL for the Object is represented as the content
-              of an <spanx style="verb">activty:object-type</spanx> element.
-            </t>
-          </list>
+              <t hangText="URL">
+                The URL of the Object is represented by the href attribute of an
+                <spanx style="verb">atom:link</spanx> element, whose rel attribute value is
+                "alternate" and a whose type attribute value is "text/html".  If no such
+                <spanx style="verb">atom:link</spanx> element is present, consumers SHOULD accept
+                the content of the <spanx style="verb">atom:uri</spanx> element as representing the
+                Object Permalink URL.
+              </t>
+            </list>
           </t>
+        </section>
 
-          <t>
-            The <spanx style="verb">atom:author</spanx> element used to represent
-            the Object MAY have additional child elements that represent properties
-            defined by the Object Types of the Object or by other extensions.
-          </t>
-
+        <section anchor="object-as-entry" title="Object represented as atom:entry">
+          <t>TODO: remove this section, after all xref's are removed</t>
         </section>
 
         <section anchor="object-as-object" title="Object represented as activity:object">
-          <t>
-            When used to identify the <xref target="activity.object">Object of an Activity</xref>,
-            an Object is represented using the <spanx style="verb">activity:object</spanx>
-            element.  The components of the Object are represented using child
-            elements as defined in <xref target="object-as-entry" />.
-          </t>
-
-          <t>
-            The <spanx style="verb">activity:object</spanx> element used to represent
-            the Object MAY have additional child elements that represent properties
-            defined by the Object Types of the Object or by other extensions.
-          </t>
+          <t>TODO: remove this section, after all xref's are removed</t>
         </section>
 
         <section anchor="object-as-target" title="Object represented as activity:target">
-          <t>
-            When used to identify the <xref target="activity.target">Target of an Activity</xref>,
-            an Object is represented using the <spanx style="verb">activity:target</spanx>
-            element.  The components of the Object are represented using child
-            elements as defined in <xref target="object-as-entry" />.
-          </t>
-
-          <t>
-            The <spanx style="verb">activity:target</spanx> element used to represent
-            the Object MAY have additional child elements that represent properties
-            defined by the Object Types of the Object or by other extensions.
-          </t>
+          <t>TODO: remove this section, after all xref's are removed</t>
         </section>
 
       </section>
