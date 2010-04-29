@@ -45,8 +45,8 @@
     <note title="Requirements Language">
       <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
       "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
-      document are to be interpreted as described in 
-      <xref target="RFC2119" />.</t>
+      document are to be interpreted as described in <xref
+      target="RFC2119"></xref>.</t>
     </note>
   </front>
 
@@ -90,18 +90,18 @@
       specification uses the term "attribute," it is referring to an attribute
       information item.</t>
 
-      <t>This specification allows the use of IRIs <xref target="RFC3987" />.
-      Every URI <xref target="RFC3986" /> is also an IRI, so a URI may be used
-      wherever an IRI is named.  When an IRI that is not also a URI is given
-      for dereferencing, it MUST be mapped to a URI using the steps in Section
-      3.1 of <xref target="RFC3987" />. When an IRI is serving as an identifier,
-      it MUST NOT be so mapped.</t>
+      <t>This specification allows the use of IRIs <xref
+      target="RFC3987"></xref>. Every URI <xref target="RFC3986"></xref> is
+      also an IRI, so a URI may be used wherever an IRI is named. When an IRI
+      that is not also a URI is given for dereferencing, it MUST be mapped to
+      a URI using the steps in Section 3.1 of <xref target="RFC3987"></xref>.
+      When an IRI is serving as an identifier, it MUST NOT be so mapped.</t>
 
       <t>The text of this specification provides the sole definition of
       conformance. Examples in this specification are non-normative.</t>
 
       <t>This specification uses "the Atom specification" to refer to <xref
-      target="RFC4287" />.</t>
+      target="RFC4287"></xref>.</t>
     </section>
 
     <section anchor="concepts" title="Activity Concepts">
@@ -115,29 +115,31 @@
         <t>An activity consists of the following logical components:</t>
 
         <section anchor="activity.id" title="ID">
-          <t>This absolute URI value conveys a permanent, universally
-          unique identifier for the activity.  An Activity construct MUST have
-          exactly one ID value.</t>
+          <t>This absolute URI value conveys a permanent, universally unique
+          identifier for the activity. An Activity construct MUST have exactly
+          one ID value.</t>
         </section>
 
         <section anchor="activity.icon" title="Icon">
-          <t>This URI value identifies an image resource which provides a visual
-          representation of the activity, intended for human consumption.  The
-          image SHOULD be square and SHOULD be suitable for presentation at a
-          small size.  An Activity construct MAY have zero or one icon.</t>
+          <t>This URI value identifies an image resource which provides a
+          visual representation of the activity, intended for human
+          consumption. The image SHOULD be square and SHOULD be suitable for
+          presentation at a small size. An Activity construct MAY have zero or
+          one icon.</t>
         </section>
 
         <section anchor="activity.time" title="Time">
-          <t>A Date Construct, as defined in section 3.3 of <xref target="RFC4287" />,
-          that identifies the time at which the activity
-          occurred. It is important to note that this is not necessarily the
-          same as the time at which the activity was published.  An Activity
-          construct MUST have exactly one Time value.</t>
+          <t>A Date Construct, as defined in section 3.3 of <xref
+          target="RFC4287"></xref>, that identifies the time at which the
+          activity occurred. It is important to note that this is not
+          necessarily the same as the time at which the activity was
+          published. An Activity construct MUST have exactly one Time
+          value.</t>
         </section>
 
         <section anchor="activity.actor" title="Actor">
           <t>An <xref target="object">Object Construct</xref> that identifies
-          the entity that performed the activity.  An Activity construct MUST
+          the entity that performed the activity. An Activity construct MUST
           have exactly one actor.</t>
         </section>
 
@@ -162,29 +164,58 @@
 
         <section anchor="activity.object" title="Object">
           <t>This <xref target="object">Object Construct</xref> identifies the
-          primary object of the activity.  An Activity construct MUST have
+          primary object of the activity. An Activity construct MUST have
           exactly one object.</t>
         </section>
 
         <section anchor="activity.target" title="Target">
-          <t>The target of an activity is an <xref target="object">Object Construct</xref> that
-          represents the object to which the activity was performed. The exact
-          meaning of an activity's target is dependent on the verb of the
-          activity, but will often be the object of the English preposition
-          "to". For example, in the activity "John saved a movie to his
-          wishlist", the target of the activity is 'wishlist'. The activity
-          target MUST NOT be used to identify an indirect object that is not a
-          target of the activity.  An Activity construct MAY have a zero or one 
-          target.</t>
+          <t>The target of an activity is an <xref target="object">Object
+          Construct</xref> that represents the object to which the activity
+          was performed. The exact meaning of an activity's target is
+          dependent on the verb of the activity, but will often be the object
+          of the English preposition "to". For example, in the activity "John
+          saved a movie to his wishlist", the target of the activity is
+          'wishlist'. The activity target MUST NOT be used to identify an
+          indirect object that is not a target of the activity. An Activity
+          construct MAY have a zero or one target.</t>
         </section>
 
         <section anchor="activity.generator" title="Generator">
           <t>The generator of an activity identifies that application which
           created it, which may be separate from the service to which the
-          activity is published.  For example, a third-party application on a
+          activity is published. For example, a third-party application on a
           mobile phone may be used to post a photo to a photo sharing service.
-          The activity generator is identified by a name and optional URI.
-          An Activity construct MAY have zero or one generator.</t>
+          The activity generator is identified by a name and optional URI. An
+          Activity construct MAY have zero or one generator.</t>
+        </section>
+
+        <section anchor="activity.permalink" title="Permalink URL">
+          <t>The URL of a HTML page that represents this activity. This
+          property SHOULD NOT be <spanx style="verb">null</spanx></t>
+        </section>
+
+        <section anchor="activity.title" title="Title">
+          <t>An HTML representation of the natural language title for this
+          activity. Consumers MAY use the value of this field, if set, as a
+          fallback for when none of the provided verbs are recognized. This
+          property MAY be <spanx style="verb">null</spanx> if the publisher
+          does not wish to provide a HTML representation.</t>
+        </section>
+
+        <section anchor="activity.body" title="Body">
+          <t>An HTML representation of a natural language describing this
+          activity including visual elements such as thumbnails. Consumers MAY
+          use the value of this field, if set, as a fallback for when none of
+          the provided verbs are recognized. This property MAY be <spanx
+          style="verb">null</spanx> if the publisher does not wish to provide
+          a HTML representation.</t>
+        </section>
+
+        <section title="Privacy">
+          <t>[TODO Review] An array of absolute IRIs which identify the privacy of the activity. 	
+			This property MAY be <spanx style="verb">null</spanx> which denotes the privacy is obtained 
+			from the parent feed. Example: <spanx
+		      style="verb">http://activitystrea.ms/privacy/1.0/public</spanx></t>
         </section>
       </section>
 
@@ -196,41 +227,42 @@
 
         <section anchor="object.id" title="ID">
           <t>The id of an object construct is an absolute URI that uniquely
-          identifies the object.  An Object construct MUST have exactly one
-          ID value.</t>
+          identifies the object. An Object construct MUST have exactly one ID
+          value.</t>
         </section>
 
         <section anchor="object.name" title="Name">
           <t>This string value provides a human readable display name for the
-          object, if the object has a name.  An Object construct MAY have a
+          object, if the object has a name. An Object construct MAY have a
           name, but MUST NOT have more than one.</t>
         </section>
 
         <section anchor="object.summary" title="Summary">
           <t>This string value provides a human readable description or
-          summary of the Object.  An Object construct MAY have a summary,
-          but MUST NOT have more than one.</t>
+          summary of the Object. An Object construct MAY have a summary, but
+          MUST NOT have more than one.</t>
         </section>
 
         <section anchor="object.image" title="Representative Image">
-          <t>This URI value identifies an image resource which provides a visual
-          representation of the object, intended for human consumption.  An
-          Object construct MAY have a image, but MUST NOT have more than one.</t>
+          <t>This URI value identifies an image resource which provides a
+          visual representation of the object, intended for human consumption.
+          An Object construct MAY have a image, but MUST NOT have more than
+          one.</t>
         </section>
 
         <section anchor="object.permalink" title="Permalink URL">
           <t>This URI value identifies a resource which provides an HTML
-          representation of the object.  An Object construct MAY have a Permalink
-          URL, but MUST NOT have more than one.</t>
+          representation of the object. An Object construct MAY have a
+          Permalink URL, but MUST NOT have more than one.</t>
         </section>
 
         <section anchor="object.object-type" title="Object Type">
-          <t>This absolute URI identifies the type of object.  An Object
+          <t>This absolute URI identifies the type of object. An Object
           construct MAY have one or more types.</t>
 
-          <t>If an object contains more than one object type, all types MUST be
-          generalizations or specializations of one another. For example, the
-          general type "article" might be specialized by the type "weblog
+          <t>If an object contains more than one object type, all types MUST
+          be generalizations or specializations of one another. For example,
+          the general type "article" might be specialized by the type "weblog
           entry". If a more specific type is used, publishers SHOULD also
           include all of its more general types so that a consumer may use the
           most specific type it understands.</t>
@@ -275,7 +307,7 @@
         activities can be identified should an entry be referred to by another
         Atom feature which is not aware of the extensions defined in this
         specification. This id is not unique across all activities and has no
-        semantic singificance for Activity Streams processing.</t>
+        semantic significance for Activity Streams processing.</t>
 
         <section anchor="fullactivityentry" title="Full Activity Entry">
           <t>A full activity entry represents a selection of one or more
@@ -293,7 +325,7 @@
           activities. This element MUST be processed into an object construct
           as defined in <xref target="object-as-object"></xref>.</t>
 
-          <t>The atom:published chlid element of the entry, as defined in
+          <t>The atom:published child element of the entry, as defined in
           section 4.2.9 of <xref target="RFC4287"></xref>, represents the time
           of the represented activities.</t>
 
@@ -320,7 +352,7 @@
           <t>An implied activity shorthand entry represents exactly one
           activity in terms of its object.</t>
 
-          <t>The atom:published chlid element of the entry, as defined in
+          <t>The atom:published child element of the entry, as defined in
           section 4.2.9 of <xref target="RFC4287"></xref>, represents the time
           of the represented activity.</t>
 
@@ -347,12 +379,13 @@
           construct as defined in <xref target="object-as-author"></xref>.</t>
 
           <t>The atom:entry element itself MUST also be processed into an
-          object construct as defined in <xref target="object-as-entry"></xref>
-          and used as the object of the represented activity. If the set of
-          verbs for the represented activity does not include the "post" verb
-          then the atom:published child element MUST be ignored when doing
-          this processing, because the date therein represents the date of the
-          activity and not the publication date of the object.</t>
+          object construct as defined in <xref
+          target="object-as-entry"></xref> and used as the object of the
+          represented activity. If the set of verbs for the represented
+          activity does not include the "post" verb then the atom:published
+          child element MUST be ignored when doing this processing, because
+          the date therein represents the date of the activity and not the
+          publication date of the object.</t>
 
           <t>The represented activity of an implied activity shorthand entry
           does not have a target.</t>
@@ -360,150 +393,133 @@
       </section>
 
       <section title="Object Representations">
-        <t>
-          <xref target="object">Object constructs</xref> are used to identify a number of different
-          components in an activity, including the <xref target="activity.actor">Actor</xref> and
-          <xref target="activity.target">Object</xref> of an activity, among others.  Depending on
-          what an object is used to identify, it is rendered in Atom using a different root
-          element, as defined in <xref target="object-element" />.  The components of the object
-          are represented using child elements as defined in <xref target="object-components" />.
-        </t>
+        <t><xref target="object">Object constructs</xref> are used to identify
+        a number of different components in an activity, including the <xref
+        target="activity.actor">Actor</xref> and <xref
+        target="activity.target">Object</xref> of an activity, among others.
+        Depending on what an object is used to identify, it is rendered in
+        Atom using a different root element, as defined in <xref
+        target="object-element"></xref>. The components of the object are
+        represented using child elements as defined in <xref
+        target="object-components"></xref>.</t>
 
         <section anchor="object-element" title="Object element">
-          <t>
-            Object constructs can be represented using the following elements:
-          </t>
+          <t>Object constructs can be represented using the following
+          elements:</t>
 
-          <t>
-            <list style="hanging">
-              <t hangText="atom:entry">
-                When used to identify the object of an
-                <xref target="impliedactivityentry">Implied Activity</xref>, an object is
-                represented using the <spanx style="verb">atom:entry</spanx> element, as defined in
-                <xref target="impliedactivityentry" />.
-              </t>
+          <t><list style="hanging">
+              <t hangText="atom:entry">When used to identify the object of an
+              <xref target="impliedactivityentry">Implied Activity</xref>, an
+              object is represented using the <spanx style="verb">atom:entry</spanx>
+              element, as defined in <xref
+              target="impliedactivityentry"></xref>.</t>
 
-              <t hangText="atom:author">
-                When used to identify the <xref target="activity.actor">Actor of an Activity</xref>,
-                an Object is represented using the <spanx style="verb">atom:author</spanx> element,
-                as defined in <xref target="object-as-author"/>.
-              </t>
+              <t hangText="atom:author">When used to identify the <xref
+              target="activity.actor">Actor of an Activity</xref>, an Object
+              is represented using the <spanx style="verb">atom:author</spanx>
+              element, as defined in <xref
+              target="object-as-author"></xref>.</t>
 
-              <t hangText="activity:object">
-                When used to identify the <xref target="activity.object">Object of an Activity</xref>,
-                an Object is represented using the <spanx style="verb">activity:object</spanx>
-                element.
-              </t>
+              <t hangText="activity:object">When used to identify the <xref
+              target="activity.object">Object of an Activity</xref>, an Object
+              is represented using the <spanx style="verb">activity:object</spanx>
+              element.</t>
 
-              <t hangText="activity:target">
-                When used to identify the <xref target="activity.target">Target of an Activity</xref>,
-                an Object is represented using the <spanx style="verb">activity:target</spanx>
-                element.
-              </t>
+              <t hangText="activity:target">When used to identify the <xref
+              target="activity.target">Target of an Activity</xref>, an Object
+              is represented using the <spanx style="verb">activity:target</spanx>
+              element.</t>
 
-              <t hangText="other elements">
-                Other specifications or object types may define additional elements that can be 
-                used to represent objects.
-              </t>
-            </list>
-          </t>
+              <t hangText="other elements">Other specifications or object
+              types may define additional elements that can be used to
+              represent objects.</t>
+            </list></t>
 
-          <t>
-            The element used to represent the Object MAY have additional attributes and child
-            elements that represent properties defined by the Object Types of the Object or by
-            other extensions.
-          </t>
+          <t>The element used to represent the Object MAY have additional
+          attributes and child elements that represent properties defined by
+          the Object Types of the Object or by other extensions.</t>
         </section>
 
         <section anchor="object-components" title="Object components">
-          <t>
-            Unless specified otherwise, the components of an object are represented using child
-            elements as follows, regardless of the element used to identify the object:
-          </t>
+          <t>Unless specified otherwise, the components of an object are
+          represented using child elements as follows, regardless of the
+          element used to identify the object:</t>
 
-          <t>
-            <list style="hanging">
-              <t hangText="ID">
-                The <xref target="object.id">ID</xref> of the object is represented using the
-                <spanx style="verb">atom:id</spanx> element, as defined in section 4.2.6 of
-                <xref target="RFC4287"></xref>.
-              </t>
+          <t><list style="hanging">
+              <t hangText="ID">The <xref target="object.id">ID</xref> of the
+              object is represented using the <spanx style="verb">atom:id</spanx>
+              element, as defined in section 4.2.6 of <xref
+              target="RFC4287"></xref>.</t>
 
-              <t hangText="Name">
-                The <xref target="object.name">name</xref> of the object is represented using
-                the <spanx style="verb">atom:title</spanx> element, as defined in section
-                3.2.1 of <xref target="RFC4287"></xref>.
-              </t>
+              <t hangText="Name">The <xref target="object.name">name</xref> of
+              the object is represented using the <spanx style="verb">atom:title</spanx>
+              element, as defined in section 3.2.1 of <xref
+              target="RFC4287"></xref>.</t>
 
-              <t hangText="Summary">
-                The <xref target="object.summary">summary</xref> of the object is represented
-                using the <spanx style="verb">atom:summary</spanx> element, as defined in section
-                4.2.13 of <xref target="RFC4287"></xref>).
-              </t>
+              <t hangText="Summary">The <xref
+              target="object.summary">summary</xref> of the object is
+              represented using the <spanx style="verb">atom:summary</spanx>
+              element, as defined in section 4.2.13 of <xref
+              target="RFC4287"></xref>).</t>
 
-              <t hangText="Representative Image">
-                The <xref target="object.image">representative image</xref> of the object is
-                represented by the href attribute of an <spanx style="verb">atom:link</spanx>
-                element, whose rel attribute value is "preview" and a whose type attribute
-                value is an appropriate image media type.
-              </t>
+              <t hangText="Representative Image">The <xref
+              target="object.image">representative image</xref> of the object
+              is represented by the href attribute of an <spanx style="verb">atom:link</spanx>
+              element, whose rel attribute value is "preview" and a whose type
+              attribute value is an appropriate image media type.</t>
 
-              <t hangText="Permalink URL">
-                The <xref target="object.permalink">permalink URL</xref> of the object is
-                represented by the href attribute of an <spanx style="verb">atom:link</spanx>
-                element, whose rel attribute value is "alternate" and whose type attribute
-                value is "text/html".
-              </t>
+              <t hangText="Permalink URL">The <xref
+              target="object.permalink">permalink URL</xref> of the object is
+              represented by the href attribute of an <spanx style="verb">atom:link</spanx>
+              element, whose rel attribute value is "alternate" and whose type
+              attribute value is "text/html".</t>
 
-              <t hangText="Object Type">
-                Each <xref target="object.object-type">object type URL</xref> of the object
-                is represented as the content of an <spanx style="verb">activty:object-type</spanx>
-                element.
-              </t>
-            </list>
-          </t>
+              <t hangText="Object Type">Each <xref
+              target="object.object-type">object type URL</xref> of the object
+              is represented as the content of an <spanx style="verb">activty:object-type</spanx>
+              element.</t>
+            </list></t>
         </section>
 
-        <section anchor="object-as-author" title="Object represented as atom:author">
-          <t>
-            When used to identify the <xref target="activity.actor">Actor of an Activity</xref>,
-            an Object is represented using the <spanx style="verb">atom:author</spanx> element
-            (see section 4.2.1 of <xref target="RFC4287"/>).  The components of the Object are
-            represented using child elements as defined in <xref target="object-components" />,
-            with the following exceptions:
-          </t>
+        <section anchor="object-as-author"
+                 title="Object represented as atom:author">
+          <t>When used to identify the <xref target="activity.actor">Actor of
+          an Activity</xref>, an Object is represented using the <spanx
+          style="verb">atom:author</spanx> element (see section 4.2.1 of <xref
+          target="RFC4287"></xref>). The components of the Object are
+          represented using child elements as defined in <xref
+          target="object-components"></xref>, with the following
+          exceptions:</t>
 
-          <t>
-            <list style="hanging">
-              <t hangText="Name">
-                The name of the Object is represented using the <spanx style="verb">atom:name</spanx>
-                element, as defined in  section 3.2.1 of <xref target="RFC4287"></xref>.
-              </t>
+          <t><list style="hanging">
+              <t hangText="Name">The name of the Object is represented using
+              the <spanx style="verb">atom:name</spanx> element, as defined in
+              section 3.2.1 of <xref target="RFC4287"></xref>.</t>
 
-              <t hangText="URL">
-                The URL of the Object is represented by the href attribute of an
-                <spanx style="verb">atom:link</spanx> element, whose rel attribute value is
-                "alternate" and a whose type attribute value is "text/html".  If no such
-                <spanx style="verb">atom:link</spanx> element is present, consumers SHOULD accept
-                the content of the <spanx style="verb">atom:uri</spanx> element as representing the
-                Object Permalink URL.
-              </t>
-            </list>
-          </t>
+              <t hangText="URL">The URL of the Object is represented by the
+              href attribute of an <spanx style="verb">atom:link</spanx>
+              element, whose rel attribute value is "alternate" and a whose
+              type attribute value is "text/html". If no such <spanx
+              style="verb">atom:link</spanx> element is present, consumers
+              SHOULD accept the content of the <spanx style="verb">atom:uri</spanx>
+              element as representing the Object Permalink URL.</t>
+            </list></t>
         </section>
 
-        <section anchor="object-as-entry" title="Object represented as atom:entry">
+        <section anchor="object-as-entry"
+                 title="Object represented as atom:entry">
           <t>TODO: remove this section, after all xref's are removed</t>
         </section>
 
-        <section anchor="object-as-object" title="Object represented as activity:object">
+        <section anchor="object-as-object"
+                 title="Object represented as activity:object">
           <t>TODO: remove this section, after all xref's are removed</t>
         </section>
 
-        <section anchor="object-as-target" title="Object represented as activity:target">
+        <section anchor="object-as-target"
+                 title="Object represented as activity:target">
           <t>TODO: remove this section, after all xref's are removed</t>
         </section>
-
       </section>
     </section>
 
@@ -610,7 +626,8 @@
         <front>
           <title>The Atom Syndication Format</title>
 
-          <author fullname="Mark Nottingham" initials="M." surname="Nottingham">
+          <author fullname="Mark Nottingham" initials="M."
+                  surname="Nottingham">
             <organization></organization>
           </author>
 
@@ -653,12 +670,15 @@
         <front>
           <title>Uniform Resource Identifiers (URI): Generic Syntax</title>
 
-          <author fullname="Tim Berners-Lee" initials="T." surname="Berners-Lee">
+          <author fullname="Tim Berners-Lee" initials="T."
+                  surname="Berners-Lee">
             <organization></organization>
           </author>
+
           <author fullname="Roy Fielding" initials="R." surname="Fielding">
             <organization></organization>
           </author>
+
           <author fullname="Larry Masinter" initials="L." surname="Masinter">
             <organization></organization>
           </author>
