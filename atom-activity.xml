@@ -70,25 +70,52 @@
     </section>
 
     <section title="Notational Conventions">
-      <t>The XML Namespaces URI [W3C.REC-xml-names-19990114] for the XML
-      elements and attributes described in this specification is: <spanx
-      style="verb">http://activitystrea.ms/spec/1.0/</spanx>.</t>
+      <t>This document refers to elements in a number of XML namespaces as
+      defined in <xref target="xml-names"></xref>. For brevity, these elements
+      shall be referred to using prefixes rather than their full namespace
+      URIs. The aliases used within this document are listed in the following
+      table. The choices of namespace prefix are arbitrary and are not
+      semantically significant.</t>
 
-      <t>In this document, this namespace is referred to as "the AtomActivity
-      namespace", and the namespace prefix "activity:" is used for the above
-      namespace URI. The namespace prefix "atom:" is used for the namespace
-      URI <spanx style="verb">http://www.w3.org/2005/Atom</spanx>. The
-      namespace prefix "thr:" is used for the namespace URI <spanx
-      style="verb">http://purl.org/syndication/thread/1.0</spanx>. The choices
-      of namespace prefix are arbitrary and not semantically significant.</t>
+      <texttable>
+        <ttcol>Alias</ttcol>
+
+        <ttcol>Namespace URI</ttcol>
+
+        <ttcol>Specification</ttcol>
+
+        <c><spanx style="verb">atom:</spanx></c>
+
+        <c><spanx style="verb">http://www.w3.org/2005/Atom</spanx></c>
+
+        <c><xref target="RFC4287">The Atom Syndication Format</xref></c>
+
+        <c><spanx style="verb">thr:</spanx></c>
+
+        <c><spanx style="verb">http://purl.org/syndication/thread/1.0</spanx></c>
+
+        <c><xref target="RFC4685">Atom Threading Extensions</xref></c>
+
+        <c><spanx style="verb">activity:</spanx></c>
+
+        <c><spanx style="verb">http://activitystrea.ms/spec/1.0/</spanx></c>
+
+        <c>Atom Activity Extensions</c>
+
+        <c><spanx style="verb">media:</spanx></c>
+
+        <c><spanx style="verb">http://purl.org/syndication/atommedia</spanx></c>
+
+        <c>Atom Media Extensions</c>
+      </texttable>
 
       <t>This specification uses a shorthand form of terms from the XML
-      Infoset [W3C.REC-xml-infoset-20040204]. The phrase "Information Item" is
-      omitted when naming element and attribute information items. Therefore,
-      when this specification uses the term "element," it is referring to an
-      element information item in infoset terms. Likewise, when this
-      specification uses the term "attribute," it is referring to an attribute
-      information item.</t>
+      Infoset <xref target="xml-infoset"></xref>. The phrase "Information
+      Item" is omitted when naming element and attribute information items.
+      Therefore, when this specification uses the term "element," it is
+      referring to an element information item in infoset terms. Likewise,
+      when this specification uses the term "attribute," it is referring to an
+      attribute information item.</t>
 
       <t>This specification allows the use of IRIs <xref
       target="RFC3987"></xref>. Every URI <xref target="RFC3986"></xref> is
@@ -639,7 +666,6 @@
         </front>
       </reference>
 
-      <!--
       <reference anchor="RFC4685">
         <front>
           <title>Atom Threading Extensions</title>
@@ -651,7 +677,6 @@
           <date month="September" year="2006" />
         </front>
       </reference>
-      -->
 
       <reference anchor="RFC2119">
         <front>
@@ -726,6 +751,30 @@
           </author>
 
           <date day="30" month="March" year="2009" />
+        </front>
+      </reference>
+
+      <reference anchor="xml-names">
+        <front>
+          <title>Namespaces in XML 1.0 (Third Edition)</title>
+
+          <author fullname="Tim Bray" initials="T." surname="Bray">
+            <organization></organization>
+          </author>
+
+          <date day="8" month="December" year="2009" />
+        </front>
+      </reference>
+
+      <reference anchor="xml-infoset">
+        <front>
+          <title>XML Information Set (Second Edition)</title>
+
+          <author fullname="John Cowan" initials="J." surname="Cowan">
+            <organization></organization>
+          </author>
+
+          <date day="4" month="February" year="2004" />
         </front>
       </reference>
     </references>
