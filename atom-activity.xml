@@ -474,25 +474,25 @@
           <t><list style="hanging">
               <t hangText="atom:entry">When used to identify the object of an
               <xref target="impliedactivityentry">Implied Activity</xref>, an
-              object is represented using the <spanx style="verb">atom:entry</spanx>
-              element, as defined in <xref
-              target="impliedactivityentry"></xref>.</t>
+              Object Construct is represented using the <spanx style="verb">atom:entry</spanx>
+              element, using the elements defined in <xref
+              target="object-components"></xref>.</t>
 
               <t hangText="atom:author">When used to identify the <xref
               target="activity.actor">Actor of an Activity</xref>, an Object
-              is represented using the <spanx style="verb">atom:author</spanx>
+              Construct is represented using the <spanx style="verb">atom:author</spanx>
               element, as defined in <xref
               target="object-as-author"></xref>.</t>
 
               <t hangText="activity:object">When used to identify the <xref
               target="activity.object">Object of an Activity</xref>, an Object
-              is represented using the <spanx style="verb">activity:object</spanx>
+              Construct is represented using the <spanx style="verb">activity:object</spanx>
               element as defined in <xref
               target="xml.activity.object"></xref>.</t>
 
               <t hangText="activity:target">When used to identify the <xref
               target="activity.target">Target of an Activity</xref>, an Object
-              is represented using the <spanx style="verb">activity:target</spanx>
+              Construct is represented using the <spanx style="verb">activity:target</spanx>
               element as defined in <xref
               target="xml.activity.target"></xref>.</t>
 
