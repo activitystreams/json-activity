@@ -237,7 +237,12 @@
         <t>An object construct is a thing, real or imaginary, which
         participates in an activity. It may be the entity performing the
         activity, or the entity on which the activity was performed. An object
-        consists of the following logical components:</t>
+        consists of the logical components defined in the following sections.
+        Certain object types may further refine the meaning of these
+        components, or they may define additional components. If an object
+        type defines an additional component then it SHOULD also define the
+        representation of that component in one or more serialization
+        formats.</t>
 
         <section anchor="object.id" title="ID">
           <t>The id of an object construct is an absolute URI that uniquely
@@ -292,6 +297,25 @@
           example, when forming an activity sentence a consumer might say
           "Johan posted 'My Cat'" rather than "Johan posted a photo: 'My
           Cat'".</t>
+        </section>
+
+        <section anchor="object.in-reply-to-object" title="In Reply To Object">
+          <t>An <xref target="object">Object Construct</xref> that this object
+          is a response to. An Object Construct MAY have one In Reply To
+          Object, but MUST NOT have more than one.</t>
+
+          <t>This is not set unless the Object Construct is a response to
+          another Object Construct.</t>
+        </section>
+
+        <section anchor="object.attached-object" title="Attached Object">
+          <t>An <xref target="object">Object Construct</xref> that is attached
+          to this object. An Object Construct MAY have one or more attached
+          objects.</t>
+
+          <t>An attached Object Construct can be used when one object is used
+          as a wrapper or carrier for another object, similar to the concept
+          of attached files in an email message.</t>
         </section>
       </section>
     </section>
@@ -431,7 +455,7 @@
 
           <t>The atom:entry element itself MUST also be processed into an
           object construct as defined in <xref
-          target="object-as-entry"></xref> and used as the object of the
+          target="object-components"></xref> and used as the object of the
           represented activity. If the set of verbs for the represented
           activity does not include the "post" verb then the atom:published
           child element MUST be ignored when doing this processing, because
@@ -459,29 +483,42 @@
           elements:</t>
 
           <t><list style="hanging">
-              <t hangText="atom:entry">When used to identify the object of an
-              <xref target="impliedactivityentry">Implied Activity</xref>, an
-              Object Construct is represented using the <spanx style="verb">atom:entry</spanx>
+              <t hangText="atom:entry">When used to describe the object of an
+              Implied Activity as defined in <xref
+              target="impliedactivityentry"></xref>, an Object Construct is
+              represented using the <spanx style="verb">atom:entry</spanx>
               element, using the elements defined in <xref
               target="object-components"></xref>.</t>
 
-              <t hangText="atom:author">When used to identify the <xref
-              target="activity.actor">Actor of an Activity</xref>, an Object
-              Construct is represented using the <spanx style="verb">atom:author</spanx>
-              element, as defined in <xref
+              <t hangText="atom:author">When used to describe the <xref
+              target="activity.actor">Actor of an Activity Construct</xref>,
+              an Object Construct is represented using the <spanx
+              style="verb">atom:author</spanx> element, as defined in <xref
               target="object-as-author"></xref>.</t>
 
-              <t hangText="activity:object">When used to identify the <xref
-              target="activity.object">Object of an Activity</xref>, an Object
-              Construct is represented using the <spanx style="verb">activity:object</spanx>
-              element as defined in <xref
+              <t hangText="activity:object">When used to describe the <xref
+              target="activity.object">Object of an Activity Construct</xref>,
+              an Object Construct is represented using the <spanx
+              style="verb">activity:object</spanx> element as defined in <xref
               target="xml.activity.object"></xref>.</t>
 
-              <t hangText="activity:target">When used to identify the <xref
-              target="activity.target">Target of an Activity</xref>, an Object
-              Construct is represented using the <spanx style="verb">activity:target</spanx>
-              element as defined in <xref
+              <t hangText="activity:target">When used to describe the <xref
+              target="activity.target">Target of an Activity Construct</xref>,
+              an Object Construct is represented using the <spanx
+              style="verb">activity:target</spanx> element as defined in <xref
               target="xml.activity.target"></xref>.</t>
+
+              <t hangText="thr:in-reply-to">When used to describe the <xref
+              target="object.in-reply-to-object">In Reply To Object of an
+              Object Construct</xref>, an Object Construct is represented
+              using the thr:in-reply-to element as defined in <xref
+              target="object-as-in-reply-to"></xref>.</t>
+
+              <t hangText="atom:link">When used to describe <xref
+              target="object.attached-object">Attached Object of an Object
+              Construct</xref>, an Object Construct is represented using the
+              atom:link element as defined in <xref
+              target="object-as-link"></xref>.</t>
 
               <t hangText="other elements">Other specifications or object
               types may define additional elements that can be used to
@@ -539,21 +576,22 @@
 
         <section anchor="object-as-author"
                  title="Object represented as atom:author">
-          <t>When used to identify the <xref target="activity.actor">Actor of
-          an Activity</xref>, an Object is represented using the <spanx
-          style="verb">atom:author</spanx> element (see section 4.2.1 of <xref
-          target="RFC4287"></xref>). The components of the Object are
-          represented using child elements as defined in <xref
+          <t>When used to describe the <xref target="activity.actor">Actor of
+          an Activity</xref>, an Object Construct is represented using the
+          <spanx style="verb">atom:author</spanx> element (see section 4.2.1
+          of <xref target="RFC4287"></xref>). The components of the Object
+          Construct are represented using child elements as defined in <xref
           target="object-components"></xref>, with the following
           exceptions:</t>
 
           <t><list style="hanging">
-              <t hangText="Name">The name of the Object is represented using
-              the <spanx style="verb">atom:name</spanx> element, as defined in
-              section 3.2.1 of <xref target="RFC4287"></xref>.</t>
+              <t hangText="Name">The name of the Object Construct is
+              represented using the <spanx style="verb">atom:name</spanx>
+              element, as defined in section 3.2.1 of <xref
+              target="RFC4287"></xref>.</t>
 
-              <t hangText="URL">The URL of the Object is represented by the
-              href attribute of an <spanx style="verb">atom:link</spanx>
+              <t hangText="Permalink URL">The URL of the Object Construct is
+              represented by the href attribute of an <spanx style="verb">atom:link</spanx>
               element, whose rel attribute value is "alternate" and a whose
               type attribute value is "text/html". If no such <spanx
               style="verb">atom:link</spanx> element is present, consumers
@@ -562,19 +600,59 @@
             </list></t>
         </section>
 
-        <section anchor="object-as-entry"
-                 title="Object represented as atom:entry">
-          <t>TODO: remove this section, after all xref's are removed</t>
+        <section anchor="object-as-in-reply-to"
+                 title="Object represented as thr:in-reply-to">
+          <t>When used to describe the <xref
+          target="object.in-reply-to-object">In Reply To Object of an Object
+          Construct</xref>, an Object Construct is represented using the
+          thr:in-reply-to element as defined in section 3 of <xref
+          target="RFC4685"></xref>. The components of the Object Construct are
+          represented using child elements as defined in <xref
+          target="object-components"></xref>, with the following
+          exceptions:</t>
+
+          <t><list style="hanging">
+              <t hangText="ID">The ID of the Object Construct is represented
+              by the ref attribute of the <spanx style="verb">thr:in-reply-to</spanx>
+              element.</t>
+
+              <t hangText="Permalink URL">The URL of the Object Construct is
+              represented by the href attribute of the <spanx style="verb">thr:in-reply-to</spanx>
+              element.</t>
+            </list></t>
+
+          <t><xref target="RFC4685"></xref> does not define any child elements
+          for <spanx style="verb">thr:in-reply-to</spanx>. When used with no
+          child elements, the element represents an Object Construct with an
+          ID and URL but with no other components set.</t>
         </section>
 
-        <section anchor="object-as-object"
-                 title="Object represented as activity:object">
-          <t>TODO: remove this section, after all xref's are removed</t>
-        </section>
+        <section anchor="object-as-link"
+                 title="Object represented as atom:link">
+          <t>When used to describe an <xref
+          target="object.attached-object">Attached Object of an Object
+          Construct</xref>, an Object Construct is represented using an
+          atom:link element as defined in section 4.2.7 of <xref
+          target="RFC4287"></xref>.</t>
 
-        <section anchor="object-as-target"
-                 title="Object represented as activity:target">
-          <t>TODO: remove this section, after all xref's are removed</t>
+          <t>When used to describe an Attached Object, the atom:link element
+          should have a link relation type of "related".</t>
+
+          <t>The components of the Object Construct are represented using
+          child elements as defined in <xref
+          target="object-components"></xref>, with the following
+          exceptions:</t>
+
+          <t><list style="hanging">
+              <t hangText="Permalink URL">The URL of the Object Construct is
+              represented by the href attribute of the <spanx style="verb">atom:link</spanx>
+              element.</t>
+            </list></t>
+
+          <t><xref target="RFC4287"></xref> does not define any child elements
+          for <spanx style="verb">atom:link</spanx>. When used with no child
+          elements, the element represents an Object Construct with a URL but
+          with no other components set.</t>
         </section>
       </section>
     </section>
