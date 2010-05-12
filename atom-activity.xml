@@ -321,58 +321,94 @@
         target="RFC4287"></xref> is a representation of one or more activities
         as defined in <xref target="activity"></xref>.</t>
 
-        <t>If the atom:entry contains at least one activity:verb element and
-        at least one activity:object element then it is a full activity entry
-        and MUST be processed as described in <xref
-        target="fullactivityentry"></xref>. Otherwise the entry is an implied
-        activity shorthand entry and MUST be processed as described in <xref
-        target="impliedactivityentry"></xref>.</t>
+        <t>If the atom:entry contains at least one activity:object element
+        then it is a Full Activity Entry and MUST be interpreted as described
+        in <xref target="fullactivityentry"></xref>. Otherwise the entry is an
+        Implied Activity Shorthand Entry and MUST be interpreted as described
+        in <xref target="impliedactivityentry"></xref>.</t>
 
         <t>Although there is not a one-to-one mapping between an Atom entry
         and an activity, consumers SHOULD retain the value of the atom:id
         element from which each activity was produced such that these
         activities can be identified should an entry be referred to by another
-        Atom feature which is not aware of the extensions defined in this
-        specification. This id is not unique across all activities and has no
-        semantic significance for Activity Streams processing.</t>
+        Atom feature which is not aware of the activity streams data model
+        defined in this specification. This id is not unique across all
+        activities and has no semantic significance for Activity Streams
+        processing.</t>
 
         <section anchor="fullactivityentry" title="Full Activity Entry">
-          <t>A full activity entry represents a selection of one or more
-          activities which refer to different objects but all share the same
-          values for the other activity properties.</t>
+          <t>A Full Activity Entry represents a selection of one or more
+          Activity Constructs which have differing Objects but all share the
+          same values for the other Activity Construct properties. An activity
+          is produced for each <spanx style="verb">activity:object</spanx>
+          child element of the Full Activity Entry. In this section, "the
+          entry" shall refer to the <spanx style="verb">atom:entry</spanx>
+          element that is a Full Activity Entry.</t>
 
-          <t>The atom:author element which applies to the entry, as defined by
-          section 4.2.1 of <xref target="RFC4287"></xref>, represents the
-          actor of the represented activities. This element MUST be processed
-          into an object construct as defined in <xref
-          target="object-as-author"></xref>.</t>
+          <t>The components of the Activity Constructs are represented in a
+          Full Activity Entry as follows:</t>
 
-          <t>If the entry element has as a direct child an activity:target
-          element then this element represents the target of the represented
-          activities. This element MUST be processed into an object construct
-          as defined in <xref target="object-as-object"></xref>.</t>
+          <t><list style="hanging">
+              <t hangText="Actor">The <xref
+              target="activity.actor">Actor</xref> of each of the Activity
+              Constructs is represented by the atom:author element that
+              applies to the entry, as defined by section 4.2.1 of <xref
+              target="RFC4287"></xref>. The representation of an Object
+              Construct as an atom:author element is defined in <xref
+              target="object-as-author"></xref>.</t>
 
-          <t>The atom:published child element of the entry, as defined in
-          section 4.2.9 of <xref target="RFC4287"></xref>, represents the time
-          of the represented activities.</t>
+              <t hangText="Object">Each <spanx style="verb">activity:object</spanx>
+              child element of the entry, as defined in <xref
+              target="xml.activity.object"></xref>, represents the <xref
+              target="activity.object">Object</xref> of its respective
+              Activity Construct.</t>
 
-          <t>Each activity:verb child element of the entry, as defined in
-          <xref target="xml.activity.verb"></xref>, represents a verb for the
-          represented activities.</t>
+              <t hangText="Target">The <xref
+              target="activity.target">Target</xref> of each of the Activity
+              Constructs is represented by the first activity:target child
+              element of the entry, as defined in <xref
+              target="xml.activity.target"></xref>. If no such element is
+              present, the Activity Constructs have no Target.</t>
 
-          <t>If the entry has as a direct child an atom:generator element then
-          it MUST be processed as defined in section 4.2.4 of <xref
-          target="RFC4287"></xref> and its name and URI used for the generator
-          property of the represented activities.</t>
+              <t hangText="Time">The <xref target="activity.time">Time</xref>
+              of each of the Activity Constructs is represented by the
+              atom:published child element of the entry, as defined in section
+              4.2.9 of <xref target="RFC4287"></xref>.</t>
 
-          <t>Each activity:object child element of the entry represents the
-          object of an activity whose other properties are represented as
-          described above. Each element MUST be processed into an object
-          construct as defined in <xref target="object-as-object"></xref>.</t>
+              <t hangText="Title">If the entry has exactly one <spanx
+              style="verb">activity:object</spanx> child element, the the
+              <xref target="activity.title">Title</xref> of each of the single
+              Activity Construct represented by the entry is represented by
+              the <spanx style="verb">atom:title</spanx> child element as
+              defined in section 3.2.1 of <xref target="RFC4287"></xref>. If
+              there are multiple <spanx style="verb">activity:object</spanx>
+              child elements then this property is not set for any of the
+              Activity Constructs represented by the entry.</t>
+
+              <t hangText="Body">If the entry has exactly one <spanx
+              style="verb">activity:object</spanx> child element, the the
+              <xref target="activity.body">Body</xref> of each of the single
+              Activity Construct represented by the entry is represented by
+              the <spanx style="verb">atom:content</spanx> child element as
+              defined in section 4.1.3 of <xref target="RFC4287"></xref>. If
+              there are multiple <spanx style="verb">activity:object</spanx>
+              child elements then this property is not set for any of the
+              Activity Constructs represented by the entry.</t>
+            </list></t>
 
           <t>The set of activities represented by a full activity entry is the
-          set of activities created by combining the object represented by
-          each activity:object element with the other common properties.</t>
+          set of activities created by combining the Object Construct
+          represented by each <spanx style="verb">activity:object</spanx>
+          element with the other common properties.</t>
+
+          <t>For entries that have multiple <spanx style="verb">activity:object</spanx>
+          child elements, publishers SHOULD also include in the entry <spanx
+          style="verb">atom:title</spanx>. <spanx style="verb">atom:content</spanx>
+          and <spanx style="verb">atom:link</spanx> elements that describe the
+          entire set of activities represented by the entry in a form that is
+          suitable for consumption by an Atom processor that does not accept
+          the Activity Streams extensions. These elements have no meaning for
+          activity streams processing.</t>
         </section>
 
         <section anchor="impliedactivityentry"
