@@ -239,10 +239,10 @@
         </section>
 
         <section title="Privacy">
-          <t>[TODO Review] An array of absolute IRIs which identify the privacy of the activity. 	
-			This property MAY be <spanx style="verb">null</spanx> which denotes the privacy is obtained 
-			from the parent feed. Example: <spanx
-		      style="verb">http://activitystrea.ms/privacy/1.0/public</spanx></t>
+          <t>[TODO Review] An array of absolute IRIs which identify the
+          privacy of the activity. This property MAY be <spanx style="verb">null</spanx>
+          which denotes the privacy is obtained from the parent feed. Example:
+          <spanx style="verb">http://activitystrea.ms/privacy/1.0/public</spanx></t>
         </section>
       </section>
 
@@ -671,7 +671,7 @@
         <t>An <spanx style="verb">activity:object-type</spanx> element
         represents one of the Object Types of an Object Construct as defined
         in <xref target="object.object-type"></xref>. Its content is an IRI
-        that identifies the object type. </t>
+        that identifies the object type.</t>
       </section>
 
       <section anchor="xml.activity.verb" title="The activity:verb Element">
