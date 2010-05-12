@@ -478,7 +478,8 @@
         represented using child elements as defined in <xref
         target="object-components"></xref>.</t>
 
-        <section anchor="object-element" title="Object element">
+        <section anchor="object-element"
+                 title="Object Construct Representations">
           <t>Object constructs can be represented using the following
           elements:</t>
 
@@ -532,45 +533,62 @@
           Object Type or extension.</t>
         </section>
 
-        <section anchor="object-components" title="Object components">
-          <t>Unless specified otherwise, the components of an object are
-          represented using child elements as follows, regardless of the
-          element used to identify the object:</t>
+        <section anchor="object-components"
+                 title="Common Representation for Object Construct Components">
+          <t>Unless specified otherwise, the components of an Object
+          Constructs are represented using child elements of the
+          representative element as follows, regardless of the type of element
+          used to describe the Object Construct:</t>
 
           <t><list style="hanging">
               <t hangText="ID">The <xref target="object.id">ID</xref> of the
-              object is represented using the <spanx style="verb">atom:id</spanx>
+              Object Construct is represented using the <spanx style="verb">atom:id</spanx>
               element, as defined in section 4.2.6 of <xref
               target="RFC4287"></xref>.</t>
 
               <t hangText="Name">The <xref target="object.name">name</xref> of
-              the object is represented using the <spanx style="verb">atom:title</spanx>
-              element, as defined in section 3.2.1 of <xref
-              target="RFC4287"></xref>.</t>
+              the Object Construct is represented using the <spanx
+              style="verb">atom:title</spanx> element, as defined in section
+              3.2.1 of <xref target="RFC4287"></xref>.</t>
 
               <t hangText="Summary">The <xref
-              target="object.summary">summary</xref> of the object is
-              represented using the <spanx style="verb">atom:summary</spanx>
+              target="object.summary">summary</xref> of the Object Construct
+              is represented using the <spanx style="verb">atom:summary</spanx>
               element, as defined in section 4.2.13 of <xref
               target="RFC4287"></xref>).</t>
 
               <t hangText="Representative Image">The <xref
-              target="object.image">representative image</xref> of the object
-              is represented by the href attribute of an <spanx style="verb">atom:link</spanx>
-              element, whose rel attribute value is "preview" and a whose type
-              attribute value is an appropriate image media type.</t>
+              target="object.image">representative image</xref> of the Object
+              Construct is represented by the href attribute of an <spanx
+              style="verb">atom:link</spanx> element, whose rel attribute
+              value is "preview" and a whose type attribute value is an
+              appropriate image media type.</t>
 
               <t hangText="Permalink URL">The <xref
-              target="object.permalink">permalink URL</xref> of the object is
-              represented by the href attribute of an <spanx style="verb">atom:link</spanx>
-              element, whose rel attribute value is "alternate" and whose type
-              attribute value is "text/html".</t>
+              target="object.permalink">permalink URL</xref> of the Object
+              Construct is represented by the href attribute of an <spanx
+              style="verb">atom:link</spanx> element, whose rel attribute
+              value is "alternate" and whose type attribute value is
+              "text/html".</t>
 
               <t hangText="Object Type">Each <xref
-              target="object.object-type">object type URL</xref> of the object
-              is represented by an <spanx style="verb">activity:object-type</spanx>
+              target="object.object-type">object type URL</xref> of the Object
+              Construct is represented by an <spanx style="verb">activity:object-type</spanx>
               element as defined in <xref
               target="xml.activity.object-type"></xref>.</t>
+
+              <t hangText="In Reply To Object">The <xref
+              target="object.in-reply-to-object">In Reply To Object</xref> of
+              the Object Construct is represented by the first <spanx
+              style="verb">thr:in-reply-to</spanx> child element, which
+              represents an Object Construct as defined in <xref
+              target="object-as-in-reply-to"></xref>.</t>
+
+              <t hangText="Attached Object">Each <xref
+              target="object.attached-object">Attached Object</xref> is
+              represented by an atom:link child element whose link relation
+              type is "related", which represents an Object Construct as
+              defined in <xref target="object-as-link"></xref>.</t>
             </list></t>
         </section>
 
