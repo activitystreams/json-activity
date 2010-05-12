@@ -231,13 +231,6 @@
           style="verb">null</spanx> if the publisher does not wish to provide
           a HTML representation.</t>
         </section>
-
-        <section title="Privacy">
-          <t>[TODO Review] An array of absolute IRIs which identify the
-          privacy of the activity. This property MAY be <spanx style="verb">null</spanx>
-          which denotes the privacy is obtained from the parent feed. Example:
-          <spanx style="verb">http://activitystrea.ms/privacy/1.0/public</spanx></t>
-        </section>
       </section>
 
       <section anchor="object" title="The Object Construct">
