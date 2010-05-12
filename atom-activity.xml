@@ -435,8 +435,7 @@
           elements, each of these elements represents a verb for the
           represented activity. If the entry has no activity:verb child
           elements, the represented activity is implied to have only the
-          "post" verb as defined in [<spanx style="strong">TODO:</spanx> write
-          this section and xref].</t>
+          "post" verb as defined in <xref target="post-verb"></xref>.</t>
 
           <t>If the entry has as a direct child an atom:generator element then
           it MUST be processed as defined in section 4.2.4 of <xref
@@ -711,8 +710,8 @@
         elements as defined in <xref target="xml.activity.verb"></xref>, each
         of these elements represents a verb for the represented activity. If
         the entry has no activity:verb child elements, the represented
-        activity is implied to have only the "post" verb as defined in [TODO:
-        write this section and xref].</t>
+        activity is implied to have only the "post" verb as defined in <xref
+        target="post-verb"></xref>.</t>
 
         <t>The author of the activity is the feed-wide actor as described in
         <xref target="rss2representation"></xref>.</t>
@@ -722,9 +721,10 @@
         object.</t>
 
         <t>If and only if the set of verbs for the activity includes the
-        "post" verb, the first pubDate child element of the item, as defined
-        in <xref target="RSS2"></xref>, also represents the publication time
-        of the activity's object.</t>
+        "post" verb as defined in <xref target="post-verb"></xref>, the first
+        pubDate child element of the item, as defined in <xref
+        target="RSS2"></xref>, also represents the publication time of the
+        activity's object.</t>
 
         <t>The first link child element of the item, as defined in <xref
         target="RSS2"></xref>, represents the URL of the activity's object. If
@@ -789,6 +789,28 @@
         section, as well as any extension elements defined by the Atom
         serializations of the object types listed for the object.</t>
       </section>
+    </section>
+
+    <section anchor="post-verb" title="The &quot;Post&quot; Verb">
+      <t>This specificiation defines one initial verb and defers to other
+      specifications to define the full schema of verb and object types.</t>
+
+      <t>The "Post" verb describes the act of authoring an object and then
+      publishing it online. The verb URI for the "Post" verb is <spanx
+      style="verb">http://activitystrea.ms/schema/1.0/post</spanx>.</t>
+
+      <t>The actor of an Activity Construct using the "Post" verb is an Object
+      Construct representing the person or object that authored and posted the
+      item represented by the object of the Activity Construct.</t>
+
+      <t>The target of the Activity Construct, if present, represents the item
+      into which the object is posted. For example, this could represent a
+      blog that the author has posted in.</t>
+
+      <t>It is not appropriate to use the target of the Activity Construct to
+      represent an Object Construct that this new Object Construct is posted
+      in reply to. Instead, this SHOULD be represented as the In Reply To
+      Object component of the new object.</t>
     </section>
 
     <section title="Security Considerations">
