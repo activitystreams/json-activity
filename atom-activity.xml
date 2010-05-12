@@ -141,12 +141,6 @@
       <section anchor="activity" title="The Activity Construct">
         <t>An activity consists of the following logical components:</t>
 
-        <section anchor="activity.id" title="ID">
-          <t>This absolute URI value conveys a permanent, universally unique
-          identifier for the activity. An Activity construct MUST have exactly
-          one ID value.</t>
-        </section>
-
         <section anchor="activity.icon" title="Icon">
           <t>This URI value identifies an image resource which provides a
           visual representation of the activity, intended for human
