@@ -356,8 +356,9 @@
           section 4.2.9 of <xref target="RFC4287"></xref>, represents the time
           of the represented activities.</t>
 
-          <t>Each activity:verb child element of the entry represents a verb
-          for the represented activities.</t>
+          <t>Each activity:verb child element of the entry, as defined in
+          <xref target="xml.activity.verb"></xref>, represents a verb for the
+          represented activities.</t>
 
           <t>If the entry has as a direct child an atom:generator element then
           it MUST be processed as defined in section 4.2.4 of <xref
@@ -450,12 +451,14 @@
               <t hangText="activity:object">When used to identify the <xref
               target="activity.object">Object of an Activity</xref>, an Object
               is represented using the <spanx style="verb">activity:object</spanx>
-              element.</t>
+              element as defined in <xref
+              target="xml.activity.object"></xref>.</t>
 
               <t hangText="activity:target">When used to identify the <xref
               target="activity.target">Target of an Activity</xref>, an Object
               is represented using the <spanx style="verb">activity:target</spanx>
-              element.</t>
+              element as defined in <xref
+              target="xml.activity.target"></xref>.</t>
 
               <t hangText="other elements">Other specifications or object
               types may define additional elements that can be used to
@@ -464,7 +467,9 @@
 
           <t>The element used to represent the Object MAY have additional
           attributes and child elements that represent properties defined by
-          the Object Types of the Object or by other extensions.</t>
+          the Object Types of the Object or by other extensions. These
+          extensions are defined by the Atom representation provided for the
+          Object Type or extension.</t>
         </section>
 
         <section anchor="object-components" title="Object components">
@@ -503,8 +508,9 @@
 
               <t hangText="Object Type">Each <xref
               target="object.object-type">object type URL</xref> of the object
-              is represented as the content of an <spanx style="verb">activty:object-type</spanx>
-              element.</t>
+              is represented by an <spanx style="verb">activity:object-type</spanx>
+              element as defined in <xref
+              target="xml.activity.object-type"></xref>.</t>
             </list></t>
         </section>
 
@@ -583,10 +589,11 @@
         activity.</t>
 
         <t>If the item has as direct children one or more activity:verb
-        elements, each of these elements represents a verb for the represented
-        activity. If the entry has no activity:verb child elements, the
-        represented activity is implied to have only the "post" verb as
-        defined in [TODO: write this section and xref].</t>
+        elements as defined in <xref target="xml.activity.verb"></xref>, each
+        of these elements represents a verb for the represented activity. If
+        the entry has no activity:verb child elements, the represented
+        activity is implied to have only the "post" verb as defined in [TODO:
+        write this section and xref].</t>
 
         <t>The author of the activity is the feed-wide actor as described in
         <xref target="rss2representation"></xref>.</t>
@@ -613,6 +620,55 @@
         the activity's object has no id.</t>
 
         <t>The activity represented by the item has no target.</t>
+      </section>
+    </section>
+
+    <section title="Elements used in XML Representations">
+      <t>This specification defines several extension elements in the XML
+      namespace <spanx style="verb">http://activitystrea.ms/spec/1.0/</spanx>.
+      These elements are used in both the Atom and RSS serializations and MAY
+      be used by other XML-based serializations of the activity streams data
+      model defined by other specifications.</t>
+
+      <section anchor="xml.activity.object-type"
+               title="The activity:object-type Element">
+        <t>An <spanx style="verb">activity:object-type</spanx> element
+        represents one of the Object Types of an Object Construct as defined
+        in <xref target="object.object-type"></xref>. Its content is an IRI
+        that identifies the object type. </t>
+      </section>
+
+      <section anchor="xml.activity.verb" title="The activity:verb Element">
+        <t>An <spanx style="verb">activity:verb</spanx> element represents one
+        of the Verbs of an Activity Construct as defined in <xref
+        target="activity.verb"></xref>. Its content is an IRI that identifies
+        the verb.</t>
+      </section>
+
+      <section anchor="xml.activity.object"
+               title="The activity:object Element">
+        <t>An <spanx style="verb">activity:object</spanx> element represents
+        the Object Construct that is the Object of an Activity Construct as
+        defined in <xref target="activity.object"></xref>.</t>
+
+        <t>The content model of an <spanx style="verb">activity:object</spanx>
+        element includes the elements indicated in <xref
+        target="object-components"></xref>, with the meanings defined in that
+        section, as well as any extension elements defined by the Atom
+        serializations of the object types listed for the object.</t>
+      </section>
+
+      <section anchor="xml.activity.target"
+               title="The activity:target Element">
+        <t>An <spanx style="verb">activity:target</spanx> element represents
+        the Object Construct that is the Target of an Activity Construct as
+        defined in <xref target="activity.target"></xref>.</t>
+
+        <t>The content model of an <spanx style="verb">activity:target</spanx>
+        element includes the elements indicated in <xref
+        target="object-components"></xref>, with the meanings defined in that
+        section, as well as any extension elements defined by the Atom
+        serializations of the object types listed for the object.</t>
       </section>
     </section>
 
