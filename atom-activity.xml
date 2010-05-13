@@ -722,50 +722,113 @@
       another source, such as the user account which is assumed to be the
       subject of the feed, to populate these properties.</t>
 
-      <section title="Activity Represented as RSS &quot;item&quot;">
+      <section anchor="rss.activity"
+               title="Activity Construct Represented as RSS &quot;item&quot;">
         <t>In this section, "the item" refers to the RSS "item" element which
         is representing the activity.</t>
 
-        <t>An RSS "item" element represents exactly one activity in terms of
-        its object.</t>
+        <t>An RSS "item" element represents exactly one Activity Construct in
+        terms of its object. The item actually directly represents both the
+        Object Construct that is the object of the Activity Construct and the
+        Activity Construct itself via different subsets of the child
+        elements.</t>
 
-        <t>The first pubDate child element of the item, as defined in <xref
-        target="RSS2"></xref>, represents the time of the represented
-        activity.</t>
+        <t>The components of the Activity Construct are represented in an RSS
+        item as follows:</t>
 
-        <t>If the item has as direct children one or more activity:verb
-        elements as defined in <xref target="xml.activity.verb"></xref>, each
-        of these elements represents a verb for the represented activity. If
-        the entry has no activity:verb child elements, the represented
-        activity is implied to have only the "post" verb as defined in <xref
-        target="post-verb"></xref>.</t>
+        <t><list style="hanging">
+            <t hangText="Actor">The <xref target="activity.actor">Actor</xref>
+            of the Activity Construct is the feed-wide actor as described in
+            <xref target="rss2representation"></xref>.</t>
 
-        <t>The author of the activity is the feed-wide actor as described in
-        <xref target="rss2representation"></xref>.</t>
+            <t hangText="Object">The <xref
+            target="activity.object">Object</xref> of the Activity Construct
+            is represented by the item itself. The representation of an Object
+            Construct as an RSS item element is defined in <xref
+            target="rss.object"></xref>.</t>
 
-        <t>The first title child element of the item, as defined in <xref
-        target="RSS2"></xref>, represents the title of the activity's
-        object.</t>
+            <t hangText="Target">The Activity Construct does not have a <xref
+            target="activity.target">Target</xref>.</t>
 
-        <t>If and only if the set of verbs for the activity includes the
-        "post" verb as defined in <xref target="post-verb"></xref>, the first
-        pubDate child element of the item, as defined in <xref
-        target="RSS2"></xref>, also represents the publication time of the
-        activity's object.</t>
+            <t hangText="Verb">Each <xref target="activity.verb">verb
+            URI</xref> of the Activity Construct is represented by an <spanx
+            style="verb">activity:verb</spanx> child element as defined in
+            <xref target="xml.activity.verb"></xref>. If the item has no
+            <spanx style="verb">activity:verb</spanx> child elements then the
+            Activity Construct has only the "Post" verb as defined in <xref
+            target="post-verb"></xref>.</t>
 
-        <t>The first link child element of the item, as defined in <xref
-        target="RSS2"></xref>, represents the URL of the activity's object. If
-        no such element is present, the first guid child element which is
-        marked as a permalink, as defined in <xref target="RSS2"></xref>,
-        represents the URL of the activity's object.</t>
+            <t hangText="Time">The <xref target="activity.time">Time</xref> of
+            each of the Activity Constructs is represented by the pubDate
+            child element of the item, as defined in <xref
+            target="RSS2"></xref>.</t>
 
-        <t>The first guid child element of the item, as defined in <xref
-        target="RSS2"></xref>, represents the id of the activity's object if
-        and only if its value conforms to the syntax for an IRI as defined in
-        <xref target="RFC3987"></xref>. If it does not conform to this syntax,
-        the activity's object has no id.</t>
+            <t hangText="Title">The Activity Construct does not have a <xref
+            target="activity.title">Title</xref>.</t>
 
-        <t>The activity represented by the item has no target.</t>
+            <t hangText="Body">The Activity Construct does not have a <xref
+            target="activity.body">Body</xref>.</t>
+          </list></t>
+      </section>
+
+      <section anchor="rss.object"
+               title="Object Construct Represented as RSS &quot;item&quot;">
+        <t>The components of an Object Construct are represented using child
+        elements of an RSS <spanx style="verb">item</spanx> element as
+        follows:</t>
+
+        <t><list style="hanging">
+            <t hangText="ID">The <xref target="object.id">ID</xref> of the
+            Object Construct is represented using the RSS <spanx style="verb">guid</spanx>
+            element, as defined in <xref target="RSS2"></xref>, if and only if
+            its value conforms to the syntax of an IRI as defined in <xref
+            target="RFC3987"></xref>. If the value is not a valid IRI then the
+            Object Construct has no ID.</t>
+
+            <t hangText="Name">The <xref target="object.name">name</xref> of
+            the Object Construct is represented using the RSS <spanx
+            style="verb">title</spanx> element, as defined in <xref
+            target="RSS2"></xref>.</t>
+
+            <t hangText="Summary">The Object Construct has no <xref
+            target="object.summary">summary</xref>.</t>
+
+            <t hangText="Representative Image">The <xref
+            target="object.image">representative image</xref> of the Object
+            Construct is represented by the href attribute of an <spanx
+            style="verb">atom:link</spanx> element, whose rel attribute value
+            is "preview" and a whose type attribute value is an appropriate
+            image media type.</t>
+
+            <t hangText="Permalink URL">The <xref
+            target="object.permalink">permalink URL</xref> of the Object
+            Construct is represented by the first RSS <spanx style="verb">link</spanx>
+            child element, as defined in <xref target="RSS2"></xref>. If no
+            such element is present, the value of the first <spanx
+            style="verb">guid</spanx> child element that is marked as a
+            permalink as defined in <xref target="RSS2"></xref> represents the
+            Permalink URL. If neither element is present, the Object Construct
+            has no Permalink URL.</t>
+
+            <t hangText="Object Type">Each <xref
+            target="object.object-type">object type URL</xref> of the Object
+            Construct is represented by an <spanx style="verb">activity:object-type</spanx>
+            element as defined in <xref
+            target="xml.activity.object-type"></xref>.</t>
+
+            <t hangText="In Reply To Object">The <xref
+            target="object.in-reply-to-object">In Reply To Object</xref> of
+            the Object Construct is represented by the first <spanx
+            style="verb">thr:in-reply-to</spanx> child element, which
+            represents an Object Construct as defined in <xref
+            target="object-as-in-reply-to"></xref>.</t>
+
+            <t hangText="Attached Object">Each <xref
+            target="object.attached-object">Attached Object</xref> is
+            represented by an atom:link child element whose link relation type
+            is "related", which represents an Object Construct as defined in
+            <xref target="object-as-link"></xref>.</t>
+          </list></t>
       </section>
     </section>
 
