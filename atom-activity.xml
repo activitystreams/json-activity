@@ -561,10 +561,10 @@
 
         <section anchor="object-components"
                  title="Common Representation for Object Construct Components">
-          <t>Unless specified otherwise, the components of an Object
-          Constructs are represented using child elements of the
-          representative element as follows, regardless of the type of element
-          used to describe the Object Construct:</t>
+          <t>Unless specified otherwise, the components of an Object Construct
+          are represented using child elements of the representative element
+          as follows, regardless of the type of element used to describe the
+          Object Construct:</t>
 
           <t><list style="hanging">
               <t hangText="ID">The <xref target="object.id">ID</xref> of the
