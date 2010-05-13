@@ -465,7 +465,10 @@
               <t hangText="Verb">Each <xref target="activity.verb">verb
               URI</xref> of the Activity Construct is represented by an <spanx
               style="verb">activity:verb</spanx> child element as defined in
-              <xref target="xml.activity.verb"></xref>.</t>
+              <xref target="xml.activity.verb"></xref>. If the entry has no
+              <spanx style="verb">activity:verb</spanx> child elements then
+              the Activity Construct has only the "Post" verb as defined in
+              <xref target="post-verb"></xref>.</t>
 
               <t hangText="Time">The <xref target="activity.time">Time</xref>
               of each of the Activity Constructs is represented by the
