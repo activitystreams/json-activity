@@ -246,8 +246,11 @@
 
         <section anchor="object.id" title="ID">
           <t>The id of an object construct is an absolute URI that uniquely
-          identifies the object. An Object construct MUST have exactly one ID
-          value.</t>
+          identifies the object. An Object construct SHOULD have exactly one
+          ID value. If an object construct does not have an ID value consumers
+          MAY use the Permalink URL as a weaker identifier, but must in this
+          case allow for the fact that Permalink URL is not defined to be
+          unique across all objects and be prepared to handle duplicates.</t>
         </section>
 
         <section anchor="object.name" title="Name">
