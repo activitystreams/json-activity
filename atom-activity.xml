@@ -804,34 +804,38 @@
       be applied to other serializations with a similar data model to
       JSON.</t>
 
-      <t>In the JSON object structures defined in the following subsections,
-      absent properties may be represented either by an explicit declaration
-      of the property whose value is null or by omitting the property
-      declaration altogether at the option of the publisher; these two
-      representations are semantically equivalent.</t>
+      <t>In order to avoid confusion with the Object Construct concept in the
+      Activity Streams data model, in this section the term "dictionary" will
+      be used to refer to the JSON object data type.</t>
+
+      <t>In the JSON dictionary structures defined in the following
+      subsections, absent properties may be represented either by an explicit
+      declaration of the property whose value is null or by omitting the
+      property declaration altogether at the option of the publisher; these
+      two representations are semantically equivalent.</t>
 
       <section anchor="json.activity"
                title="Activity Construct represented as JSON object">
-        <t>An Activity Construct is represented in JSON as a JSON object. The
-        components of the Activity Construct are represented in this JSON as
-        follows:</t>
+        <t>An Activity Construct is represented in JSON as a JSON dictionary.
+        The components of the Activity Construct are represented in this JSON
+        as follows:</t>
 
         <t><list style="hanging">
             <t hangText="Actor">The <xref target="activity.actor">Actor</xref>
             of the Activity Construct is represented by a property named
-            <spanx style="verb">actor</spanx> whose value is a JSON object as
-            described in <xref target="json.object"></xref>.</t>
+            <spanx style="verb">actor</spanx> whose value is a JSON dictionary
+            as described in <xref target="json.object"></xref>.</t>
 
             <t hangText="Object">The <xref
             target="activity.object">Object</xref> of the Activity Construct
             is represented by a property named <spanx style="verb">object</spanx>
-            whose value is a JSON object as described in <xref
+            whose value is a JSON dictionary as described in <xref
             target="json.object"></xref>.</t>
 
             <t hangText="Target">The <xref
             target="activity.target">Target</xref> of the Activity Construct
             is represented by a property named <spanx style="verb">target</spanx>
-            whose value is a JSON object as described in <xref
+            whose value is a JSON dictionary as described in <xref
             target="json.object"></xref>.</t>
 
             <t hangText="Verb">The set of <xref
@@ -864,9 +868,9 @@
 
       <section anchor="json.object"
                title="Object Construct represented as JSON object">
-        <t>An Object Construct is represented in JSON as a JSON object. The
-        components of the Object Construct are represented in this JSON as
-        follows:</t>
+        <t>An Object Construct is represented in JSON as a JSON dictionary.
+        The components of the Object Construct are represented in this
+        dictionary as follows:</t>
 
         <t><list style="hanging">
             <t hangText="ID">The <xref target="object.id">ID</xref> of the
@@ -903,14 +907,14 @@
             <t hangText="In Reply To Object">The <xref
             target="object.in-reply-to-object">In Reply To Object</xref> of
             the Object Construct is represented by a property called <spanx
-            style="verb">inReplyTo</spanx> whose value is a JSON object as
+            style="verb">inReplyTo</spanx> whose value is a JSON dictionary as
             described in <xref target="json.object"></xref>.</t>
 
             <t hangText="Attached Object">Thee set of <xref
             target="object.attached-object">Attached Objects</xref> of the
             Object Construct is represented by a property called <spanx
             style="verb">attachedObjects</spanx> whose value is a JSON array
-            of JSON objects as described in <xref
+            of JSON dictionaries as described in <xref
             target="json.object"></xref>.</t>
           </list></t>
       </section>
