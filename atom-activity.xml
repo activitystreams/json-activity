@@ -891,54 +891,75 @@
       <section anchor="json.object"
                title="Object Construct represented as JSON object">
         <t>An Object Construct is represented in JSON as a JSON dictionary.
-        The components of the Object Construct are represented in this
-        dictionary as follows:</t>
+        The primary representation of an Object Construct is a Full Object
+        Dictionary as defined in <xref target="json.object.full"></xref>.</t>
 
-        <t><list style="hanging">
-            <t hangText="ID">The <xref target="object.id">ID</xref> of the
-            Object Construct is represented by a property named <spanx
-            style="verb">id</spanx> whose value is a JSON string containing
-            the ID.</t>
+        <section anchor="json.object.full" title="Full Object Dictionary">
+          <t>The components of the Object Construct are represented in this
+          dictionary as follows:</t>
 
-            <t hangText="Name">The <xref target="object.name">name</xref> of
-            the Object Construct is represented by a property named <spanx
-            style="verb">displayName</spanx> whose value is a JSON string
-            containing the name.</t>
+          <t><list style="hanging">
+              <t hangText="ID">The <xref target="object.id">ID</xref> of the
+              Object Construct is represented by a property named <spanx
+              style="verb">id</spanx> whose value is a JSON string containing
+              the ID.</t>
 
-            <t hangText="Summary">The <xref
-            target="object.summary">summary</xref> of the Object Construct is
-            represented by a property called <spanx style="verb">summary</spanx>
-            whose value is a JSON string containing the summary.</t>
+              <t hangText="Name">The <xref target="object.name">name</xref> of
+              the Object Construct is represented by a property named <spanx
+              style="verb">displayName</spanx> whose value is a JSON string
+              containing the name.</t>
 
-            <t hangText="Representative Image">The <xref
-            target="object.image">representative image</xref> of the Object
-            Construct is represented by a property called <spanx style="verb">image</spanx>
-            whose value is a JSON string containing the image URL.</t>
+              <t hangText="Summary">The <xref
+              target="object.summary">summary</xref> of the Object Construct
+              is represented by a property called <spanx style="verb">summary</spanx>
+              whose value is a JSON string containing the summary.</t>
 
-            <t hangText="Permalink URL">The <xref
-            target="object.permalink">permalink URL</xref> of the Object
-            Construct is represented by a property named <spanx style="verb">link</spanx>
-            whose value is a JSON string containing the permalink URL.</t>
+              <t hangText="Representative Image">The <xref
+              target="object.image">representative image</xref> of the Object
+              Construct is represented by a property called <spanx
+              style="verb">image</spanx> whose value is a JSON string
+              containing the image URL.</t>
 
-            <t hangText="Object Type">The set of <xref
-            target="object.object-type">object type URLs</xref> of the Object
-            Construct is represented by a property named <spanx style="verb">objectTypes</spanx>
-            whose value is a JSON array of JSON string values containing the
-            object type URIs.</t>
+              <t hangText="Permalink URL">The <xref
+              target="object.permalink">permalink URL</xref> of the Object
+              Construct is represented by a property named <spanx
+              style="verb">link</spanx> whose value is a JSON string
+              containing the permalink URL.</t>
 
-            <t hangText="In Reply To Object">The <xref
-            target="object.in-reply-to-object">In Reply To Object</xref> of
-            the Object Construct is represented by a property called <spanx
-            style="verb">inReplyTo</spanx> whose value is a JSON dictionary as
-            described in <xref target="json.object"></xref>.</t>
+              <t hangText="Object Type">The set of <xref
+              target="object.object-type">object type URLs</xref> of the
+              Object Construct is represented by a property named <spanx
+              style="verb">objectTypes</spanx> whose value is a JSON array of
+              JSON string values containing the object type URIs.</t>
 
-            <t hangText="Attached Object">Thee set of <xref
-            target="object.attached-object">Attached Objects</xref> of the
-            Object Construct is represented by a property called <spanx
-            style="verb">attachedObjects</spanx> whose value is a JSON array
-            of JSON dictionaries as described in <xref
-            target="json.object"></xref>.</t>
-          </list></t>
+              <t hangText="In Reply To Object">The <xref
+              target="object.in-reply-to-object">In Reply To Object</xref> of
+              the Object Construct is represented by a property called <spanx
+              style="verb">inReplyTo</spanx> whose value is a JSON dictionary
+              as described in <xref target="json.object"></xref>.</t>
+
+              <t hangText="Attached Object">Thee set of <xref
+              target="object.attached-object">Attached Objects</xref> of the
+              Object Construct is represented by a property called <spanx
+              style="verb">attachedObjects</spanx> whose value is a JSON array
+              of JSON dictionaries as described in <xref
+              target="json.object"></xref>.</t>
+            </list></t>
+        </section>
+
+        <section title="Object Dictionary with Implied In Reply To Object">
+          <t>The components of the Object Construct are represented in JSON as
+          defined in <xref target="json.object.full"></xref> except for the
+          following exception:</t>
+
+          <t><list style="hanging">
+              <t hangText="In Reply To Object">The In Reply To Object
+              Component is not explicitly represented inside the JSON
+              dictionary, and is instead implied by context. The contextual
+              object is defined as part of the definition of any property
+              which uses this representation for its value.</t>
+            </list></t>
+        </section>
       </section>
     </section>
 
