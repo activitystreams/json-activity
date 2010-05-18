@@ -817,53 +817,75 @@
       <section anchor="json.activity"
                title="Activity Construct represented as JSON object">
         <t>An Activity Construct is represented in JSON as a JSON dictionary.
-        The components of the Activity Construct are represented in this JSON
-        as follows:</t>
+        The primary representation of an Activity Construct in JSON is a Full
+        Activity Dictionary as described in <xref
+        target="json.activity.full"></xref>.</t>
 
-        <t><list style="hanging">
-            <t hangText="Actor">The <xref target="activity.actor">Actor</xref>
-            of the Activity Construct is represented by a property named
-            <spanx style="verb">actor</spanx> whose value is a JSON dictionary
-            as described in <xref target="json.object"></xref>.</t>
+        <section anchor="json.activity.full" title="Full Activity Dictionary">
+          <t>The components of the Activity Construct are represented in this
+          JSON as follows:</t>
 
-            <t hangText="Object">The <xref
-            target="activity.object">Object</xref> of the Activity Construct
-            is represented by a property named <spanx style="verb">object</spanx>
-            whose value is a JSON dictionary as described in <xref
-            target="json.object"></xref>.</t>
+          <t><list style="hanging">
+              <t hangText="Actor">The <xref
+              target="activity.actor">Actor</xref> of the Activity Construct
+              is represented by a property named <spanx style="verb">actor</spanx>
+              whose value is a JSON dictionary as described in <xref
+              target="json.object"></xref>.</t>
 
-            <t hangText="Target">The <xref
-            target="activity.target">Target</xref> of the Activity Construct
-            is represented by a property named <spanx style="verb">target</spanx>
-            whose value is a JSON dictionary as described in <xref
-            target="json.object"></xref>.</t>
+              <t hangText="Object">The <xref
+              target="activity.object">Object</xref> of the Activity Construct
+              is represented by a property named <spanx style="verb">object</spanx>
+              whose value is a JSON dictionary as described in <xref
+              target="json.object"></xref>.</t>
 
-            <t hangText="Verb">The set of <xref
-            target="activity.verb">verbs</xref> of the Activity Construct is
-            represented by a property named <spanx style="verb">verbs</spanx>
-            whose value is a JSON array of JSON string values containing the
-            verb URIs.</t>
+              <t hangText="Target">The <xref
+              target="activity.target">Target</xref> of the Activity Construct
+              is represented by a property named <spanx style="verb">target</spanx>
+              whose value is a JSON dictionary as described in <xref
+              target="json.object"></xref>.</t>
 
-            <t hangText="Time">The <xref target="activity.time">Time</xref> of
-            the Activity Construct is represented by a property named <spanx
-            style="verb">postedTime</spanx> whose value is a JSON string
-            containing a timestamp in W3CDTF format as described in [TODO:
-            xref W3CDTF spec].</t>
+              <t hangText="Verb">The set of <xref
+              target="activity.verb">verbs</xref> of the Activity Construct is
+              represented by a property named <spanx style="verb">verbs</spanx>
+              whose value is a JSON array of JSON string values containing the
+              verb URIs.</t>
 
-            <t hangText="Title">The <xref target="activity.title">Title</xref>
-            of the Activity Construct is represented by a property named
-            <spanx style="verb">title</spanx> whose value is a JSON string
-            containing the title value. This string MUST be a HTML fragment
-            that would be valid in an inline context as described in [TODO:
-            what can we reference for this definition?].</t>
+              <t hangText="Time">The <xref target="activity.time">Time</xref>
+              of the Activity Construct is represented by a property named
+              <spanx style="verb">postedTime</spanx> whose value is a JSON
+              string containing a timestamp in W3CDTF format as described in
+              [TODO: xref W3CDTF spec].</t>
 
-            <t hangText="Body">The <xref target="activity.body">Body</xref> of
-            the Activity Construct is represented by a property named <spanx
-            style="verb">body</spanx> whose value is a JSON string containing
-            the body value. This string MUST be a HTML fragment that would be
-            valid in a block context as described in [TODO: what can we
-            reference for this definition?].</t>
-          </list></t>
+              <t hangText="Title">The <xref
+              target="activity.title">Title</xref> of the Activity Construct
+              is represented by a property named <spanx style="verb">title</spanx>
+              whose value is a JSON string containing the title value. This
+              string MUST be a HTML fragment that would be valid in an inline
+              context as described in [TODO: what can we reference for this
+              definition?].</t>
+
+              <t hangText="Body">The <xref target="activity.body">Body</xref>
+              of the Activity Construct is represented by a property named
+              <spanx style="verb">body</spanx> whose value is a JSON string
+              containing the body value. This string MUST be a HTML fragment
+              that would be valid in a block context as described in [TODO:
+              what can we reference for this definition?].</t>
+            </list></t>
+        </section>
+
+        <section title="Activity Dictionary with Implied Object">
+          <t>The components of the Activity Construct are represented in JSON
+          as defined in <xref target="json.activity.full"></xref> except for
+          the following exception:</t>
+
+          <t><list style="hanging">
+              <t hangText="Object">The Object Component is not explicitly
+              represented inside the JSON dictionary, and is instead implied
+              by context. The contextual object is defined as part of the
+              definition of any property which uses this representation for
+              its value.</t>
+            </list></t>
+        </section>
       </section>
 
       <section anchor="json.object"
