@@ -500,6 +500,12 @@
               there are multiple <spanx style="verb">activity:object</spanx>
               child elements then this property is not set for any of the
               Activity Constructs represented by the entry.</t>
+
+              <t hangText="Generator">The <xref
+              target="activity.generator">Generator</xref> of the Activity
+              Construct is represented by the first <spanx style="verb">atom:generator</spanx>
+              child element as defined in <xref
+              target="application-as-atom-generator"></xref>.</t>
             </list></t>
 
           <t>The set of activities represented by a full activity entry is the
@@ -794,8 +800,8 @@
 
         <section anchor="media-link-as-atom-link"
                  title="Media Link Construct represented as atom:link">
-          <t>The components of a Media Link Construct is represented by the
-          following attributes of an atom:link element:</t>
+          <t>The components of a Media Link Construct can be represented by
+          the following attributes of an atom:link element:</t>
 
           <t><list style="hanging">
               <t hangText="Target URL">Represented by the <spanx style="verb">href</spanx>
@@ -812,6 +818,21 @@
 
               <t hangText="Duration">Represented by the <spanx style="verb">media:duration</spanx>
               attribute of the <spanx style="verb">atom:link</spanx>
+              element.</t>
+            </list></t>
+        </section>
+
+        <section anchor="application-as-atom-generator"
+                 title="Application Construct represented as atom:generator">
+          <t>The components of an Application Construct can be represented by
+          the following attributes of an atom:generator element:</t>
+
+          <t><list style="hanging">
+              <t hangText="Name">Represented by the content of the <spanx
+              style="verb">atom:generator</spanx> element.</t>
+
+              <t hangText="Site URL">Represented by the <spanx style="verb">uri</spanx>
+              attribute of the <spanx style="verb">atom:generator</spanx>
               element.</t>
             </list></t>
         </section>
