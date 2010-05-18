@@ -917,8 +917,8 @@
               <t hangText="Representative Image">The <xref
               target="object.image">representative image</xref> of the Object
               Construct is represented by a property called <spanx
-              style="verb">image</spanx> whose value is a JSON string
-              containing the image URL.</t>
+              style="verb">image</spanx> whose value is a JSON dictionary as
+              defined in <xref target="media-link-as-json"></xref>.</t>
 
               <t hangText="Permalink URL">The <xref
               target="object.permalink">permalink URL</xref> of the Object
@@ -958,6 +958,30 @@
               dictionary, and is instead implied by context. The contextual
               object is defined as part of the definition of any property
               which uses this representation for its value.</t>
+            </list></t>
+        </section>
+      </section>
+
+      <section title="Other Representations">
+        <t>[TODO: write something here]</t>
+
+        <section anchor="media-link-as-json"
+                 title="Media Link Construct represented as JSON dictionary">
+          <t>The components of a Media Link Construct is represented by a JSON
+          dictionary as follows:</t>
+
+          <t><list style="hanging">
+              <t hangText="Target URL">Represented by the <spanx style="verb">url</spanx>
+              property of the JSON dictionary.</t>
+
+              <t hangText="Width">Represented by the <spanx style="verb">width</spanx>
+              property of the JSON dictionary.</t>
+
+              <t hangText="Height">Represented by the <spanx style="verb">height</spanx>
+              property of the JSON dictionary.</t>
+
+              <t hangText="Duration">Represented by the <spanx style="verb">duration</spanx>
+              property of the JSON dictionary.</t>
             </list></t>
         </section>
       </section>
