@@ -316,6 +316,71 @@
           of attached files in an email message.</t>
         </section>
       </section>
+
+      <section title="The Media Link Construct">
+        <t>A Media Link Construct represents a hyperlink to a media item.
+        TODO: elaborate</t>
+
+        <t>A Media Link Construct consists of the logical components defined
+        in the following sections.</t>
+
+        <section title="Target URL">
+          <t>The URL that is the target of this hyperlink. A Media Link
+          Construct MUST have one Target URL and MUST NOT have more than
+          one.</t>
+        </section>
+
+        <section title="Media Type">
+          <t>A hint to the consumer about the media type of the target
+          resource. The value of this component is a media type as defined in
+          [TODO: reference and xref]. A Link Construct MAY have one Media Type
+          but MUST NOT have more than one.</t>
+        </section>
+
+        <section title="Width">
+          <t>A hint to the consumer about the natural width of the resource
+          that is the target of this hyperlink, in pixels. This MAY be
+          included when the target resource is a visual media item such as an
+          image, video or embeddable HTML page, but a Link Construct MUST NOT
+          have more than one Width.</t>
+        </section>
+
+        <section title="Height">
+          <t>A hint to the consumer about the natural height of the resource
+          that is the target of this hyperlink, in pixels. This MAY be
+          included when the target resource is a visual media item such as an
+          image, video or embeddable HTML page, but a Link Construct MUST NOT
+          have more than one Height.</t>
+        </section>
+
+        <section title="Duration">
+          <t>A hint to the consumer about the length of the resource that is
+          the target of this hyperlink, in seconds. This MAY be included when
+          the target resource is a time-based media item such as an audio or
+          video, but a Link Construct MUST NOT have more than one
+          Duration.</t>
+        </section>
+      </section>
+
+      <section title="The Action Link Construct">
+        <t>An Action Link Construct represents a hyperlink at which an action
+        can be performed. TODO: elaborate</t>
+
+        <t>An Action Link Construct consists of the logical components defined
+        in the following sections.</t>
+
+        <section title="Target URL">
+          <t>The URL that is the target of this hyperlink. An Action Link
+          Construct MUST have one Target URL and MUST NOT have more than
+          one.</t>
+        </section>
+
+        <section title="Caption">
+          <t>The human-readable caption of the UI element that a user will
+          interact with in order to navigate to the Target URL. An Action Link
+          Construct MUST have one Caption and MUST NOT have more than one.</t>
+        </section>
+      </section>
     </section>
 
     <section title="Atom Representation">
