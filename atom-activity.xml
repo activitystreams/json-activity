@@ -652,10 +652,12 @@
 
               <t hangText="Representative Image">The <xref
               target="object.image">representative image</xref> of the Object
-              Construct is represented by the href attribute of an <spanx
-              style="verb">atom:link</spanx> element, whose rel attribute
-              value is "preview" and a whose type attribute value is an
-              appropriate image media type.</t>
+              Construct is represented by the first <spanx style="verb">atom:link</spanx>
+              element whose rel attribute value is "preview" and a whose type
+              attribute value is an image media type. The atom:link element is
+              processed as defined in <xref
+              target="media-link-as-atom-link"></xref> to produce a Media Link
+              Construct.</t>
 
               <t hangText="Permalink URL">The <xref
               target="object.permalink">permalink URL</xref> of the Object
@@ -764,6 +766,34 @@
           for <spanx style="verb">atom:link</spanx>. When used with no child
           elements, the element represents an Object Construct with a URL but
           with no other components set.</t>
+        </section>
+      </section>
+
+      <section title="Other Representations">
+        <t>[TODO: write something here]</t>
+
+        <section anchor="media-link-as-atom-link"
+                 title="Media Link Construct represented as atom:link">
+          <t>The components of a Media Link Construct is represented by the
+          following attributes of an atom:link element:</t>
+
+          <t><list style="hanging">
+              <t hangText="Target URL">Represented by the <spanx style="verb">href</spanx>
+              attribute of the <spanx style="verb">atom:link</spanx>
+              element.</t>
+
+              <t hangText="Width">Represented by the <spanx style="verb">media:width</spanx>
+              attribute of the <spanx style="verb">atom:link</spanx>
+              element.</t>
+
+              <t hangText="Height">Represented by the <spanx style="verb">media:height</spanx>
+              attribute of the <spanx style="verb">atom:link</spanx>
+              element.</t>
+
+              <t hangText="Duration">Represented by the <spanx style="verb">media:duration</spanx>
+              attribute of the <spanx style="verb">atom:link</spanx>
+              element.</t>
+            </list></t>
         </section>
       </section>
     </section>
