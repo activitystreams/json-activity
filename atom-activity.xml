@@ -211,11 +211,6 @@
           than one.</t>
         </section>
 
-        <section anchor="activity.permalink" title="Permalink URL">
-          <t>The URL of a HTML page that represents this activity. This
-          property SHOULD NOT be <spanx style="verb">null</spanx></t>
-        </section>
-
         <section anchor="activity.title" title="Title">
           <t>An HTML representation of the natural language title for this
           activity. Consumers MAY use the value of this field, if set, as a
