@@ -722,48 +722,100 @@
         <t><list style="hanging">
             <t hangText="Actor">The <xref target="activity.actor">Actor</xref>
             of the Activity Construct is represented by a property named
-            "actor" whose value is a JSON object as described in <xref
-            target="json.object"></xref>.</t>
+            <spanx style="verb">actor</spanx> whose value is a JSON object as
+            described in <xref target="json.object"></xref>.</t>
 
             <t hangText="Object">The <xref
             target="activity.object">Object</xref> of the Activity Construct
-            is represented by a property named "object" whose value is a JSON
-            object as described in <xref target="json.object"></xref>.</t>
+            is represented by a property named <spanx style="verb">object</spanx>
+            whose value is a JSON object as described in <xref
+            target="json.object"></xref>.</t>
 
             <t hangText="Target">The <xref
             target="activity.target">Target</xref> of the Activity Construct
-            is represented by a property named "target" whose value is a JSON
-            object as described in <xref target="json.object"></xref>.</t>
+            is represented by a property named <spanx style="verb">target</spanx>
+            whose value is a JSON object as described in <xref
+            target="json.object"></xref>.</t>
 
             <t hangText="Verb">The set of <xref
             target="activity.verb">verbs</xref> of the Activity Construct is
-            represented by a property named "verbs" whose value is a JSON
-            array of JSON string values containing the verb URIs.</t>
+            represented by a property named <spanx style="verb">verbs</spanx>
+            whose value is a JSON array of JSON string values containing the
+            verb URIs.</t>
 
             <t hangText="Time">The <xref target="activity.time">Time</xref> of
-            the Activity Construct is represented by a property named
-            "postedTime" whose value is a JSON string containing a timestamp
-            in W3CDTF format as described in [TODO: xref W3CDTF spec].</t>
+            the Activity Construct is represented by a property named <spanx
+            style="verb">postedTime</spanx> whose value is a JSON string
+            containing a timestamp in W3CDTF format as described in [TODO:
+            xref W3CDTF spec].</t>
 
             <t hangText="Title">The <xref target="activity.title">Title</xref>
             of the Activity Construct is represented by a property named
-            "title" whose value is a JSON string containing the title value.
-            This string MUST be a HTML fragment that would be valid in an
-            inline context as described in [TODO: what can we reference for
-            this definition?].</t>
+            <spanx style="verb">title</spanx> whose value is a JSON string
+            containing the title value. This string MUST be a HTML fragment
+            that would be valid in an inline context as described in [TODO:
+            what can we reference for this definition?].</t>
 
             <t hangText="Body">The <xref target="activity.body">Body</xref> of
-            the Activity Construct is represented by a property named "body"
-            whose value is a JSON string containing the body value. This
-            string MUST be a HTML fragment that would be valid in a block
-            context as described in [TODO: what can we reference for this
-            definition?].</t>
+            the Activity Construct is represented by a property named <spanx
+            style="verb">body</spanx> whose value is a JSON string containing
+            the body value. This string MUST be a HTML fragment that would be
+            valid in a block context as described in [TODO: what can we
+            reference for this definition?].</t>
           </list></t>
       </section>
 
       <section anchor="json.object"
                title="Object Construct represented as JSON object">
-        <t></t>
+        <t>An Object Construct is represented in JSON as a JSON object. The
+        components of the Object Construct are represented in this JSON as
+        follows:</t>
+
+        <t><list style="hanging">
+            <t hangText="ID">The <xref target="object.id">ID</xref> of the
+            Object Construct is represented by a property named <spanx
+            style="verb">id</spanx> whose value is a JSON string containing
+            the ID.</t>
+
+            <t hangText="Name">The <xref target="object.name">name</xref> of
+            the Object Construct is represented by a property named <spanx
+            style="verb">displayName</spanx> whose value is a JSON string
+            containing the name.</t>
+
+            <t hangText="Summary">The <xref
+            target="object.summary">summary</xref> of the Object Construct is
+            represented by a property called <spanx style="verb">summary</spanx>
+            whose value is a JSON string containing the summary.</t>
+
+            <t hangText="Representative Image">The <xref
+            target="object.image">representative image</xref> of the Object
+            Construct is represented by a property called <spanx style="verb">image</spanx>
+            whose value is a JSON string containing the image URL.</t>
+
+            <t hangText="Permalink URL">The <xref
+            target="object.permalink">permalink URL</xref> of the Object
+            Construct is represented by a property named <spanx style="verb">link</spanx>
+            whose value is a JSON string containing the permalink URL.</t>
+
+            <t hangText="Object Type">The set of <xref
+            target="object.object-type">object type URLs</xref> of the Object
+            Construct is represented by a property named <spanx style="verb">objectTypes</spanx>
+            whose value is a JSON array of JSON string values containing the
+            object type URIs.</t>
+
+            <t hangText="In Reply To Object">The <xref
+            target="object.in-reply-to-object">In Reply To Object</xref> of
+            the Object Construct is represented by a property called <spanx
+            style="verb">inReplyTo</spanx> whose value is a JSON object as
+            described in <xref target="json.object"></xref>.</t>
+
+            <t hangText="Attached Object">Thee set of <xref
+            target="object.attached-object">Attached Objects</xref> of the
+            Object Construct is represented by a property called <spanx
+            style="verb">attachedObjects</spanx> whose value is a JSON array
+            of JSON objects as described in <xref
+            target="json.object"></xref>.</t>
+          </list></t>
       </section>
     </section>
 
