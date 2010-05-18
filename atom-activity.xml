@@ -261,9 +261,10 @@
         </section>
 
         <section anchor="object.image" title="Representative Image">
-          <t>This URI value identifies an image resource which provides a
-          visual representation of the object, intended for human consumption.
-          An Object construct MAY have a image, but MUST NOT have more than
+          <t>A <xref target="medialink">Media Link Construct</xref> that
+          identifies an image resource which provides a visual representation
+          of the object, intended for human consumption. An Object construct
+          MAY have a representative image, but MUST NOT have more than
           one.</t>
         </section>
 
@@ -315,9 +316,15 @@
           as a wrapper or carrier for another object, similar to the concept
           of attached files in an email message.</t>
         </section>
+
+        <section anchor="object.action-link" title="Action Link">
+          <t>An <xref target="actionlink">Action Link</xref> that represents
+          an action that a human could peform on this object. An Object
+          Construct MAY have one or more Action Links.</t>
+        </section>
       </section>
 
-      <section title="The Media Link Construct">
+      <section anchor="medialink" title="The Media Link Construct">
         <t>A Media Link Construct represents a hyperlink to a media item.
         TODO: elaborate</t>
 
@@ -362,7 +369,7 @@
         </section>
       </section>
 
-      <section title="The Action Link Construct">
+      <section anchor="actionlink" title="The Action Link Construct">
         <t>An Action Link Construct represents a hyperlink at which an action
         can be performed. TODO: elaborate</t>
 
