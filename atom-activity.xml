@@ -889,7 +889,7 @@
       </section>
 
       <section anchor="json.object"
-               title="Object Construct represented as JSON object">
+               title="Object Construct represented as JSON dictionary">
         <t>An Object Construct is represented in JSON as a JSON dictionary.
         The primary representation of an Object Construct is a Full Object
         Dictionary as defined in <xref target="json.object.full"></xref>.</t>
