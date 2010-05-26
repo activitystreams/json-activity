@@ -742,6 +742,27 @@
       components must be defined on a case-by-case basis.</t>
     </section>
 
+    <section anchor="republisher" title="Requirements for Re-publishers">
+      <t>A Re-publisher is an agent which receives Activity Constructs or
+      Object Constructs and then transmits these items to other agents.</t>
+
+      <t>When a Re-publisher transmits an Activity Construct, the Re-publisher
+      MUST preserve the original Verb and Posted Time components, MUST
+      re-publish the Actor, Object and Target components as defined in the
+      previous paragraph. The Re-publisher MAY preserve the remaining
+      properties, OR the Re-publisher MAY omit these properties entirely or
+      replace these properties with locally-determined values.</t>
+
+      <t>When a Re-publisher transmits an Object Construct, the Re-publisher
+      MUST maintain the full integrity of the Object Construct, including any
+      extension properties, and retain the original ID value OR, if
+      maintaining full fidelity is not possible the Re-publisher MUST assign
+      this copy a new ID and include the ID of the original object as a value
+      of the Upstream Duplicates component of the new copy. In the latter
+      case, a new Object Construct is created which is considered to be a
+      duplicate of the original Object Construct.</t>
+    </section>
+
     <section title="Security Considerations">
       <t>Publishers or Consumers implementing Activity Streams as a stream of
       public data may also want to consider the potential for unsolicited
