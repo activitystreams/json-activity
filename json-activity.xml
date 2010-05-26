@@ -81,7 +81,7 @@
       <t>In its simplest form, an activity consists of an actor, a verb, and
       an object. It tells the story of a person performing an action on or
       with an object -- "Geraldine posted a photo" or "John shared a video".
-      In most cases these elements will be explicitly declared, but they may
+      In most cases these components will be explicitly declared, but they may
       also be implied.</t>
 
       <section anchor="activity" title="The Activity Construct">
