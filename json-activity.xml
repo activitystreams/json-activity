@@ -620,6 +620,41 @@
       represent an Object Construct that this new Object Construct is posted
       in reply to. Instead, this SHOULD be represented as the In Reply To
       Object component of the new object.</t>
+
+      <section title="Implied &quot;Post&quot; Activity">
+        <t>Because the "Post" Verb is defined to includ ethe act of publishing
+        an object online, it is possible to assume an implied "Post" activity
+        for any Object Construct even if such an activity was never explicitly
+        published or recieved. The components of this implied activity are as
+        follows; any component not explicitly listed here is absent from the
+        resulting activity unless the consumer is able to infer a value based
+        on out-of-band information outside the scope of this
+        specification:</t>
+
+        <t><list style="hanging">
+            <t hangText="Actor">The <xref target="activity.actor">Actor</xref>
+            of the Activity Construct is unknown unless the consumer is able
+            to infer an actor based on information outside the scope of this
+            specification. For example, the consumer may know via some
+            out-of-band information that all of the objects in a particular
+            document were posted by a particular user.</t>
+
+            <t hangText="Object">The <xref
+            target="activity.object">Object</xref> of the Activity Construct
+            is the object for which this implied activity is being
+            constructed.</t>
+
+            <t hangText="Verb">The Activity Construct has the "Post" verb as
+            defined in <xref target="post-verb"></xref> as its only <xref
+            target="activity.verb">Verb</xref>.</t>
+
+            <t hangText="Time">The <xref target="activity.time">Time</xref> of
+            the Activity Construct is unknown unless the consumer is able to
+            infer a time based on an extension property defined for the Object
+            Construct's Object Type that is defined to be the time the object
+            was created and/or posted online.</t>
+          </list></t>
+      </section>
     </section>
 
     <section anchor="extensions" title="Extension Object Types and Verbs">
