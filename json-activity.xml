@@ -353,10 +353,13 @@
       be used to refer to the JSON object data type.</t>
 
       <t>In the JSON dictionary structures defined in the following
-      subsections, absent properties may be represented either by an explicit
+      subsections, absent components may be represented either by an explicit
       declaration of the property whose value is null or by omitting the
       property declaration altogether at the option of the publisher; these
-      two representations are semantically equivalent.</t>
+      two representations are semantically equivalent. If a property is having
+      a value whose type is a JSON array, the absense of any items in that
+      array MUST be represented as an empty array and MUST NOT be represented
+      by <spanx style="verb">null</spanx> nor by omitting the property.</t>
 
       <section anchor="json.activity"
                title="Activity Construct represented as JSON object">
