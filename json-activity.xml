@@ -370,11 +370,11 @@
       </section>
     </section>
 
-    <section title="JSON Serialization">
+    <section title="JSON Representation">
       <t>An Activity Construct can be represented with the JSON format, as
       defined in <xref target="RFC4627"></xref>, using the object structures
       defined in the following subsections. This object model MAY be applied
-      to other serializations with a similar data model to JSON.</t>
+      to other serialization formats with a similar data model to JSON.</t>
 
       <t>In order to avoid confusion with the Object Construct concept in the
       Activity Streams data model, in this section the term "dictionary" will
@@ -649,7 +649,7 @@
       represent the extensions.</t>
     </section>
 
-    <section anchor="other-serializations" title="Other Serialization Formats">
+    <section anchor="other-serializations" title="Other Representations">
       <t>This specification defines the primary representation for the
       Activity Streams concepts in terms of the JSON serialization format.
       Other specifications MAY define additional representations of the
