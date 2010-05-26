@@ -302,6 +302,34 @@
           an action that a human could peform on this object. An Object
           Construct MAY have one or more Action Links.</t>
         </section>
+
+        <section anchor="object.upstream-duplicate-id"
+                 title="Upstream Duplicate ID">
+          <t>A string containing the ID value of another Object Construct for
+          which this Object Construct is a duplicate created by re-publishing.
+          An Object Construct MAY have one or more Upstream Duplicate IDs.</t>
+
+          <t>A publisher SHOULD use this component if it is knowingly
+          duplicating with a new ID the content from an Object Construct that
+          was obtained elsewhere. This MAY be used as a hint for consumers to
+          use when resolving duplicates between objects recieved from
+          different sources.</t>
+        </section>
+
+        <section anchor="object.downstream-duplicate-id"
+                 title="Downstream Duplicate ID">
+          <t>A string containing the ID value of another Object Construct for
+          which was created as a duplicate of this Object Construct. An Object
+          Construct MAY have one or more Downstream Duplicate IDs.</t>
+
+          <t>A publisher SHOULD use this component if has knowingly created
+          another Object Construct with a new ID, possibly in another system,
+          that duplicates the content in this object. A publisher might choose
+          to do this in order to make the content available to a wider
+          audience. This MAY be used as a hint for consumers to use when
+          resolving duplicates between objects recieved from different
+          sources.</t>
+        </section>
       </section>
 
       <section anchor="medialink" title="The Media Link Construct">
@@ -386,9 +414,10 @@
       property declaration altogether at the option of the publisher; these
       two representations are semantically equivalent. If a property is having
       a value whose type is a JSON array, the absense of any items in that
-      array MUST be represented as an empty array and MUST NOT be represented
-      by <spanx style="verb">null</spanx> nor by omitting the property, except
-      as otherwise stated in the definition of a specific property.</t>
+      array MUST be represented by omitting the property entirely or
+      publishing it with the value null, and MUST NOT be represented as an
+      empty array, except as otherwise stated in the definition of a specific
+      property.</t>
 
       <section anchor="json.activity"
                title="Activity Construct represented as JSON object">
@@ -535,8 +564,7 @@
               target="json.object-implied-reply-to"></xref>, where the implied
               In Reply To Object is the Object Construct represented by the
               JSON object which contains this <spanx style="verb">replies</spanx>
-              property. If no items are included in this array, the <spanx
-              style="verb">replies</spanx> property SHOULD be omitted.</t>
+              property.</t>
 
               <t hangText="Reaction Activity">The set of <xref
               target="object.reaction">Reaction Activities</xref> that the
@@ -546,8 +574,7 @@
               target="json.activity.implied-object"></xref>, where the implied
               Object is the Object Construct represented by the JSON object
               which contains this <spanx style="verb">replies</spanx>
-              property. If no items are included in this array, the <spanx
-              style="verb">reactions</spanx> property SHOULD be omitted.</t>
+              property.</t>
 
               <t hangText="Attached Object">Thee set of <xref
               target="object.attached-object">Attached Objects</xref> of the
@@ -555,6 +582,20 @@
               style="verb">attachedObjects</spanx> whose value is a JSON array
               of JSON dictionaries as described in <xref
               target="json.object"></xref>.</t>
+
+              <t hangText="Upstream Duplicate ID">The set of <xref
+              target="object.upstream-duplicate-id">Upstream Duplicate
+              IDs</xref> of the Object Construct is represented by a property
+              named <spanx style="verb">upstreamDuplicates</spanx> whose value
+              is a JSON array of JSON string values containing the ID
+              URIs.</t>
+
+              <t hangText="Downstream Duplicate ID">The set of <xref
+              target="object.downstream-duplicate-id">Downstream Duplicate
+              IDs</xref> of the Object Construct is represented by a property
+              named <spanx style="verb">downstreamDuplicates</spanx> whose
+              value is a JSON array of JSON string values containing the ID
+              URIs.</t>
             </list></t>
         </section>
 
