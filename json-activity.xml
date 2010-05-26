@@ -178,6 +178,19 @@
           the provided verbs are recognized. An Activity Construct MAY have a
           body but it MUST NOT have more than one.</t>
         </section>
+
+        <section anchor="activity.standard-link" title="Standard Link">
+          <t>A Link as defined by section 3 of <xref
+          target="draft-nottingham-http-link-header-10"></xref>. An Activity
+          Construct MAY have one ore more Standard Links.</t>
+
+          <t>This component is provided to allow the use of the registry of
+          link relations defined by the Web Linking specification to create
+          links between an Activity Construct and other resources. The Context
+          of the Link is the Object Construct. This component MUST NOT be used
+          to publish data that matches a meaning that could be published by
+          another Activity Streams component.</t>
+        </section>
       </section>
 
       <section anchor="object" title="The Object Construct">
@@ -223,7 +236,11 @@
         <section anchor="object.permalink" title="Permalink URL">
           <t>This URI value identifies a resource which provides an HTML
           representation of the object. An Object construct MAY have a
-          Permalink URL, but MUST NOT have more than one.</t>
+          Permalink URL, but MUST NOT have more than one. The presence of this
+          construct implies a Link as defined in section 3 of <xref
+          target="draft-nottingham-http-link-header-10"></xref> whose Context
+          is this Object Construct, whose Link Relation Type is "alternate"
+          and whose Target IRI is the Permalink URL value.</t>
         </section>
 
         <section anchor="object.object-type" title="Object Type">
@@ -329,6 +346,19 @@
           audience. This MAY be used as a hint for consumers to use when
           resolving duplicates between objects recieved from different
           sources.</t>
+        </section>
+
+        <section anchor="object.standard-link" title="Standard Link">
+          <t>A Link as defined by section 3 of <xref
+          target="draft-nottingham-http-link-header-10"></xref>. An Object
+          Construct MAY have one ore more Standard Links.</t>
+
+          <t>This component is provided to allow the use of the registry of
+          link relations defined by the Web Linking specification to create
+          links between an Object Construct and other resources. The Context
+          of the Link is the Object Construct. This component MUST NOT be used
+          to publish data that matches a meaning that could be published by
+          another Activity Streams component.</t>
         </section>
       </section>
 
@@ -487,6 +517,11 @@
               containing the body value. This string MUST be a HTML fragment
               that would be valid in a block context as described in [TODO:
               what can we reference for this definition?].</t>
+
+              <t hangText="Standard Link">The set of <xref
+              target="activity.standard-link">Standard Links</xref> of the
+              Activity Construct is represented as described in <xref
+              target="json.standard-links"></xref>.</t>
             </list></t>
         </section>
 
@@ -596,6 +631,11 @@
               named <spanx style="verb">downstreamDuplicates</spanx> whose
               value is a JSON array of JSON string values containing the ID
               URIs.</t>
+
+              <t hangText="Standard Link">The set of <xref
+              target="activity.standard-link">Standard Links</xref> of the
+              Activity Construct is represented as described in <xref
+              target="json.standard-links"></xref>.</t>
             </list></t>
         </section>
 
@@ -637,6 +677,42 @@
               property of the JSON dictionary.</t>
             </list></t>
         </section>
+
+        <section anchor="json.standard-links"
+                 title="Set of Standard Links represented as JSON dictionary">
+          <t>The set of Standard Link components of both an Activity Construct
+          and an Object Construct are represented by a JSON dictionary whose
+          properties are named for Link Relation Types as defined in <xref
+          target="draft-nottingham-http-link-header-10"></xref>. Valid Link
+          Relation Types and their meanings are defined in the Link Relation
+          Type registry created by that specification. A particular property
+          MUST NOT be included unless there is at least one link in the set
+          with the corresponding Link Relation Type.</t>
+
+          <t>The value of each of the properties is a JSON array containing a
+          JSON object for each Link in the set with the corresponding Link
+          Relation Type. containing a property <spanx style="verb">href</spanx>
+          whose value is a JSON string containing the Target URI of the link
+          it represents. Target Attributes of the Link are represented by
+          additional properties whose names correspond to Target Attributes
+          defined for the link, where the value of each is a JSON string
+          containing the value of the corresponding Target Attribute.</t>
+        </section>
+      </section>
+
+      <section title="Stream of Activity Constructs represented as a JSON Document">
+        <t>The above defined JSON dictionary formats can be used to represent
+        the Activity Streams concepts in any JSON context. This section
+        defines one particular use of the above dictionary formats to publish
+        a JSON document that represents a set of Activity Constructs.</t>
+
+        <t>Publishers using this format MUST produce a valid JSON document
+        whose root value is a JSON object. This document MUST include a
+        property named <spanx style="verb">items</spanx> whose value is a JSON
+        array of JSON dictionaries of the form described in <xref
+        target="json.activity.full"></xref>. Other properties MAY be included
+        in the root JSON object, but the meaning of these properties is not
+        defined by this specification.</t>
       </section>
     </section>
 
@@ -853,6 +929,19 @@
           </author>
 
           <date month="July" year="2006" />
+        </front>
+      </reference>
+
+      <reference anchor="draft-nottingham-http-link-header-10">
+        <front>
+          <title>Web Linking</title>
+
+          <author fullname="Mark Nottingham" initials="M."
+                  surname="Nottingham">
+            <organization></organization>
+          </author>
+
+          <date day="5" month="May" year="2010" />
         </front>
       </reference>
 
