@@ -150,8 +150,7 @@
           Construct</xref> that represents the application which created it,
           which may be separate from the service to which the activity is
           published. For example, a third-party application on a mobile phone
-          may be used to post a photo to a photo sharing service. The activity
-          generator is identified by a name and optional URI. An Activity
+          may be used to post a photo to a photo sharing service. An Activity
           construct MAY have a generator but it MUST NOT have more than
           one.</t>
         </section>
