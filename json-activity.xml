@@ -371,10 +371,10 @@
     </section>
 
     <section title="JSON Serialization">
-      <t>An Activity Construct can be represented in JSON using the object
-      structures defined in the following subsections. This object model MAY
-      be applied to other serializations with a similar data model to
-      JSON.</t>
+      <t>An Activity Construct can be represented with the JSON format, as
+      defined in <xref target="RFC4627"></xref>, using the object structures
+      defined in the following subsections. This object model MAY be applied
+      to other serializations with a similar data model to JSON.</t>
 
       <t>In order to avoid confusion with the Object Construct concept in the
       Activity Streams data model, in this section the term "dictionary" will
@@ -697,6 +697,20 @@
           </author>
 
           <date month="January" year="2005" />
+        </front>
+      </reference>
+
+      <reference anchor="RFC4627">
+        <front>
+          <title>The application/json Media Type for JavaScript Object
+          Notation (JSON)</title>
+
+          <author fullname="Douglas Crockford" initials="D."
+                  surname="Crockford">
+            <organization>JSON.org</organization>
+          </author>
+
+          <date month="July" year="2006" />
         </front>
       </reference>
 
