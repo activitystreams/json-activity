@@ -601,7 +601,8 @@
 
     <section anchor="post-verb" title="The &quot;Post&quot; Verb">
       <t>This specificiation defines one initial verb and defers to other
-      specifications to define the full schema of verb and object types.</t>
+      specifications to define the full schema of verb and object types as
+      defined in <xref target="extensions"></xref>.</t>
 
       <t>The "Post" verb describes the act of authoring an object and then
       publishing it online. The verb URI for the "Post" verb is <spanx
@@ -619,6 +620,50 @@
       represent an Object Construct that this new Object Construct is posted
       in reply to. Instead, this SHOULD be represented as the In Reply To
       Object component of the new object.</t>
+    </section>
+
+    <section anchor="extensions" title="Extension Object Types and Verbs">
+      <t>Other specifications MAY define new object types and verbs for use
+      with the concepts and serializations defined in this specification.</t>
+
+      <t>When defining a new verb, the defining specification MUST provide a
+      verb identifier URI for the new verb and MUST define the meaning of the
+      verb in terms of the Actor, Object and Target components of the Activity
+      Construct, and MUST define whether a Target is required and what it
+      represents when present.</t>
+
+      <t>When defining a new object type, the defining specification MUST
+      provide an object type identifier URI for the new object type. The
+      definition of the new object type MAY define additional components
+      specific to that object type; if so, the specification SHOULD define how
+      these additional components are to be represented as JSON properties,
+      and the specification MAY define how these additional components are to
+      be represented in other serialization formats. The definition of the new
+      object type MAY impose additional meaning or constraint on the core
+      Object Construct components as long as the new definition remains
+      compatible with the definition of the base component. New Object
+      Construct components SHOULD be defined such that the object would remain
+      useful if those components are omitted or removed during processing, to
+      enable graceful fallback by consumers that do not implement the
+      extension components or alternative representations that are unable to
+      represent the extensions.</t>
+    </section>
+
+    <section anchor="other-serializations" title="Other Serialization Formats">
+      <t>This specification defines the primary representation for the
+      Activity Streams concepts in terms of the JSON serialization format.
+      Other specifications MAY define additional representations of the
+      Activity Streams concepts. If the new representation is compatible with
+      the JSON data model, the new representation SHOULD be defined as a
+      transformation of the raw JSON structures. Otherwise, the new
+      representation MAY be defined in terms of the Activity Streams concepts
+      in <xref target="concepts"></xref>.</t>
+
+      <t>Defining a new representation as a transformation from JSON will
+      allow the new representation to automatically support additional
+      components added for new object types as described in <xref
+      target="extensions"></xref>. Otherwise the representation of these new
+      components must be defined on a case-by-case basis.</t>
     </section>
 
     <section title="Security Considerations">
