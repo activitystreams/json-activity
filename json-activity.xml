@@ -146,14 +146,21 @@
         </section>
 
         <section anchor="activity.generator" title="Generator">
-          <t>The generator of an activity is an <xref
-          target="application">Application Construct</xref> that identifies
-          that application which created it, which may be separate from the
-          service to which the activity is published. For example, a
-          third-party application on a mobile phone may be used to post a
-          photo to a photo sharing service. The activity generator is
-          identified by a name and optional URI. An Activity construct MAY
-          have a generator but it MUST NOT have more than one.</t>
+          <t>The generator of an activity is an <xref target="object">Object
+          Construct</xref> that represents the application which created it,
+          which may be separate from the service to which the activity is
+          published. For example, a third-party application on a mobile phone
+          may be used to post a photo to a photo sharing service. The activity
+          generator is identified by a name and optional URI. An Activity
+          construct MAY have a generator but it MUST NOT have more than
+          one.</t>
+        </section>
+
+        <section anchor="activity.provider" title="Service Provider">
+          <t>The service provider of an activity is an <xref
+          target="object">Object Construct</xref> that represents the service
+          which is publishing the activity. An Activity Construct MAY have a
+          provider but it MUST NOT have more than one.</t>
         </section>
 
         <section anchor="activity.title" title="Title">
@@ -333,25 +340,6 @@
           Construct MUST have one Caption and MUST NOT have more than one.</t>
         </section>
       </section>
-
-      <section anchor="application" title="The Application Construct">
-        <t>An Application Construct represents an application that is used to
-        create and/or post an object. TODO: elaborate</t>
-
-        <t>An Application Construct consists of the logical components defined
-        in the following sections.</t>
-
-        <section title="Name">
-          <t>A human-readable name for this application. An Application
-          Construct MUST have one Name and MUST NOT have more than one.</t>
-        </section>
-
-        <section title="Site URL">
-          <t>The URL of a page that represents or describes the application to
-          humans. An Application Construct MAY have a Site URL but MUST NOT
-          have more than one.</t>
-        </section>
-      </section>
     </section>
 
     <section title="JSON Serialization">
@@ -411,6 +399,18 @@
               <spanx style="verb">postedTime</spanx> whose value is a JSON
               string containing a timestamp in W3CDTF format as described in
               [TODO: xref W3CDTF spec].</t>
+
+              <t hangText="Generator">The <xref
+              target="activity.generator">Generator</xref> of the Activity
+              Construct is represented by a property named <spanx
+              style="verb">generator</spanx> whose value is a JSON dictionary
+              as described in <xref target="json.object"></xref>.</t>
+
+              <t hangText="Service Provider">The <xref
+              target="activity.provider">Service Provider</xref> of the
+              Activity Construct is represented by a property named <spanx
+              style="verb">provider</spanx> whose value is a JSON dictionary
+              as described in <xref target="json.object"></xref>.</t>
 
               <t hangText="Title">The <xref
               target="activity.title">Title</xref> of the Activity Construct
