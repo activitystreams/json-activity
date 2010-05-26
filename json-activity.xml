@@ -269,6 +269,34 @@
           of attached files in an email message.</t>
         </section>
 
+        <section anchor="object.reply" title="Reply Object">
+          <t>An <xref target="object">Object Construct</xref> that has this
+          Object Construct as its In Reply To Object. An Object Construct MAY
+          have one more more Reply Objects.</t>
+
+          <t>In many cases a specific publication of an object will include
+          only a selection of the full set of objects posted as replies to
+          this object. Publishers MAY choose any subset of the set of all
+          reply objects to include. Publishers MAY make available a complete
+          list of reply objects for a particular object via a separate
+          mechanism, but that mechanism is not defined by this
+          specification.</t>
+        </section>
+
+        <section anchor="object.reaction" title="Reaction Activity">
+          <t>An <xref target="activity">Activity Construct</xref> that
+          describes an Activity whose Object is this Object Construct. An
+          Object Construct MAY have one or more Reaction Activities.</t>
+
+          <t>In many cases a specific publication of an object will include
+          only a selection of the full set of activities that are reactions to
+          this object. Publishers MAY choose any subset of the set of all
+          reaction activities to include. Publishers MAY make available a
+          complete list of reaction activities for a particular object via a
+          separate mechanism, but that mechanism is not defined by this
+          specification.</t>
+        </section>
+
         <section anchor="object.action-link" title="Action Link">
           <t>An <xref target="actionlink">Action Link</xref> that represents
           an action that a human could peform on this object. An Object
@@ -359,7 +387,8 @@
       two representations are semantically equivalent. If a property is having
       a value whose type is a JSON array, the absense of any items in that
       array MUST be represented as an empty array and MUST NOT be represented
-      by <spanx style="verb">null</spanx> nor by omitting the property.</t>
+      by <spanx style="verb">null</spanx> nor by omitting the property, except
+      as otherwise stated in the definition of a specific property.</t>
 
       <section anchor="json.activity"
                title="Activity Construct represented as JSON object">
@@ -432,7 +461,8 @@
             </list></t>
         </section>
 
-        <section title="Activity Dictionary with Implied Object">
+        <section anchor="json.activity.implied-object"
+                 title="Activity Dictionary with Implied Object">
           <t>The components of the Activity Construct are represented in JSON
           as defined in <xref target="json.activity.full"></xref> except for
           the following exception:</t>
@@ -497,6 +527,28 @@
               style="verb">inReplyTo</spanx> whose value is a JSON dictionary
               as described in <xref target="json.object"></xref>.</t>
 
+              <t hangText="Reply Object">The set of <xref
+              target="object.reply">Reply Objects</xref> that the publisher
+              choses to include for this object is represented by a property
+              named <spanx style="verb">replies</spanx> whose value is a JSON
+              array of JSON objects of the form defined in <xref
+              target="json.object-implied-reply-to"></xref>, where the implied
+              In Reply To Object is the Object Construct represented by the
+              JSON object which contains this <spanx style="verb">replies</spanx>
+              property. If no items are included in this array, the <spanx
+              style="verb">replies</spanx> property SHOULD be omitted.</t>
+
+              <t hangText="Reaction Activity">The set of <xref
+              target="object.reaction">Reaction Activities</xref> that the
+              publisher choses to include for this object is represented by a
+              property named <spanx style="verb">reactions</spanx> whose value
+              is a JSON array of JSON objects of the form defined in <xref
+              target="json.activity.implied-object"></xref>, where the implied
+              Object is the Object Construct represented by the JSON object
+              which contains this <spanx style="verb">replies</spanx>
+              property. If no items are included in this array, the <spanx
+              style="verb">reactions</spanx> property SHOULD be omitted.</t>
+
               <t hangText="Attached Object">Thee set of <xref
               target="object.attached-object">Attached Objects</xref> of the
               Object Construct is represented by a property called <spanx
@@ -506,7 +558,8 @@
             </list></t>
         </section>
 
-        <section title="Object Dictionary with Implied In Reply To Object">
+        <section anchor="json.object-implied-reply-to"
+                 title="Object Dictionary with Implied In Reply To Object">
           <t>The components of the Object Construct are represented in JSON as
           defined in <xref target="json.object.full"></xref> except for the
           following exception:</t>
