@@ -36,11 +36,12 @@
       <organization>Microsoft</organization>
     </author>
 
-    <date month="March" year="2010" />
+    <date month="July" year="2010" />
 
     <abstract>
-      <t>This document presents an extension that allows activities on social
-      objects to be expressed within the Atom Syndication Format.</t>
+      <t>This specification details how to serialize activities in JSON. 
+        Activities are very important in making the web a more social place as
+        they allow individuals to process the latest news of people and things they care about.</t>
     </abstract>
 
     <note title="Requirements Language">
@@ -53,8 +54,6 @@
 
   <middle>
     <section title="Introduction">
-      <t>...</t>
-
       <t>It is a goal of this specification to provide sufficient metadata
       about an activity such that a consumer of the data can present it to a
       user in a rich human-friendly format. This may include constructing
@@ -64,17 +63,8 @@
     </section>
 
     <section title="Notational Conventions">
-      <t>This specification allows the use of IRIs <xref
-      target="RFC3987"></xref>. Every URI <xref target="RFC3986"></xref> is
-      also an IRI, so a URI may be used wherever an IRI is named. When an IRI
-      that is not also a URI is given for dereferencing, it MUST be mapped to
-      a URI using the steps in Section 3.1 of <xref target="RFC3987"></xref>.
-      When an IRI is serving as an identifier, it MUST NOT be so mapped.</t>
-
       <t>The text of this specification provides the sole definition of
       conformance. Examples in this specification are non-normative.</t>
-
-      <t>...</t>
     </section>
 
     <section anchor="concepts" title="Activity Concepts">
@@ -109,22 +99,12 @@
         </section>
 
         <section anchor="activity.verb" title="Verb">
-          <t>An absolute URI value that identifies the action of the activity.
-          An Activity construct MUST have one or more verbs.</t>
-
-          <t>If an activity contains more than one verb, all verbs MUST be
-          generalizations or specializations of one another. For example, the
-          general verb "to experience" might be specialized by a verb "to
-          listen to". If a more specific verb is used, publishers SHOULD also
-          include all of its more general verbs so that a consumer may use the
-          most specific verb it understands.</t>
-
-          <t>An activity consumer SHOULD use the most specific verb it
-          understands within each entry. If none of the activity's verbs are
-          understood by the consumer, it MAY use other information to infer
-          the verb, or the consumer MAY use the content of the activity title,
-          summary and/or content to obtain a human-readable description of the
-          activity.</t>
+          <t>A string value that identifies the type of action performed. See <xref target="activity-schema-01">
+            Activity Schema</xref> for the list of verbs the community has agreed on using and what
+            each one means.</t>
+          <t>Publishers can invent their own verbs but it is recommended for them to 
+            register these verbs so that consumers can rely on using the same definition 
+            whenever they see a verb.</t>
         </section>
 
         <section anchor="activity.object" title="Object">
@@ -243,21 +223,9 @@
         </section>
 
         <section anchor="object.object-type" title="Object Type">
-          <t>This absolute URI identifies the type of object. An Object
-          construct MAY have one or more types.</t>
-
-          <t>If an object contains more than one object type, all types MUST
-          be generalizations or specializations of one another. For example,
-          the general type "article" might be specialized by the type "weblog
-          entry". If a more specific type is used, publishers SHOULD also
-          include all of its more general types so that a consumer may use the
-          most specific type it understands.</t>
-
-          <t>Activity consumers SHOULD use the most specific object type that
-          they understand within each entry. The consumer MAY use other
-          information to infer the object type if it does not recognize any of
-          the object types given. If it cannot infer the object type, a
-          consumer MUST act as though no object type is present.</t>
+          <t>A string value that identifies the type of object. See <xref target="activity-schema-01">
+            Activity Schema</xref> for the list of object types the community has agreed on using and what
+            each one means.</t>
 
           <t>If no object type is present, the object has no specific type.
           Consumers SHOULD refer to such objects only by their names. For
@@ -315,7 +283,7 @@
 
         <section anchor="object.action-link" title="Action Link">
           <t>An <xref target="actionlink">Action Link</xref> that represents
-          an action that a human could peform on this object. An Object
+          an action that a human could perform on this object. An Object
           Construct MAY have one or more Action Links.</t>
         </section>
 
@@ -328,7 +296,7 @@
           <t>A publisher SHOULD use this component if it is knowingly
           duplicating with a new ID the content from an Object Construct that
           was obtained elsewhere. This MAY be used as a hint for consumers to
-          use when resolving duplicates between objects recieved from
+          use when resolving duplicates between objects received from
           different sources.</t>
         </section>
 
@@ -343,7 +311,7 @@
           that duplicates the content in this object. A publisher might choose
           to do this in order to make the content available to a wider
           audience. This MAY be used as a hint for consumers to use when
-          resolving duplicates between objects recieved from different
+          resolving duplicates between objects received from different
           sources.</t>
         </section>
 
@@ -442,7 +410,7 @@
       declaration of the property whose value is null or by omitting the
       property declaration altogether at the option of the publisher; these
       two representations are semantically equivalent. If a property is having
-      a value whose type is a JSON array, the absense of any items in that
+      a value whose type is a JSON array, the absence of any items in that
       array MUST be represented by omitting the property entirely or
       publishing it with the value null, and MUST NOT be represented as an
       empty array, except as otherwise stated in the definition of a specific
@@ -478,11 +446,10 @@
               whose value is a JSON dictionary as described in <xref
               target="json.object"></xref>.</t>
 
-              <t hangText="Verb">The set of <xref
-              target="activity.verb">verbs</xref> of the Activity Construct is
-              represented by a property named <spanx style="verb">verbs</spanx>
-              whose value is a JSON array of JSON string values containing the
-              verb URIs.</t>
+              <t hangText="Verb">The <xref
+              target="activity.verb">verb</xref> of the Activity Construct is
+              represented by a property named <spanx style="verb">verb</spanx>
+              whose value is a JSON string.</t>
 
               <t hangText="Time">The <xref target="activity.time">Time</xref>
               of the Activity Construct is represented by a property named
@@ -578,11 +545,10 @@
               style="verb">link</spanx> whose value is a JSON string
               containing the permalink URL.</t>
 
-              <t hangText="Object Type">The set of <xref
-              target="object.object-type">object type URLs</xref> of the
+              <t hangText="Object Type">The <xref
+              target="object.object-type">object type</xref> of the
               Object Construct is represented by a property named <spanx
-              style="verb">objectTypes</spanx> whose value is a JSON array of
-              JSON string values containing the object type URIs.</t>
+              style="verb">objectType</spanx> whose value is a JSON string.</t>
 
               <t hangText="In Reply To Object">The <xref
               target="object.in-reply-to-object">In Reply To Object</xref> of
@@ -716,7 +682,7 @@
     </section>
 
     <section anchor="post-verb" title="The &quot;Post&quot; Verb">
-      <t>This specificiation defines one initial verb and defers to other
+      <t>This specification defines one initial verb and defers to other
       specifications to define the full schema of verb and object types as
       defined in <xref target="extensions"></xref>.</t>
 
@@ -738,10 +704,10 @@
       Object component of the new object.</t>
 
       <section title="Implied &quot;Post&quot; Activity">
-        <t>Because the "Post" Verb is defined to includ ethe act of publishing
+        <t>Because the "Post" Verb is defined to include the act of publishing
         an object online, it is possible to assume an implied "Post" activity
         for any Object Construct even if such an activity was never explicitly
-        published or recieved. The components of this implied activity are as
+        published or received. The components of this implied activity are as
         follows; any component not explicitly listed here is absent from the
         resulting activity unless the consumer is able to infer a value based
         on out-of-band information outside the scope of this
@@ -878,6 +844,12 @@
 
           <date month="March" year="1997" />
         </front>
+      </reference>
+      <reference anchor="activity-schema-01" 
+        target="http://activitystrea.ms/head/activity-schema.html">
+         <front>
+            <title>Atom Activity Base Schema (Draft)</title>
+          </front>
       </reference>
 
       <reference anchor="RFC3986">
