@@ -1,0 +1,99 @@
+{
+  "type" : "object",
+  "title" : "social object",
+  "description" : "",
+  "properties" : {
+    'id' : {
+      "type" : "string"
+    },
+    'image' : {
+      "format":"image",
+      "type":"string",
+      "optional":true
+    },
+    'displayName' : {
+      "type":"string",
+      "optional":true
+    },
+    'summary' : {
+      "type" : "string",
+      "optional":true
+    },
+    'link' : {
+      "type" : "string",
+      "format" : "url",
+      "optional":true
+    },
+    'objectType' :{
+      "type" : "string",
+      "description" : "The type of social object. See note below",
+      "optional" : true,
+      "unconstrained" : true,
+      "note" : "This is done completely wrong. We should just create different\
+        types that extend social object so we can leverage the vanilla property\
+        validation",
+      "options": [
+        {"value": "article"},
+        {"value": "audio"},
+        {"value": "bookmark"},
+        {"value": "comment"},
+        {"value": "file"},
+        {"value": "folder"},
+        {"value": "group"},
+        {"value": "list"},
+        {"value": "note"},
+        {"value": "person"},
+        {"value": "photo"},
+        {"value": "photo-album"},
+        {"value": "place"},
+        {"value": "playlist"},
+        {"value": "product"},
+        {"value": "review"},
+        {"value": "service"},
+        {"value": "status"},
+        {"value": "video"},
+      ]
+    },
+    'inReplyTo':{
+      "optional" : true,
+      "description" : "The object that this object is in response to.",
+      "type": "object",
+      "properties" :{"$ref":"#.properties"}
+    },
+    'replies':{
+      "optional" : true,
+      "type" : "array",
+      "items": {
+        "type" : "object",
+        "properties" :{"$ref":"#.properties"}
+      }
+    },
+    'reactions':{
+      "optional" : true,
+      "type" : "array",
+      "items": {
+        "type" : "object",
+        "properties" :{
+
+        }
+      }
+    },
+    'attachedObjects':{
+      "optional" : true,
+      "type" : "array",
+      "items": {
+        "type" : "object",
+        "properties" :{"$ref":"#.properties"}
+      }
+    },
+    'upstreamDuplicates':{"optional" : true,
+      "type" : "array",
+      "items": {"type" : "string"}
+    },
+    'downstreamDuplicates':{
+      "optional" : true,
+      "type" : "array",
+      "items": {"type" : "string"}
+    }
+  }
+}
