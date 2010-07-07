@@ -7,7 +7,7 @@
     "actor" : {
       "type": "object",
       "description": "Identifies the entity that performed the activity. Example: A person",
-      "properties" : {"$ref":"http://activitystrea.ms/schema/object.properties"}
+      "properties" : {"$ref":"http://activitystrea.ms/json-schema/object.properties"}
     },
     "verb" : {
       "optional" : true,
@@ -19,9 +19,12 @@
         without an object",
       "unconstrained":true,
       "options" : [
-        {'value':'favorite', 'name':'favorited'},
-        {'value':'follow', 'name' : 'started following'},
-        {'value':'like', 'name' : 'liked'},
+        {'value':'favorite',
+          'name':'favorited'},
+        {'value':'follow',
+          'name' : 'started following'},
+        {'value':'like',
+          'name' : 'liked'},
         {'value':'post', 'name' : 'posted'},
         {'value':'make-friend', 'name' : 'is friends with'},
         {'value':'join', 'name' : 'joined'},
