@@ -1,1 +1,9 @@
+This is a repository which contains json-schema documents which map to all the constructs in 
+http://activitystrea.ms/head/json-activity.html
+
+The syntax of the schema is defined at
 http://json-schema.org/
+
+This is work in progress. I will also add a version using orderly
+http://orderly-json.org/
+
