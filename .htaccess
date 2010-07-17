@@ -1,2 +1,1 @@
-RewriteEngine on
-RewriteRule ^(*person)$ $1
+
