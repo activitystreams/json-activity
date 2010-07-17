@@ -1,0 +1,2 @@
+RewriteEngine on
+RewriteRule ^(*person)$ $1 [T=application/json]
