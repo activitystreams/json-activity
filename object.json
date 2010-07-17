@@ -1,7 +1,7 @@
 {
   "type" : "object",
   "title" : "social object",
-  "description" : "",
+  "description" : "Generic object on the web",
   "properties" : {
     'id' : {
       "type" : "string"
@@ -26,12 +26,9 @@
     },
     'objectType' :{
       "type" : "string",
-      "description" : "The type of social object. See note below",
+      "description" : "The type of social object used to select schema",
       "optional" : true,
       "unconstrained" : true,
-      "note" : "This is done completely wrong. We should just create different\
-        types that extend social object so we can leverage the vanilla property\
-        validation",
       "options": [
         {"value": "article"},
         {"value": "audio"},
@@ -52,6 +49,8 @@
         {"value": "service"},
         {"value": "status"},
         {"value": "video"},
+        {"value": "event"},
+        {"value": "song"}
       ]
     },
     'inReplyTo':{
@@ -74,7 +73,7 @@
       "items": {
         "type" : "object",
         "properties" :{
-
+          "$ref":"http://activitystrea.ms/json-schema/action.properties"
         }
       }
     },
@@ -95,5 +94,9 @@
       "type" : "array",
       "items": {"type" : "string"}
     }
-  }
+  },
+  "links": [
+       {"rel": "describedby", "href": "http://activitystrea.ms/json-schema/{objectType}.json"}
+     ]
+
 }
