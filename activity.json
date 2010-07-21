@@ -7,13 +7,13 @@
     "object" : {
       "type": "object",
       "description" : "Identifies the primary object of the activity. Example: A photo",
-      "properties" : {"$ref":"http://activitystrea.ms/json-schema/object.properties"}
+      "properties" : {"$ref":"http://activitystrea.ms/json-schema/object.json#properties"}
     },
     "target" : {
       "type": "object",
       "optional" : true,
       "description" : "Represents the object to which the activity was performed. Example: A photo album",
-      "properties" : {"$ref":"http://activitystrea.ms/json-schema/object.properties"}
+      "properties" : {"$ref":"http://activitystrea.ms/json-schema/object.json#properties"}
     },
     "postedTime" : {
       "type" : "string",
@@ -24,13 +24,13 @@
       "type": "object",
       "description": "Represents the application which created the activity, which may be separate from the service to which the activity is published. For example, a third-party application on a mobile phone may be used to post a photo to a photo sharing service.",
       "optional" : true,
-      "properties" : {"$ref":"http://activitystrea.ms/json-schema/object.properties"}
+      "properties" : {"$ref":"http://activitystrea.ms/json-schema/object.json#properties"}
     },
     "provider" : {
       "type": "object",
       "description" : "Represents the service which is publishing the activity",
       "optional" : true,
-      "properties" : {"$ref":"http://activitystrea.ms/json-schema/object.properties"}
+      "properties" : {"$ref":"http://activitystrea.ms/json-schema/object.json#properties"}
     },
     "title" : {
       "type" : "string",
@@ -48,8 +48,8 @@
       "type" : "array",
       "optional" : true,
       "description" :"Links between an this object and other resources as defined in Web Linking",
-      "note": "Tell JSON schema team to not put links inside http://json-schema.org/hyper-schema.properties",
-      "properties" : {"$ref" : "http://json-schema.org/links.properties"}
+      "note": "Tell JSON schema team to not put links inside http://json-schema.org/hyper-schema#properties",
+      "properties" : {"$ref" : "http://json-schema.org/links#properties"}
     }
   }
 }

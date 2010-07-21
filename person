@@ -1,6 +1,0 @@
-{
-  "type" : "object",
-  "title" : "person",
-  "extends": {"$ref":"http://activitystrea.ms/json-schema/object"},
-  "properties" :{"$ref":"http://www.json-schema.org/card.properties"}
-}

@@ -9,6 +9,7 @@
     'image' : {
       "format":"image",
       "type":"string",
+      "description" : "A representative image.",
       "optional":true
     },
     'displayName' : {
@@ -56,15 +57,18 @@
     'inReplyTo':{
       "optional" : true,
       "description" : "The object that this object is in response to.",
+      "note" : "This should also support replying to activities",
       "type": "object",
-      "properties" :{"$ref":"#.properties"}
+      "properties" :{"$ref":"#properties"}
     },
     'replies':{
       "optional" : true,
       "type" : "array",
+      "description": "",
+      "note" : "Changed it from object to activity so we have time and actor",
       "items": {
         "type" : "object",
-        "properties" :{"$ref":"#.properties"}
+        "properties" :{"$ref":"http://activitystrea.ms/json-schema/activity#properties"}
       }
     },
     'reactions':{
