@@ -1,0 +1,16 @@
+{
+  "type" : "object",
+  "title" : "Favorite",
+  "description" : "To mark an object as a favorite",
+  "extends": {"$ref":"http://activitystrea.ms/json-schema/activity.json"},
+  "properties" :{
+    "verb" :{
+      "type" : "string",
+      "default" : "favorite"
+    },
+    "title" : {
+      "type" : "string",
+      "default" : "{actor.displayName} marked {object.displayName} as a favorite"
+    }
+  }
+}

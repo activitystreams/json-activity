@@ -4,17 +4,21 @@
   "description" : "Generic object on the web",
   "properties" : {
     'id' : {
-      "type" : "string"
+      "type" : "string",
+      "description" : "Uniquely identifies the object on the service",
+      "default" : "{link}"
     },
     'image' : {
       "format":"image",
       "type":"string",
-      "description" : "A representative image.",
+      "description" : "A representative image of the object such as a profile \n\
+        picture for a person",
       "optional":true
     },
     'displayName' : {
       "type":"string",
-      "optional":true
+      "description" : "The name of the object. Made required except for photos \n\
+        which will have a default"
     },
     'summary' : {
       "type" : "string",
@@ -23,36 +27,24 @@
     'link' : {
       "type" : "string",
       "format" : "url",
+      "description" : "Permalink to the object.",
       "optional":true
     },
     'objectType' :{
       "type" : "string",
       "description" : "The type of social object used to select schema",
+      "optional" : true
+    },
+    "author" : {
+      "type" : "object",
       "optional" : true,
-      "unconstrained" : true,
-      "options": [
-        {"value": "article"},
-        {"value": "audio"},
-        {"value": "bookmark"},
-        {"value": "comment"},
-        {"value": "file"},
-        {"value": "folder"},
-        {"value": "group"},
-        {"value": "list"},
-        {"value": "note"},
-        {"value": "person"},
-        {"value": "photo"},
-        {"value": "photo-album"},
-        {"value": "place"},
-        {"value": "playlist"},
-        {"value": "product"},
-        {"value": "review"},
-        {"value": "service"},
-        {"value": "status"},
-        {"value": "video"},
-        {"value": "event"},
-        {"value": "song"}
-      ]
+      "description" : "Entity who posted this object",
+      "properties" : {"$ref":"#properties"}
+    },
+    "postedTime" : {
+      "type" : "string",
+      "description": "Time at which the object was created. We should a last updated time.",
+      "format" : "date"
     },
     'inReplyTo':{
       "optional" : true,
@@ -65,8 +57,8 @@
       "optional" : true,
       "type" : "array",
       "uniqueItems" : true,
-      "description": "",
-      "note" : "Changed it from object to activity so we have time and actor",
+      "description" : "An array of feeds. Each feed has an array of activities \n\
+        which were done in response to this object",
       "items": {
         "type" : "object",
         "properties" :{"$ref":"http://activitystrea.ms/json-schema/feed.json#properties"}
@@ -74,6 +66,8 @@
     },
     'reactions':{
       "optional" : true,
+      "description" : "An array of reactions. A reactions object is itself an \n\
+        array of people who all had the same reaction",
       "type" : "array",
       "uniqueItems" :  true,
       "items": {
@@ -85,24 +79,32 @@
     },
     'attachedObjects':{
       "optional" : true,
+      "title" : "Related objects",
+      "description" : "An array of objects which are related to this object...\n\
+        Generally photos for an article. This needs more clarification",
       "type" : "array",
       "items": {
         "type" : "object",
         "properties" :{"$ref":"#.properties"}
       }
     },
-    'upstreamDuplicates':{"optional" : true,
+    'upstreamDuplicates':{
+      "optional" : true,
       "type" : "array",
+      "description" : "When a publisher changes the id they can put the original \n\
+        id of the object in this field so consumers can de-duplicate",
       "items": {"type" : "string"}
     },
     'downstreamDuplicates':{
       "optional" : true,
       "type" : "array",
+      "description" : "When a publisher creates a clone object in another system they can put that id\n\
+      here in order to let the consumer know how to de-duplicate",
       "items": {"type" : "string"}
     }
   },
   "links": [
-       {"rel": "describedby", "href": "http://activitystrea.ms/json-schema/{objectType}.json"}
+       {"rel": "describedby", "href": "http://activitystrea.ms/json-schema/objectType/{objectType}.json"}
      ]
 
 }

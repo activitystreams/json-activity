@@ -1,0 +1,16 @@
+{
+  "type" : "object",
+  "title" : "Save",
+  "description" : "To save an object",
+  "extends": {"$ref":"http://activitystrea.ms/json-schema/activity.json"},
+  "properties" :{
+    "verb" :{
+      "type" : "string",
+      "default" : "save"
+    },
+    "title" : {
+      "type" : "string",
+      "default" : "{actor.displayName} saved {object.displayName}"
+    }
+  }
+}

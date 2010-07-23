@@ -1,0 +1,16 @@
+{
+  "type" : "object",
+  "title" : "Rsvp Maybe",
+  "description" : "To indicate that the actor may attend an event",
+  "extends": {"$ref":"http://activitystrea.ms/json-schema/activity.json"},
+  "properties" :{
+    "verb" :{
+      "type" : "string",
+      "default" : "rsvp-maybe"
+    },
+    "title" : {
+      "type" : "string",
+      "default" : "{actor.displayName} may be attending {object.displayName}"
+    }
+  }
+}

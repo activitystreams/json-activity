@@ -1,0 +1,16 @@
+{
+  "type" : "object",
+  "title" : "Follow",
+  "description" : "To start following an object",
+  "extends": {"$ref":"http://activitystrea.ms/json-schema/activity.json"},
+  "properties" :{
+    "verb" :{
+      "type" : "string",
+      "default" : "follow"
+    },
+    "title" : {
+      "type" : "string",
+      "default" : "{actor.displayName} started following {object.displayName}"
+    }
+  }
+}

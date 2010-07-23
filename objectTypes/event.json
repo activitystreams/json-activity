@@ -1,0 +1,13 @@
+{
+  "type" : "object",
+  "title" : "event",
+  "description" : "xCal fromat for vevent",
+  "extends": [{"$ref":"http://activitystrea.ms/json-schema/object.json"},
+    {"$ref":"http://www.json-schema.org/calendar"}],
+  "properties" :{
+      "objectType" :{
+      "type" :"string",
+      "default" : "event"
+    }
+  }
+}

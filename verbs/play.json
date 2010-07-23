@@ -1,0 +1,16 @@
+{
+  "type" : "object",
+  "title" : "Play",
+  "description" : "To play an object",
+  "extends": {"$ref":"http://activitystrea.ms/json-schema/activity.json"},
+  "properties" :{
+    "verb" :{
+      "type" : "string",
+      "default" : "play"
+    },
+    "title" : {
+      "type" : "string",
+      "default" : "{actor.displayName} played {object.displayName}"
+    }
+  }
+}

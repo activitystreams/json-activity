@@ -1,0 +1,16 @@
+{
+  "type" : "object",
+  "title" : "Join",
+  "description" : "To join an object. Usually a group",
+  "extends": {"$ref":"http://activitystrea.ms/json-schema/activity.json"},
+  "properties" :{
+    "verb" :{
+      "type" : "string",
+      "default" : "join"
+    },
+    "title" : {
+      "type" : "string",
+      "default" : "{actor.displayName} joined {object.displayName}"
+    }
+  }
+}

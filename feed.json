@@ -1,0 +1,33 @@
+{
+  "type" : "object",
+  "title" : "feed",
+  "description" : "This is the top level container which is typically the response for the API call. \n\
+    A feed contains an array of activities usually related to each other via a subject. Ex: Peter's Lifestream",
+  "properties" : {
+    "title" : {
+      "type" : "string",
+      "optional" : true,
+      "description": "Human readable name of the feed"
+    },
+    "subject" : {
+      "type" : "object",
+      "description" : "The main object of the feed. All objects default to being inReplyTo this object.\n\
+      If not present its the parent object",
+      "optional" : true,
+      "properties" :{"$ref":"http://activitystrea.ms/json-schema/object.json#properties"}
+    },
+    "items" : {
+      "type" : "array",
+      "items": {
+        "type" : "object",
+        "properties" :{"$ref":"http://activitystrea.ms/json-schema/activity.json#properties"}
+      }
+    },
+    "links" : {
+      "type" : "array",
+      "optional" : true,
+      "description" :"Links between an this object and other resources as defined in Web Linking",
+      "properties" : {"$ref" : "http://json-schema.org/links#properties"}
+    }
+  }
+}

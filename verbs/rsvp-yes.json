@@ -1,0 +1,16 @@
+{
+  "type" : "object",
+  "title" : "Rsvp Yes",
+  "description" : "To indicate that the actor will attend an event",
+  "extends": {"$ref":"http://activitystrea.ms/json-schema/activity.json"},
+  "properties" :{
+    "verb" :{
+      "type" : "string",
+      "default" : "rsvp-yes"
+    },
+    "title" : {
+      "type" : "string",
+      "default" : "{actor.displayName} is attending {object.displayName}"
+    }
+  }
+}
