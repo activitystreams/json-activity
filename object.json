@@ -64,20 +64,22 @@
     'replies':{
       "optional" : true,
       "type" : "array",
+      "uniqueItems" : true,
       "description": "",
       "note" : "Changed it from object to activity so we have time and actor",
       "items": {
         "type" : "object",
-        "properties" :{"$ref":"http://activitystrea.ms/json-schema/activity#properties"}
+        "properties" :{"$ref":"http://activitystrea.ms/json-schema/feed.json#properties"}
       }
     },
     'reactions':{
       "optional" : true,
       "type" : "array",
+      "uniqueItems" :  true,
       "items": {
         "type" : "object",
         "properties" :{
-          "$ref":"http://activitystrea.ms/json-schema/action.properties"
+          "$ref":"http://activitystrea.ms/json-schema/reactions.json#properties"
         }
       }
     },

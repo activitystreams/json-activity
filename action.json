@@ -7,36 +7,7 @@
     "actor" : {
       "type": "object",
       "description": "Identifies the entity that performed the activity. Example: A person",
-      "properties" : {"$ref":"http://activitystrea.ms/json-schema/object.properties"}
-    },
-    "verb" : {
-      "optional" : true,
-      "type" : "string",
-      "default": "post",
-      "description" :"Represents the type of action performed.",
-      "note" : "Should we only include a subset of verbs which demonstrate the impact on the reader ? \
-        The verb post for example does not indicate how the reader perceived the content and is not significant\
-        without an object",
-      "unconstrained":true,
-      "options" : [
-        {'value':'favorite',
-          'name':'favorited'},
-        {'value':'follow',
-          'name' : 'started following'},
-        {'value':'like',
-          'name' : 'liked'},
-        {'value':'post', 'name' : 'posted'},
-        {'value':'make-friend', 'name' : 'is friends with'},
-        {'value':'join', 'name' : 'joined'},
-        {'value':'play', 'name' : 'played'},
-        {'value':'tag', 'name' : 'tagged'},
-        {'value':'update', 'name' : 'updated'},
-        {'value':'save', 'name' : 'saved'},
-        {'value':'share', 'name': 'shared'},
-        {'value':'rsvp-yes', 'name' : 'will attend'},
-        {'value':'rsvp-maybe', 'name' : 'may attend'},
-        {'value':'rsvp-no', 'name' : 'will not attend'}
-      ]
+      "properties" : {"$ref":"http://activitystrea.ms/json-schema/object#properties"}
     }
   }
 }

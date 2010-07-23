@@ -1,9 +1,18 @@
 {
   "type" : "object",
   "title" : "activity",
-  "extends": {"$ref":"http://activitystrea.ms/json-schema/action"}, /*Actor and Verb  are defined there*/
   "description" : "An activity construct specifies all the details about an event that occurred in the past. The current focus is on knowledge sharing and social broadcasting.",
   "properties": {
+    "actor" : {
+      "type": "object",
+      "description": "Identifies the entity that performed the activity. Example: A person",
+      "properties" : {"$ref":"http://activitystrea.ms/json-schema/object.properties"}
+    },
+    "verb" : {
+      "optional" : true,
+      "description" : "The type of action performed",
+      "type" : {"$ref" : "http://activitystrea.ms/json-schema/verb.json"}
+    },
     "object" : {
       "type": "object",
       "description" : "Identifies the primary object of the activity. Example: A photo",
