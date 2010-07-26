@@ -11,7 +11,7 @@
     "actor" : {
       "type": "object",
       "description": "Identifies the entity that performed the activity. Example: A person or user",
-      "properties" : {"$ref":"http://activitystrea.ms/json-schema/object.properties"}
+      "properties" : {"$ref":"./object.json#properties"}
     },
     "verb" : {
       "title" : "verb",
@@ -23,13 +23,13 @@
     "object" : {
       "type": "object",
       "description" : "Identifies the primary object of the activity. Example: A photo",
-      "properties" : {"$ref":"http://activitystrea.ms/json-schema/object.json#properties"}
+      "properties" : {"$ref":"./object.json#properties"}
     },
     "target" : {
       "type": "object",
       "optional" : true,
       "description" : "Represents the object to which the activity was performed. Example: A photo album",
-      "properties" : {"$ref":"http://activitystrea.ms/json-schema/object.json#properties"}
+      "properties" : {"$ref":"./object.json#properties"}
     },
     "postedTime" : {
       "type" : "string",
@@ -40,13 +40,13 @@
       "type": "object",
       "description": "Represents the application which created the activity, which may be separate from the service to which the activity is published. For example, a third-party application on a mobile phone may be used to post a photo to a photo sharing service.",
       "optional" : true,
-      "properties" : {"$ref":"http://activitystrea.ms/json-schema/object.json#properties"}
+      "properties" : {"$ref":"./object.json#properties"}
     },
     "provider" : {
       "type": "object",
       "description" : "Represents the service which is publishing the activity",
       "optional" : true,
-      "properties" : {"$ref":"http://activitystrea.ms/json-schema/object.json#properties"}
+      "properties" : {"$ref":"./object.json#properties"}
     },
     "title" : {
       "type" : "string",
@@ -60,7 +60,7 @@
       "format" : "html",
       "optional" : true
     },
-    'link' : {
+    "link" : {
       "type" : "string",
       "description" : "Permalink to the activity",
       "format" : "url",
@@ -75,6 +75,6 @@
     }
   },
   "links": [
-       {"rel": "describedby", "href": "http://activitystrea.ms/json-schema/verbs/{verb}.json"}
+       {"rel": "describedby", "href": "./verbs/{verb}.json"}
      ]
 }

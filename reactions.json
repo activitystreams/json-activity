@@ -5,8 +5,8 @@
     "inReplyTo" : {
       "optional" : true,
       "type" : [
-        {"$ref" : "http://activitystrea.ms/json-schema/object.json"},
-        {"$ref" : "http://activitystrea.ms/json-schema/activity.json"}
+        {"$ref" : "./object.json"},
+        {"$ref" : "./activity.json"}
       ]
     },
     "verb" : {
@@ -22,7 +22,7 @@
       "description" : "An array of unique people who had the same reaction to the same object. May be a subset",
       "items" : {
         "type" : "object",
-        "properties" :{"$ref":"http://activitystrea.ms/json-schema/person.json#properties"}
+        "properties" :{"$ref":"./person.json#properties"}
       }
     },
     "example" : {

@@ -1,0 +1,53 @@
+{
+  "type" : "object",
+  "title" : "core_object",
+  "description" : "Basic object on the web",
+  "properties" : {
+    "id" : {
+      "type" : "string",
+      "description" : "Uniquely identifies the object on the service",
+      "default" : "{link}"
+    },
+    "image" : {
+      "format":"image",
+      "type":"string",
+      "description" : "A representative image of the object such as a profile picture for a person",
+      "optional":true
+    },
+    "displayName" : {
+      "type":"string",
+      "description" : "The name of the object. Made required except for photos which will have a default"
+    },
+    "summary" : {
+      "type" : "string",
+      "optional":true
+    },
+    "link" : {
+      "type" : "string",
+      "format" : "url",
+      "description" : "Permalink to the object.",
+      "optional":true
+    },
+    "objectType" :{
+      "type" : "string",
+      "description" : "The type of social object used to select schema",
+      "optional" : true
+    },
+    "author" : {
+      "type" : "object",
+      "optional" : true,
+      "description" : "Entity who posted this object",
+      "properties" : {"$ref":"#properties"}
+    },
+    "postedTime" : {
+      "optional" : true,
+      "type" : "string",
+      "description": "Time at which the object was created. We should a last updated time.",
+      "format" : "date"
+    }
+  },
+  "additionalProperties" : true,
+  "links": [
+       {"rel": "describedby", "href": "./objectType/{objectType}.json"}
+     ]
+}

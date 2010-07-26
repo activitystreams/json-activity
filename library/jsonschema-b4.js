@@ -170,6 +170,7 @@ JSONSchema = {
 					addError("may only have " + schema.maxDecimal + " digits of decimal places");
 				}
 			}
+
 		}
 		return null;
 	}
