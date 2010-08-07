@@ -1,7 +1,7 @@
 {
   "type" : "object",
   "title" : "core_object",
-  "description" : "Basic object on the web",
+  "description" : "Basic object on the web. The only required property is the id",
   "properties" : {
     "id" : {
       "type" : "string",

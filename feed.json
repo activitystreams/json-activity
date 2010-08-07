@@ -1,7 +1,7 @@
 {
   "type" : "object",
   "title" : "feed",
-  "description" : "This is the top level container which is typically the response for the API call. A feed contains an array of activities usually related to each other via a subject. Ex: Peter's Lifestream",
+  "description" : "This is the top level container which is typically the response for the API call. A feed contains an array of activities usually related to each other via a subject. Ex: Peter's Lifestream. A feed or stream can also be used to syncrhonize changes",
   "properties" : {
     "title" : {
       "type" : "string",

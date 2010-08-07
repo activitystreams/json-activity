@@ -1,6 +1,6 @@
 {
   "type" : "object",
-  "description" : "This type represents a list of people who had the same reaction represented by the verb to the same object",
+  "description" : "This type represents a list of people who had the same reaction represented by the verb to the same object. Subject to change.",
   "properties" : {
     "inReplyTo" : {
       "optional" : true,
