@@ -11,6 +11,17 @@
     "title" : {
       "type" : "string",
       "default" : "{actor.displayName} updated {object.displayName}'s {change.name} to {change.value}"
+    },
+    "change" : {
+      "type" : "object",
+      "properties" :{
+        "name" : {
+          "type" : "string"
+        },
+        "value" : {
+          "type" : "any"
+        }
+      }
     }
   },
   "example" : {

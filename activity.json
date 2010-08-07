@@ -11,7 +11,8 @@
     "actor" : {
       "type": "object",
       "description": "Identifies the entity that performed the activity. Example: A person or user",
-      "properties" : {"$ref":"./object.json#properties"}
+      "properties" : {"$ref":"./object.json#properties"},
+      "optional" : true
     },
     "verb" : {
       "title" : "verb",
