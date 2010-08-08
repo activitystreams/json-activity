@@ -27,5 +27,8 @@
       "description" :"Links between an this object and other resources as defined in Web Linking",
       "properties" : {"$ref" : "http://json-schema.org/links#properties"}
     }
-  }
+  },
+  "links": [
+       {"rel": "describedby", "href": "http://json-schema.org/schema"}
+     ]
 }
