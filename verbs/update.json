@@ -1,44 +1,26 @@
 {
   "type" : "object",
   "title" : "Update",
-  "description" : "To update an object. Ex: Monica updated her street address to 234 Awesome St",
+  "description" : "To update a property on an object. Ex: Monica updated her street address to 234 Awesome St.",
+  "notes" : "The new property value can be a scalar value or an object. See the property object type",
   "extends": {"$ref":"http://activitystrea.ms/json-schema/activity.json"},
   "properties" :{
     "verb" :{
       "type" : "string",
-      "default" : "tag"
+      "default" : "update"
     },
     "title" : {
       "type" : "string",
-      "default" : "{actor.displayName} updated {object.displayName}'s {change.name} to {change.value}"
-    },
-    "change" : {
-      "type" : "object",
-      "properties" :{
-        "name" : {
-          "type" : "string"
-        },
-        "value" : {
-          "type" : "any"
-        }
-      }
-    }
-  },
-  "example" : {
-    "actor" : {"id":1212, "displayName" : "Peter"},
-    "verb" : "update",
-    "change" :
-     {
-      "name" : "street address",
-      "value" : {"$ref": "#object.streetAddress"}
+      "default" : "{actor.displayName} updated {target.displayName}'s {object.displayName} to {object.value}"
     },
     "object" : {
-      "id": 12121,
-      "displayName" : "Peter's House",
-      "streetAddress" : "234 Amazing St",
-      "city" : "San Francisco",
-      "state" : "California"
+      "type" : "object",
+      "properties" : {"$ref":"http://activitystrea.ms/json-schema/objectTypes/property.json"}
+    },
+    "target" : {
+      "type" : "object",
+      "optional" : true,
+      "properties" : {"$ref":"http://activitystrea.ms/json-schema/core-object.json"}
     }
-
   }
 }
