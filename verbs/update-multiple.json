@@ -24,16 +24,16 @@
     }
   },
   "example" : {
-    "actor" : {"id":1212, "displayName" : "Melissa"},
-    "verb" : "update-multiple",
+    "actor" : {"id":1212, "displayName" : "Melissa"}, /*May not be known for FB */
+    "verb" : "update-multiple", /* ignore for FB */
     "time" : "2010-08-02T15:29:00Z",
-    "target" : {
+    "target" : { /* uid --> id on FB */
       "type" : "profile",
       "id" :  "2121212",
       "displayName" : "Melissa's profile",
       "time" : "2009-08-02T15:29:00Z"
      },
-     "object" : {
+     "object" : { /* data */
        "type" : "changeset",
        "actions" : [
           {"verb" : "update", "object" : {"type" : "property", "displayName" : "relationship status"}},
