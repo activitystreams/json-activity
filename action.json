@@ -1,0 +1,19 @@
+{
+  "type" : "object",
+  "title" : "action",
+  "description" : "An action construct describes a change in an object",
+  "properties": {
+    "verb" : {
+      "title" : "verb",
+      "type" : "string",
+      "default": "post",
+      "optional" : "true",
+      "description" :"Represents the type of action performed: post(add), update or delete"
+    },
+    "object" : {
+      "type": "object",
+      "description" : "Identifies the object to which the verb applies. Ex: Added a photo",
+      "properties" : {"$ref":"./object.json#properties"}
+    }
+  }
+}

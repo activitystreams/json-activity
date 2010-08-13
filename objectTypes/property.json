@@ -25,7 +25,7 @@
   "example" : {
     "actor" : {"id":1212, "displayName" : "Peter"},
     "verb" : "update",
-    "postedTime" : "2010-08-02T15:29:00Z",
+    "time" : "2010-08-02T15:29:00Z",
     "object" :
      {
       "objectType" : "property",
@@ -35,7 +35,7 @@
     },
     "target" : {
       "id": 12121,
-      "postedTime" : "2010-08-02T15:29:00Z",
+      "time" : "2010-08-02T15:29:00Z",
       "displayName" : "Peter's House"
     }
   }

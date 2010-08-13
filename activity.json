@@ -32,7 +32,7 @@
       "description" : "Represents the object to which the activity was performed. Example: A photo album",
       "properties" : {"$ref":"./object.json#properties"}
     },
-    "postedTime" : {
+    "time" : {
       "type" : "string",
       "description": "Time at which the activity occurred",
       "format" : "date"

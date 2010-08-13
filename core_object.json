@@ -39,7 +39,7 @@
       "description" : "Entity who posted this object",
       "properties" : {"$ref":"#properties"}
     },
-    "postedTime" : {
+    "time" : {
       "optional" : true,
       "type" : "string",
       "description": "Time at which the object was created. We should a last updated time.",
