@@ -28,15 +28,15 @@
       <organization>Citizen Agency, Google</organization>
     </author>
 
-    <author fullname="Monica Keller" initials="M." surname="Keller">
-      <organization>MySpace, Facebook</organization>
+    <author fullname="Monica Wilkinson" initials="M." surname="Wilkinson">
+      <organization>MySpace, Facebook, Socialcast</organization>
     </author>
 
     <author fullname="Rob Dolin" initials="R." surname="Dolin">
       <organization>Microsoft</organization>
     </author>
 
-    <date month="July" year="2010" />
+    <date month="October" year="2010" />
 
     <abstract>
       <t>This specification details how to serialize activities in JSON. 
@@ -78,7 +78,8 @@
         <t>An activity consists of the following logical components:</t>
 
         <section anchor="activity.icon" title="Icon">
-          <t>This URI value identifies an image resource which provides a
+          <t>This IRI<xref target="RFC3987"></xref> 
+          value identifies an image resource which provides a
           visual representation of the activity, intended for human
           consumption. The image SHOULD be square and SHOULD be suitable for
           presentation at a small size. An Activity construct MAY have an icon
@@ -184,7 +185,7 @@
         formats.</t>
 
         <section anchor="object.id" title="ID">
-          <t>The id of an object construct is an absolute URI that uniquely
+          <t>The id of an object construct is an absolute IRI<xref target="RFC3987"></xref> that uniquely
           identifies the object. An Object construct SHOULD have exactly one
           ID value. If an object construct does not have an ID value consumers
           MAY use the Permalink URL as a weaker identifier, but must in this
@@ -213,7 +214,7 @@
         </section>
 
         <section anchor="object.permalink" title="Permalink URL">
-          <t>This URI value identifies a resource which provides an HTML
+          <t>This IRI<xref target="RFC3987"></xref> value identifies a resource which provides an HTML
           representation of the object. An Object construct MAY have a
           Permalink URL, but MUST NOT have more than one. The presence of this
           construct implies a Link as defined in section 3 of <xref
@@ -588,14 +589,14 @@
               IDs</xref> of the Object Construct is represented by a property
               named <spanx style="verb">upstreamDuplicates</spanx> whose value
               is a JSON array of JSON string values containing the ID
-              URIs.</t>
+              IRI<xref target="RFC3987"></xref>s.</t>
 
               <t hangText="Downstream Duplicate ID">The set of <xref
               target="object.downstream-duplicate-id">Downstream Duplicate
               IDs</xref> of the Object Construct is represented by a property
               named <spanx style="verb">downstreamDuplicates</spanx> whose
               value is a JSON array of JSON string values containing the ID
-              URIs.</t>
+              IRI<xref target="RFC3987"></xref>s.</t>
 
               <t hangText="Standard Link">The set of <xref
               target="activity.standard-link">Standard Links</xref> of the
@@ -657,7 +658,7 @@
           <t>The value of each of the properties is a JSON array containing a
           JSON object for each Link in the set with the corresponding Link
           Relation Type. containing a property <spanx style="verb">href</spanx>
-          whose value is a JSON string containing the Target URI of the link
+          whose value is a JSON string containing the Target IRI<xref target="RFC3987"></xref> of the link
           it represents. Target Attributes of the Link are represented by
           additional properties whose names correspond to Target Attributes
           defined for the link, where the value of each is a JSON string
@@ -687,8 +688,7 @@
       defined in <xref target="extensions"></xref>.</t>
 
       <t>The "Post" verb describes the act of authoring an object and then
-      publishing it online. The verb URI for the "Post" verb is <spanx
-      style="verb">http://activitystrea.ms/schema/1.0/post</spanx>.</t>
+      publishing it online. The verb is <spanx style="verb">post</spanx>.</t>
 
       <t>The actor of an Activity Construct using the "Post" verb is an Object
       Construct representing the person or object that authored and posted the
@@ -744,13 +744,13 @@
       with the concepts and serializations defined in this specification.</t>
 
       <t>When defining a new verb, the defining specification MUST provide a
-      verb identifier URI for the new verb and MUST define the meaning of the
+      verb identifier for the new verb and MUST define the meaning of the
       verb in terms of the Actor, Object and Target components of the Activity
       Construct, and MUST define whether a Target is required and what it
       represents when present.</t>
 
       <t>When defining a new object type, the defining specification MUST
-      provide an object type identifier URI for the new object type. The
+      provide an object type identifier for the new object type. The
       definition of the new object type MAY define additional components
       specific to that object type; if so, the specification SHOULD define how
       these additional components are to be represented as JSON properties,
@@ -846,31 +846,29 @@
         </front>
       </reference>
       <reference anchor="activity-schema-01" 
-        target="http://activitystrea.ms/head/activity-schema.html">
+        target="http://activitystrea.ms/activity-schema.html">      
          <front>
-            <title>Atom Activity Base Schema (Draft)</title>
+            <title>Atom Activity Base Schema</title>
+            <author fullname="Martin Atkins" initials="M." surname="Atkins">
+              <organization>Six Apart</organization>
+            </author>
+
+            <author fullname="Will Norris" initials="W." surname="Norris">
+              <organization>Google</organization>
+            </author>
+
+            <author fullname="Chris Messina" initials="C." surname="Messina">
+              <organization>Citizen Agency, Google</organization>
+            </author>
+
+            <author fullname="Monica Wilkinson" initials="M." surname="Wilkinson">
+              <organization>MySpace, Facebook, Socialcast</organization>
+            </author>
+
+            <author fullname="Rob Dolin" initials="R." surname="Dolin">
+              <organization>Microsoft</organization>
+            </author>
           </front>
-      </reference>
-
-      <reference anchor="RFC3986">
-        <front>
-          <title>Uniform Resource Identifiers (URI): Generic Syntax</title>
-
-          <author fullname="Tim Berners-Lee" initials="T."
-                  surname="Berners-Lee">
-            <organization></organization>
-          </author>
-
-          <author fullname="Roy Fielding" initials="R." surname="Fielding">
-            <organization></organization>
-          </author>
-
-          <author fullname="Larry Masinter" initials="L." surname="Masinter">
-            <organization></organization>
-          </author>
-
-          <date month="January" year="2005" />
-        </front>
       </reference>
 
       <reference anchor="RFC3987">
