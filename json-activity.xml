@@ -13,8 +13,11 @@
 <?rfc subcompact="no"?>
 <rfc category="exp" docName="json-activity-01" ipr="none">
   <front>
-    <title abbrev="ActivityStreams">Activity Streams Concepts and
-    Representations (Draft)</title>
+    <title abbrev="ActivityStreams">JSON Activity Streams (Draft)</title>
+
+    <author fullname="James M Snell" initials="J.M." surname="Snell">
+      <organization>IBM</organization>
+    </author>
 
     <author fullname="Martin Atkins" initials="M." surname="Atkins">
       <organization>SAY Media</organization>
@@ -36,706 +39,507 @@
       <organization>Microsoft</organization>
     </author>
 
-    <date month="October" year="2010" />
+    <date month="February" year="2011" />
 
     <abstract>
-      <t>This specification details how to serialize activities in JSON. 
-        Activities are very important in making the web a more social place as
-        they allow individuals to process the latest news of people and things they care about.</t>
+      <t>This specification details the serialization of a stream of social
+        activities using the JSON format. Activities are important in that
+        they allow individuals to process the latest news of people and things
+        they care about.</t>
     </abstract>
 
-    <note title="Requirements Language">
-      <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-      "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
-      document are to be interpreted as described in <xref
-      target="RFC2119"></xref>.</t>
-    </note>
   </front>
 
   <middle>
     <section title="Introduction">
+
+      <t>In its simplest form, an <spanx style="verb">activity</spanx> consists
+      of an <spanx style="verb">actor</spanx>, a
+      <spanx style="verb">verb</spanx>, an
+      an <spanx style="verb">object</spanx>, and a <spanx style="verb">target</spanx>.
+      It tells the story of a person performing an action on or with an object --
+      "Geraldine posted a photo to her album"
+      or "John shared a video". In most cases these components will be
+      explicit, but they may also be implied.</t>
+
       <t>It is a goal of this specification to provide sufficient metadata
       about an activity such that a consumer of the data can present it to a
       user in a rich human-friendly format. This may include constructing
       readable sentences about the activity that occurred, visual
       representations of the activity, or combining similar activities for
       display.</t>
+
+      <t>The basic properties that comprise the description of an
+      <spanx style="verb">activity</spanx> are defined in the following sections.</t>
+
+      <t>Within this specification, an <spanx style="verb">object</spanx> is a
+      thing, real or imaginary, which participates in an
+      activity. It may be the entity performing the activity, or the entity
+      on which the activity was performed. An <spanx style="verb">object</spanx>
+      consists of properties defined in the following sections. Certain object
+      types may further refine the meaning of these properties, or they may
+      define additional properties.</t>
+
+      <t>Some types of objects may have an alternative visual representation
+      in the form of an image, video or embedded HTML fragments.
+      A <spanx style="verb">Media Link</spanx> represents a hyperlink to
+      such resources.</t>
+
+      <t>An <spanx style="verb">Activity Stream</spanx> is a collection one or
+      more individual activities. The relationship between the activities within
+      the collection is undefined by this specification.</t>
+
     </section>
 
     <section title="Notational Conventions">
       <t>The text of this specification provides the sole definition of
       conformance. Examples in this specification are non-normative.</t>
+
+      <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+      "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+      document are to be interpreted as described in <xref
+      target="RFC2119" />.</t>
+
+      <t>This specification allows the use of IRIs <xref target="RFC3987"/>.
+      Every URI <xref target="RFC3986" /> is also an IRI, so a URI may be used
+      wherever below an IRI is named.  There are two special considerations:
+      (1) when an IRI that is not also a URI is given for dereferencing, it
+      MUST be mapped to a URI using the steps in Section 3.1 of
+      <xref target="RFC3987"/> and (2) when an IRI is serving as
+      an <spanx style="verb">id</spanx> value, it MUST NOT be so mapped.</t>
     </section>
 
-    <section anchor="concepts" title="Activity Concepts">
-      <t>In its simplest form, an activity consists of an actor, a verb, and
-      an object. It tells the story of a person performing an action on or
-      with an object -- "Geraldine posted a photo" or "John shared a video".
-      In most cases these components will be explicitly declared, but they may
-      also be implied.</t>
+    <section anchor="format" title="JSON Serialization">
 
-      <section anchor="activity" title="The Activity Construct">
-        <t>An activity consists of the following logical components:</t>
+      <t>Activities are serialized using the JSON format, as
+      defined in <xref target="RFC4627" />. Alternative serializations
+      MAY be used but are outside the scope of this specification.</t>
 
-        <section anchor="activity.icon" title="Icon">
-          <t>This IRI<xref target="RFC3987"></xref> 
-          value identifies an image resource which provides a
-          visual representation of the activity, intended for human
-          consumption. The image SHOULD be square and SHOULD be suitable for
-          presentation at a small size. An Activity construct MAY have an icon
-          but it MUST NOT have more than one.</t>
-        </section>
+      <t>In the JSON serialization, absent properties MAY be represented either
+      by an explicit declaration of the property whose value is null or by
+      omitting the property declaration altogether at the option of the
+      publisher; these two representations are semantically equivalent. If a
+      property is having a value whose type is a JSON array, the absence of
+      any items in that array MUST be represented by omitting the property
+      entirely or publishing it with the value null, and MUST NOT be
+      represented as an empty array, except as otherwise stated in the
+      definition of a specific property.</t>
 
-        <section anchor="activity.time" title="Time">
-          <t>A Date Construct that identifies the time at which the activity
-          occurred. It is important to note that this is not necessarily the
-          same as the time at which the activity was published. An Activity
-          construct MUST have exactly one Time value.</t>
-        </section>
+      <t>Unless otherwise specified, all properties specifying date and
+      time values within the JSON serialization, including extensions,
+      MUST conform to the "date-time" production in <xref target="RFC3339" />.
+      In addition, an uppercase "T" character MUST be used to separate date
+      and time, and an uppercase "Z" character MUST be present in the absence of
+      a numeric time zone offset.</t>
 
-        <section anchor="activity.actor" title="Actor">
-          <t>An <xref target="object">Object Construct</xref> that identifies
-          the entity that performed the activity. An Activity construct MUST
-          have exactly one actor.</t>
-        </section>
+      <section anchor="examples" title="Example Activities">
 
-        <section anchor="activity.verb" title="Verb">
-          <t>A string value that identifies the type of action performed. See <xref target="activity-schema-01">
-            Activity Schema</xref> for the list of verbs the community has agreed on using and what
-            each one means.</t>
-          <t>Publishers can invent their own verbs but it is recommended for them to 
-            register these verbs so that consumers can rely on using the same definition 
-            whenever they see a verb.</t>
-        </section>
+        <t>Following is a simple, minimal example of a JSON serialized
+        <spanx style="verb">activity</spanx>:</t>
 
-        <section anchor="activity.object" title="Object">
-          <t>This <xref target="object">Object Construct</xref> identifies the
-          primary object of the activity. An Activity construct MUST have
-          exactly one object.</t>
-        </section>
+<figure><artwork><![CDATA[
+  {
+    "postedTime": "2011-02-10T15:04:55Z",
+    "verb": "post",
+    "target" : {
+      "url": "http://example.org/blog/",
+      "objectType": "blog",
+      "id": "tag:example.org,2011:abc123",
+      "displayName": "Martin's Blog"
+    },
+    "object" : {
+      "url": "http://example.org/blog/2011/02/entry",
+      "id": "tag:example.org,2011:abc123/xyz"
+    },
+    "actor": {
+      "url": "http://example.org/martin",
+      "objectType" : "person",
+      "id": "tag:example.org,2011:martin",
+      "image": {
+        "url": "http://example.org/martin/image",
+        "width": 250,
+        "height": 250
+      },
+      "displayName": "Martin Smith"
+    }
+  }
+]]></artwork></figure>
 
-        <section anchor="activity.target" title="Target">
-          <t>The target of an activity is an <xref target="object">Object
-          Construct</xref> that represents the object to which the activity
-          was performed. The exact meaning of an activity's target is
-          dependent on the verb of the activity, but will often be the object
-          of the English preposition "to". For example, in the activity "John
-          saved a movie to his wishlist", the target of the activity is
-          'wishlist'. The activity target MUST NOT be used to identify an
-          indirect object that is not a target of the activity. An Activity
-          construct MAY have a target but it MUST NOT have more than one.</t>
-        </section>
+        <t>A more extensive, single-entry <spanx style="verb">Activity Stream</spanx>
+        follows. In addition to containing a number of required and optional
+        core properties, the example contains the additional, undefined extension
+        properties "to" and "bcc" for illustrative purposes only. The values
+        of each of these extension properties are an Array of
+        <xref target="object-serialization">Objects</xref></t>
 
-        <section anchor="activity.generator" title="Generator">
-          <t>The generator of an activity is an <xref target="object">Object
-          Construct</xref> that represents the application which created it,
-          which may be separate from the service to which the activity is
-          published. For example, a third-party application on a mobile phone
-          may be used to post a photo to a photo sharing service. An Activity
-          construct MAY have a generator but it MUST NOT have more than
-          one.</t>
-        </section>
+<figure><artwork><![CDATA[
+  {
+    "items" : [
+      {
+        "to": [
+          {
+            "objectType": "person",
+            "id": "acct:john.doe@example.org"
+          },
+          {
+            "objectType": "person",
+            "id": "acct:jane.doe@example.org"
+          }
+        ],
+        "bcc": [
+          {
+            "objectType": "person",
+            "id": "acct:jean.deux@example.org"
+          }
+        ],
+        "verb": "post",
+        "postedTime": "2011-02-10T15:04:55Z",
+        "generator": {
+          "url": "http://example.org/activities-app"
+        },
+        "provider": {
+          "url": "http://example.org/activity-stream"
+        },
+        "title": "Martin posted a new video to his album.",
+        "target": {
+          "url": "http://example.org/album/",
+          "objectType": "http://activitystrea.ms/schema/1.0/photo-album",
+          "id": "tag:example.org,2011:abc123",
+          "displayName": "Martin's Photo Album",
+          "image": {
+            "url": "http://example.org/album/thumbnail.jpg",
+            "width": 250,
+            "height": 250
+          }
+        },
+        "object" : {
+          "url": "http://example.org/album/my_fluffy_cat.jpg",
+          "objectType": "http://activitystrea.ms/schema/1.0/photo",
+          "id": "tag:example.org,2011:my_fluffy_cat",
+          "image": {
+            "url": "http://example.org/album/my_fluffy_cat_thumb.jpg",
+            "width": 250,
+            "height": 250
+          }
+        },
+        "actor": {
+          "url": "http://example.org/martin",
+          "objectType": "person",
+          "id": "tag:example.org,2011:martin",
+          "image": {
+            "url": "http://example.org/martin/image",
+            "width": 250,
+            "height": 250
+          },
+          "displayName": "Martin Smith"
+        }
+      }
+    ]
+  }
+]]></artwork></figure>
 
-        <section anchor="activity.provider" title="Service Provider">
-          <t>The service provider of an activity is an <xref
-          target="object">Object Construct</xref> that represents the service
-          which is publishing the activity. An Activity Construct MAY have a
-          provider but it MUST NOT have more than one.</t>
-        </section>
-
-        <section anchor="activity.title" title="Title">
-          <t>An HTML representation of the natural language title for this
-          activity. Consumers MAY use the value of this field, if set, as a
-          fallback for when none of the provided verbs are recognized. An
-          Activity Construct MAY have a title but it MUST NOT have more than
-          one.</t>
-        </section>
-
-        <section anchor="activity.body" title="Body">
-          <t>An HTML representation of a natural language describing this
-          activity including visual elements such as thumbnails. Consumers MAY
-          use the value of this field, if set, as a fallback for when none of
-          the provided verbs are recognized. An Activity Construct MAY have a
-          body but it MUST NOT have more than one.</t>
-        </section>
-
-        <section anchor="activity.standard-link" title="Standard Link">
-          <t>A Link as defined by section 3 of <xref
-          target="draft-nottingham-http-link-header-10"></xref>. An Activity
-          Construct MAY have one ore more Standard Links.</t>
-
-          <t>This component is provided to allow the use of the registry of
-          link relations defined by the Web Linking specification to create
-          links between an Activity Construct and other resources. The Context
-          of the Link is the Object Construct. This component MUST NOT be used
-          to publish data that matches a meaning that could be published by
-          another Activity Streams component.</t>
-        </section>
       </section>
 
-      <section anchor="object" title="The Object Construct">
-        <t>An object construct is a thing, real or imaginary, which
-        participates in an activity. It may be the entity performing the
-        activity, or the entity on which the activity was performed. An object
-        consists of the logical components defined in the following sections.
-        Certain object types may further refine the meaning of these
-        components, or they may define additional components. If an object
-        type defines an additional component then it SHOULD also define the
-        representation of that component in one or more serialization
-        formats.</t>
+      <section anchor="activity-serialization" title="Activity Serialization">
 
-        <section anchor="object.id" title="ID">
-          <t>The id of an object construct is an absolute IRI<xref target="RFC3987"></xref> that uniquely
-          identifies the object. An Object construct SHOULD have exactly one
-          ID value. If an object construct does not have an ID value consumers
-          MAY use the Permalink URL as a weaker identifier, but must in this
-          case allow for the fact that Permalink URL is not defined to be
-          unique across all objects and be prepared to handle duplicates.</t>
-        </section>
+        <texttable>
+          <ttcol align="left" width="15%">Property</ttcol>
+          <ttcol align="left" width="21%">Value</ttcol>
+          <ttcol align="left">Description</ttcol>
 
-        <section anchor="object.name" title="Name">
-          <t>This string value provides a human readable display name for the
-          object, if the object has a name. An Object construct MAY have a
-          name, but MUST NOT have more than one.</t>
-        </section>
+          <c><spanx style="verb">actor</spanx></c>
+          <c><xref target="object-serialization">Object</xref></c>
+          <c>Describes the entity that performed the activity. An activity
+          MUST contain one <spanx style="verb">actor</spanx> property whose value is a
+          single <xref target="object-serialization">Object</xref>.</c>
 
-        <section anchor="object.summary" title="Summary">
-          <t>This string value provides a human readable description or
-          summary of the Object. An Object construct MAY have a summary, but
-          MUST NOT have more than one.</t>
-        </section>
+          <c><spanx style="verb">body</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> String</c>
+          <c>Natural-language description of the activity encoded as a single
+          JSON String containing HTML markup. Visual elements such as thumbnail
+          images MAY be included. An activity MAY contain a
+          <spanx style="verb">body</spanx> property.</c>
 
-        <section anchor="object.image" title="Representative Image">
-          <t>A <xref target="medialink">Media Link Construct</xref> that
-          identifies an image resource which provides a visual representation
-          of the object, intended for human consumption. An Object construct
-          MAY have a representative image, but MUST NOT have more than
-          one.</t>
-        </section>
+          <c><spanx style="verb">generator</spanx></c>
+          <c><xref target="object-serialization">Object</xref></c>
+          <c>Describes the application that generated the activity. An activity
+          MAY contain a <spanx style="verb">generator</spanx> property whose value is a single
+          <xref target="object-serialization">Object</xref>.</c>
 
-        <section anchor="object.permalink" title="Permalink URL">
-          <t>This IRI<xref target="RFC3987"></xref> value identifies a resource which provides an HTML
-          representation of the object. An Object construct MAY have a
-          Permalink URL, but MUST NOT have more than one. The presence of this
-          construct implies a Link as defined in section 3 of <xref
-          target="draft-nottingham-http-link-header-10"></xref> whose Context
-          is this Object Construct, whose Link Relation Type is "alternate"
-          and whose Target IRI is the Permalink URL value.</t>
-        </section>
+          <c><spanx style="verb">icon</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> String</c>
+          <c>An IRI<xref target="RFC3987" /> identifying an image resource
+          provides a visual representation of the activity, intended for human
+          consumption. The image SHOULD have an aspect ratio of one (horizontal)
+          to one (vertical) and SHOULD be suitable for presentation at a small
+          size. An activity MAY have an <spanx style="verb">icon</spanx> property.</c>
 
-        <section anchor="object.object-type" title="Object Type">
-          <t>A string value that identifies the type of object. See <xref target="activity-schema-01">
-            Activity Schema</xref> for the list of object types the community has agreed on using and what
-            each one means.</t>
+          <c><spanx style="verb">object</spanx></c>
+          <c><xref target="object-serialization">Object</xref></c>
+          <c>Describes the primary object of the activity. For instance,
+          in the activity, "John saved a movie to his wishlist", the object
+          of the activity is "movie". An activity SHOULD contain an
+          <spanx style="verb">object</spanx> property whose value is a single
+          <xref target="object-serialization">Object</xref>. If the
+          <spanx style="verb">object</spanx> property is not contained, the
+          primary object of the activity MAY be implied by context.</c>
 
-          <t>If no object type is present, the object has no specific type.
-          Consumers SHOULD refer to such objects only by their names. For
-          example, when forming an activity sentence a consumer might say
-          "Johan posted 'My Cat'" rather than "Johan posted a photo: 'My
-          Cat'".</t>
-        </section>
+          <c><spanx style="verb">postedTime</spanx></c>
+          <c><xref target="RFC3339"/> date-time</c>
+          <c>The date and time at which the activity occurred. It is important
+          to note that this is not necessarily the same as the time at which
+          the activity was published. An activity MUST contain a
+          <spanx style="verb">postedTime</spanx>
+          property.</c>
 
-        <section anchor="object.in-reply-to-object" title="In Reply To Object">
-          <t>An <xref target="object">Object Construct</xref> that this object
-          is a response to. An Object Construct MAY have one In Reply To
-          Object, but MUST NOT have more than one.</t>
+          <c><spanx style="verb">provider</spanx></c>
+          <c><xref target="object-serialization">Object</xref></c>
+          <c>Describes the application that published the activity. Note that
+          this is not necessarily the same entity that generated the activity.
+          An activity MAY contain a <spanx style="verb">provider</spanx> property whose value is a
+          single <xref target="object-serialization">Object</xref>.</c>
 
-          <t>This is not set unless the Object Construct is a response to
-          another Object Construct.</t>
-        </section>
+          <c><spanx style="verb">target</spanx></c>
+          <c><xref target="object-serialization">Object</xref></c>
+          <c>Describes the target of the activity. The precise meaning of the
+          activity's target is dependent on the activities <spanx style="verb">verb</spanx>,
+          but will often be the object the English preposition "to".
+          For instance, in the activity, "John saved a movie to his
+          wishlist", the target of the activity is "wishlist". The activity
+          target MUST NOT be used to identity an indirect object that is
+          not a target of the activity. An activity MAY contain a <spanx style="verb">target</spanx>
+          property whose value is a single <xref target="object-serialization">Object</xref>.</c>
 
-        <section anchor="object.attached-object" title="Attached Object">
-          <t>An <xref target="object">Object Construct</xref> that is attached
-          to this object. An Object Construct MAY have one or more attached
-          objects.</t>
+          <c><spanx style="verb">title</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> String</c>
+          <c>Natural-language title or headline for the activity encoded as a single
+          JSON String containing HTML markup. An activity MAY contain a
+          <spanx style="verb">title</spanx> property.</c>
 
-          <t>An attached Object Construct can be used when one object is used
-          as a wrapper or carrier for another object, similar to the concept
-          of attached files in an email message.</t>
-        </section>
+          <c><spanx style="verb">updatedTime</spanx></c>
+          <c><xref target="RFC3339"/> date-time</c>
+          <c>The date and time at which a previously published activity has
+          been modified. An Activity MAY contain an <spanx style="verb">updatedTime</spanx>
+          property.</c>
 
-        <section anchor="object.reply" title="Reply Object">
-          <t>An <xref target="object">Object Construct</xref> that has this
-          Object Construct as its In Reply To Object. An Object Construct MAY
-          have one more more Reply Objects.</t>
+          <c><spanx style="verb">verb</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> String</c>
+          <c>Identifies the action that the activity describes. An activity
+          MUST contain a <spanx style="verb">verb</spanx> property whose
+          value is a JSON String that is non-empty and matches either the
+          "isegment-nz-nc" or the "IRI" production in <xref target="RFC3339"/>.
+          Note that the use of a relative reference other than a simple name
+          is not allowed.</c>
 
-          <t>In many cases a specific publication of an object will include
-          only a selection of the full set of objects posted as replies to
-          this object. Publishers MAY choose any subset of the set of all
-          reply objects to include. Publishers MAY make available a complete
-          list of reply objects for a particular object via a separate
-          mechanism, but that mechanism is not defined by this
-          specification.</t>
-        </section>
-
-        <section anchor="object.reaction" title="Reaction Activity">
-          <t>An <xref target="activity">Activity Construct</xref> that
-          describes an Activity whose Object is this Object Construct. An
-          Object Construct MAY have one or more Reaction Activities.</t>
-
-          <t>In many cases a specific publication of an object will include
-          only a selection of the full set of activities that are reactions to
-          this object. Publishers MAY choose any subset of the set of all
-          reaction activities to include. Publishers MAY make available a
-          complete list of reaction activities for a particular object via a
-          separate mechanism, but that mechanism is not defined by this
-          specification.</t>
-        </section>
-
-        <section anchor="object.action-link" title="Action Link">
-          <t>An <xref target="actionlink">Action Link</xref> that represents
-          an action that a human could perform on this object. An Object
-          Construct MAY have one or more Action Links.</t>
-        </section>
-
-        <section anchor="object.upstream-duplicate-id"
-                 title="Upstream Duplicate ID">
-          <t>A string containing the ID value of another Object Construct for
-          which this Object Construct is a duplicate created by re-publishing.
-          An Object Construct MAY have one or more Upstream Duplicate IDs.</t>
-
-          <t>A publisher SHOULD use this component if it is knowingly
-          duplicating with a new ID the content from an Object Construct that
-          was obtained elsewhere. This MAY be used as a hint for consumers to
-          use when resolving duplicates between objects received from
-          different sources.</t>
-        </section>
-
-        <section anchor="object.downstream-duplicate-id"
-                 title="Downstream Duplicate ID">
-          <t>A string containing the ID value of another Object Construct for
-          which was created as a duplicate of this Object Construct. An Object
-          Construct MAY have one or more Downstream Duplicate IDs.</t>
-
-          <t>A publisher SHOULD use this component if has knowingly created
-          another Object Construct with a new ID, possibly in another system,
-          that duplicates the content in this object. A publisher might choose
-          to do this in order to make the content available to a wider
-          audience. This MAY be used as a hint for consumers to use when
-          resolving duplicates between objects received from different
-          sources.</t>
-        </section>
-
-        <section anchor="object.standard-link" title="Standard Link">
-          <t>A Link as defined by section 3 of <xref
-          target="draft-nottingham-http-link-header-10"></xref>. An Object
-          Construct MAY have one ore more Standard Links.</t>
-
-          <t>This component is provided to allow the use of the registry of
-          link relations defined by the Web Linking specification to create
-          links between an Object Construct and other resources. The Context
-          of the Link is the Object Construct. This component MUST NOT be used
-          to publish data that matches a meaning that could be published by
-          another Activity Streams component.</t>
-        </section>
+        </texttable>
       </section>
 
-      <section anchor="medialink" title="The Media Link Construct">
-        <t>A Media Link Construct represents a hyperlink to a media item.
-        TODO: elaborate</t>
+      <section anchor="media-link-serialization" title="Media Link Serialization">
 
-        <t>A Media Link Construct consists of the logical components defined
-        in the following sections.</t>
+        <texttable>
+          <ttcol align="left" width="15%">Property</ttcol>
+          <ttcol align="left" width="21%">Value</ttcol>
+          <ttcol align="left">Description</ttcol>
 
-        <section title="Target URL">
-          <t>The URL that is the target of this hyperlink. A Media Link
-          Construct MUST have one Target URL and MUST NOT have more than
-          one.</t>
-        </section>
+          <c><spanx style="verb">duration</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> int</c>
+          <c>A hint to the consumer about the length, in seconds, of the
+          media resource identified by the <spanx style="verb">url</spanx> property. A media link MAY
+          contain a "duratoin" property when the target resource is a
+          time-based media item such as an audio or video.</c>
 
-        <section title="Media Type">
-          <t>A hint to the consumer about the media type of the target
-          resource. The value of this component is a media type as defined in
-          [TODO: reference and xref]. A Link Construct MAY have one Media Type
-          but MUST NOT have more than one.</t>
-        </section>
+          <c><spanx style="verb">height</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> int</c>
+          <c>A hint to the consumer about the height, in pixels, of the
+          media resource identified by the <spanx style="verb">url</spanx> property. A media link MAY
+          contain a <spanx style="verb">height</spanx> property when the target resource is a visual
+          media item such as an image, video or embeddable HTML page.</c>
 
-        <section title="Width">
-          <t>A hint to the consumer about the natural width of the resource
-          that is the target of this hyperlink, in pixels. This MAY be
-          included when the target resource is a visual media item such as an
-          image, video or embeddable HTML page, but a Link Construct MUST NOT
-          have more than one Width.</t>
-        </section>
+          <c><spanx style="verb">url</spanx></c>
+          <c>String</c>
+          <c>The IRI of the media resource being linked. A media link MUST
+          have a <spanx style="verb">url</spanx> property.</c>
 
-        <section title="Height">
-          <t>A hint to the consumer about the natural height of the resource
-          that is the target of this hyperlink, in pixels. This MAY be
-          included when the target resource is a visual media item such as an
-          image, video or embeddable HTML page, but a Link Construct MUST NOT
-          have more than one Height.</t>
-        </section>
+          <c><spanx style="verb">width</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> int</c>
+          <c>A hint to the consumer about the width, in pixels, of the
+          media resource identified by the <spanx style="verb">url</spanx> property. A media link MAY
+          contain a <spanx style="verb">width</spanx> property when the target resource is a visual
+          media item such as an image, video or embeddable HTML page.</c>
 
-        <section title="Duration">
-          <t>A hint to the consumer about the length of the resource that is
-          the target of this hyperlink, in seconds. This MAY be included when
-          the target resource is a time-based media item such as an audio or
-          video, but a Link Construct MUST NOT have more than one
-          Duration.</t>
-        </section>
+        </texttable>
+
       </section>
 
-      <section anchor="actionlink" title="The Action Link Construct">
-        <t>An Action Link Construct represents a hyperlink at which an action
-        can be performed. TODO: elaborate</t>
+      <section anchor="object-serialization" title="Object Serialization">
 
-        <t>An Action Link Construct consists of the logical components defined
-        in the following sections.</t>
+        <texttable>
+          <ttcol align="left" width="15%">Property</ttcol>
+          <ttcol align="left" width="21%">Value</ttcol>
+          <ttcol align="left">Description</ttcol>
 
-        <section title="Target URL">
-          <t>The URL that is the target of this hyperlink. An Action Link
-          Construct MUST have one Target URL and MUST NOT have more than
-          one.</t>
-        </section>
+          <c><spanx style="verb">attachedObjects</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> Array of <xref target="object-serialization">Objects</xref></c>
+          <c>A collection of one or more additional, associated objects, similar
+          to the concept of attached files in an email message. An object MAY
+          have an <spanx style="verb">attachedObjects</spanx> property whose value is a JSON Array of
+          <xref target="object-serialization">Objects</xref>.</c>
 
-        <section title="Caption">
-          <t>The human-readable caption of the UI element that a user will
-          interact with in order to navigate to the Target URL. An Action Link
-          Construct MUST have one Caption and MUST NOT have more than one.</t>
-        </section>
-      </section>
-    </section>
+          <c><spanx style="verb">displayName</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> String</c>
+          <c>A natural-language, human-readable and plain-text name for the object.
+          HTML markup MUST NOT be included. An object MAY contain a <spanx style="verb">displayName</spanx>
+          property.</c>
 
-    <section title="JSON Representation">
-      <t>An Activity Construct can be represented with the JSON format, as
-      defined in <xref target="RFC4627"></xref>, using the object structures
-      defined in the following subsections. This object model MAY be applied
-      to other serialization formats with a similar data model to JSON.</t>
+          <c><spanx style="verb">downstreamDuplicates</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> Array of Strings</c>
+          <c>A JSON Array of one or more absolute IRI's <xref target="RFC3987"/>
+          identifying objects that duplicate this object's content. An object
+          SHOULD contain a <spanx style="verb">downstreamDuplicates</spanx> property when there are known
+          objects, possibly in a different system, that duplicate the content
+          in this object. This MAY be used as a hint for consumers to use when
+          resolving duplicates between objects received from different sources.</c>
 
-      <t>In order to avoid confusion with the Object Construct concept in the
-      Activity Streams data model, in this section the term "dictionary" will
-      be used to refer to the JSON object data type.</t>
+          <c><spanx style="verb">embedCode</spanx></c>
+          <c>Contextual</c>
+          <c>Provides information a consumer of the object will need to embed
+          representations of the object into another context. For instance,
+          if the object represents a video, the <spanx style="verb">embedCode</spanx> may provide
+          either javascript or a fragment of HTML markup that may be used to
+          embed that video within an browser view. An <spanx style="verb">object</spanx> MAY have one
+          <spanx style="verb">embedCode</spanx> property whose value is dependent entirely on the
+          definition of the object type. That is, the definition of one type
+          of object may specify that the value of the <spanx style="verb">embedCode</spanx> property
+          is a JSON String containing a snippet of javascript code, while
+          the definition of a different type of object may specify that the
+          embedCode is itself a JSON object.</c>
 
-      <t>In the JSON dictionary structures defined in the following
-      subsections, absent components may be represented either by an explicit
-      declaration of the property whose value is null or by omitting the
-      property declaration altogether at the option of the publisher; these
-      two representations are semantically equivalent. If a property is having
-      a value whose type is a JSON array, the absence of any items in that
-      array MUST be represented by omitting the property entirely or
-      publishing it with the value null, and MUST NOT be represented as an
-      empty array, except as otherwise stated in the definition of a specific
-      property.</t>
+          <c><spanx style="verb">id</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> String</c>
+          <c>Provides a permanent, universally unique identifier for the
+          object in the form of an absolute IRI <xref target="RFC3987"/>.
+          An object SHOULD contain a single <spanx style="verb">id</spanx> property. If an object
+          does not contain an <spanx style="verb">id</spanx> property, consumers MAY use the value of
+          the <spanx style="verb">url</spanx> property as a less-reliable, non-unique identifier.</c>
 
-      <section anchor="json.activity"
-               title="Activity Construct represented as JSON object">
-        <t>An Activity Construct is represented in JSON as a JSON dictionary.
-        The primary representation of an Activity Construct in JSON is a Full
-        Activity Dictionary as described in <xref
-        target="json.activity.full"></xref>.</t>
+          <c><spanx style="verb">image</spanx></c>
+          <c><xref target="media-link-serialization">Media Link</xref></c>
+          <c>Description of a resource providing a visual representation of
+          the object, intended for human consumption. An object MAY contain
+          an <spanx style="verb">image</spanx> property whose value is a
+          <xref target="media-link-serialization">Media Link</xref>.</c>
 
-        <section anchor="json.activity.full" title="Full Activity Dictionary">
-          <t>The components of the Activity Construct are represented in this
-          JSON as follows:</t>
+          <c><spanx style="verb">objectType</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> String</c>
+          <c>Identifies the type of object. An object MAY contain an
+          <spanx style="verb">objectType</spanx>
+          property whose value is a JSON String that is non-empty and matches
+          either the "isegment-nz-nc" or the "IRI" production in
+          <xref target="RFC3339"/>. Note that the use of a relative reference
+          other than a simple name is not allowed. If no
+          <spanx style="verb">objectType</spanx> property
+          is contained, the object has no specific type.</c>
 
-          <t><list style="hanging">
-              <t hangText="Actor">The <xref
-              target="activity.actor">Actor</xref> of the Activity Construct
-              is represented by a property named <spanx style="verb">actor</spanx>
-              whose value is a JSON dictionary as described in <xref
-              target="json.object"></xref>.</t>
+          <c><spanx style="verb">summary</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> String</c>
+          <c>Natural-language description of the object encoded as a single
+          JSON String containing HTML markup. Visual elements such as thumbnail
+          images MAY be included. An activity MAY contain a
+          <spanx style="verb">summary</spanx> property.</c>
 
-              <t hangText="Object">The <xref
-              target="activity.object">Object</xref> of the Activity Construct
-              is represented by a property named <spanx style="verb">object</spanx>
-              whose value is a JSON dictionary as described in <xref
-              target="json.object"></xref>.</t>
+          <c><spanx style="verb">upstreamDuplicates</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> Array of Strings</c>
+          <c>A JSON Array of one or more absolute IRI's <xref target="RFC3987"/>
+          identifying objects that duplicate this object's content.
+          An object SHOULD contain an <spanx style="verb">upstreamDuplicates</spanx>
+          property when a publisher is knowingly duplicating with a new ID
+          the content from another object. This MAY be used as a hint for consumers to use
+          when resolving duplicates between objects received from different
+          sources.</c>
 
-              <t hangText="Target">The <xref
-              target="activity.target">Target</xref> of the Activity Construct
-              is represented by a property named <spanx style="verb">target</spanx>
-              whose value is a JSON dictionary as described in <xref
-              target="json.object"></xref>.</t>
+          <c><spanx style="verb">url</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> String</c>
+          <c>An IRI <xref target="RFC3987"/> identifying a resource providing
+          an HTML representation of the object. An object MAY contain
+          a <spanx style="verb">url</spanx> property </c>
 
-              <t hangText="Verb">The <xref
-              target="activity.verb">verb</xref> of the Activity Construct is
-              represented by a property named <spanx style="verb">verb</spanx>
-              whose value is a JSON string.</t>
-
-              <t hangText="Time">The <xref target="activity.time">Time</xref>
-              of the Activity Construct is represented by a property named
-              <spanx style="verb">postedTime</spanx> whose value is a JSON
-              string containing a timestamp in W3CDTF format as described in
-              [TODO: xref W3CDTF spec].</t>
-
-              <t hangText="Generator">The <xref
-              target="activity.generator">Generator</xref> of the Activity
-              Construct is represented by a property named <spanx
-              style="verb">generator</spanx> whose value is a JSON dictionary
-              as described in <xref target="json.object"></xref>.</t>
-
-              <t hangText="Service Provider">The <xref
-              target="activity.provider">Service Provider</xref> of the
-              Activity Construct is represented by a property named <spanx
-              style="verb">provider</spanx> whose value is a JSON dictionary
-              as described in <xref target="json.object"></xref>.</t>
-
-              <t hangText="Title">The <xref
-              target="activity.title">Title</xref> of the Activity Construct
-              is represented by a property named <spanx style="verb">title</spanx>
-              whose value is a JSON string containing the title value. This
-              string MUST be a HTML fragment that would be valid in an inline
-              context as described in [TODO: what can we reference for this
-              definition?].</t>
-
-              <t hangText="Body">The <xref target="activity.body">Body</xref>
-              of the Activity Construct is represented by a property named
-              <spanx style="verb">body</spanx> whose value is a JSON string
-              containing the body value. This string MUST be a HTML fragment
-              that would be valid in a block context as described in [TODO:
-              what can we reference for this definition?].</t>
-
-              <t hangText="Standard Link">The set of <xref
-              target="activity.standard-link">Standard Links</xref> of the
-              Activity Construct is represented as described in <xref
-              target="json.standard-links"></xref>.</t>
-            </list></t>
-        </section>
-
-        <section anchor="json.activity.implied-object"
-                 title="Activity Dictionary with Implied Object">
-          <t>The components of the Activity Construct are represented in JSON
-          as defined in <xref target="json.activity.full"></xref> except for
-          the following exception:</t>
-
-          <t><list style="hanging">
-              <t hangText="Object">The Object Component is not explicitly
-              represented inside the JSON dictionary, and is instead implied
-              by context. The contextual object is defined as part of the
-              definition of any property which uses this representation for
-              its value.</t>
-            </list></t>
-        </section>
-      </section>
-
-      <section anchor="json.object"
-               title="Object Construct represented as JSON dictionary">
-        <t>An Object Construct is represented in JSON as a JSON dictionary.
-        The primary representation of an Object Construct is a Full Object
-        Dictionary as defined in <xref target="json.object.full"></xref>.</t>
-
-        <section anchor="json.object.full" title="Full Object Dictionary">
-          <t>The components of the Object Construct are represented in this
-          dictionary as follows:</t>
-
-          <t><list style="hanging">
-              <t hangText="ID">The <xref target="object.id">ID</xref> of the
-              Object Construct is represented by a property named <spanx
-              style="verb">id</spanx> whose value is a JSON string containing
-              the ID.</t>
-
-              <t hangText="Name">The <xref target="object.name">name</xref> of
-              the Object Construct is represented by a property named <spanx
-              style="verb">displayName</spanx> whose value is a JSON string
-              containing the name.</t>
-
-              <t hangText="Summary">The <xref
-              target="object.summary">summary</xref> of the Object Construct
-              is represented by a property called <spanx style="verb">summary</spanx>
-              whose value is a JSON string containing the summary.</t>
-
-              <t hangText="Representative Image">The <xref
-              target="object.image">representative image</xref> of the Object
-              Construct is represented by a property called <spanx
-              style="verb">image</spanx> whose value is a JSON dictionary as
-              defined in <xref target="media-link-as-json"></xref>.</t>
-
-              <t hangText="Permalink URL">The <xref
-              target="object.permalink">permalink URL</xref> of the Object
-              Construct is represented by a property named <spanx
-              style="verb">link</spanx> whose value is a JSON string
-              containing the permalink URL.</t>
-
-              <t hangText="Object Type">The <xref
-              target="object.object-type">object type</xref> of the
-              Object Construct is represented by a property named <spanx
-              style="verb">objectType</spanx> whose value is a JSON string.</t>
-
-              <t hangText="In Reply To Object">The <xref
-              target="object.in-reply-to-object">In Reply To Object</xref> of
-              the Object Construct is represented by a property called <spanx
-              style="verb">inReplyTo</spanx> whose value is a JSON dictionary
-              as described in <xref target="json.object"></xref>.</t>
-
-              <t hangText="Reply Object">The set of <xref
-              target="object.reply">Reply Objects</xref> that the publisher
-              choses to include for this object is represented by a property
-              named <spanx style="verb">replies</spanx> whose value is a JSON
-              array of JSON objects of the form defined in <xref
-              target="json.object-implied-reply-to"></xref>, where the implied
-              In Reply To Object is the Object Construct represented by the
-              JSON object which contains this <spanx style="verb">replies</spanx>
-              property.</t>
-
-              <t hangText="Reaction Activity">The set of <xref
-              target="object.reaction">Reaction Activities</xref> that the
-              publisher choses to include for this object is represented by a
-              property named <spanx style="verb">reactions</spanx> whose value
-              is a JSON array of JSON objects of the form defined in <xref
-              target="json.activity.implied-object"></xref>, where the implied
-              Object is the Object Construct represented by the JSON object
-              which contains this <spanx style="verb">replies</spanx>
-              property.</t>
-
-              <t hangText="Attached Object">Thee set of <xref
-              target="object.attached-object">Attached Objects</xref> of the
-              Object Construct is represented by a property called <spanx
-              style="verb">attachedObjects</spanx> whose value is a JSON array
-              of JSON dictionaries as described in <xref
-              target="json.object"></xref>.</t>
-
-              <t hangText="Upstream Duplicate ID">The set of <xref
-              target="object.upstream-duplicate-id">Upstream Duplicate
-              IDs</xref> of the Object Construct is represented by a property
-              named <spanx style="verb">upstreamDuplicates</spanx> whose value
-              is a JSON array of JSON string values containing the ID
-              IRI<xref target="RFC3987"></xref>s.</t>
-
-              <t hangText="Downstream Duplicate ID">The set of <xref
-              target="object.downstream-duplicate-id">Downstream Duplicate
-              IDs</xref> of the Object Construct is represented by a property
-              named <spanx style="verb">downstreamDuplicates</spanx> whose
-              value is a JSON array of JSON string values containing the ID
-              IRI<xref target="RFC3987"></xref>s.</t>
-
-              <t hangText="Standard Link">The set of <xref
-              target="activity.standard-link">Standard Links</xref> of the
-              Activity Construct is represented as described in <xref
-              target="json.standard-links"></xref>.</t>
-            </list></t>
-        </section>
-
-        <section anchor="json.object-implied-reply-to"
-                 title="Object Dictionary with Implied In Reply To Object">
-          <t>The components of the Object Construct are represented in JSON as
-          defined in <xref target="json.object.full"></xref> except for the
-          following exception:</t>
-
-          <t><list style="hanging">
-              <t hangText="In Reply To Object">The In Reply To Object
-              Component is not explicitly represented inside the JSON
-              dictionary, and is instead implied by context. The contextual
-              object is defined as part of the definition of any property
-              which uses this representation for its value.</t>
-            </list></t>
-        </section>
-      </section>
-
-      <section title="Other Representations">
-        <t>[TODO: write something here]</t>
-
-        <section anchor="media-link-as-json"
-                 title="Media Link Construct represented as JSON dictionary">
-          <t>The components of a Media Link Construct is represented by a JSON
-          dictionary as follows:</t>
-
-          <t><list style="hanging">
-              <t hangText="Target URL">Represented by the <spanx style="verb">url</spanx>
-              property of the JSON dictionary.</t>
-
-              <t hangText="Width">Represented by the <spanx style="verb">width</spanx>
-              property of the JSON dictionary.</t>
-
-              <t hangText="Height">Represented by the <spanx style="verb">height</spanx>
-              property of the JSON dictionary.</t>
-
-              <t hangText="Duration">Represented by the <spanx style="verb">duration</spanx>
-              property of the JSON dictionary.</t>
-            </list></t>
-        </section>
-
-        <section anchor="json.standard-links"
-                 title="Set of Standard Links represented as JSON dictionary">
-          <t>The set of Standard Link components of both an Activity Construct
-          and an Object Construct are represented by a JSON dictionary whose
-          properties are named for Link Relation Types as defined in <xref
-          target="draft-nottingham-http-link-header-10"></xref>. Valid Link
-          Relation Types and their meanings are defined in the Link Relation
-          Type registry created by that specification. A particular property
-          MUST NOT be included unless there is at least one link in the set
-          with the corresponding Link Relation Type.</t>
-
-          <t>The value of each of the properties is a JSON array containing a
-          JSON object for each Link in the set with the corresponding Link
-          Relation Type. containing a property <spanx style="verb">href</spanx>
-          whose value is a JSON string containing the Target IRI<xref target="RFC3987"></xref> of the link
-          it represents. Target Attributes of the Link are represented by
-          additional properties whose names correspond to Target Attributes
-          defined for the link, where the value of each is a JSON string
-          containing the value of the corresponding Target Attribute.</t>
-        </section>
-      </section>
-
-      <section title="Stream of Activity Constructs represented as a JSON Document">
-        <t>The above defined JSON dictionary formats can be used to represent
-        the Activity Streams concepts in any JSON context. This section
-        defines one particular use of the above dictionary formats to publish
-        a JSON document that represents a set of Activity Constructs.</t>
-
-        <t>Publishers using this format MUST produce a valid JSON document
-        whose root value is a JSON object. This document MUST include a
-        property named <spanx style="verb">items</spanx> whose value is a JSON
-        array of JSON dictionaries of the form described in <xref
-        target="json.activity.full"></xref>. Other properties MAY be included
-        in the root JSON object, but the meaning of these properties is not
-        defined by this specification.</t>
+        </texttable>
       </section>
     </section>
 
-    <section anchor="post-verb" title="The &quot;Post&quot; Verb">
+    <section title="Comparison of Identifier Values">
+      <t>The values of multiple <xref target="object-serialization">Object's</xref>
+      <spanx style="verb">id</spanx>, <spanx style="verb">upstreamDuplicates</spanx>,
+      and <spanx style="verb">downstreamDuplicates</spanx> properties can be
+      compared to determine if the objects represent duplicate content.
+      Processors MUST compare these values on a character-by-character basis
+      (in a case-sensitive fashion).  Comparison operations MUST be based solely
+      on the IRI character strings and MUST NOT rely on dereferencing the
+      IRIs or URIs mapped from them.</t>
+
+      <t>As a result, two IRIs that resolve to the same resource but are not
+      character-for-character identical will be considered different for
+      the purposes of identifier comparison.</t>
+    </section>
+
+    <section title="The Activity Stream JSON Document">
+      <t>The above defined JSON serialization can be used to represent
+      the activities, objects and media links in any JSON context. This section
+      defines one particular use of the above dictionary formats to publish
+      a JSON document that representing an <spanx style="verb">Activity Stream</spanx>.</t>
+
+      <t>Publishers using this format MUST produce a valid JSON document
+      whose root value is a JSON object. This document MUST include a
+      property named <spanx style="verb">items</spanx> whose value is a JSON
+      array of JSON objects conforming to the <xref
+      target="activity-serialization">Activity Serialization</xref>. Other
+      properties MAY be included in the root JSON object, but the meaning of
+      these properties is not defined by this specification.</t>
+    </section>
+
+    <section anchor="post-verb" title="The &quot;post&quot; Verb">
       <t>This specification defines one initial verb and defers to other
-      specifications to define the full schema of verb and object types as
+      specifications to define additional verb and object types as
       defined in <xref target="extensions"></xref>.</t>
 
-      <t>The "Post" verb describes the act of authoring an object and then
-      publishing it online. The verb is <spanx style="verb">post</spanx>.</t>
+      <t>The "post" verb describes the act of authoring an object and then
+      publishing it online. The <spanx style="verb">actor</spanx> can be
+      any entity; the <spanx style="verb">object</spanx> can be of any
+      object type; and the <spanx style="verb">target</spanx>, if specified,
+      can be of any object type. A <spanx style="verb">target</spanx>,
+      however, is not required.</t>
 
-      <t>The actor of an Activity Construct using the "Post" verb is an Object
-      Construct representing the person or object that authored and posted the
-      item represented by the object of the Activity Construct.</t>
+      <section title="Implied &quot;post&quot; Activity">
 
-      <t>The target of the Activity Construct, if present, represents the item
-      into which the object is posted. For example, this could represent a
-      blog that the author has posted in.</t>
-
-      <t>It is not appropriate to use the target of the Activity Construct to
-      represent an Object Construct that this new Object Construct is posted
-      in reply to. Instead, this SHOULD be represented as the In Reply To
-      Object component of the new object.</t>
-
-      <section title="Implied &quot;Post&quot; Activity">
-        <t>Because the "Post" Verb is defined to include the act of publishing
-        an object online, it is possible to assume an implied "Post" activity
-        for any Object Construct even if such an activity was never explicitly
-        published or received. The components of this implied activity are as
-        follows; any component not explicitly listed here is absent from the
+        <t>Because the "post" verb is defined to include the act of publishing
+        an object online, it is possible to assume an implied "post" activity
+        for any object even if such an activity was never explicitly
+        published or received. The properties of this implied activity are as
+        follows; any property not explicitly listed here is absent from the
         resulting activity unless the consumer is able to infer a value based
         on out-of-band information outside the scope of this
         specification:</t>
 
         <t><list style="hanging">
-            <t hangText="Actor">The <xref target="activity.actor">Actor</xref>
-            of the Activity Construct is unknown unless the consumer is able
-            to infer an actor based on information outside the scope of this
-            specification. For example, the consumer may know via some
-            out-of-band information that all of the objects in a particular
-            document were posted by a particular user.</t>
+          <t hangText="actor">The <spanx style="verb">actor</spanx>
+          of the implied activity is unknown unless the consumer is able
+          to infer an <spanx style="verb">actor</spanx> based on information
+          outside the scope of this specification. For example, the consumer
+          may know via some out-of-band information that all of the objects in
+          a particular document were posted by a particular user.</t>
 
-            <t hangText="Object">The <xref
-            target="activity.object">Object</xref> of the Activity Construct
-            is the object for which this implied activity is being
-            constructed.</t>
+          <t hangText="object">The <spanx style="verb">object</spanx> of the
+          implied activity is the object for which this implied activity is
+          being constructed.</t>
 
-            <t hangText="Verb">The Activity Construct has the "Post" verb as
-            defined in <xref target="post-verb"></xref> as its only <xref
-            target="activity.verb">Verb</xref>.</t>
+          <t hangText="verb">The <spanx style="verb">verb</spanx> of the
+          implied activity is "post".</t>
 
-            <t hangText="Time">The <xref target="activity.time">Time</xref> of
-            the Activity Construct is unknown unless the consumer is able to
-            infer a time based on an extension property defined for the Object
-            Construct's Object Type that is defined to be the time the object
-            was created and/or posted online.</t>
-          </list></t>
+          <t hangText="postedTime">The <spanx style="verb">postedTime</spanx>
+          of the implied activity is unknown unless the consumer is able to
+          infer a time based on information outside the scope of this
+          specification.</t>
+        </list></t>
       </section>
     </section>
 
@@ -745,63 +549,86 @@
 
       <t>When defining a new verb, the defining specification MUST provide a
       verb identifier for the new verb and MUST define the meaning of the
-      verb in terms of the Actor, Object and Target components of the Activity
-      Construct, and MUST define whether a Target is required and what it
+      verb in terms of the <spanx style="verb">actor</spanx>,
+      <spanx style="verb">object</spanx> and <spanx style="verb">target</spanx>
+      properties of the activity, and MUST define whether a
+      <spanx style="verb">target</spanx> is required and what it
       represents when present.</t>
 
       <t>When defining a new object type, the defining specification MUST
       provide an object type identifier for the new object type. The
-      definition of the new object type MAY define additional components
+      definition of the new object type MAY define additional properties
       specific to that object type; if so, the specification SHOULD define how
-      these additional components are to be represented as JSON properties,
-      and the specification MAY define how these additional components are to
+      these additional properties are to be serialized within the JSON document,
+      and the specification MAY define how these additional properties are to
       be represented in other serialization formats. The definition of the new
       object type MAY impose additional meaning or constraint on the core
-      Object Construct components as long as the new definition remains
-      compatible with the definition of the base component. New Object
-      Construct components SHOULD be defined such that the object would remain
-      useful if those components are omitted or removed during processing, to
+      object properties as long as the new definition remains compatible with
+      the definition of the base component.</t>
+
+      <t>Additional extension properties MAY also be defined for
+      <xref target="activity-serialization">Activities</xref> and
+      <xref target="media-link-serialization">Media Links</xref>. The
+      specification of these properties SHOULD define how they are to be
+      serialized within the JSON document, and the specification MAY define
+      how they are to be represented in other serialization formats.</t>
+
+      <t>New properties SHOULD be defined such that the
+      <xref target="object-serialization">Object</xref>,
+      <xref target="activity-serialization">Activity</xref> or
+      <xref target="media-link-serialization">Media Link</xref> would remain
+      useful if those properties are omitted or removed during processing, to
       enable graceful fallback by consumers that do not implement the
-      extension components or alternative representations that are unable to
+      extension properties or alternative representations that are unable to
       represent the extensions.</t>
+
+      <t>Processors that encounter unfamiliar extension properties within an
+      <xref target="object-serialization">Object</xref>,
+      <xref target="activity-serialization">Activity</xref> or
+      <xref target="media-link-serialization">Media Link</xref> MUST NOT
+      stop processing or signal an error and MUST continue processing the
+      items as if the extension properties were not present.</t>
+
     </section>
 
     <section anchor="other-serializations" title="Other Representations">
-      <t>This specification defines the primary representation for the
-      Activity Streams concepts in terms of the JSON serialization format.
-      Other specifications MAY define additional representations of the
-      Activity Streams concepts. If the new representation is compatible with
+      <t>This specification defines the primary representation for
+      "activities", "objects" and "media links" in terms of the JSON
+      serialization format. Other specifications MAY define additional
+      serializations of these items. If the new serialization is compatible with
       the JSON data model, the new representation SHOULD be defined as a
-      transformation of the raw JSON structures. Otherwise, the new
-      representation MAY be defined in terms of the Activity Streams concepts
-      in <xref target="concepts"></xref>.</t>
+      transformation of the raw JSON structures.</t>
 
       <t>Defining a new representation as a transformation from JSON will
       allow the new representation to automatically support additional
-      components added for new object types as described in <xref
-      target="extensions"></xref>. Otherwise the representation of these new
-      components must be defined on a case-by-case basis.</t>
+      properties added for new object types as described in <xref
+      target="extensions" />. Otherwise the representation of these new
+      properties must be defined on a case-by-case basis.</t>
     </section>
 
     <section anchor="republisher" title="Requirements for Re-publishers">
-      <t>A Re-publisher is an agent which receives Activity Constructs or
-      Object Constructs and then transmits these items to other agents.</t>
+      <t>A Re-publisher is an agent which receives "activities" or
+      "objects" and then transmits these items to other agents.</t>
 
-      <t>When a Re-publisher transmits an Activity Construct, the Re-publisher
-      MUST preserve the original Verb and Posted Time components, MUST
-      re-publish the Actor, Object and Target components as defined in the
-      previous paragraph. The Re-publisher MAY preserve the remaining
-      properties, OR the Re-publisher MAY omit these properties entirely or
-      replace these properties with locally-determined values.</t>
+      <t>When a Re-publisher transmits an "activity", the Re-publisher
+      MUST preserve the original <spanx style="verb">verb</spanx>,
+      <spanx style="verb">postedTime</spanx>, <spanx style="verb">actor</spanx>,
+      <spanx style="verb">object</spanx> and
+      <spanx style="verb">target</spanx> properties. The Re-publisher MAY
+      preserve the remaining properties, OR the Re-publisher MAY omit these
+      properties entirely or replace these properties with locally-determined
+      values.</t>
 
-      <t>When a Re-publisher transmits an Object Construct, the Re-publisher
-      MUST maintain the full integrity of the Object Construct, including any
-      extension properties, and retain the original ID value OR, if
+      <t>When a Re-publisher transmits an <spanx style="verb">object</spanx>,
+      the Re-publisher MUST maintain the full integrity of the
+      <spanx style="verb">object</spanx>, including any extension properties,
+      and retain the original <spanx style="verb">id</spanx> value OR, if
       maintaining full fidelity is not possible the Re-publisher MUST assign
-      this copy a new ID and include the ID of the original object as a value
-      of the Upstream Duplicates component of the new copy. In the latter
-      case, a new Object Construct is created which is considered to be a
-      duplicate of the original Object Construct.</t>
+      this copy a new <spanx style="verb">id</spanx> and include the
+      <spanx style="verb">id</spanx> of the original object as a value
+      of the <spanx style="verb">upstreamDuplicates</spanx> property of the
+      new copy. In the latter case, a new <spanx style="verb">object</spanx>
+      is created which is considered to be a duplicate of the original.</t>
     </section>
 
     <section title="Security Considerations">
@@ -824,6 +651,18 @@
       as a Search Engine Optimization loophole. This may include converting
       un-trusted hyperlinks to text or including a rel="nofollow"
       attribute.</t>
+
+      <t>Consumers should be aware of the potential for spoofing attacks
+      where the attacker publishes activities or objects with falsified
+      property values with the intent of injecting malicious content,
+      hiding or corrupting legitimate content, or misleading users.</t>
+
+      <t>Activity Streams implementations handle URIs.  See Section 7 of
+      <xref target="RFC3986"/>.</t>
+
+      <t>Activity Streams implementations handle IRIs.  See Section 8 of
+      <xref target="RFC3987"/>.</t>
+
     </section>
 
     <section title="IANA Considerations">
@@ -845,8 +684,8 @@
           <date month="March" year="1997" />
         </front>
       </reference>
-      <reference anchor="activity-schema-01" 
-        target="http://activitystrea.ms/activity-schema.html">      
+      <reference anchor="activity-schema-01"
+        target="http://activitystrea.ms/activity-schema.html">
          <front>
             <title>Atom Activity Base Schema</title>
             <author fullname="Martin Atkins" initials="M." surname="Atkins">
@@ -869,6 +708,26 @@
               <organization>Microsoft</organization>
             </author>
           </front>
+      </reference>
+
+      <reference anchor="RFC3986">
+        <front>
+          <title>Uniform Resource Identifier (URI)</title>
+
+          <author fullname="Tim Berners-Lee" initials="T." surname="Berners-Lee">
+            <organization>W3C/MIT</organization>
+          </author>
+
+          <author fullname="Roy Fielding" initials="R." surname="Fielding">
+            <organization>Day Software</organization>
+          </author>
+
+          <author fullname="Larry Masinter" initials="L." surname="Masinter">
+            <organization>Adobe Systems</organization>
+          </author>
+
+          <date month="January" year="2005" />
+        </front>
       </reference>
 
       <reference anchor="RFC3987">
@@ -914,7 +773,7 @@
         </front>
       </reference>
 
-      <!--
+
       <reference anchor="RFC3339">
         <front>
           <title>Date and Time on the Internet: Timestamps</title>
@@ -926,8 +785,7 @@
           <date month="July" year="2002" />
         </front>
       </reference>
-      -->
-    </references>
+      </references>
 
     <section title="Acknowledgements">
       <t>...</t>
