@@ -327,7 +327,7 @@
           <c>Identifies the action that the activity describes. An activity
           MUST contain a <spanx style="verb">verb</spanx> property whose
           value is a JSON String that is non-empty and matches either the
-          "isegment-nz-nc" or the "IRI" production in <xref target="RFC3339"/>.
+          "isegment-nz-nc" or the "IRI" production in <xref target="RFC3987"/>.
           Note that the use of a relative reference other than a simple name
           is not allowed.</c>
 
@@ -435,7 +435,7 @@
           <spanx style="verb">objectType</spanx>
           property whose value is a JSON String that is non-empty and matches
           either the "isegment-nz-nc" or the "IRI" production in
-          <xref target="RFC3339"/>. Note that the use of a relative reference
+          <xref target="RFC3987"/>. Note that the use of a relative reference
           other than a simple name is not allowed. If no
           <spanx style="verb">objectType</spanx> property
           is contained, the object has no specific type.</c>
