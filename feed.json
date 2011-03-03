@@ -10,9 +10,13 @@
     },
     "subject" : {
       "type" : "object",
-      "description" : "The main object of the feed. All objects default to being inReplyTo this object. If not present its the parent object",
+      "description" : "The main object the activities are grouped by. All objects default to being inReplyTo this object. If not present its the parent object",
       "optional" : true,
       "properties" :{"$ref":"./object.json#properties"}
+    },
+    "count": {
+      "type" : "number",
+      "description" : "The total number of items"
     },
     "items" : {
       "type" : "array",

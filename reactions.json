@@ -4,6 +4,7 @@
   "properties" : {
     "inReplyTo" : {
       "optional" : true,
+        "description" : "Not needed if nested",
       "type" : [
         {"$ref" : "./object.json"},
         {"$ref" : "./activity.json"}
@@ -26,24 +27,26 @@
       }
     },
     "example" : {
-      "inReplyTo" : {
-        "objectType" : "photo",
-        "link" : "http://www.facebook.com/photo.php?pid=6139638&id=608201527"
-      },
-      "verb" : "like",
-      "count" : 2,
+        "likes" : {
+          "inReplyTo" : {
+            "objectType" : "photo",
+            "link" : "http://www.facebook.com/photo.php?pid=6139638&id=608201527"
+          },
+          "verb" : "like",
+          "count" : 2,
       "items" : [
-        {
-          "displayName" : "Monica",
-          "objectType" : "person",
-          "link" : "http://www.facebook.com/ciberch"
-        },
-        {
-          "displayName" : "Nick",
-          "objectType" : "person",
-          "link" : "http://www.facebook.com/nicolasbertrand"
+            {
+              "displayName" : "Monica",
+              "objectType" : "person",
+              "link" : "http://www.facebook.com/ciberch"
+            },
+            {
+              "displayName" : "Nick",
+              "objectType" : "person",
+              "link" : "http://www.facebook.com/nicolasbertrand"
+            }
+          ]
         }
-      ]
     }
   }
 }
