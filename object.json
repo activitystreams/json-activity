@@ -11,32 +11,24 @@
       "type": "object",
       "properties" :{"$ref":"#properties"}
     },
-    "replies":{
+    "comments":{
       "optional" : true,
-      "type" : "array",
+      "type" : "object",
       "uniqueItems" : true,
-      "description" : "An array of feeds. Each feed has an array of activities which were done in response to this object",
-      "items": {
-        "type" : "object",
-        "properties" :{"$ref":"./feed.json#properties"}
-      }
+      "description" : "All the comments in response to this object",
+      "properties" :{"$ref":"./feed.json#properties"}
     },
-    "reactions":{
+    "likes":{
       "optional" : true,
-      "description" : "An array of reactions. A reactions object is itself an array of people who all had the same reaction",
-      "type" : "array",
-      "uniqueItems" :  true,
-      "items": {
-        "type" : "object",
-        "properties" :{
-          "$ref":"./reactions.json#properties"
-        }
+      "description" : "All the likes in response to this object",
+      "type" : "object",
+      "properties" : {"$ref":"./reactions.json#properties"}
       }
     },
     "attachedObjects":{
       "optional" : true,
       "title" : "Related objects",
-      "description" : "An array of objects which are related to this object...Generally photos for an article. This needs more clarification",
+      "description" : "A collection of one or more additional, associated objects, similar to the concept of attached files in an email message. An object MAY have an attachedObjects property whose value is a JSON Array of Objects.",
       "type" : "array",
       "items": {
         "type" : "object",
@@ -46,13 +38,13 @@
     "upstreamDuplicates":{
       "optional" : true,
       "type" : "array",
-      "description" : "When a publisher changes the id they can put the original id of the object in this field so consumers can de-duplicate",
+      "description" : "A JSON Array of one or more absolute IRI's [RFC3987] identifying objects that duplicate this object's content. An object SHOULD contain an upstreamDuplicates property when a publisher is knowingly duplicating with a new ID the content from another object. This MAY be used as a hint for consumers to use when resolving duplicates between objects received from different sources",
       "items": {"type" : "string"}
     },
     "downstreamDuplicates":{
       "optional" : true,
       "type" : "array",
-      "description" : "When a publisher creates a clone object in another system they can put that id here in order to let the consumer know how to de-duplicate",
+      "description" : "A JSON Array of one or more absolute IRI's [RFC3987] identifying objects that duplicate this object's content. An object SHOULD contain a downstreamDuplicates property when there are known objects, possibly in a different system, that duplicate the content in this object. This MAY be used as a hint for consumers to use when resolving duplicates between objects received from different sources.",
       "items": {"type" : "string"}
     }
   },

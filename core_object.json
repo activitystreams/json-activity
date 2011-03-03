@@ -5,13 +5,13 @@
   "properties" : {
     "id" : {
       "type" : "string",
-      "description" : "Uniquely identifies the object on the service",
+      "description" : "Provides a permanent, universally unique identifier for the object in the form of an absolute IRI [RFC3987]. An object SHOULD contain a single id property. If an object does not contain an id property, consumers MAY use the value of the url property as a less-reliable, non-unique identifier.",
       "default" : "{link}"
     },
     "image" : {
       "format":"image",
       "type":"object",
-      "properties" :{"$ref":"./media_link.json#properties"}
+      "properties" :{"$ref":"./media_link.json#properties"},
       "description" : "Description of a resource providing a visual representation of the object, intended for human consumption. An object MAY contain an image property whose value is a Media Link.",
       "optional":true
     },
@@ -32,16 +32,16 @@
     },
     "objectType" :{
       "type" : "string",
-      "description" : "Identifies the type of object. An object MAY contain an objectType property whose value is a JSON String that is non-empty and matches either the "isegment-nz-nc" or the "IRI" production in [RFC3987]. Note that the use of a relative reference other than a simple name is not allowed. If no objectType property is contained, the object has no specific type.",
+      "description" : "Identifies the type of object. An object MAY contain an objectType property whose value is a JSON String that is non-empty and matches either the \"isegment-nz-nc\" or the \"IRI\" production in [RFC3987]. Note that the use of a relative reference other than a simple name is not allowed. If no objectType property is contained, the object has no specific type.",
       "optional" : true
     },
     "author" : {
       "type" : "object",
       "optional" : true,
-      "description" : "Entity who posted this object",
+      "description" : "Entity who posted this object. Could also be called owner",
       "properties" : {"$ref":"#properties"}
     },
-    "time" : {
+    "createdTime" : {
       "optional" : true,
       "type" : "string",
       "description": "Time at which the object was created. We should a last updated time.",
