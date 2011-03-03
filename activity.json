@@ -10,7 +10,7 @@
     },
     "actor" : {
       "type": "object",
-      "description": "Identifies the entity that performed the activity. Example: A person or user",
+      "description": "Describes the entity that performed the activity. An activity MUST contain one actor property whose value is a single Object.",
       "properties" : {"$ref":"./object.json#properties"},
       "optional" : true
     },
@@ -29,35 +29,46 @@
     "target" : {
       "type": "object",
       "optional" : true,
-      "description" : "Represents the object to which the activity was performed. Example: A photo album",
+      "description" : "Describes the target of the activity. The precise meaning of the activity's target is dependent on the activities verb, but will often be the object the English preposition "to". For instance, in the activity, "John saved a movie to his wishlist", the target of the activity is "wishlist". The activity target MUST NOT be used to identity an indirect object that is not a target of the activity. An activity MAY contain a target property whose value is a single Object.",
       "properties" : {"$ref":"./object.json#properties"}
     },
-    "time" : {
+    "postedTime" : {
       "type" : "string",
-      "description": "Time at which the activity occurred",
+      "description": "The date and time at which the activity occurred. It is important to note that this is not necessarily the same as the time at which the activity was published. An activity MUST contain a postedTime property.",
+      "format" : "date"
+    },
+	"updatedTime" : {
+      "type" : "string",
+      "optional" : true,
+      "description": "The date and time at which a previously published activity has been modified. An Activity MAY contain an updatedTime property",
       "format" : "date"
     },
     "generator" : {
       "type": "object",
-      "description": "Represents the application which created the activity, which may be separate from the service to which the activity is published. For example, a third-party application on a mobile phone may be used to post a photo to a photo sharing service.",
+      "description": "Describes the application that generated the activity. An activity MAY contain a generator property whose value is a single Object.",
       "optional" : true,
       "properties" : {"$ref":"./object.json#properties"}
     },
+    "icon" : {
+      "type": "string",
+      "optional" : true,
+      "description": "An IRI[RFC3987] identifying an image resource provides a visual representation of the activity, intended for human consumption. The image SHOULD have an aspect ratio of one (horizontal) to one (vertical) and SHOULD be suitable for presentation at a small size. An activity MAY have an icon property"
+    },
     "provider" : {
       "type": "object",
-      "description" : "Represents the service which is publishing the activity",
+      "description" : "Describes the application that published the activity. Note that this is not necessarily the same entity that generated the activity. An activity MAY contain a provider property whose value is a single Object",
       "optional" : true,
       "properties" : {"$ref":"./object.json#properties"}
     },
     "title" : {
       "type" : "string",
-      "description" : "An HTML representation of the natural language title for this activity. Consumers MAY use the value of this field, if set, as a fallback for when none of the provided verbs are recognized",
+      "description" : "Natural-language title or headline for the activity encoded as a single JSON String containing HTML markup. An activity MAY contain a title property",
       "format": "html",
       "optional" : true
     },
     "body" : {
       "type" : "string",
-      "description" : "An HTML representation of a natural language describing this activity including visual elements such as thumbnails. Consumers MAY use the value of this field, if set, as a fallback for when none of the provided verbs are recognized",
+      "description" : "Natural-language description of the activity encoded as a single JSON String containing HTML markup. Visual elements such as thumbnail images MAY be included. An activity MAY contain a body property.",
       "format" : "html",
       "optional" : true
     },
