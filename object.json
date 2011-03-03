@@ -23,7 +23,6 @@
       "description" : "All the likes in response to this object",
       "type" : "object",
       "properties" : {"$ref":"./reactions.json#properties"}
-      }
     },
     "attachedObjects":{
       "optional" : true,
