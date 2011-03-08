@@ -273,7 +273,15 @@
           consumption. The image SHOULD have an aspect ratio of one (horizontal)
           to one (vertical) and SHOULD be suitable for presentation at a small
           size. An activity MAY have an <spanx style="verb">icon</spanx> property.</c>
-
+        
+          <c><spanx style="verb">id</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> String</c>
+          <c>Provides a permanent, universally unique identifier for the 
+          activity in the form of an absolute IRI <xref target="RFC3987"/>.
+          An activity SHOULD contain a single <spanx style="verb">id</spanx> property. If an activity 
+          does not contain an <spanx style="verb">id</spanx> property, consumers MAY use the value of
+          the <spanx style="verb">url</spanx> property as a less-reliable, non-unique identifier.</c>
+        
           <c><spanx style="verb">object</spanx></c>
           <c><xref target="object-serialization">Object</xref></c>
           <c>Describes the primary object of the activity. For instance,
@@ -321,16 +329,24 @@
           <c>The date and time at which a previously published activity has
           been modified. An Activity MAY contain an <spanx style="verb">updatedTime</spanx>
           property.</c>
-
+          
+          <c><spanx style="verb">url</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> String</c>
+          <c>An IRI <xref target="RFC3987"/> identifying a resource providing
+          an HTML representation of the activity. An activity MAY contain 
+          a <spanx style="verb">url</spanx> property.</c>
+          
           <c><spanx style="verb">verb</spanx></c>
           <c><xref target="RFC4627">JSON</xref> String</c>
           <c>Identifies the action that the activity describes. An activity
-          MUST contain a <spanx style="verb">verb</spanx> property whose
-          value is a JSON String that is non-empty and matches either the
-          "isegment-nz-nc" or the "IRI" production in <xref target="RFC3987"/>.
-          Note that the use of a relative reference other than a simple name
-          is not allowed.</c>
-
+          SHOULD contain a <spanx style="verb">verb</spanx> property whose 
+          value is a JSON String that is non-empty and matches either the 
+          "isegment-nz-nc" or the "IRI" production in <xref target="RFC3339"/>. 
+          Note that the use of a relative reference other than a simple name 
+          is not allowed. If the <spanx style="verb">verb</spanx> is not 
+          specified, or if the value is null, the <spanx style="verb">verb</spanx> 
+          is assumed to be <xref target="post-verb">"post"</xref>.</c>
+                                        
         </texttable>
       </section>
 
@@ -385,6 +401,17 @@
           have an <spanx style="verb">attachedObjects</spanx> property whose value is a JSON Array of
           <xref target="object-serialization">Objects</xref>.</c>
 
+          <c><spanx style="verb">author</spanx></c>
+          <c><xref target="object-serialization">Object</xref></c>
+          <c>Describes the entity that created or authored the object. An 
+          object MAY contain a single <spanx style="verb">author</spanx> 
+          property whose value is an <xref target="object-serialization">Object</xref>
+          of any type. Note that the author field identifies the entity that 
+          created the object and does not necessarily identify the entity 
+          that published the object. For instance, it may be the case that 
+          an object created by one person is posted and published to a system
+          by an entirely different entity.</c>
+
           <c><spanx style="verb">displayName</spanx></c>
           <c><xref target="RFC4627">JSON</xref> String</c>
           <c>A natural-language, human-readable and plain-text name for the object.
@@ -399,20 +426,6 @@
           objects, possibly in a different system, that duplicate the content
           in this object. This MAY be used as a hint for consumers to use when
           resolving duplicates between objects received from different sources.</c>
-
-          <c><spanx style="verb">embedCode</spanx></c>
-          <c>Contextual</c>
-          <c>Provides information a consumer of the object will need to embed
-          representations of the object into another context. For instance,
-          if the object represents a video, the <spanx style="verb">embedCode</spanx> may provide
-          either javascript or a fragment of HTML markup that may be used to
-          embed that video within an browser view. An <spanx style="verb">object</spanx> MAY have one
-          <spanx style="verb">embedCode</spanx> property whose value is dependent entirely on the
-          definition of the object type. That is, the definition of one type
-          of object may specify that the value of the <spanx style="verb">embedCode</spanx> property
-          is a JSON String containing a snippet of javascript code, while
-          the definition of a different type of object may specify that the
-          embedCode is itself a JSON object.</c>
 
           <c><spanx style="verb">id</spanx></c>
           <c><xref target="RFC4627">JSON</xref> String</c>
@@ -439,13 +452,27 @@
           other than a simple name is not allowed. If no
           <spanx style="verb">objectType</spanx> property
           is contained, the object has no specific type.</c>
-
+                                 
+          <c><spanx style="verb">postedTime</spanx></c>
+          <c><xref target="RFC3339"/> date-time</c>
+          <c>The date and time at which the object was created. It is important
+          to note that this is not necessarily the same as the time at which
+          the object was published. An object MAY contain a 
+          <spanx style="verb">postedTime</spanx>
+          property.</c>
+                                        
           <c><spanx style="verb">summary</spanx></c>
           <c><xref target="RFC4627">JSON</xref> String</c>
           <c>Natural-language description of the object encoded as a single
           JSON String containing HTML markup. Visual elements such as thumbnail
           images MAY be included. An activity MAY contain a
           <spanx style="verb">summary</spanx> property.</c>
+
+          <c><spanx style="verb">updatedTime</spanx></c>
+          <c><xref target="RFC3339"/> date-time</c>
+          <c>The date and time at which a previously published object has
+          been modified. An Object MAY contain an <spanx style="verb">updatedTime</spanx>
+          property.</c>
 
           <c><spanx style="verb">upstreamDuplicates</spanx></c>
           <c><xref target="RFC4627">JSON</xref> Array of Strings</c>
