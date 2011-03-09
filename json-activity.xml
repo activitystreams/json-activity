@@ -170,7 +170,10 @@
         core properties, the example contains the additional, undefined extension
         properties "to" and "bcc" for illustrative purposes only. The values
         of each of these extension properties are an Array of
-        <xref target="object-serialization">Objects</xref></t>
+        <xref target="object-serialization">Objects</xref>. Also included 
+        in the example are the undefined "comments" and "likes" properties, 
+        the values of which are <xref target="stream-serialization">Streams</xref>
+        used to represent two types of responses to a object.</t>
 
 <figure><artwork><![CDATA[
   {
@@ -220,6 +223,27 @@
             "url": "http://example.org/album/my_fluffy_cat_thumb.jpg",
             "width": 250,
             "height": 250
+          },
+          "comments": {
+            "url": "http://example.org/comments/my_fluffy_cat",
+            "count": 10,
+            "items": [
+              { 
+                "objectType": "comment",
+                "id": "tag:example.org,2011:my_fluffy_cat/1",
+                "summary": "It's so fluffy!"
+              }
+            ]
+          },
+          "likes": {
+            "count": 1,
+            "actors": [
+              {
+                "url": "http://example.org/joe",
+                "objectType": "person",
+                "id": "tag:example.org,2011:joe"
+              }
+            ]
           }
         },
         "actor": {
@@ -492,6 +516,67 @@
 
         </texttable>
       </section>
+      
+      <section anchor="stream-serialization" title="Stream Serialization">
+      
+        <texttable>
+          <ttcol align="left" width="15%">Property</ttcol>
+          <ttcol align="left" width="21%">Value</ttcol>
+          <ttcol align="left">Description</ttcol>
+
+          <c><spanx style="verb">actors</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> Array of 
+          <xref target="object-serialization">Objects</xref></c>
+          <c>An array containing a collection of actors participating in a
+          stream of activities. Each item in the array is an 
+          <xref target="object-serialization">Object</xref> that MAY
+          be of any object type but will typically represent an individual.</c>
+
+          <c><spanx style="verb">count</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> Integer</c>
+          <c>Non-negative integer specifying the total number of activities
+          within the stream. The Stream serialization MAY contain a
+          <spanx style="verb">count</spanx> property.</c>
+
+          <c><spanx style="verb">items</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> Array of 
+          <xref target="activity-serialization">Activities</xref></c>
+          <c>An array containing a listing of  
+          <xref target="activity-serialization">activities</xref> in a stream.
+          If used in combination with the <spanx style="verb">url</spanx>
+          property, the <spanx style="verb">items</spanx> array can be used 
+          to provide a subset of the activities (e.g. the most recent) in the 
+          Activity Stream JSON Document referenced by the 
+          <spanx style="verb">url</spanx>.</c>
+
+          <c><spanx style="verb">url</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> String</c>
+          <c>An IRI <xref target="RFC3987"/> identifying an 
+          <xref target="document">Activity Stream JSON Document</xref>.</c>
+
+        </texttable>
+      
+        <t>A valid Stream object serialization MUST contain at least the 
+        <spanx style="verb">url</spanx>, <spanx style="verb">items</spanx>
+        or <spanx style="verb">actors</spanx> property and MAY contain any 
+        combination of the three.</t>
+      
+      </section>
+      
+    </section>
+
+    <section anchor="document" title="The Activity Stream JSON Document">
+    
+      <t>The above defined JSON serialization can be used to represent
+      activities, objects and media links in any JSON context. This section
+      defines one particular use of the above formats to publish a JSON 
+      document representing a stream of activities.</t>
+
+      <t>Publishers using this format MUST produce a valid JSON document
+      whose root value is a <xref target="stream-serialization">Stream Object</xref>. 
+      This object MUST, at a minimum, include the <spanx style="verb">items</spanx> 
+      property.</t>
+      
     </section>
 
     <section title="Comparison of Identifier Values">
@@ -507,21 +592,6 @@
       <t>As a result, two IRIs that resolve to the same resource but are not
       character-for-character identical will be considered different for
       the purposes of identifier comparison.</t>
-    </section>
-
-    <section title="The Activity Stream JSON Document">
-      <t>The above defined JSON serialization can be used to represent
-      the activities, objects and media links in any JSON context. This section
-      defines one particular use of the above dictionary formats to publish
-      a JSON document that representing an <spanx style="verb">Activity Stream</spanx>.</t>
-
-      <t>Publishers using this format MUST produce a valid JSON document
-      whose root value is a JSON object. This document MUST include a
-      property named <spanx style="verb">items</spanx> whose value is a JSON
-      array of JSON objects conforming to the <xref
-      target="activity-serialization">Activity Serialization</xref>. Other
-      properties MAY be included in the root JSON object, but the meaning of
-      these properties is not defined by this specification.</t>
     </section>
 
     <section anchor="post-verb" title="The &quot;post&quot; Verb">
@@ -683,6 +753,9 @@
       where the attacker publishes activities or objects with falsified
       property values with the intent of injecting malicious content,
       hiding or corrupting legitimate content, or misleading users.</t>
+
+      <t>Activity Streams are JSON Documents and are subject to the same
+      security considerations described in <xref target="RFC4627"/>.</t>
 
       <t>Activity Streams implementations handle URIs.  See Section 7 of
       <xref target="RFC3986"/>.</t>
