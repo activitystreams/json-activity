@@ -206,7 +206,7 @@
         "title": "Martin posted a new video to his album.",
         "target": {
           "url": "http://example.org/album/",
-          "objectType": "http://activitystrea.ms/schema/1.0/photo-album",
+          "objectType": "photo-album",
           "id": "tag:example.org,2011:abc123",
           "displayName": "Martin's Photo Album",
           "image": {
@@ -217,7 +217,7 @@
         },
         "object" : {
           "url": "http://example.org/album/my_fluffy_cat.jpg",
-          "objectType": "http://activitystrea.ms/schema/1.0/photo",
+          "objectType": "photo",
           "id": "tag:example.org,2011:my_fluffy_cat",
           "image": {
             "url": "http://example.org/album/my_fluffy_cat_thumb.jpg",
@@ -638,6 +638,52 @@
           specification.</t>
         </list></t>
       </section>
+    </section>
+
+    <section title="The &quot;activity&quot; Object Type">
+    
+      <t>The "activity" object type indicates that an Object represents an 
+      Activity. It can be used whenever an event involving another activity
+      is described within an Activity Stream. For instance, when one user 
+      "shares" or "reposts" an activity from another user.</t>
+      
+      <t>In addition to the core Object properties, an "activity" object
+      MAY contain any combination of the properties defined for an
+      <xref target="activity-serialization">Activity</xref>. The values of 
+      the object's <spanx style="verb">id</spanx> and <spanx style="verb">url</spanx>
+      fields MUST match those of the activity being described. The object's
+      <spanx style="verb">displayName</spanx> property SHOULD be used to 
+      provide a human readable description of the activity, e.g.
+      <span style="verb">"displayName":"John posted a video"</span>.</t>
+      
+      <t>The example below illustrates an activity in which one user, Jane,
+      is sharing another activity performed by a second user, John.</t>
+    
+<figure><artwork><![CDATA[
+  {
+    "postedTime": "2011-02-10T15:04:55Z",
+    "verb": "share",
+    "object" : {
+      "objectType":"activity",
+      "displayName": "John posted a photo",
+      "id": "tag:example.org,2011:abc123",
+      "verb": "post",
+      "actor": {
+        "objectType":"person",
+        "id":"tag:example.org,2011:john"
+      },
+      "object": {
+        "objectType":"photo",
+        "url":"http://example.org/album/my_fluffy_cat.jpg"
+      }
+    },
+    "actor": {
+      "objectType" : "person",
+      "id": "tag:example.org,2011:jane"
+    }
+  }
+]]></artwork></figure>
+    
     </section>
 
     <section anchor="extensions" title="Extension Object Types and Verbs">
