@@ -140,17 +140,6 @@
 <figure><artwork><![CDATA[
   {
     "postedTime": "2011-02-10T15:04:55Z",
-    "verb": "post",
-    "target" : {
-      "url": "http://example.org/blog/",
-      "objectType": "blog",
-      "id": "tag:example.org,2011:abc123",
-      "displayName": "Martin's Blog"
-    },
-    "object" : {
-      "url": "http://example.org/blog/2011/02/entry",
-      "id": "tag:example.org,2011:abc123/xyz"
-    },
     "actor": {
       "url": "http://example.org/martin",
       "objectType" : "person",
@@ -161,6 +150,17 @@
         "height": 250
       },
       "displayName": "Martin Smith"
+    }
+    "verb": "post",
+    "object" : {
+      "url": "http://example.org/blog/2011/02/entry",
+      "id": "tag:example.org,2011:abc123/xyz"
+    },
+    "target" : {
+      "url": "http://example.org/blog/",
+      "objectType": "blog",
+      "id": "tag:example.org,2011:abc123",
+      "displayName": "Martin's Blog"
     }
   }
 ]]></artwork></figure>
@@ -195,7 +195,6 @@
             "id": "acct:jean.deux@example.org"
           }
         ],
-        "verb": "post",
         "postedTime": "2011-02-10T15:04:55Z",
         "generator": {
           "url": "http://example.org/activities-app"
@@ -204,17 +203,18 @@
           "url": "http://example.org/activity-stream"
         },
         "title": "Martin posted a new video to his album.",
-        "target": {
-          "url": "http://example.org/album/",
-          "objectType": "photo-album",
-          "id": "tag:example.org,2011:abc123",
-          "displayName": "Martin's Photo Album",
+        "actor": {
+          "url": "http://example.org/martin",
+          "objectType": "person",
+          "id": "tag:example.org,2011:martin",
           "image": {
-            "url": "http://example.org/album/thumbnail.jpg",
+            "url": "http://example.org/martin/image",
             "width": 250,
             "height": 250
-          }
+          },
+          "displayName": "Martin Smith"
         },
+        "verb": "post",
         "object" : {
           "url": "http://example.org/album/my_fluffy_cat.jpg",
           "objectType": "photo",
@@ -246,17 +246,17 @@
             ]
           }
         },
-        "actor": {
-          "url": "http://example.org/martin",
-          "objectType": "person",
-          "id": "tag:example.org,2011:martin",
+        "target": {
+          "url": "http://example.org/album/",
+          "objectType": "photo-album",
+          "id": "tag:example.org,2011:abc123",
+          "displayName": "Martin's Photo Album",
           "image": {
-            "url": "http://example.org/martin/image",
+            "url": "http://example.org/album/thumbnail.jpg",
             "width": 250,
             "height": 250
-          },
-          "displayName": "Martin Smith"
-        }
+          }
+        },
       }
     ]
   }
@@ -662,6 +662,10 @@
 <figure><artwork><![CDATA[
   {
     "postedTime": "2011-02-10T15:04:55Z",
+    "actor": {
+      "objectType" : "person",
+      "id": "tag:example.org,2011:jane"
+    },
     "verb": "share",
     "object" : {
       "objectType":"activity",
@@ -676,10 +680,6 @@
         "objectType":"photo",
         "url":"http://example.org/album/my_fluffy_cat.jpg"
       }
-    },
-    "actor": {
-      "objectType" : "person",
-      "id": "tag:example.org,2011:jane"
     }
   }
 ]]></artwork></figure>
