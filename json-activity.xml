@@ -466,6 +466,11 @@
           an <spanx style="verb">image</spanx> property whose value is a
           <xref target="media-link-serialization">Media Link</xref>.</c>
 
+          <c><spanx style="verb">inReplyTo</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> Array of <xref target="object-serialization">Objects</xref></c>
+          <c>A JSON Array of one or more <xref target="object-serialization">Objects</xref>
+          to which this object can be considered a response.</c>
+
           <c><spanx style="verb">objectType</spanx></c>
           <c><xref target="RFC4627">JSON</xref> String</c>
           <c>Identifies the type of object. An object MAY contain an
