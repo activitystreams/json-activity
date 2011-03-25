@@ -418,11 +418,11 @@
           <ttcol align="left" width="21%">Value</ttcol>
           <ttcol align="left">Description</ttcol>
 
-          <c><spanx style="verb">attachedObjects</spanx></c>
+          <c><spanx style="verb">attachments</spanx></c>
           <c><xref target="RFC4627">JSON</xref> Array of <xref target="object-serialization">Objects</xref></c>
           <c>A collection of one or more additional, associated objects, similar
           to the concept of attached files in an email message. An object MAY
-          have an <spanx style="verb">attachedObjects</spanx> property whose value is a JSON Array of
+          have an <spanx style="verb">attachments</spanx> property whose value is a JSON Array of
           <xref target="object-serialization">Objects</xref>.</c>
 
           <c><spanx style="verb">author</spanx></c>
