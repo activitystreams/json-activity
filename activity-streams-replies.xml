@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<?xml-stylesheet type='text/xsl' href='./rfc2629.xslt' ?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+<?rfc toc="yes"?>
+<?rfc tocompact="yes"?>
+<?rfc tocdepth="3"?>
+<?rfc tocindent="yes"?>
+<?rfc symrefs="yes"?>
+<?rfc sortrefs="yes"?>
+<?rfc comments="yes"?>
+<?rfc inline="yes"?>
+<?rfc compact="yes"?>
+<?rfc subcompact="no"?>
+<rfc category="exp" docName="json-activity-01" ipr="none">
+  <front>
+    <title abbrev="ActivityStreams">Responses for Activity Streams (Draft)</title>
+
+    <author fullname="James M Snell" initials="J.M." surname="Snell">
+      <organization>IBM</organization>
+    </author>
+
+    <date month="April" year="2011" />
+
+    <abstract>
+      <t>TBD</t>
+    </abstract>
+
+  </front>
+
+  <middle>
+    <section title="Introduction">
+      <t>TBD</t>
+    </section>
+
+    <section title="Notational Conventions">
+      <t>The text of this specification provides the sole definition of
+      conformance. Examples in this specification are non-normative.</t>
+
+      <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+      "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+      document are to be interpreted as described in <xref
+      target="RFC2119" />.</t>
+      
+    </section>
+    
+    <section anchor="inreplyto" title="The &quot;inReplyTo&quot; Property">
+      <t>The <spanx style="verb">inReplyTo</spanx> property MAY be used within any Activity Stream 
+      object to identify another object for which the containing object is
+      considered a response. The value of the <spanx style="verb">inReplyTo</spanx>
+      property is a <xref target="RFC4627">JSON</xref> Array of 
+      <xref target="object-serialization">Objects</xref>.</t>        
+    </section> 
+
+    <section anchor="stream" title="Responses and Activity Summaries">
+    
+      <t>It is common practice to provide summary information on the number 
+      and types of activities that have occurred with respect to a given 
+      object. For instance, a "note" object may have been the target of 
+      any number of comment, like, or share activities. This summary information 
+      MAY be expressed in the JSON serialization of an object by using a property
+      name descriptive of the data being summarized and using the Collection
+      object as defined by the JSON Activity Streams document.</t>
+      
+      <t>The following properties MAY be used on any object type or activity 
+      for each of the specified situations:</t>
+      
+      <texttable>
+        <ttcol align="left" width="15%">Property</ttcol>
+        <ttcol align="left">Description</ttcol>
+        
+        <c><spanx style="verb">attending</spanx></c>
+        <c>Used to provide information about the collection of actors that 
+        have responded to an <xref target="event">event</xref> using the 
+        <spanx style="verb">rsvp-yes</spanx> verb.</c>
+        
+        <c><spanx style="verb">followers</spanx></c>
+        <c>Used to provide information about the collection of objects (typically
+        person objects) that are "following" the containing object.</c>
+        
+        <c><spanx style="verb">following</spanx></c>
+        <c>Used to provide information about the collection of objects that this 
+        object is "following".</c>
+        
+        <c><spanx style="verb">friends</spanx></c>
+        <c>Used to provide information about the collection of objects with which
+        a "friendship" relationship has been established using the <spanx style="verb">make-friend</spanx>
+        verb. This property will typically only be relevant for the <spanx style="verb">person</spanx> object type.</c>
+        
+        <c><spanx style="verb">friend-requests</spanx></c>
+        <c>Used to provide information about the collection of objects with which
+        a "friendship" relationship is being requested using the <spanx style="verb">request-friend</spanx>
+        verb. This property will typically only be relevant for the <spanx style="verb">person</spanx> object type.</c>
+        
+        <c><spanx style="verb">likes</spanx></c>
+        <c>Used to provide information about the actors (typically person 
+        objects) that have favorited or liked the containing object.</c>
+        
+        <c><spanx style="verb">notAttending</spanx></c>
+        <c>Used to provide information about the collection of actors that 
+        have responded to an <xref target="event">event</xref> using the 
+        <spanx style="verb">rsvp-no</spanx> verb.</c>
+        
+        <c><spanx style="verb">maybeAttending</spanx></c>
+        <c>Used to provide information about the collection of actors that 
+        have responded to an <xref target="event">event</xref> using the 
+        <spanx style="verb">rsvp-maybe</spanx> verb.</c>
+        
+        <c><spanx style="verb">members</spanx></c>
+        <c>Used to provide information about the actors (typically person 
+        objects) that have "joined" the containing object. This is typically
+        only useful for object types that represent groups.</c>
+        
+        <c><spanx style="verb">replies</spanx></c>
+        <c>Used to provide information about the thread of discussion associated
+        with a given object. Typically, the objects contained will have an 
+        implied <spanx style="verb">inReplyTo</spanx> property value equal to
+        the object containing the <spanx style="verb">replies</spanx> property.</c>
+        
+        <c><spanx style="verb">reviews</spanx></c>
+        <c>Used to provide information about reviews available for the containing 
+        object.</c>
+        
+        <c><spanx style="verb">saves</spanx></c>
+        <c>Used to provide information about the actors (typically person 
+        objects) that have "saved" the containing object.</c>
+        
+        <c><spanx style="verb">shares</spanx></c>
+        <c>Used to provide information about the actors (typically person 
+        objects) that have "shared" the containing object.</c>      
+      </texttable>
+    
+      <t>The following example illustrates the use of these 
+      properties. Note that the value of the <spanx style="verb">totalItems</spanx>
+      property indicates the total number of items in the associated 
+      collections and may not match the actual number of objects in the 
+      <spanx style="verb">items</spanx> property. For instance, in the example
+      below, for the <spanx style="verb">likes</spanx> property, the 
+      <spanx style="verb">totalItems</spanx> property specifies the value 120 but
+      includes only a single object. This SHOULD be interpreted along the 
+      lines of "John and 119 other users like this note".</t>
+      
+<figure><artwork><![CDATA[
+  {
+    "objectType": "note",
+    "displayName": "A Simple Note",
+    "content": "<p>This is a simple note</p>",
+    "replies": {
+      "totalItems": 10,
+      "url": "http://example.org/comments-stream",
+    },
+    "followers": {
+      "totalItems": 15,
+      "url": "http://example.org/followers-stream",
+      "items": [
+        {
+          "objectType": "person",
+          "displayName": "Jane"
+        }
+      ]
+    },
+    "likes": {
+      "totalItems": 120,
+      "items": [
+        "objectType": "person",
+        "displayName": "John"
+      ]
+    },
+    "reviews": {
+      "totalItems": 1,
+      "items": [
+        {
+          "objectType": "review",
+          "author": {
+            "displayName": "Joe",
+            "objectType": "person"
+          },
+          "rating": 4.5
+        }
+      ]
+    }
+  }
+]]></artwork></figure>
+    
+    </section>
+
+    <section title="Security Considerations">
+      <t>TBD</t>      
+    </section>
+
+    <section title="IANA Considerations">
+      <t>None.</t>
+    </section>
+  </middle>
+
+  <back>
+    <references title="Normative References">
+      <reference anchor="RFC2119">
+        <front>
+          <title>Key words for use in RFCs to Indicate Requirement
+          Levels</title>
+
+          <author fullname="Scott Bradner" initials="S." surname="Bradner">
+            <organization></organization>
+          </author>
+
+          <date month="March" year="1997" />
+        </front>
+      </reference>
+      <reference anchor="activity-schema-01" 
+        target="http://activitystrea.ms/activity-schema.html">      
+         <front>
+            <title>Atom Activity Base Schema</title>
+            <author fullname="Martin Atkins" initials="M." surname="Atkins">
+              <organization>Six Apart</organization>
+            </author>
+
+            <author fullname="Will Norris" initials="W." surname="Norris">
+              <organization>Google</organization>
+            </author>
+
+            <author fullname="Chris Messina" initials="C." surname="Messina">
+              <organization>Citizen Agency, Google</organization>
+            </author>
+
+            <author fullname="Monica Wilkinson" initials="M." surname="Wilkinson">
+              <organization>MySpace, Facebook, Socialcast</organization>
+            </author>
+
+            <author fullname="Rob Dolin" initials="R." surname="Dolin">
+              <organization>Microsoft</organization>
+            </author>
+          </front>
+      </reference>
+
+      <reference anchor="RFC3986">
+        <front>
+          <title>Uniform Resource Identifier (URI)</title>
+
+          <author fullname="Tim Berners-Lee" initials="T." surname="Berners-Lee">
+            <organization>W3C/MIT</organization>
+          </author>
+
+          <author fullname="Roy Fielding" initials="R." surname="Fielding">
+            <organization>Day Software</organization>
+          </author>
+          
+          <author fullname="Larry Masinter" initials="L." surname="Masinter">
+            <organization>Adobe Systems</organization>
+          </author>
+
+          <date month="January" year="2005" />
+        </front>
+      </reference>
+
+      <reference anchor="RFC3987">
+        <front>
+          <title>Internationalized Resource Identifiers (IRIs)</title>
+
+          <author fullname="Martin Duerst" initials="M." surname="Duerst">
+            <organization></organization>
+          </author>
+
+          <author fullname="Michel Suignard" initials="M." surname="Suignard">
+            <organization></organization>
+          </author>
+
+          <date month="January" year="2005" />
+        </front>
+      </reference>
+
+      <reference anchor="RFC4627">
+        <front>
+          <title>The application/json Media Type for JavaScript Object
+          Notation (JSON)</title>
+
+          <author fullname="Douglas Crockford" initials="D."
+                  surname="Crockford">
+            <organization>JSON.org</organization>
+          </author>
+
+          <date month="July" year="2006" />
+        </front>
+      </reference>
+
+      <reference anchor="draft-nottingham-http-link-header-10">
+        <front>
+          <title>Web Linking</title>
+
+          <author fullname="Mark Nottingham" initials="M."
+                  surname="Nottingham">
+            <organization></organization>
+          </author>
+
+          <date day="5" month="May" year="2010" />
+        </front>
+      </reference>
+
+      
+      <reference anchor="RFC3339">
+        <front>
+          <title>Date and Time on the Internet: Timestamps</title>
+
+          <author fullname="Graham Klyne" initials="G." surname="Klyne">
+            <organization></organization>
+          </author>
+
+          <date month="July" year="2002" />
+        </front>
+      </reference>
+      </references>
+
+    <section title="Acknowledgements">
+      <t>...</t>
+    </section>
+  </back>
+</rfc>
+<!-- vim: set expandtab sw=2 ts=2: -->
