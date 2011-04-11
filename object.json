@@ -2,7 +2,7 @@
   "type" : "object",
   "title" : "social object",
   "extends" : {"$ref": "./core_object"},
-  "description" : "Generic object on the web with a set fo reactions",
+  "description" : "Generic object on the web with a set of reactions",
   "properties" : {
     "inReplyTo":{
       "optional" : true,
