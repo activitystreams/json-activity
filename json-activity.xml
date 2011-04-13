@@ -539,7 +539,7 @@
           <c><xref target="RFC4627">JSON</xref> Array of 
           <xref target="object-serialization">Objects</xref></c>
           <c>An array containing a listing of  
-          <xref target="objects-serialization">Objects</xref> of any 
+          <xref target="object-serialization">Objects</xref> of any 
           object type. If used in combination with the <spanx style="verb">url</spanx>
           property, the <spanx style="verb">items</spanx> array can be used 
           to provide a subset of the objects that may be found in the resource
