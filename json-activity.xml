@@ -537,7 +537,7 @@
 
           <c><spanx style="verb">items</spanx></c>
           <c><xref target="RFC4627">JSON</xref> Array of 
-          <xref target="objects-serialization">Objects</xref></c>
+          <xref target="object-serialization">Objects</xref></c>
           <c>An array containing a listing of  
           <xref target="objects-serialization">Objects</xref> of any 
           object type. If used in combination with the <spanx style="verb">url</spanx>
