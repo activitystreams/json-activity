@@ -139,7 +139,7 @@
 
 <figure><artwork><![CDATA[
   {
-    "postedTime": "2011-02-10T15:04:55Z",
+    "published": "2011-02-10T15:04:55Z",
     "actor": {
       "url": "http://example.org/martin",
       "objectType" : "person",
@@ -195,7 +195,7 @@
             "id": "acct:jean.deux@example.org"
           }
         ],
-        "postedTime": "2011-02-10T15:04:55Z",
+        "published": "2011-02-10T15:04:55Z",
         "generator": {
           "url": "http://example.org/activities-app"
         },
@@ -277,12 +277,12 @@
           MUST contain one <spanx style="verb">actor</spanx> property whose value is a
           single <xref target="object-serialization">Object</xref>.</c>
 
-          <c><spanx style="verb">body</spanx></c>
+          <c><spanx style="verb">content</spanx></c>
           <c><xref target="RFC4627">JSON</xref> String</c>
           <c>Natural-language description of the activity encoded as a single
           JSON String containing HTML markup. Visual elements such as thumbnail
           images MAY be included. An activity MAY contain a
-          <spanx style="verb">body</spanx> property.</c>
+          <spanx style="verb">content</spanx> property.</c>
 
           <c><spanx style="verb">generator</spanx></c>
           <c><xref target="object-serialization">Object</xref></c>
@@ -316,13 +316,10 @@
           <spanx style="verb">object</spanx> property is not contained, the
           primary object of the activity MAY be implied by context.</c>
 
-          <c><spanx style="verb">postedTime</spanx></c>
+          <c><spanx style="verb">published</spanx></c>
           <c><xref target="RFC3339"/> date-time</c>
-          <c>The date and time at which the activity occurred. It is important
-          to note that this is not necessarily the same as the time at which
-          the activity was published. An activity MUST contain a
-          <spanx style="verb">postedTime</spanx>
-          property.</c>
+          <c>The date and time at which the activity was published. An activity 
+          MUST contain a <spanx style="verb">published</spanx> property.</c>
 
           <c><spanx style="verb">provider</spanx></c>
           <c><xref target="object-serialization">Object</xref></c>
@@ -348,10 +345,10 @@
           JSON String containing HTML markup. An activity MAY contain a
           <spanx style="verb">title</spanx> property.</c>
 
-          <c><spanx style="verb">updatedTime</spanx></c>
+          <c><spanx style="verb">updated</spanx></c>
           <c><xref target="RFC3339"/> date-time</c>
           <c>The date and time at which a previously published activity has
-          been modified. An Activity MAY contain an <spanx style="verb">updatedTime</spanx>
+          been modified. An Activity MAY contain an <spanx style="verb">updated</spanx>
           property.</c>
           
           <c><spanx style="verb">url</spanx></c>
@@ -436,11 +433,19 @@
           an object created by one person is posted and published to a system
           by an entirely different entity.</c>
 
+          <c><spanx style="verb">content</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> String</c>
+          <c>Natural-language description of the object encoded as a single
+          JSON String containing HTML markup. Visual elements such as thumbnail
+          images MAY be included. An object MAY contain a
+          <spanx style="verb">content</spanx> property.</c>
+
           <c><spanx style="verb">displayName</spanx></c>
           <c><xref target="RFC4627">JSON</xref> String</c>
           <c>A natural-language, human-readable and plain-text name for the object.
           HTML markup MUST NOT be included. An object MAY contain a <spanx style="verb">displayName</spanx>
-          property.</c>
+          property. If the object does not specify an <spanx style="verb">objectType</spanx>
+          property, the object SHOULD specify a <spanx style="verb">displayName</spanx>.</c>
 
           <c><spanx style="verb">downstreamDuplicates</spanx></c>
           <c><xref target="RFC4627">JSON</xref> Array of Strings</c>
@@ -477,25 +482,22 @@
           <spanx style="verb">objectType</spanx> property
           is contained, the object has no specific type.</c>
                                  
-          <c><spanx style="verb">postedTime</spanx></c>
+          <c><spanx style="verb">published</spanx></c>
           <c><xref target="RFC3339"/> date-time</c>
-          <c>The date and time at which the object was created. It is important
-          to note that this is not necessarily the same as the time at which
-          the object was published. An object MAY contain a 
-          <spanx style="verb">postedTime</spanx>
-          property.</c>
+          <c>The date and time at which the object was published. An object 
+          MAY contain a <spanx style="verb">published</spanx> property.</c>
                                         
           <c><spanx style="verb">summary</spanx></c>
           <c><xref target="RFC4627">JSON</xref> String</c>
-          <c>Natural-language description of the object encoded as a single
+          <c>Natural-language summarization of the object encoded as a single
           JSON String containing HTML markup. Visual elements such as thumbnail
           images MAY be included. An activity MAY contain a
           <spanx style="verb">summary</spanx> property.</c>
 
-          <c><spanx style="verb">updatedTime</spanx></c>
+          <c><spanx style="verb">updated</spanx></c>
           <c><xref target="RFC3339"/> date-time</c>
           <c>The date and time at which a previously published object has
-          been modified. An Object MAY contain an <spanx style="verb">updatedTime</spanx>
+          been modified. An Object MAY contain an <spanx style="verb">updated</spanx>
           property.</c>
 
           <c><spanx style="verb">upstreamDuplicates</spanx></c>
@@ -628,7 +630,7 @@
           <t hangText="verb">The <spanx style="verb">verb</spanx> of the
           implied activity is "post".</t>
 
-          <t hangText="postedTime">The <spanx style="verb">postedTime</spanx>
+          <t hangText="published">The <spanx style="verb">published</spanx>
           of the implied activity is unknown unless the consumer is able to
           infer a time based on information outside the scope of this
           specification.</t>
@@ -657,7 +659,7 @@
     
 <figure><artwork><![CDATA[
   {
-    "postedTime": "2011-02-10T15:04:55Z",
+    "published": "2011-02-10T15:04:55Z",
     "actor": {
       "objectType" : "person",
       "id": "tag:example.org,2011:jane"
@@ -751,7 +753,7 @@
 
       <t>When a Re-publisher transmits an "activity", the Re-publisher
       MUST preserve the original <spanx style="verb">verb</spanx>,
-      <spanx style="verb">postedTime</spanx>, <spanx style="verb">actor</spanx>,
+      <spanx style="verb">published</spanx>, <spanx style="verb">actor</spanx>,
       <spanx style="verb">object</spanx> and
       <spanx style="verb">target</spanx> properties. The Re-publisher MAY
       preserve the remaining properties, OR the Re-publisher MAY omit these
