@@ -168,34 +168,14 @@
         <t>A more extensive, single-entry <spanx style="verb">Activity Stream</spanx>
         follows. In addition to containing a number of required and optional
         core properties, the example contains the additional, undefined extension
-        properties "to" and "bcc" for illustrative purposes only. The values
-        of each of these extension properties are an Array of
-        <xref target="object-serialization">Objects</xref>. Also included 
-        in the example are the undefined "comments" and "likes" properties, 
-        the values of which are <xref target="collection-serialization">Streams</xref>
-        used to represent two types of responses to a object.</t>
+        properties "foo" and "foo2" for illustrative purposes only.</t>
 
 <figure><artwork><![CDATA[
   {
     "items" : [
       {
-        "to": [
-          {
-            "objectType": "person",
-            "id": "acct:john.doe@example.org"
-          },
-          {
-            "objectType": "person",
-            "id": "acct:jane.doe@example.org"
-          }
-        ],
-        "bcc": [
-          {
-            "objectType": "person",
-            "id": "acct:jean.deux@example.org"
-          }
-        ],
         "published": "2011-02-10T15:04:55Z",
+        "foo": "some extension property",
         "generator": {
           "url": "http://example.org/activities-app"
         },
@@ -207,6 +187,7 @@
           "url": "http://example.org/martin",
           "objectType": "person",
           "id": "tag:example.org,2011:martin",
+          "foo2": "some other extension property",
           "image": {
             "url": "http://example.org/martin/image",
             "width": 250,
@@ -223,27 +204,6 @@
             "url": "http://example.org/album/my_fluffy_cat_thumb.jpg",
             "width": 250,
             "height": 250
-          },
-          "comments": {
-            "url": "http://example.org/comments/my_fluffy_cat",
-            "count": 10,
-            "items": [
-              { 
-                "objectType": "comment",
-                "id": "tag:example.org,2011:my_fluffy_cat/1",
-                "summary": "It's so fluffy!"
-              }
-            ]
-          },
-          "likes": {
-            "count": 1,
-            "actors": [
-              {
-                "url": "http://example.org/joe",
-                "objectType": "person",
-                "id": "tag:example.org,2011:joe"
-              }
-            ]
           }
         },
         "target": {
@@ -524,7 +484,10 @@
         <t>A "collection" is a generic list of <xref target="object-serialization">Objects</xref>
         of any object type. The <spanx style="verb">objectType</spanx> of each 
         item in the collection MAY be omitted if the type of object can be established
-        through context.</t>
+        through context. The collection is used primarily as the root of an 
+        Activity Streams document as described in <xref target="document"/>,
+        but can be used as the value of extension properties in a variety 
+        of situations.</t>
        
         <texttable>
           <ttcol align="left" width="15%">Property</ttcol>
@@ -686,7 +649,9 @@
 
     <section anchor="extensions" title="Extension Object Types and Verbs">
       <t>Other specifications MAY define new object types and verbs for use
-      with the concepts and serializations defined in this specification.</t>
+      with the concepts and serializations defined in this specification.
+      To be clear, new extension properties can be added anywhere in the 
+      JSON serialization of an object or activity.</t>
 
       <t>When defining a new verb, the defining specification MUST provide a
       verb identifier for the new verb and MUST define the meaning of the
