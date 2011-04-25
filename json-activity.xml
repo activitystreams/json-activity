@@ -630,7 +630,7 @@
     "verb": "share",
     "object" : {
       "objectType":"activity",
-      "displayName": "John posted a photo",
+      "title": "John posted a photo",
       "id": "tag:example.org,2011:abc123",
       "verb": "post",
       "actor": {
