@@ -150,7 +150,7 @@
         "height": 250
       },
       "displayName": "Martin Smith"
-    }
+    },
     "verb": "post",
     "object" : {
       "url": "http://example.org/blog/2011/02/entry",
@@ -216,7 +216,7 @@
             "width": 250,
             "height": 250
           }
-        },
+        }
       }
     ]
   }
@@ -342,7 +342,7 @@
           <c><xref target="RFC4627">JSON</xref> int</c>
           <c>A hint to the consumer about the length, in seconds, of the
           media resource identified by the <spanx style="verb">url</spanx> property. A media link MAY
-          contain a "duratoin" property when the target resource is a
+          contain a "duration" property when the target resource is a
           time-based media item such as an audio or video.</c>
 
           <c><spanx style="verb">height</spanx></c>
@@ -612,10 +612,19 @@
       MAY contain any combination of the properties defined for an
       <xref target="activity-serialization">Activity</xref>. The values of 
       the object's <spanx style="verb">id</spanx> and <spanx style="verb">url</spanx>
-      fields MUST match those of the activity being described. The object's
-      <spanx style="verb">displayName</spanx> property SHOULD be used to 
-      provide a human readable description of the activity, e.g.
-      <span style="verb">"displayName":"John posted a video"</span>.</t>
+      fields MUST match those of the activity being described.</t>
+      
+      <t>Note that an <spanx style="verb">activity</spanx> object MUST 
+      be processable as both an <xref target="object-serialization">Object</xref>
+      and an <xref target="activity-serialization">Activity</xref> and 
+      may contain fields from either construct, some of which may overlap or 
+      duplicate content. When duplication of content may occur, an implementation
+      SHOULD choose to use the fields from the <xref target="activity-serialization">Activity</xref>
+      object. For instance, in an <spanx style="verb">activity</spanx> object,
+      the Activity's <spanx style="verb">title</spanx> property and the 
+      Object's <spanx style="verb">displayName</spanx> properties serve 
+      identical functions, therefore the use of the <spanx style="verb">title</spanx>
+      property SHOULD be favored over the use of <spanx style="verb">displayName</spanx>.</t>
       
       <t>The example below illustrates an activity in which one user, Jane,
       is sharing another activity performed by a second user, John.</t>
