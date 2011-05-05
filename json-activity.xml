@@ -251,12 +251,12 @@
           <xref target="object-serialization">Object</xref>.</c>
 
           <c><spanx style="verb">icon</spanx></c>
-          <c><xref target="RFC4627">JSON</xref> String</c>
-          <c>An IRI<xref target="RFC3987" /> identifying an image resource
-          provides a visual representation of the activity, intended for human
-          consumption. The image SHOULD have an aspect ratio of one (horizontal)
-          to one (vertical) and SHOULD be suitable for presentation at a small
-          size. An activity MAY have an <spanx style="verb">icon</spanx> property.</c>
+          <c><xref target="media-link-serialization">Media Link</xref></c>
+          <c>Description of a resource providing a visual representation of
+          the object, intended for human consumption. The image SHOULD have an 
+          aspect ratio of one (horizontal) to one (vertical) and SHOULD be suitable 
+          for presentation at a small size. An activity MAY have an 
+          <spanx style="verb">icon</spanx> property.</c>
         
           <c><spanx style="verb">id</spanx></c>
           <c><xref target="RFC4627">JSON</xref> String</c>
