@@ -802,31 +802,6 @@
           <date month="March" year="1997" />
         </front>
       </reference>
-      <reference anchor="activity-schema-01"
-        target="http://activitystrea.ms/activity-schema.html">
-         <front>
-            <title>Atom Activity Base Schema</title>
-            <author fullname="Martin Atkins" initials="M." surname="Atkins">
-              <organization>Six Apart</organization>
-            </author>
-
-            <author fullname="Will Norris" initials="W." surname="Norris">
-              <organization>Google</organization>
-            </author>
-
-            <author fullname="Chris Messina" initials="C." surname="Messina">
-              <organization>Citizen Agency, Google</organization>
-            </author>
-
-            <author fullname="Monica Wilkinson" initials="M." surname="Wilkinson">
-              <organization>MySpace, Facebook, Socialcast</organization>
-            </author>
-
-            <author fullname="Rob Dolin" initials="R." surname="Dolin">
-              <organization>Microsoft</organization>
-            </author>
-          </front>
-      </reference>
 
       <reference anchor="RFC3986">
         <front>
@@ -877,20 +852,6 @@
           <date month="July" year="2006" />
         </front>
       </reference>
-
-      <reference anchor="draft-nottingham-http-link-header-10">
-        <front>
-          <title>Web Linking</title>
-
-          <author fullname="Mark Nottingham" initials="M."
-                  surname="Nottingham">
-            <organization></organization>
-          </author>
-
-          <date day="5" month="May" year="2010" />
-        </front>
-      </reference>
-
 
       <reference anchor="RFC3339">
         <front>
