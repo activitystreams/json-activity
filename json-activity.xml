@@ -11,9 +11,10 @@
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
-<rfc category="exp" docName="json-activity-01" ipr="none">
+<?rfc private="Activity Streams Working Group"?>
+<rfc>
   <front>
-    <title abbrev="ActivityStreams">JSON Activity Streams (Draft)</title>
+    <title abbrev="ActivityStreams">JSON Activity Streams 1.0</title>
 
     <author fullname="James M Snell" initials="J.M." surname="Snell">
       <organization>IBM</organization>
@@ -39,7 +40,7 @@
       <organization>Microsoft</organization>
     </author>
 
-    <date month="March" year="2011" />
+    <date month="May" year="2011" />
 
     <abstract>
       <t>This specification details the serialization of a stream of social
@@ -785,6 +786,38 @@
 
     <section title="IANA Considerations">
       <t>None.</t>
+    </section>
+
+    <section anchor="license" title="License">
+      <t>As of [date], the following persons or entities have made this
+      Specification available under the Open Web Foundation Agreement Version
+      1.0, which is available at
+      <eref target="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" />.
+
+        <list>
+          <t>[List of persons or entities]</t>
+        </list>
+      </t>
+
+      <t>You can review the signed copies of the Open Web Foundation Agreement
+      Version 1.0 for this Specification at
+      <eref target="http://activitystrea.ms/agreements" />, which may also
+      include additional parties to those listed above.</t>
+
+      <t>Your use of this Specification may be subject to other third party
+      rights. THIS SPECIFICATION IS PROVIDED "AS IS." The contributors expressly
+      disclaim any warranties (express, implied, or otherwise), including
+      implied warranties of merchantability, non-infringement, fitness for a
+      particular purpose, or title, related to the Specification. The entire
+      risk as to implementing or otherwise using the Specification is assumed by
+      the Specification implementer and user. IN NO EVENT WILL ANY PARTY BE
+      LIABLE TO ANY OTHER PARTY FOR LOST PROFITS OR ANY FORM OF INDIRECT,
+      SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES OF ANY CHARACTER FROM ANY
+      CAUSES OF ACTION OF ANY KIND WITH RESPECT TO THIS SPECIFICATION OR ITS
+      GOVERNING AGREEMENT, WHETHER BASED ON BREACH OF CONTRACT, TORT (INCLUDING
+      NEGLIGENCE), OR OTHERWISE, AND WHETHER OR NOT THE OTHER PARTY HAS BEEN
+      ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</t>
+
     </section>
   </middle>
 
