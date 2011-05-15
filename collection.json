@@ -1,0 +1,33 @@
+{
+  "type" : "object",
+  "title" : "collection",
+  "description" : "A collection is a generic list of Objects of any object type. The objectType of each item in the collection MAY be omitted if the type of object can be established through context. The collection is used primarily as the root of an Activity Streams document, but can be used as the value of extension properties in a variety of situations. ",
+  "properties" : {
+    "url" : {
+      "type" : "string",
+      "description": "An IRI [RFC3987] referencing a JSON document containing the full listing of objects in the collection."
+    },
+    "totalItems": {
+      "type" : "number",
+      "optional": true,
+      "description" : "Non-negative integer specifying the total number of activities within the stream. The Stream serialization MAY contain a count property."
+    },
+    "items" : {
+      "type" : "array",
+      "description" : "An array containing a listing of Objects of any object type. If used in combination with the url property, the items array can be used to provide a subset of the objects that may be found in the resource identified by the url.",
+      "items": {
+        "type" : "object",
+        "properties" :{"$ref":"./object.json#properties"}
+      }
+    },
+    "links" : {
+      "type" : "array",
+      "optional" : true,
+      "description" :"Links between an this object and other resources as defined in Web Linking",
+      "properties" : {"$ref" : "http://json-schema.org/links#properties"}
+    }
+  },
+  "links": [
+       {"rel": "describedby", "href": "http://json-schema.org/schema"}
+     ]
+}
