@@ -17,12 +17,17 @@
     },
     "displayName" : {
       "type":"string",
-      "description" : "A natural-language, human-readable and plain-text name for the object. HTML markup MUST NOT be included. An object MAY contain a displayName property"
+      "description" : "A natural-language, human-readable and plain-text name for the object. HTML markup MUST NOT be included. An object MAY contain a displayName property. If the object does not specify an objectType property, the object SHOULD specify a displayName"
     },
     "summary" : {
       "type" : "string",
       "optional":true,
-      "description" : "Natural-language description of the object encoded as a single JSON String containing HTML markup. Visual elements such as thumbnail images MAY be included. An activity MAY contain a summary property"
+      "description" : "Natural-language summary of the object encoded as a single JSON String containing HTML markup. Visual elements such as thumbnail images MAY be included. An activity MAY contain a summary property"
+    },
+    "content" : {
+      "type" : "string",
+      "optional":true,
+      "description" : "Natural-language description of the object encoded as a single JSON String containing HTML markup. Visual elements such as thumbnail images MAY be included. An object MAY contain a content property"
     },
     "url" : {
       "type" : "string",
@@ -38,13 +43,19 @@
     "author" : {
       "type" : "object",
       "optional" : true,
-      "description" : "Entity who posted this object. Could also be called owner",
+      "description" : "Describes the entity that created or authored the object. An object MAY contain a single author property whose value is an Object of any type. Note that the author field identifies the entity that created the object and does not necessarily identify the entity that published the object. For instance, it may be the case that an object created by one person is posted and published to a system by an entirely different entity",
       "properties" : {"$ref":"#properties"}
     },
-    "createdTime" : {
+    "published" : {
       "optional" : true,
       "type" : "string",
-      "description": "Time at which the object was created. We should a last updated time.",
+      "description": "[RFC3339] date-time. The date and time at which the object was published. An object MAY contain a published property",
+      "format" : "date"
+    },
+    "updated" : {
+      "optional" : true,
+      "type" : "string",
+      "description": "[RFC3339] date-time. The date and time at which a previously published object has been modified. An Object MAY contain an updated property.",
       "format" : "date"
     }
   },

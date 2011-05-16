@@ -1,30 +1,10 @@
 {
   "type" : "object",
-  "title" : "social object",
+  "title" : "object",
   "extends" : {"$ref": "./core_object"},
   "description" : "Generic object on the web with a set of reactions",
   "properties" : {
-    "inReplyTo":{
-      "optional" : true,
-      "description" : "The object that this object is in response to.",
-      "note" : "This should also support replying to activities",
-      "type": "object",
-      "properties" :{"$ref":"#properties"}
-    },
-    "comments":{
-      "optional" : true,
-      "type" : "object",
-      "uniqueItems" : true,
-      "description" : "All the comments in response to this object",
-      "properties" :{"$ref":"./feed.json#properties"}
-    },
-    "likes":{
-      "optional" : true,
-      "description" : "All the likes in response to this object",
-      "type" : "object",
-      "properties" : {"$ref":"./reactions.json#properties"}
-    },
-    "attachedObjects":{
+    "attachments":{
       "optional" : true,
       "title" : "Related objects",
       "description" : "A collection of one or more additional, associated objects, similar to the concept of attached files in an email message. An object MAY have an attachedObjects property whose value is a JSON Array of Objects.",
