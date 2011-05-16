@@ -36,19 +36,19 @@
       "description" : "Identifies the type of object. An object MAY contain an objectType property whose value is a JSON String that is non-empty and matches either the \"isegment-nz-nc\" or the \"IRI\" production in [RFC3987]. Note that the use of a relative reference other than a simple name is not allowed. If no objectType property is contained, the object has no specific type."
     },
     "author" : {
-      "type" : "object"
+      "type" : "object",
       "description" : "Describes the entity that created or authored the object. An object MAY contain a single author property whose value is an Object of any type. Note that the author field identifies the entity that created the object and does not necessarily identify the entity that published the object. For instance, it may be the case that an object created by one person is posted and published to a system by an entirely different entity",
       "properties" : {"$ref":"#properties"}
     },
     "published" : {
       "type" : "string",
       "description": "[RFC3339] date-time. The date and time at which the object was published. An object MAY contain a published property",
-      "format" : "date"
+      "format" : "date-time"
     },
     "updated" : {
       "type" : "string",
       "description": "[RFC3339] date-time. The date and time at which a previously published object has been modified. An Object MAY contain an updated property.",
-      "format" : "date"
+      "format" : "date-time"
     },
     "attachments":{
       "title" : "Related objects",
