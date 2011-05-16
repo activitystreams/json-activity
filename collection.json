@@ -9,11 +9,11 @@
     },
     "totalItems": {
       "type" : "number",
-      "optional": true,
       "description" : "Non-negative integer specifying the total number of activities within the stream. The Stream serialization MAY contain a count property."
     },
     "items" : {
       "type" : "array",
+      "required" : true,
       "description" : "An array containing a listing of Objects of any object type. If used in combination with the url property, the items array can be used to provide a subset of the objects that may be found in the resource identified by the url.",
       "items": {
         "type" : "object",
