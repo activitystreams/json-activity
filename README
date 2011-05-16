@@ -1,5 +1,6 @@
-This is a repository which contains json-schema documents which map to all the constructs in 
-http://activitystrea.ms/head/json-activity.html
+This repository contains the JSON activity streams specification version 1.0
+ 
+It also contains json-schema documents which map to all the constructs in the spec.
 
 The syntax of the schema is defined at
 http://json-schema.org/

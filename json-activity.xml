@@ -1,0 +1,907 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<?xml-stylesheet type='text/xsl' href='./rfc2629.xslt' ?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+<?rfc toc="yes"?>
+<?rfc tocompact="yes"?>
+<?rfc tocdepth="3"?>
+<?rfc tocindent="yes"?>
+<?rfc symrefs="yes"?>
+<?rfc sortrefs="yes"?>
+<?rfc comments="yes"?>
+<?rfc inline="yes"?>
+<?rfc compact="yes"?>
+<?rfc subcompact="no"?>
+<?rfc private="Activity Streams Working Group"?>
+<rfc>
+  <front>
+    <title abbrev="ActivityStreams">JSON Activity Streams 1.0</title>
+
+    <author fullname="James M Snell" initials="J.M." surname="Snell">
+      <organization>IBM</organization>
+    </author>
+
+    <author fullname="Martin Atkins" initials="M." surname="Atkins">
+      <organization>SAY Media</organization>
+    </author>
+
+    <author fullname="Will Norris" initials="W." surname="Norris">
+      <organization>Google</organization>
+    </author>
+
+    <author fullname="Chris Messina" initials="C." surname="Messina">
+      <organization>Citizen Agency, Google</organization>
+    </author>
+
+    <author fullname="Monica Wilkinson" initials="M." surname="Wilkinson">
+      <organization>MySpace, Facebook, Socialcast</organization>
+    </author>
+
+    <author fullname="Rob Dolin" initials="R." surname="Dolin">
+      <organization>Microsoft</organization>
+    </author>
+
+    <date month="May" year="2011" />
+
+    <abstract>
+      <t>This specification details the serialization of a stream of social
+        activities using the JSON format. Activities are important in that
+        they allow individuals to process the latest news of people and things
+        they care about.</t>
+    </abstract>
+
+  </front>
+
+  <middle>
+    <section title="Introduction">
+
+      <t>In its simplest form, an <spanx style="verb">activity</spanx> consists
+      of an <spanx style="verb">actor</spanx>, a
+      <spanx style="verb">verb</spanx>, an
+      an <spanx style="verb">object</spanx>, and a <spanx style="verb">target</spanx>.
+      It tells the story of a person performing an action on or with an object --
+      "Geraldine posted a photo to her album"
+      or "John shared a video". In most cases these components will be
+      explicit, but they may also be implied.</t>
+
+      <t>It is a goal of this specification to provide sufficient metadata
+      about an activity such that a consumer of the data can present it to a
+      user in a rich human-friendly format. This may include constructing
+      readable sentences about the activity that occurred, visual
+      representations of the activity, or combining similar activities for
+      display.</t>
+
+      <t>The basic properties that comprise the description of an
+      <spanx style="verb">activity</spanx> are defined in the following sections.</t>
+
+      <t>Within this specification, an <spanx style="verb">object</spanx> is a
+      thing, real or imaginary, which participates in an
+      activity. It may be the entity performing the activity, or the entity
+      on which the activity was performed. An <spanx style="verb">object</spanx>
+      consists of properties defined in the following sections. Certain object
+      types may further refine the meaning of these properties, or they may
+      define additional properties.</t>
+
+      <t>Some types of objects may have an alternative visual representation
+      in the form of an image, video or embedded HTML fragments.
+      A <spanx style="verb">Media Link</spanx> represents a hyperlink to
+      such resources.</t>
+
+      <t>An <spanx style="verb">Activity Stream</spanx> is a collection one or
+      more individual activities. The relationship between the activities within
+      the collection is undefined by this specification.</t>
+
+    </section>
+
+    <section title="Notational Conventions">
+      <t>The text of this specification provides the sole definition of
+      conformance. Examples in this specification are non-normative.</t>
+
+      <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+      "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+      document are to be interpreted as described in <xref
+      target="RFC2119" />.</t>
+
+      <t>This specification allows the use of IRIs <xref target="RFC3987"/>.
+      Every URI <xref target="RFC3986" /> is also an IRI, so a URI may be used
+      wherever below an IRI is named.  There are two special considerations:
+      (1) when an IRI that is not also a URI is given for dereferencing, it
+      MUST be mapped to a URI using the steps in Section 3.1 of
+      <xref target="RFC3987"/> and (2) when an IRI is serving as
+      an <spanx style="verb">id</spanx> value, it MUST NOT be so mapped.</t>
+    </section>
+
+    <section anchor="format" title="JSON Serialization">
+
+      <t>Activities are serialized using the JSON format, as
+      defined in <xref target="RFC4627" />. Alternative serializations
+      MAY be used but are outside the scope of this specification.</t>
+
+      <t>In the JSON serialization, absent properties MAY be represented either
+      by an explicit declaration of the property whose value is null or by
+      omitting the property declaration altogether at the option of the
+      publisher; these two representations are semantically equivalent. If a
+      property is having a value whose type is a JSON array, the absence of
+      any items in that array MUST be represented by omitting the property
+      entirely or publishing it with the value null, and MUST NOT be
+      represented as an empty array, except as otherwise stated in the
+      definition of a specific property.</t>
+
+      <t>Unless otherwise specified, all properties specifying date and
+      time values within the JSON serialization, including extensions,
+      MUST conform to the "date-time" production in <xref target="RFC3339" />.
+      In addition, an uppercase "T" character MUST be used to separate date
+      and time, and an uppercase "Z" character MUST be present in the absence of
+      a numeric time zone offset.</t>
+
+      <section anchor="examples" title="Example Activities">
+
+        <t>Following is a simple, minimal example of a JSON serialized
+        <spanx style="verb">activity</spanx>:</t>
+
+<figure><artwork><![CDATA[
+  {
+    "published": "2011-02-10T15:04:55Z",
+    "actor": {
+      "url": "http://example.org/martin",
+      "objectType" : "person",
+      "id": "tag:example.org,2011:martin",
+      "image": {
+        "url": "http://example.org/martin/image",
+        "width": 250,
+        "height": 250
+      },
+      "displayName": "Martin Smith"
+    },
+    "verb": "post",
+    "object" : {
+      "url": "http://example.org/blog/2011/02/entry",
+      "id": "tag:example.org,2011:abc123/xyz"
+    },
+    "target" : {
+      "url": "http://example.org/blog/",
+      "objectType": "blog",
+      "id": "tag:example.org,2011:abc123",
+      "displayName": "Martin's Blog"
+    }
+  }
+]]></artwork></figure>
+
+        <t>A more extensive, single-entry <spanx style="verb">Activity Stream</spanx>
+        follows. In addition to containing a number of required and optional
+        core properties, the example contains the additional, undefined extension
+        properties "foo" and "foo2" for illustrative purposes only.</t>
+
+<figure><artwork><![CDATA[
+  {
+    "items" : [
+      {
+        "published": "2011-02-10T15:04:55Z",
+        "foo": "some extension property",
+        "generator": {
+          "url": "http://example.org/activities-app"
+        },
+        "provider": {
+          "url": "http://example.org/activity-stream"
+        },
+        "title": "Martin posted a new video to his album.",
+        "actor": {
+          "url": "http://example.org/martin",
+          "objectType": "person",
+          "id": "tag:example.org,2011:martin",
+          "foo2": "some other extension property",
+          "image": {
+            "url": "http://example.org/martin/image",
+            "width": 250,
+            "height": 250
+          },
+          "displayName": "Martin Smith"
+        },
+        "verb": "post",
+        "object" : {
+          "url": "http://example.org/album/my_fluffy_cat.jpg",
+          "objectType": "photo",
+          "id": "tag:example.org,2011:my_fluffy_cat",
+          "image": {
+            "url": "http://example.org/album/my_fluffy_cat_thumb.jpg",
+            "width": 250,
+            "height": 250
+          }
+        },
+        "target": {
+          "url": "http://example.org/album/",
+          "objectType": "photo-album",
+          "id": "tag:example.org,2011:abc123",
+          "displayName": "Martin's Photo Album",
+          "image": {
+            "url": "http://example.org/album/thumbnail.jpg",
+            "width": 250,
+            "height": 250
+          }
+        }
+      }
+    ]
+  }
+]]></artwork></figure>
+
+      </section>
+
+      <section anchor="activity-serialization" title="Activity Serialization">
+
+        <texttable>
+          <ttcol align="left" width="15%">Property</ttcol>
+          <ttcol align="left" width="21%">Value</ttcol>
+          <ttcol align="left">Description</ttcol>
+
+          <c><spanx style="verb">actor</spanx></c>
+          <c><xref target="object-serialization">Object</xref></c>
+          <c>Describes the entity that performed the activity. An activity
+          MUST contain one <spanx style="verb">actor</spanx> property whose value is a
+          single <xref target="object-serialization">Object</xref>.</c>
+
+          <c><spanx style="verb">content</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> String</c>
+          <c>Natural-language description of the activity encoded as a single
+          JSON String containing HTML markup. Visual elements such as thumbnail
+          images MAY be included. An activity MAY contain a
+          <spanx style="verb">content</spanx> property.</c>
+
+          <c><spanx style="verb">generator</spanx></c>
+          <c><xref target="object-serialization">Object</xref></c>
+          <c>Describes the application that generated the activity. An activity
+          MAY contain a <spanx style="verb">generator</spanx> property whose value is a single
+          <xref target="object-serialization">Object</xref>.</c>
+
+          <c><spanx style="verb">icon</spanx></c>
+          <c><xref target="media-link-serialization">Media Link</xref></c>
+          <c>Description of a resource providing a visual representation of
+          the object, intended for human consumption. The image SHOULD have an 
+          aspect ratio of one (horizontal) to one (vertical) and SHOULD be suitable 
+          for presentation at a small size. An activity MAY have an 
+          <spanx style="verb">icon</spanx> property.</c>
+        
+          <c><spanx style="verb">id</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> String</c>
+          <c>Provides a permanent, universally unique identifier for the 
+          activity in the form of an absolute IRI <xref target="RFC3987"/>.
+          An activity SHOULD contain a single <spanx style="verb">id</spanx> property. If an activity 
+          does not contain an <spanx style="verb">id</spanx> property, consumers MAY use the value of
+          the <spanx style="verb">url</spanx> property as a less-reliable, non-unique identifier.</c>
+        
+          <c><spanx style="verb">object</spanx></c>
+          <c><xref target="object-serialization">Object</xref></c>
+          <c>Describes the primary object of the activity. For instance,
+          in the activity, "John saved a movie to his wishlist", the object
+          of the activity is "movie". An activity SHOULD contain an
+          <spanx style="verb">object</spanx> property whose value is a single
+          <xref target="object-serialization">Object</xref>. If the
+          <spanx style="verb">object</spanx> property is not contained, the
+          primary object of the activity MAY be implied by context.</c>
+
+          <c><spanx style="verb">published</spanx></c>
+          <c><xref target="RFC3339"/> date-time</c>
+          <c>The date and time at which the activity was published. An activity 
+          MUST contain a <spanx style="verb">published</spanx> property.</c>
+
+          <c><spanx style="verb">provider</spanx></c>
+          <c><xref target="object-serialization">Object</xref></c>
+          <c>Describes the application that published the activity. Note that
+          this is not necessarily the same entity that generated the activity.
+          An activity MAY contain a <spanx style="verb">provider</spanx> property whose value is a
+          single <xref target="object-serialization">Object</xref>.</c>
+
+          <c><spanx style="verb">target</spanx></c>
+          <c><xref target="object-serialization">Object</xref></c>
+          <c>Describes the target of the activity. The precise meaning of the
+          activity's target is dependent on the activities <spanx style="verb">verb</spanx>,
+          but will often be the object the English preposition "to".
+          For instance, in the activity, "John saved a movie to his
+          wishlist", the target of the activity is "wishlist". The activity
+          target MUST NOT be used to identity an indirect object that is
+          not a target of the activity. An activity MAY contain a <spanx style="verb">target</spanx>
+          property whose value is a single <xref target="object-serialization">Object</xref>.</c>
+
+          <c><spanx style="verb">title</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> String</c>
+          <c>Natural-language title or headline for the activity encoded as a single
+          JSON String containing HTML markup. An activity MAY contain a
+          <spanx style="verb">title</spanx> property.</c>
+
+          <c><spanx style="verb">updated</spanx></c>
+          <c><xref target="RFC3339"/> date-time</c>
+          <c>The date and time at which a previously published activity has
+          been modified. An Activity MAY contain an <spanx style="verb">updated</spanx>
+          property.</c>
+          
+          <c><spanx style="verb">url</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> String</c>
+          <c>An IRI <xref target="RFC3987"/> identifying a resource providing
+          an HTML representation of the activity. An activity MAY contain 
+          a <spanx style="verb">url</spanx> property.</c>
+          
+          <c><spanx style="verb">verb</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> String</c>
+          <c>Identifies the action that the activity describes. An activity
+          SHOULD contain a <spanx style="verb">verb</spanx> property whose 
+          value is a JSON String that is non-empty and matches either the 
+          "isegment-nz-nc" or the "IRI" production in <xref target="RFC3339"/>. 
+          Note that the use of a relative reference other than a simple name 
+          is not allowed. If the <spanx style="verb">verb</spanx> is not 
+          specified, or if the value is null, the <spanx style="verb">verb</spanx> 
+          is assumed to be <xref target="post-verb">"post"</xref>.</c>
+                                        
+        </texttable>
+      </section>
+
+      <section anchor="media-link-serialization" title="Media Link Serialization">
+
+        <texttable>
+          <ttcol align="left" width="15%">Property</ttcol>
+          <ttcol align="left" width="21%">Value</ttcol>
+          <ttcol align="left">Description</ttcol>
+
+          <c><spanx style="verb">duration</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> int</c>
+          <c>A hint to the consumer about the length, in seconds, of the
+          media resource identified by the <spanx style="verb">url</spanx> property. A media link MAY
+          contain a "duration" property when the target resource is a
+          time-based media item such as an audio or video.</c>
+
+          <c><spanx style="verb">height</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> int</c>
+          <c>A hint to the consumer about the height, in pixels, of the
+          media resource identified by the <spanx style="verb">url</spanx> property. A media link MAY
+          contain a <spanx style="verb">height</spanx> property when the target resource is a visual
+          media item such as an image, video or embeddable HTML page.</c>
+
+          <c><spanx style="verb">url</spanx></c>
+          <c>String</c>
+          <c>The IRI of the media resource being linked. A media link MUST
+          have a <spanx style="verb">url</spanx> property.</c>
+
+          <c><spanx style="verb">width</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> int</c>
+          <c>A hint to the consumer about the width, in pixels, of the
+          media resource identified by the <spanx style="verb">url</spanx> property. A media link MAY
+          contain a <spanx style="verb">width</spanx> property when the target resource is a visual
+          media item such as an image, video or embeddable HTML page.</c>
+
+        </texttable>
+
+      </section>
+
+      <section anchor="object-serialization" title="Object Serialization">
+
+        <texttable>
+          <ttcol align="left" width="15%">Property</ttcol>
+          <ttcol align="left" width="21%">Value</ttcol>
+          <ttcol align="left">Description</ttcol>
+
+          <c><spanx style="verb">attachments</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> Array of <xref target="object-serialization">Objects</xref></c>
+          <c>A collection of one or more additional, associated objects, similar
+          to the concept of attached files in an email message. An object MAY
+          have an <spanx style="verb">attachments</spanx> property whose value is a JSON Array of
+          <xref target="object-serialization">Objects</xref>.</c>
+
+          <c><spanx style="verb">author</spanx></c>
+          <c><xref target="object-serialization">Object</xref></c>
+          <c>Describes the entity that created or authored the object. An 
+          object MAY contain a single <spanx style="verb">author</spanx> 
+          property whose value is an <xref target="object-serialization">Object</xref>
+          of any type. Note that the author field identifies the entity that 
+          created the object and does not necessarily identify the entity 
+          that published the object. For instance, it may be the case that 
+          an object created by one person is posted and published to a system
+          by an entirely different entity.</c>
+
+          <c><spanx style="verb">content</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> String</c>
+          <c>Natural-language description of the object encoded as a single
+          JSON String containing HTML markup. Visual elements such as thumbnail
+          images MAY be included. An object MAY contain a
+          <spanx style="verb">content</spanx> property.</c>
+
+          <c><spanx style="verb">displayName</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> String</c>
+          <c>A natural-language, human-readable and plain-text name for the object.
+          HTML markup MUST NOT be included. An object MAY contain a <spanx style="verb">displayName</spanx>
+          property. If the object does not specify an <spanx style="verb">objectType</spanx>
+          property, the object SHOULD specify a <spanx style="verb">displayName</spanx>.</c>
+
+          <c><spanx style="verb">downstreamDuplicates</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> Array of Strings</c>
+          <c>A JSON Array of one or more absolute IRI's <xref target="RFC3987"/>
+          identifying objects that duplicate this object's content. An object
+          SHOULD contain a <spanx style="verb">downstreamDuplicates</spanx> property when there are known
+          objects, possibly in a different system, that duplicate the content
+          in this object. This MAY be used as a hint for consumers to use when
+          resolving duplicates between objects received from different sources.</c>
+
+          <c><spanx style="verb">id</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> String</c>
+          <c>Provides a permanent, universally unique identifier for the
+          object in the form of an absolute IRI <xref target="RFC3987"/>.
+          An object SHOULD contain a single <spanx style="verb">id</spanx> property. If an object
+          does not contain an <spanx style="verb">id</spanx> property, consumers MAY use the value of
+          the <spanx style="verb">url</spanx> property as a less-reliable, non-unique identifier.</c>
+
+          <c><spanx style="verb">image</spanx></c>
+          <c><xref target="media-link-serialization">Media Link</xref></c>
+          <c>Description of a resource providing a visual representation of
+          the object, intended for human consumption. An object MAY contain
+          an <spanx style="verb">image</spanx> property whose value is a
+          <xref target="media-link-serialization">Media Link</xref>.</c>
+
+          <c><spanx style="verb">objectType</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> String</c>
+          <c>Identifies the type of object. An object MAY contain an
+          <spanx style="verb">objectType</spanx>
+          property whose value is a JSON String that is non-empty and matches
+          either the "isegment-nz-nc" or the "IRI" production in
+          <xref target="RFC3987"/>. Note that the use of a relative reference
+          other than a simple name is not allowed. If no
+          <spanx style="verb">objectType</spanx> property
+          is contained, the object has no specific type.</c>
+                                 
+          <c><spanx style="verb">published</spanx></c>
+          <c><xref target="RFC3339"/> date-time</c>
+          <c>The date and time at which the object was published. An object 
+          MAY contain a <spanx style="verb">published</spanx> property.</c>
+                                        
+          <c><spanx style="verb">summary</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> String</c>
+          <c>Natural-language summarization of the object encoded as a single
+          JSON String containing HTML markup. Visual elements such as thumbnail
+          images MAY be included. An activity MAY contain a
+          <spanx style="verb">summary</spanx> property.</c>
+
+          <c><spanx style="verb">updated</spanx></c>
+          <c><xref target="RFC3339"/> date-time</c>
+          <c>The date and time at which a previously published object has
+          been modified. An Object MAY contain an <spanx style="verb">updated</spanx>
+          property.</c>
+
+          <c><spanx style="verb">upstreamDuplicates</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> Array of Strings</c>
+          <c>A JSON Array of one or more absolute IRI's <xref target="RFC3987"/>
+          identifying objects that duplicate this object's content.
+          An object SHOULD contain an <spanx style="verb">upstreamDuplicates</spanx>
+          property when a publisher is knowingly duplicating with a new ID
+          the content from another object. This MAY be used as a hint for consumers to use
+          when resolving duplicates between objects received from different
+          sources.</c>
+
+          <c><spanx style="verb">url</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> String</c>
+          <c>An IRI <xref target="RFC3987"/> identifying a resource providing
+          an HTML representation of the object. An object MAY contain
+          a <spanx style="verb">url</spanx> property </c>
+
+        </texttable>
+      </section>
+      
+      <section anchor="collection-serialization" title="Collection Serialization">
+
+        <t>A "collection" is a generic list of <xref target="object-serialization">Objects</xref>
+        of any object type. The <spanx style="verb">objectType</spanx> of each 
+        item in the collection MAY be omitted if the type of object can be established
+        through context. The collection is used primarily as the root of an 
+        Activity Streams document as described in <xref target="document"/>,
+        but can be used as the value of extension properties in a variety 
+        of situations.</t>
+       
+        <texttable>
+          <ttcol align="left" width="15%">Property</ttcol>
+          <ttcol align="left" width="21%">Value</ttcol>
+          <ttcol align="left">Description</ttcol>
+
+          <c><spanx style="verb">totalItems</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> Integer</c>
+          <c>Non-negative integer specifying the total number of activities
+          within the stream. The Stream serialization MAY contain a
+          <spanx style="verb">count</spanx> property.</c>
+
+          <c><spanx style="verb">items</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> Array of 
+          <xref target="object-serialization">Objects</xref></c>
+          <c>An array containing a listing of  
+          <xref target="object-serialization">Objects</xref> of any 
+          object type. If used in combination with the <spanx style="verb">url</spanx>
+          property, the <spanx style="verb">items</spanx> array can be used 
+          to provide a subset of the objects that may be found in the resource
+          identified by the <spanx style="verb">url</spanx>.</c>
+
+          <c><spanx style="verb">url</spanx></c>
+          <c><xref target="RFC4627">JSON</xref> String</c>
+          <c>An IRI <xref target="RFC3987"/> referencing a
+          JSON document containing the full listing of objects in the 
+          collection.</c>
+
+        </texttable>
+      
+        <t>A valid Collection object serialization MUST contain at least the 
+        <spanx style="verb">url</spanx> or <spanx style="verb">items</spanx>
+        properties.</t>
+      
+      </section>
+      
+    </section>
+
+    <section anchor="document" title="The Activity Stream JSON Document">
+    
+      <t>The above defined JSON serialization can be used to represent
+      activities, objects and media links in any JSON context. This section
+      defines one particular use of the above formats to publish a JSON 
+      document representing a stream of activities.</t>
+
+      <t>Publishers using this format MUST produce a valid JSON document
+      whose root value is a <xref target="collection-serialization">Collection</xref>. 
+      This object MUST, at a minimum, include the <spanx style="verb">items</spanx> 
+      property whose objects MUST be <xref target="activity-serialization">Activities</xref>.</t>
+      
+    </section>
+
+    <section title="Comparison of Identifier Values">
+      <t>The values of multiple <xref target="object-serialization">Object's</xref>
+      <spanx style="verb">id</spanx>, <spanx style="verb">upstreamDuplicates</spanx>,
+      and <spanx style="verb">downstreamDuplicates</spanx> properties can be
+      compared to determine if the objects represent duplicate content.
+      Processors MUST compare these values on a character-by-character basis
+      (in a case-sensitive fashion).  Comparison operations MUST be based solely
+      on the IRI character strings and MUST NOT rely on dereferencing the
+      IRIs or URIs mapped from them.</t>
+
+      <t>As a result, two IRIs that resolve to the same resource but are not
+      character-for-character identical will be considered different for
+      the purposes of identifier comparison.</t>
+    </section>
+
+    <section anchor="post-verb" title="The &quot;post&quot; Verb">
+      <t>This specification defines one initial verb and defers to other
+      specifications to define additional verb and object types as
+      defined in <xref target="extensions"></xref>.</t>
+
+      <t>The "post" verb describes the act of authoring an object and then
+      publishing it online. The <spanx style="verb">actor</spanx> can be
+      any entity; the <spanx style="verb">object</spanx> can be of any
+      object type; and the <spanx style="verb">target</spanx>, if specified,
+      can be of any object type. A <spanx style="verb">target</spanx>,
+      however, is not required.</t>
+
+      <section title="Implied &quot;post&quot; Activity">
+
+        <t>Because the "post" verb is defined to include the act of publishing
+        an object online, it is possible to assume an implied "post" activity
+        for any object even if such an activity was never explicitly
+        published or received. The properties of this implied activity are as
+        follows; any property not explicitly listed here is absent from the
+        resulting activity unless the consumer is able to infer a value based
+        on out-of-band information outside the scope of this
+        specification:</t>
+
+        <t><list style="hanging">
+          <t hangText="actor">The <spanx style="verb">actor</spanx>
+          of the implied activity is unknown unless the consumer is able
+          to infer an <spanx style="verb">actor</spanx> based on information
+          outside the scope of this specification. For example, the consumer
+          may know via some out-of-band information that all of the objects in
+          a particular document were posted by a particular user.</t>
+
+          <t hangText="object">The <spanx style="verb">object</spanx> of the
+          implied activity is the object for which this implied activity is
+          being constructed.</t>
+
+          <t hangText="verb">The <spanx style="verb">verb</spanx> of the
+          implied activity is "post".</t>
+
+          <t hangText="published">The <spanx style="verb">published</spanx>
+          of the implied activity is unknown unless the consumer is able to
+          infer a time based on information outside the scope of this
+          specification.</t>
+        </list></t>
+      </section>
+    </section>
+
+    <section title="The &quot;activity&quot; Object Type">
+    
+      <t>The "activity" object type indicates that an Object represents an 
+      Activity. It can be used whenever an event involving another activity
+      is described within an Activity Stream. For instance, when one user 
+      "shares" or "reposts" an activity from another user.</t>
+      
+      <t>In addition to the core Object properties, an "activity" object
+      MAY contain any combination of the properties defined for an
+      <xref target="activity-serialization">Activity</xref>. The values of 
+      the object's <spanx style="verb">id</spanx> and <spanx style="verb">url</spanx>
+      fields MUST match those of the activity being described.</t>
+      
+      <t>Note that an <spanx style="verb">activity</spanx> object MUST 
+      be processable as both an <xref target="object-serialization">Object</xref>
+      and an <xref target="activity-serialization">Activity</xref> and 
+      may contain fields from either construct, some of which may overlap or 
+      duplicate content. When duplication of content may occur, an implementation
+      SHOULD choose to use the fields from the <xref target="activity-serialization">Activity</xref>
+      object. For instance, in an <spanx style="verb">activity</spanx> object,
+      the Activity's <spanx style="verb">title</spanx> property and the 
+      Object's <spanx style="verb">displayName</spanx> properties serve 
+      identical functions, therefore the use of the <spanx style="verb">title</spanx>
+      property SHOULD be favored over the use of <spanx style="verb">displayName</spanx>.</t>
+      
+      <t>The example below illustrates an activity in which one user, Jane,
+      is sharing another activity performed by a second user, John.</t>
+    
+<figure><artwork><![CDATA[
+  {
+    "published": "2011-02-10T15:04:55Z",
+    "actor": {
+      "objectType" : "person",
+      "id": "tag:example.org,2011:jane"
+    },
+    "verb": "share",
+    "object" : {
+      "objectType":"activity",
+      "title": "John posted a photo",
+      "id": "tag:example.org,2011:abc123",
+      "verb": "post",
+      "actor": {
+        "objectType":"person",
+        "id":"tag:example.org,2011:john"
+      },
+      "object": {
+        "objectType":"photo",
+        "url":"http://example.org/album/my_fluffy_cat.jpg"
+      }
+    }
+  }
+]]></artwork></figure>
+    
+    </section>
+
+    <section anchor="extensions" title="Extension Object Types and Verbs">
+      <t>Other specifications MAY define new object types and verbs for use
+      with the concepts and serializations defined in this specification.
+      To be clear, new extension properties can be added anywhere in the 
+      JSON serialization of an object or activity.</t>
+
+      <t>When defining a new verb, the defining specification MUST provide a
+      verb identifier for the new verb and MUST define the meaning of the
+      verb in terms of the <spanx style="verb">actor</spanx>,
+      <spanx style="verb">object</spanx> and <spanx style="verb">target</spanx>
+      properties of the activity, and MUST define whether a
+      <spanx style="verb">target</spanx> is required and what it
+      represents when present.</t>
+
+      <t>When defining a new object type, the defining specification MUST
+      provide an object type identifier for the new object type. The
+      definition of the new object type MAY define additional properties
+      specific to that object type; if so, the specification SHOULD define how
+      these additional properties are to be serialized within the JSON document,
+      and the specification MAY define how these additional properties are to
+      be represented in other serialization formats. The definition of the new
+      object type MAY impose additional meaning or constraint on the core
+      object properties as long as the new definition remains compatible with
+      the definition of the base component.</t>
+
+      <t>Additional extension properties MAY also be defined for
+      <xref target="activity-serialization">Activities</xref> and
+      <xref target="media-link-serialization">Media Links</xref>. The
+      specification of these properties SHOULD define how they are to be
+      serialized within the JSON document, and the specification MAY define
+      how they are to be represented in other serialization formats.</t>
+
+      <t>New properties SHOULD be defined such that the
+      <xref target="object-serialization">Object</xref>,
+      <xref target="activity-serialization">Activity</xref> or
+      <xref target="media-link-serialization">Media Link</xref> would remain
+      useful if those properties are omitted or removed during processing, to
+      enable graceful fallback by consumers that do not implement the
+      extension properties or alternative representations that are unable to
+      represent the extensions.</t>
+
+      <t>Processors that encounter unfamiliar extension properties within an
+      <xref target="object-serialization">Object</xref>,
+      <xref target="activity-serialization">Activity</xref> or
+      <xref target="media-link-serialization">Media Link</xref> MUST NOT
+      stop processing or signal an error and MUST continue processing the
+      items as if the extension properties were not present.</t>
+
+    </section>
+
+    <section anchor="other-serializations" title="Other Representations">
+      <t>This specification defines the primary representation for
+      "activities", "objects" and "media links" in terms of the JSON
+      serialization format. Other specifications MAY define additional
+      serializations of these items. If the new serialization is compatible with
+      the JSON data model, the new representation SHOULD be defined as a
+      transformation of the raw JSON structures.</t>
+
+      <t>Defining a new representation as a transformation from JSON will
+      allow the new representation to automatically support additional
+      properties added for new object types as described in <xref
+      target="extensions" />. Otherwise the representation of these new
+      properties must be defined on a case-by-case basis.</t>
+    </section>
+
+    <section anchor="republisher" title="Requirements for Re-publishers">
+      <t>A Re-publisher is an agent which receives "activities" or
+      "objects" and then transmits these items to other agents.</t>
+
+      <t>When a Re-publisher transmits an "activity", the Re-publisher
+      MUST preserve the original <spanx style="verb">verb</spanx>,
+      <spanx style="verb">published</spanx>, <spanx style="verb">actor</spanx>,
+      <spanx style="verb">object</spanx> and
+      <spanx style="verb">target</spanx> properties. The Re-publisher MAY
+      preserve the remaining properties, OR the Re-publisher MAY omit these
+      properties entirely or replace these properties with locally-determined
+      values.</t>
+
+      <t>When a Re-publisher transmits an <spanx style="verb">object</spanx>,
+      the Re-publisher MUST maintain the full integrity of the
+      <spanx style="verb">object</spanx>, including any extension properties,
+      and retain the original <spanx style="verb">id</spanx> value OR, if
+      maintaining full fidelity is not possible the Re-publisher MUST assign
+      this copy a new <spanx style="verb">id</spanx> and include the
+      <spanx style="verb">id</spanx> of the original object as a value
+      of the <spanx style="verb">upstreamDuplicates</spanx> property of the
+      new copy. In the latter case, a new <spanx style="verb">object</spanx>
+      is created which is considered to be a duplicate of the original.</t>
+    </section>
+
+    <section title="Security Considerations">
+      <t>Publishers or Consumers implementing Activity Streams as a stream of
+      public data may also want to consider the potential for unsolicited
+      commercial or malicious content and should take preventative measures to
+      recognize such content and either identify it or not include it in their
+      stream implementations.</t>
+
+      <t>Publishers should take reasonable measures to make sure potentially
+      malicious user input such as cross-site scripting attacks are not
+      included in the Activity Streams data they publish.</t>
+
+      <t>Consumers that re-emit ingested content to end-users MUST take
+      reasonable measures if emitting ingested content to make sure
+      potentially malicious ingested input is not re-emitted.</t>
+
+      <t>Consumers that re-emit ingested content for crawling by search
+      engines should take reasonable measures to limit any use of their site
+      as a Search Engine Optimization loophole. This may include converting
+      un-trusted hyperlinks to text or including a rel="nofollow"
+      attribute.</t>
+
+      <t>Consumers should be aware of the potential for spoofing attacks
+      where the attacker publishes activities or objects with falsified
+      property values with the intent of injecting malicious content,
+      hiding or corrupting legitimate content, or misleading users.</t>
+
+      <t>Activity Streams are JSON Documents and are subject to the same
+      security considerations described in <xref target="RFC4627"/>.</t>
+
+      <t>Activity Streams implementations handle URIs.  See Section 7 of
+      <xref target="RFC3986"/>.</t>
+
+      <t>Activity Streams implementations handle IRIs.  See Section 8 of
+      <xref target="RFC3987"/>.</t>
+
+    </section>
+
+    <section title="IANA Considerations">
+      <t>None.</t>
+    </section>
+
+    <section anchor="license" title="License">
+      <t>As of [date], the following persons or entities have made this
+      Specification available under the Open Web Foundation Agreement Version
+      1.0, which is available at
+      <eref target="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" />.
+
+        <list>
+          <t>[List of persons or entities]</t>
+        </list>
+      </t>
+
+      <t>You can review the signed copies of the Open Web Foundation Agreement
+      Version 1.0 for this Specification at
+      <eref target="http://activitystrea.ms/agreements" />, which may also
+      include additional parties to those listed above.</t>
+
+      <t>Your use of this Specification may be subject to other third party
+      rights. THIS SPECIFICATION IS PROVIDED "AS IS." The contributors expressly
+      disclaim any warranties (express, implied, or otherwise), including
+      implied warranties of merchantability, non-infringement, fitness for a
+      particular purpose, or title, related to the Specification. The entire
+      risk as to implementing or otherwise using the Specification is assumed by
+      the Specification implementer and user. IN NO EVENT WILL ANY PARTY BE
+      LIABLE TO ANY OTHER PARTY FOR LOST PROFITS OR ANY FORM OF INDIRECT,
+      SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES OF ANY CHARACTER FROM ANY
+      CAUSES OF ACTION OF ANY KIND WITH RESPECT TO THIS SPECIFICATION OR ITS
+      GOVERNING AGREEMENT, WHETHER BASED ON BREACH OF CONTRACT, TORT (INCLUDING
+      NEGLIGENCE), OR OTHERWISE, AND WHETHER OR NOT THE OTHER PARTY HAS BEEN
+      ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</t>
+
+    </section>
+  </middle>
+
+  <back>
+    <references title="Normative References">
+      <reference anchor="RFC2119">
+        <front>
+          <title>Key words for use in RFCs to Indicate Requirement
+          Levels</title>
+
+          <author fullname="Scott Bradner" initials="S." surname="Bradner">
+            <organization></organization>
+          </author>
+
+          <date month="March" year="1997" />
+        </front>
+      </reference>
+
+      <reference anchor="RFC3986">
+        <front>
+          <title>Uniform Resource Identifier (URI)</title>
+
+          <author fullname="Tim Berners-Lee" initials="T." surname="Berners-Lee">
+            <organization>W3C/MIT</organization>
+          </author>
+
+          <author fullname="Roy Fielding" initials="R." surname="Fielding">
+            <organization>Day Software</organization>
+          </author>
+
+          <author fullname="Larry Masinter" initials="L." surname="Masinter">
+            <organization>Adobe Systems</organization>
+          </author>
+
+          <date month="January" year="2005" />
+        </front>
+      </reference>
+
+      <reference anchor="RFC3987">
+        <front>
+          <title>Internationalized Resource Identifiers (IRIs)</title>
+
+          <author fullname="Martin Duerst" initials="M." surname="Duerst">
+            <organization></organization>
+          </author>
+
+          <author fullname="Michel Suignard" initials="M." surname="Suignard">
+            <organization></organization>
+          </author>
+
+          <date month="January" year="2005" />
+        </front>
+      </reference>
+
+      <reference anchor="RFC4627">
+        <front>
+          <title>The application/json Media Type for JavaScript Object
+          Notation (JSON)</title>
+
+          <author fullname="Douglas Crockford" initials="D."
+                  surname="Crockford">
+            <organization>JSON.org</organization>
+          </author>
+
+          <date month="July" year="2006" />
+        </front>
+      </reference>
+
+      <reference anchor="RFC3339">
+        <front>
+          <title>Date and Time on the Internet: Timestamps</title>
+
+          <author fullname="Graham Klyne" initials="G." surname="Klyne">
+            <organization></organization>
+          </author>
+
+          <date month="July" year="2002" />
+        </front>
+      </reference>
+      </references>
+
+    <section title="Acknowledgements">
+      <t>...</t>
+    </section>
+  </back>
+</rfc>
+<!-- vim: set expandtab sw=2 ts=2: -->
