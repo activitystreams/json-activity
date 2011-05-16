@@ -6,7 +6,7 @@
     "id" :{
       "type" : "string",
       "description" : "Uniquely identifies each activity within the service",
-      "default" :"{link}"
+      "default" :"{url}"
     },
     "actor" : {
       "type": "object",
