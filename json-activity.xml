@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="US-ASCII"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type='text/xsl' href='./rfc2629.xslt' ?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 <?rfc toc="yes"?>
@@ -254,19 +254,19 @@
           <c><spanx style="verb">icon</spanx></c>
           <c><xref target="media-link-serialization">Media Link</xref></c>
           <c>Description of a resource providing a visual representation of
-          the object, intended for human consumption. The image SHOULD have an 
-          aspect ratio of one (horizontal) to one (vertical) and SHOULD be suitable 
-          for presentation at a small size. An activity MAY have an 
+          the object, intended for human consumption. The image SHOULD have an
+          aspect ratio of one (horizontal) to one (vertical) and SHOULD be suitable
+          for presentation at a small size. An activity MAY have an
           <spanx style="verb">icon</spanx> property.</c>
-        
+
           <c><spanx style="verb">id</spanx></c>
           <c><xref target="RFC4627">JSON</xref> String</c>
-          <c>Provides a permanent, universally unique identifier for the 
+          <c>Provides a permanent, universally unique identifier for the
           activity in the form of an absolute IRI <xref target="RFC3987"/>.
-          An activity SHOULD contain a single <spanx style="verb">id</spanx> property. If an activity 
+          An activity SHOULD contain a single <spanx style="verb">id</spanx> property. If an activity
           does not contain an <spanx style="verb">id</spanx> property, consumers MAY use the value of
           the <spanx style="verb">url</spanx> property as a less-reliable, non-unique identifier.</c>
-        
+
           <c><spanx style="verb">object</spanx></c>
           <c><xref target="object-serialization">Object</xref></c>
           <c>Describes the primary object of the activity. For instance,
@@ -279,7 +279,7 @@
 
           <c><spanx style="verb">published</spanx></c>
           <c><xref target="RFC3339"/> date-time</c>
-          <c>The date and time at which the activity was published. An activity 
+          <c>The date and time at which the activity was published. An activity
           MUST contain a <spanx style="verb">published</spanx> property.</c>
 
           <c><spanx style="verb">provider</spanx></c>
@@ -311,24 +311,24 @@
           <c>The date and time at which a previously published activity has
           been modified. An Activity MAY contain an <spanx style="verb">updated</spanx>
           property.</c>
-          
+
           <c><spanx style="verb">url</spanx></c>
           <c><xref target="RFC4627">JSON</xref> String</c>
           <c>An IRI <xref target="RFC3987"/> identifying a resource providing
-          an HTML representation of the activity. An activity MAY contain 
+          an HTML representation of the activity. An activity MAY contain
           a <spanx style="verb">url</spanx> property.</c>
-          
+
           <c><spanx style="verb">verb</spanx></c>
           <c><xref target="RFC4627">JSON</xref> String</c>
           <c>Identifies the action that the activity describes. An activity
-          SHOULD contain a <spanx style="verb">verb</spanx> property whose 
-          value is a JSON String that is non-empty and matches either the 
-          "isegment-nz-nc" or the "IRI" production in <xref target="RFC3339"/>. 
-          Note that the use of a relative reference other than a simple name 
-          is not allowed. If the <spanx style="verb">verb</spanx> is not 
-          specified, or if the value is null, the <spanx style="verb">verb</spanx> 
+          SHOULD contain a <spanx style="verb">verb</spanx> property whose
+          value is a JSON String that is non-empty and matches either the
+          "isegment-nz-nc" or the "IRI" production in <xref target="RFC3339"/>.
+          Note that the use of a relative reference other than a simple name
+          is not allowed. If the <spanx style="verb">verb</spanx> is not
+          specified, or if the value is null, the <spanx style="verb">verb</spanx>
           is assumed to be <xref target="post-verb">"post"</xref>.</c>
-                                        
+
         </texttable>
       </section>
 
@@ -385,12 +385,12 @@
 
           <c><spanx style="verb">author</spanx></c>
           <c><xref target="object-serialization">Object</xref></c>
-          <c>Describes the entity that created or authored the object. An 
-          object MAY contain a single <spanx style="verb">author</spanx> 
+          <c>Describes the entity that created or authored the object. An
+          object MAY contain a single <spanx style="verb">author</spanx>
           property whose value is an <xref target="object-serialization">Object</xref>
-          of any type. Note that the author field identifies the entity that 
-          created the object and does not necessarily identify the entity 
-          that published the object. For instance, it may be the case that 
+          of any type. Note that the author field identifies the entity that
+          created the object and does not necessarily identify the entity
+          that published the object. For instance, it may be the case that
           an object created by one person is posted and published to a system
           by an entirely different entity.</c>
 
@@ -442,12 +442,12 @@
           other than a simple name is not allowed. If no
           <spanx style="verb">objectType</spanx> property
           is contained, the object has no specific type.</c>
-                                 
+
           <c><spanx style="verb">published</spanx></c>
           <c><xref target="RFC3339"/> date-time</c>
-          <c>The date and time at which the object was published. An object 
+          <c>The date and time at which the object was published. An object
           MAY contain a <spanx style="verb">published</spanx> property.</c>
-                                        
+
           <c><spanx style="verb">summary</spanx></c>
           <c><xref target="RFC4627">JSON</xref> String</c>
           <c>Natural-language summarization of the object encoded as a single
@@ -479,17 +479,17 @@
 
         </texttable>
       </section>
-      
+
       <section anchor="collection-serialization" title="Collection Serialization">
 
         <t>A "collection" is a generic list of <xref target="object-serialization">Objects</xref>
-        of any object type. The <spanx style="verb">objectType</spanx> of each 
+        of any object type. The <spanx style="verb">objectType</spanx> of each
         item in the collection MAY be omitted if the type of object can be established
-        through context. The collection is used primarily as the root of an 
+        through context. The collection is used primarily as the root of an
         Activity Streams document as described in <xref target="document"/>,
-        but can be used as the value of extension properties in a variety 
+        but can be used as the value of extension properties in a variety
         of situations.</t>
-       
+
         <texttable>
           <ttcol align="left" width="15%">Property</ttcol>
           <ttcol align="left" width="21%">Value</ttcol>
@@ -502,43 +502,43 @@
           <spanx style="verb">count</spanx> property.</c>
 
           <c><spanx style="verb">items</spanx></c>
-          <c><xref target="RFC4627">JSON</xref> Array of 
+          <c><xref target="RFC4627">JSON</xref> Array of
           <xref target="object-serialization">Objects</xref></c>
-          <c>An array containing a listing of  
-          <xref target="object-serialization">Objects</xref> of any 
+          <c>An array containing a listing of
+          <xref target="object-serialization">Objects</xref> of any
           object type. If used in combination with the <spanx style="verb">url</spanx>
-          property, the <spanx style="verb">items</spanx> array can be used 
+          property, the <spanx style="verb">items</spanx> array can be used
           to provide a subset of the objects that may be found in the resource
           identified by the <spanx style="verb">url</spanx>.</c>
 
           <c><spanx style="verb">url</spanx></c>
           <c><xref target="RFC4627">JSON</xref> String</c>
           <c>An IRI <xref target="RFC3987"/> referencing a
-          JSON document containing the full listing of objects in the 
+          JSON document containing the full listing of objects in the
           collection.</c>
 
         </texttable>
-      
-        <t>A valid Collection object serialization MUST contain at least the 
+
+        <t>A valid Collection object serialization MUST contain at least the
         <spanx style="verb">url</spanx> or <spanx style="verb">items</spanx>
         properties.</t>
-      
+
       </section>
-      
+
     </section>
 
     <section anchor="document" title="The Activity Stream JSON Document">
-    
+
       <t>The above defined JSON serialization can be used to represent
       activities, objects and media links in any JSON context. This section
-      defines one particular use of the above formats to publish a JSON 
+      defines one particular use of the above formats to publish a JSON
       document representing a stream of activities.</t>
 
       <t>Publishers using this format MUST produce a valid JSON document
-      whose root value is a <xref target="collection-serialization">Collection</xref>. 
-      This object MUST, at a minimum, include the <spanx style="verb">items</spanx> 
+      whose root value is a <xref target="collection-serialization">Collection</xref>.
+      This object MUST, at a minimum, include the <spanx style="verb">items</spanx>
       property whose objects MUST be <xref target="activity-serialization">Activities</xref>.</t>
-      
+
     </section>
 
     <section title="Comparison of Identifier Values">
@@ -603,33 +603,33 @@
     </section>
 
     <section title="The &quot;activity&quot; Object Type">
-    
-      <t>The "activity" object type indicates that an Object represents an 
+
+      <t>The "activity" object type indicates that an Object represents an
       Activity. It can be used whenever an event involving another activity
-      is described within an Activity Stream. For instance, when one user 
+      is described within an Activity Stream. For instance, when one user
       "shares" or "reposts" an activity from another user.</t>
-      
+
       <t>In addition to the core Object properties, an "activity" object
       MAY contain any combination of the properties defined for an
-      <xref target="activity-serialization">Activity</xref>. The values of 
+      <xref target="activity-serialization">Activity</xref>. The values of
       the object's <spanx style="verb">id</spanx> and <spanx style="verb">url</spanx>
       fields MUST match those of the activity being described.</t>
-      
-      <t>Note that an <spanx style="verb">activity</spanx> object MUST 
+
+      <t>Note that an <spanx style="verb">activity</spanx> object MUST
       be processable as both an <xref target="object-serialization">Object</xref>
-      and an <xref target="activity-serialization">Activity</xref> and 
-      may contain fields from either construct, some of which may overlap or 
+      and an <xref target="activity-serialization">Activity</xref> and
+      may contain fields from either construct, some of which may overlap or
       duplicate content. When duplication of content may occur, an implementation
       SHOULD choose to use the fields from the <xref target="activity-serialization">Activity</xref>
       object. For instance, in an <spanx style="verb">activity</spanx> object,
-      the Activity's <spanx style="verb">title</spanx> property and the 
-      Object's <spanx style="verb">displayName</spanx> properties serve 
+      the Activity's <spanx style="verb">title</spanx> property and the
+      Object's <spanx style="verb">displayName</spanx> properties serve
       identical functions, therefore the use of the <spanx style="verb">title</spanx>
       property SHOULD be favored over the use of <spanx style="verb">displayName</spanx>.</t>
-      
+
       <t>The example below illustrates an activity in which one user, Jane,
       is sharing another activity performed by a second user, John.</t>
-    
+
 <figure><artwork><![CDATA[
   {
     "published": "2011-02-10T15:04:55Z",
@@ -654,13 +654,13 @@
     }
   }
 ]]></artwork></figure>
-    
+
     </section>
 
     <section anchor="extensions" title="Extension Object Types and Verbs">
       <t>Other specifications MAY define new object types and verbs for use
       with the concepts and serializations defined in this specification.
-      To be clear, new extension properties can be added anywhere in the 
+      To be clear, new extension properties can be added anywhere in the
       JSON serialization of an object or activity.</t>
 
       <t>When defining a new verb, the defining specification MUST provide a
@@ -900,7 +900,41 @@
       </references>
 
     <section title="Acknowledgements">
-      <t>...</t>
+      <t>The authors wish to thank the Activity Streams community and
+      implementers for their support, encouragement, and enthusiasm including
+      but not limited to: Abdul Qabiz, Adina Levin, Adrian Chan, Adriana Javier,
+      Alan Hoffman, Alex Kessinger, Alexander Ovchinnikov, Alexander Zhuravlev,
+      Alexandre Loureiro Solleiro, Amy Walgenbach, Andres Vidal, Angel Robert
+      Marquez, Ari Steinberg, Arjan Scherpenisse, Arne Roomann-Kurrik, Beau
+      Lebens, Ben Hedrington, Ben Metcalfe, Ben Werdmuller, Benjamin Goering,
+      Bill de hÓra, Bo Xing, Bob Aman, Bob Wyman, Brett Slatkin, Brian Walsh,
+      Brynn Evans, Charlie Cauthen, Chris Chabot, Chris Toomey, Christian
+      Crumlish, Dan Brickley, Dan Scott, Daniel Chapman, Danny Ayers, Dare
+      Obasanjo, Darren Bounds, David Cramer, David Nelson, David Recordon,
+      DeWitt Clinton, Douglas Pearce, Ed Summers, Elias Bizannes, Elisabeth
+      Norris, Eric Marcoullier, Eric Woods, Evan Prodromou, Gee-Hsien Chuang,
+      Greg Biggers, Gregory Foster, Henry Saputra, Hillary Madsen, Howard
+      Liptzin, Hung Tran, Ian Kennedy, Ian Mulvany, Ivan Pulleyn, Jacob Kim,
+      James Falkner, James Pike, James Walker, Jason Kahn, Jason Kantz, Jeff
+      Kunins, Jeff Martin, Jian Lin, Johannes Ernst, John Panzer, Jon Lebkowsky,
+      Jon Paul Davies, Jonathan Coffman, Jonathan Dugan, Joseph Boyle, Joseph
+      Holsten, Joseph Smarr, Josh Brewer, Jud Valeski, Julien Chaumond, Julien
+      Genestoux, Jyri Engeström, Kaliya Hamlin, Kevin Marks, Laurent Eschenauer,
+      Laurie Voss, Leah Culver, Libby Miller, Manu Mukerji, Mark Weitzel, Marko
+      Degenkolb, Marshall Kirkpatrick, Martin Svensson, Marty Alchin, Mary
+      Hoder, Matt Leventi, Matt Wilkinson, Matthias Müller-Prove, Max Engel, Max
+      Wegmueller, Melvin Carvalho, Michael Buckbee, Michael Chan, Michael
+      Richardson, Michael Sullivan, Mike Macgirvin, Mislav Marohnić, Mo Jangda,
+      Nate Benes, NeilFred Picciotto, Nick Howard, Nick Lothian, Nissan
+      Dookeran, Nitya Narasimhan, Pablo Martin, Pádraic Brady, Pat G.
+      Cappalaere, Patrick Aljord, Peter Ferne, Peter Reiser, Peter Saint-Andre,
+      Phil Wolff, Philip (flip) Kromer, Richard Cunningham, Richard Zhao, Rick
+      Severson, Robert Hall, Robert Langbert, Robin Cover, Ryan Boyd, Sam Sethi,
+      Scott Raymond, Scott Seely, Simon Grant, Simon Wistow, Stephen Garcia,
+      Stephen Sisk, Stephen Paul Weber, Steve Ivy, Steve Midgley, Steven
+      Livingstone-Perez, Sylvain Carle, Sylvain Hellegouarch, Tantek Çelik, Tatu
+      Saloranta, Tim Moore, Timothy Young, Todd Barnard, Tosh Meston, Tyler
+      Gillies, Zach Copley, and Zach Shepherd.</t>
     </section>
   </back>
 </rfc>
