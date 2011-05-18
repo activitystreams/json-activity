@@ -52,7 +52,7 @@
   </front>
 
   <middle>
-    <section title="Introduction">
+    <section anchor="introduction" title="Introduction">
 
       <t>In its simplest form, an <spanx style="verb">activity</spanx> consists
       of an <spanx style="verb">actor</spanx>, a
@@ -92,7 +92,7 @@
 
     </section>
 
-    <section title="Notational Conventions">
+    <section anchor="notation" title="Notational Conventions">
       <t>The text of this specification provides the sole definition of
       conformance. Examples in this specification are non-normative.</t>
 
@@ -110,7 +110,7 @@
       an <spanx style="verb">id</spanx> value, it MUST NOT be so mapped.</t>
     </section>
 
-    <section anchor="format" title="JSON Serialization">
+    <section anchor="json" title="JSON Serialization">
 
       <t>Activities are serialized using the JSON format, as
       defined in <xref target="RFC4627" />. Alternative serializations
@@ -225,7 +225,7 @@
 
       </section>
 
-      <section anchor="activity-serialization" title="Activity Serialization">
+      <section anchor="activity" title="Activity Serialization">
 
         <texttable>
           <ttcol align="left" width="15%">Property</ttcol>
@@ -233,10 +233,10 @@
           <ttcol align="left">Description</ttcol>
 
           <c><spanx style="verb">actor</spanx></c>
-          <c><xref target="object-serialization">Object</xref></c>
+          <c><xref target="object">Object</xref></c>
           <c>Describes the entity that performed the activity. An activity
           MUST contain one <spanx style="verb">actor</spanx> property whose value is a
-          single <xref target="object-serialization">Object</xref>.</c>
+          single <xref target="object">Object</xref>.</c>
 
           <c><spanx style="verb">content</spanx></c>
           <c><xref target="RFC4627">JSON</xref> String</c>
@@ -246,13 +246,13 @@
           <spanx style="verb">content</spanx> property.</c>
 
           <c><spanx style="verb">generator</spanx></c>
-          <c><xref target="object-serialization">Object</xref></c>
+          <c><xref target="object">Object</xref></c>
           <c>Describes the application that generated the activity. An activity
           MAY contain a <spanx style="verb">generator</spanx> property whose value is a single
-          <xref target="object-serialization">Object</xref>.</c>
+          <xref target="object">Object</xref>.</c>
 
           <c><spanx style="verb">icon</spanx></c>
-          <c><xref target="media-link-serialization">Media Link</xref></c>
+          <c><xref target="media-link">Media Link</xref></c>
           <c>Description of a resource providing a visual representation of
           the object, intended for human consumption. The image SHOULD have an
           aspect ratio of one (horizontal) to one (vertical) and SHOULD be suitable
@@ -268,12 +268,12 @@
           the <spanx style="verb">url</spanx> property as a less-reliable, non-unique identifier.</c>
 
           <c><spanx style="verb">object</spanx></c>
-          <c><xref target="object-serialization">Object</xref></c>
+          <c><xref target="object">Object</xref></c>
           <c>Describes the primary object of the activity. For instance,
           in the activity, "John saved a movie to his wishlist", the object
           of the activity is "movie". An activity SHOULD contain an
           <spanx style="verb">object</spanx> property whose value is a single
-          <xref target="object-serialization">Object</xref>. If the
+          <xref target="object">Object</xref>. If the
           <spanx style="verb">object</spanx> property is not contained, the
           primary object of the activity MAY be implied by context.</c>
 
@@ -283,14 +283,14 @@
           MUST contain a <spanx style="verb">published</spanx> property.</c>
 
           <c><spanx style="verb">provider</spanx></c>
-          <c><xref target="object-serialization">Object</xref></c>
+          <c><xref target="object">Object</xref></c>
           <c>Describes the application that published the activity. Note that
           this is not necessarily the same entity that generated the activity.
           An activity MAY contain a <spanx style="verb">provider</spanx> property whose value is a
-          single <xref target="object-serialization">Object</xref>.</c>
+          single <xref target="object">Object</xref>.</c>
 
           <c><spanx style="verb">target</spanx></c>
-          <c><xref target="object-serialization">Object</xref></c>
+          <c><xref target="object">Object</xref></c>
           <c>Describes the target of the activity. The precise meaning of the
           activity's target is dependent on the activities <spanx style="verb">verb</spanx>,
           but will often be the object the English preposition "to".
@@ -298,7 +298,7 @@
           wishlist", the target of the activity is "wishlist". The activity
           target MUST NOT be used to identity an indirect object that is
           not a target of the activity. An activity MAY contain a <spanx style="verb">target</spanx>
-          property whose value is a single <xref target="object-serialization">Object</xref>.</c>
+          property whose value is a single <xref target="object">Object</xref>.</c>
 
           <c><spanx style="verb">title</spanx></c>
           <c><xref target="RFC4627">JSON</xref> String</c>
@@ -332,7 +332,7 @@
         </texttable>
       </section>
 
-      <section anchor="media-link-serialization" title="Media Link Serialization">
+      <section anchor="media-link" title="Media Link Serialization">
 
         <texttable>
           <ttcol align="left" width="15%">Property</ttcol>
@@ -369,7 +369,7 @@
 
       </section>
 
-      <section anchor="object-serialization" title="Object Serialization">
+      <section anchor="object" title="Object Serialization">
 
         <texttable>
           <ttcol align="left" width="15%">Property</ttcol>
@@ -377,17 +377,17 @@
           <ttcol align="left">Description</ttcol>
 
           <c><spanx style="verb">attachments</spanx></c>
-          <c><xref target="RFC4627">JSON</xref> Array of <xref target="object-serialization">Objects</xref></c>
+          <c><xref target="RFC4627">JSON</xref> Array of <xref target="object">Objects</xref></c>
           <c>A collection of one or more additional, associated objects, similar
           to the concept of attached files in an email message. An object MAY
           have an <spanx style="verb">attachments</spanx> property whose value is a JSON Array of
-          <xref target="object-serialization">Objects</xref>.</c>
+          <xref target="object">Objects</xref>.</c>
 
           <c><spanx style="verb">author</spanx></c>
-          <c><xref target="object-serialization">Object</xref></c>
+          <c><xref target="object">Object</xref></c>
           <c>Describes the entity that created or authored the object. An
           object MAY contain a single <spanx style="verb">author</spanx>
-          property whose value is an <xref target="object-serialization">Object</xref>
+          property whose value is an <xref target="object">Object</xref>
           of any type. Note that the author field identifies the entity that
           created the object and does not necessarily identify the entity
           that published the object. For instance, it may be the case that
@@ -426,11 +426,11 @@
           the <spanx style="verb">url</spanx> property as a less-reliable, non-unique identifier.</c>
 
           <c><spanx style="verb">image</spanx></c>
-          <c><xref target="media-link-serialization">Media Link</xref></c>
+          <c><xref target="media-link">Media Link</xref></c>
           <c>Description of a resource providing a visual representation of
           the object, intended for human consumption. An object MAY contain
           an <spanx style="verb">image</spanx> property whose value is a
-          <xref target="media-link-serialization">Media Link</xref>.</c>
+          <xref target="media-link">Media Link</xref>.</c>
 
           <c><spanx style="verb">objectType</spanx></c>
           <c><xref target="RFC4627">JSON</xref> String</c>
@@ -480,9 +480,9 @@
         </texttable>
       </section>
 
-      <section anchor="collection-serialization" title="Collection Serialization">
+      <section anchor="collection" title="Collection Serialization">
 
-        <t>A "collection" is a generic list of <xref target="object-serialization">Objects</xref>
+        <t>A "collection" is a generic list of <xref target="object">Objects</xref>
         of any object type. The <spanx style="verb">objectType</spanx> of each
         item in the collection MAY be omitted if the type of object can be established
         through context. The collection is used primarily as the root of an
@@ -503,9 +503,9 @@
 
           <c><spanx style="verb">items</spanx></c>
           <c><xref target="RFC4627">JSON</xref> Array of
-          <xref target="object-serialization">Objects</xref></c>
+          <xref target="object">Objects</xref></c>
           <c>An array containing a listing of
-          <xref target="object-serialization">Objects</xref> of any
+          <xref target="object">Objects</xref> of any
           object type. If used in combination with the <spanx style="verb">url</spanx>
           property, the <spanx style="verb">items</spanx> array can be used
           to provide a subset of the objects that may be found in the resource
@@ -535,14 +535,14 @@
       document representing a stream of activities.</t>
 
       <t>Publishers using this format MUST produce a valid JSON document
-      whose root value is a <xref target="collection-serialization">Collection</xref>.
+      whose root value is a <xref target="collection">Collection</xref>.
       This object MUST, at a minimum, include the <spanx style="verb">items</spanx>
-      property whose objects MUST be <xref target="activity-serialization">Activities</xref>.</t>
+      property whose objects MUST be <xref target="activity">Activities</xref>.</t>
 
     </section>
 
-    <section title="Comparison of Identifier Values">
-      <t>The values of multiple <xref target="object-serialization">Object's</xref>
+    <section anchor="id-comparison" title="Comparison of Identifier Values">
+      <t>The values of multiple <xref target="object">Object's</xref>
       <spanx style="verb">id</spanx>, <spanx style="verb">upstreamDuplicates</spanx>,
       and <spanx style="verb">downstreamDuplicates</spanx> properties can be
       compared to determine if the objects represent duplicate content.
@@ -568,7 +568,7 @@
       can be of any object type. A <spanx style="verb">target</spanx>,
       however, is not required.</t>
 
-      <section title="Implied &quot;post&quot; Activity">
+      <section anchor="implied-activity" title="Implied &quot;post&quot; Activity">
 
         <t>Because the "post" verb is defined to include the act of publishing
         an object online, it is possible to assume an implied "post" activity
@@ -602,7 +602,7 @@
       </section>
     </section>
 
-    <section title="The &quot;activity&quot; Object Type">
+    <section anchor="activity-object" title="The &quot;activity&quot; Object Type">
 
       <t>The "activity" object type indicates that an Object represents an
       Activity. It can be used whenever an event involving another activity
@@ -611,16 +611,16 @@
 
       <t>In addition to the core Object properties, an "activity" object
       MAY contain any combination of the properties defined for an
-      <xref target="activity-serialization">Activity</xref>. The values of
+      <xref target="activity">Activity</xref>. The values of
       the object's <spanx style="verb">id</spanx> and <spanx style="verb">url</spanx>
       fields MUST match those of the activity being described.</t>
 
       <t>Note that an <spanx style="verb">activity</spanx> object MUST
-      be processable as both an <xref target="object-serialization">Object</xref>
-      and an <xref target="activity-serialization">Activity</xref> and
+      be processable as both an <xref target="object">Object</xref>
+      and an <xref target="activity">Activity</xref> and
       may contain fields from either construct, some of which may overlap or
       duplicate content. When duplication of content may occur, an implementation
-      SHOULD choose to use the fields from the <xref target="activity-serialization">Activity</xref>
+      SHOULD choose to use the fields from the <xref target="activity">Activity</xref>
       object. For instance, in an <spanx style="verb">activity</spanx> object,
       the Activity's <spanx style="verb">title</spanx> property and the
       Object's <spanx style="verb">displayName</spanx> properties serve
@@ -683,31 +683,31 @@
       the definition of the base component.</t>
 
       <t>Additional extension properties MAY also be defined for
-      <xref target="activity-serialization">Activities</xref> and
-      <xref target="media-link-serialization">Media Links</xref>. The
+      <xref target="activity">Activities</xref> and
+      <xref target="media-link">Media Links</xref>. The
       specification of these properties SHOULD define how they are to be
       serialized within the JSON document, and the specification MAY define
       how they are to be represented in other serialization formats.</t>
 
       <t>New properties SHOULD be defined such that the
-      <xref target="object-serialization">Object</xref>,
-      <xref target="activity-serialization">Activity</xref> or
-      <xref target="media-link-serialization">Media Link</xref> would remain
+      <xref target="object">Object</xref>,
+      <xref target="activity">Activity</xref> or
+      <xref target="media-link">Media Link</xref> would remain
       useful if those properties are omitted or removed during processing, to
       enable graceful fallback by consumers that do not implement the
       extension properties or alternative representations that are unable to
       represent the extensions.</t>
 
       <t>Processors that encounter unfamiliar extension properties within an
-      <xref target="object-serialization">Object</xref>,
-      <xref target="activity-serialization">Activity</xref> or
-      <xref target="media-link-serialization">Media Link</xref> MUST NOT
+      <xref target="object">Object</xref>,
+      <xref target="activity">Activity</xref> or
+      <xref target="media-link">Media Link</xref> MUST NOT
       stop processing or signal an error and MUST continue processing the
       items as if the extension properties were not present.</t>
 
     </section>
 
-    <section anchor="other-serializations" title="Other Representations">
+    <section anchor="other-representations" title="Other Representations">
       <t>This specification defines the primary representation for
       "activities", "objects" and "media links" in terms of the JSON
       serialization format. Other specifications MAY define additional
@@ -747,7 +747,7 @@
       is created which is considered to be a duplicate of the original.</t>
     </section>
 
-    <section title="Security Considerations">
+    <section anchor="security" title="Security Considerations">
       <t>Publishers or Consumers implementing Activity Streams as a stream of
       public data may also want to consider the potential for unsolicited
       commercial or malicious content and should take preventative measures to
@@ -784,7 +784,7 @@
 
     </section>
 
-    <section title="IANA Considerations">
+    <section anchor="iana" title="IANA Considerations">
       <t>None.</t>
     </section>
 
@@ -897,9 +897,9 @@
           <date month="July" year="2002" />
         </front>
       </reference>
-      </references>
+    </references>
 
-    <section title="Acknowledgements">
+    <section anchor="acknowledgements" title="Acknowledgements">
       <t>The authors wish to thank the Activity Streams community and
       implementers for their support, encouragement, and enthusiasm including
       but not limited to: Abdul Qabiz, Adina Levin, Adrian Chan, Adriana Javier,
