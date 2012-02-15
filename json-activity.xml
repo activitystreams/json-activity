@@ -819,6 +819,11 @@
       ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</t>
 
     </section>
+
+    <section anchor="errata" title="Errata">
+      <t>Changes and clarifications to this document are available at
+      <eref target="http://activitystrea.ms/specs/json/1.0/errata" />.</t>
+    </section>
   </middle>
 
   <back>
