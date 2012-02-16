@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type='text/xsl' href='./rfc2629.xslt' ?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+<?rfc header="foo"?>
+<?rfc toc="yes"?>
+<?rfc tocompact="yes"?>
+<?rfc tocdepth="3"?>
+<?rfc tocindent="yes"?>
+<?rfc symrefs="yes"?>
+<?rfc sortrefs="yes"?>
+<?rfc comments="yes"?>
+<?rfc inline="yes"?>
+<?rfc compact="yes"?>
+<?rfc subcompact="no"?>
+<?rfc private="Activity Streams Working Group"?>
+<rfc>
+  <front>
+    <title abbrev="ActivityStreamsErrata">Errata in JSON Activity Streams 1.0</title>
+    <author fullname="Activity Streams Working Group"></author>
+    <date month="February" year="2012" />
+    <abstract>
+      <t>This document records known errors and clarifications in 
+        <eref target="http://activitystrea.ms/specs/json/1.0/">JSON Activity Streams 1.0</eref>.</t>
+    </abstract>
+  </front>
+
+  <middle>
+    <section title="Abstract Change [2012-02-14]">
+      <t>Clarify the scope of the specification by changing the abstract to
+      read:</t>
+
+      <t>Social activity data is important in that it allows individuals to
+      process the latest news of people and things they care about.  This
+      specification details the serialization of a stream of social activity
+      data using the JSON format.  As this specification only describes that
+      serialization format, the methods used to transmit, receive, or process
+      that data are outside the scope of this specification.</t>
+    </section>
+  </middle>
+</rfc>
+<!-- vim: set expandtab sw=2 ts=2: -->
