@@ -36,6 +36,35 @@
       serialization format, the methods used to transmit, receive, or process
       that data are outside the scope of this specification.</t>
     </section>
+    
+    <section title="Incorrect Descriptions in Collection Serialization">
+      <t>The descriptions for the fields on the Collection Serialization
+      in Section 3.5 are incorrect.</t>
+      <section title="totalItems Property">
+        <t>The description for totalItems current says:</t>
+        <t>"Non-negative integer specifying the total number of activities
+        within the stream. The Stream serialization MAY contain a count
+        property."</t>
+        <t>It SHOULD say:</t>
+        <t>"Non-negative integer specifying the total number of objects within
+        the collection. Note that the actual number of objects included within
+        the value of the "items" property MAY be less than the total number of
+        objects specified. The Collection serialization MAY contain a
+        totalItems property"</t>
+      </section> 
+      <section title="url Property">
+        <t>The description for url currently states:</t>
+        <t>"An IRI [RFC3987] referencing a JSON document containing the full
+        listing of objects in the collection."</t>
+        <t>This does not make it clear that the original intent was for the 
+        url property on the collection to point to a JSON document whose root
+        object is itself a Collection object. Therefore, this description SHOULD
+        read:</t>
+        <t>"An IRI [RFC3987] referencing a JSON Document whose root object is a
+        Collection object providing access to the full listing of objects in the
+        collection."</t>
+      </section>
+    </section>
   </middle>
 </rfc>
 <!-- vim: set expandtab sw=2 ts=2: -->
