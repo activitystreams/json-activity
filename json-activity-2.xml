@@ -323,7 +323,7 @@
             Identifies the type of object. An object MAY contain a "@type"
             property whose value matches either the "isegment-nz-nc" or the 
             "IRI" production in <xref target="RFC3987"/>. The use of a relative 
-            references other than a simple name is not allowed. If no "@type" 
+            reference other than a simple name is not allowed. If no "@type" 
             property is specified, the object has no specific type.
           </c>
           
@@ -336,9 +336,9 @@
           </c>
           
           <c>name</c>
-          <c><xref target="lang">Natural Language value</xref></c>
+          <c>String</c>
           <c>
-            A natural-language, human-readable, plain-text name for the 
+            A simple human-readable, plain-text name for the 
             object. HTML markup MUST NOT be included. An object MAY contain a 
             "name" property. If the object does not specify a "@type"
             property, the object SHOULD specify a "name".
@@ -365,7 +365,7 @@
         </t>
         
         <t>
-          For instance, the "name" property in all objects is a
+          For instance, the "title" property in all objects is a
           Natural Language value. This means that the "name" can 
           be expressed in one or more languages:
         </t>
@@ -375,7 +375,7 @@
           <artwork>
   {
     "@language": "en",
-    "name": "This is the name"
+    "title": "This is the title"
   }
           </artwork>
         </figure>
@@ -384,10 +384,11 @@
           <preamble>Multiple, language-specific values:</preamble>
           <artwork>
   {
-    "name": {
+    "title": {
       "en": "This is the name",
-      "fr": "C'est le nom",
-      "sp": "Este es el nombre"
+      "fr": "C'est le titre",
+      "sp": "Este es el título"
+    }
   }
           </artwork>
         </figure>
@@ -666,6 +667,18 @@
           <ttcol align="left" width="21%">Value</ttcol>
           <ttcol align="left">Description</ttcol>
 
+          <c>"alias"</c>
+          <c>IRI</c>
+          <c>
+            Provides a contextually meaningful alternative label for the
+            object in addition to the "@id". For instance, within some 
+            systems, groups can be identified both by a unique global ID
+            and a more "human-friendly" label such as "@friends" or "@network".
+            The value of the "alias" property MUST match either the "isegment-nz-nc" 
+            or the "IRI" production in <xref target="RFC3987"/>. The use of a
+            relative reference other than a simple name is not allowed. 
+          </c>
+
           <c>"attachment"</c>
           <c><xref target="link">Link</xref> value</c>
           <c>
@@ -803,6 +816,13 @@
             The "tag" and "attachment" properties differ from one another
             in that the "tag" property asserts "association by reference"
             while "attachment" asserts "association by enclosure". 
+          </c>
+          
+          <c>"title"</c>
+          <c><xref target="lang">Natural Language</xref> value</c>
+          <c>
+            A Natural-language title of the object encoded as a single
+            JSON String containing HTML markup.
           </c>
           
           <c>"duration"</c>
