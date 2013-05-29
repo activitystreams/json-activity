@@ -7,6 +7,9 @@
   <!ENTITY rfc3339 PUBLIC '' 'http://xml.resource.org/public/rfc/bibxml/reference.RFC.3339.xml'>
   <!ENTITY rfc4627 PUBLIC '' 'http://xml.resource.org/public/rfc/bibxml/reference.RFC.4627.xml'>
   <!ENTITY rfc5988 PUBLIC '' 'http://xml.resource.org/public/rfc/bibxml/reference.RFC.5988.xml'>
+  <!ENTITY rfc6963 PUBLIC '' 'http://xml.resource.org/public/rfc/bibxml/reference.RFC.6963.xml'>
+  <!ENTITY rfc5646 PUBLIC '' 'http://xml.resource.org/public/rfc/bibxml/reference.RFC.5646.xml'>
+  <!ENTITY jsonld  PUBLIC '' 'http://xml.resource.org/public/rfc/bibxml4/reference.W3C.WD-json-ld-20130411.xml'>
 ]>
 
 <?rfc toc="yes"?>
@@ -91,7 +94,14 @@
         information with various types of objects, communicating or recording 
         activity logs, or delegation of potential actions to other applications.
       </t>
-
+      
+      <t>
+        The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+        "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+        document are to be interpreted as described in 
+        <xref target="RFC2119" />.
+      </t>
+      
       <section title="Relationship to JSON Activity Streams 1.0" anchor="asms-1">
         
         <t>
@@ -115,18 +125,19 @@
       <section title="Relationship to JSON-LD 1.0" anchor="json-ld" >
         
         <t>
-          The JSON-based Serialization for Linked Data (JSON-LD) describes
-          a rich syntax for the serialization of semantically-rich metadata
-          using the JSON format. While the updated Activity Streams 
-          representation defined in this document is not defined as a 
-          "JSON-LD Vocabulary", the syntax is designed to be closely 
-          compatible with JSON-LD such that implementations can utilize
-          both with minimal conflict or confusion.
+          The <xref target="W3C.WD-json-ld-20130411">JSON-based Serialization for 
+          Linked Data (JSON-LD)</xref> describes a rich syntax for the 
+          serialization of semantically-rich metadata using the JSON format. 
+          While the updated Activity Streams representation provided by this 
+          document is not defined as a "JSON-LD Vocabulary", the syntax is 
+          designed to be closely compatible with JSON-LD such that 
+          implementations can utilize both with minimal conflict or confusion.
         </t>
         
         <t>
           Most significantly, the JSON Activity Streams 2.0 syntax  
-          uses the "@id" and "@type" properties defined by JSON-LD.
+          directly leverages the "@id", "@type", and "@language" properties 
+          defined by JSON-LD.
         </t>
         
         <t>
@@ -147,21 +158,6 @@
         </t>
         
       </section>
-
-      <section anchor="notation" title="Notational Conventions">
-        <t>
-          The text of this specification provides the sole definition of
-          conformance. Examples in this specification are non-normative.
-        </t>
-
-        <t>
-          The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-          "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
-          document are to be interpreted as described in 
-          <xref target="RFC2119" />.
-        </t>
-
-      </section>
       
       <section anchor="serialization" title="Syntax Conventions">
         
@@ -171,10 +167,10 @@
         </t>
         
         <t>
-          When serialized, absent properties MAY be represented either
-          by setting the property whose value to null or by omitting the 
+          When serialized, absent properties are represented either
+          by setting the property value to null or by omitting the 
           property declaration altogether at the option of the publisher; 
-          these two representations are semantically equivalent. If a
+          these representations are semantically equivalent. If a
           property has an array value, the absence of any items in that array 
           MUST be represented by omitting the property entirely or by setting
           the value to null.
@@ -187,7 +183,7 @@
           (1) when an IRI that is not also a URI is given for dereferencing, it
           MUST be mapped to a URI using the steps in Section 3.1 of
           <xref target="RFC3987"/> and (2) when an IRI is serving as
-          an "id" value, it MUST NOT be so mapped.
+          an "@id" value, it MUST NOT be so mapped.
         </t>
 
         <t>
@@ -213,7 +209,7 @@
     "published": "2011-02-10T15:04:55Z",
     "actor": {
       "@type": "person",
-      "@id": "tag:example.org,2011:martin",
+      "@id": "urn:example:person:martin",
       "name": "Martin Smith",
       "url": "http://example.org/martin",
       "image": {
@@ -223,12 +219,12 @@
       }
     },
     "object" : {
-      "@id": "tag:example.org,2011:abc123/xyz"
+      "@id": "urn:example:blog:abc123/xyz"
       "url": "http://example.org/blog/2011/02/entry"
     },
     "target" : {
       "@type": "blog",
-      "@id": "tag:example.org,2011:abc123",
+      "@id": "urn:example:blog:abc123",
       "name": "Martin's Blog",
       "url": "http://example.org/blog/"
     }
@@ -247,14 +243,18 @@
     "items" : [
       {
         "@type": "post",
+        "@language": "en",
         "published": "2011-02-10T15:04:55Z",
         "foo": "some extension property",
         "generator": "http://example.org/activities-app",
         "provider": "http://example.org/activity-stream",
-        "title": "Martin posted a new video to his album.",
+        "title": {
+          "en": "Martin posted a new video to his album.",
+          "ga": "Martin phost le físeán nua a albam."
+        },
         "actor": {
           "@type": "person",
-          "@id": "tag:example.org,2011:martin",
+          "@id": "urn:example:person:martin",
           "name": "Martin Smith",
           "url": "http://example.org/martin",
           "foo2": "some other extension property",
@@ -266,7 +266,7 @@
         },
         "object" : {
           "@type": "photo",
-          "@id": "tag:example.org,2011:my_fluffy_cat",
+          "@id": "urn:example:album:abc123/my_fluffy_cat",
           "url": "http://example.org/album/my_fluffy_cat.jpg",
           "image": {
             "@id": "http://example.org/album/my_fluffy_cat_thumb.jpg",
@@ -277,8 +277,11 @@
         "target": {
           "url": "http://example.org/album/",
           "@type": "photo-album",
-          "@id": "tag:example.org,2011:abc123",
-          "name": "Martin's Photo Album",
+          "@id": "urn:example.org:album:abc123",
+          "name": {
+            "en": "Martin's Photo Album",
+            "ga": "Grianghraif Máirtín"
+          },
           "image": {
             "@id": "http://example.org/album/thumbnail.jpg",
             "width": 250,
@@ -323,8 +326,17 @@
             references other than a simple name is not allowed. If no "@type" 
             property is specified, the object has no specific type.
           </c>
+          
+          <c>@language</c>
+          <c><xref target="RFC5646"/> Language Tag</c>
+          <c>
+            Identifies the language for all human-readable, natural-language 
+            metadata values included in the object. An object MAY contain a
+            "@language" property.
+          </c>
+          
           <c>name</c>
-          <c>String</c>
+          <c><xref target="lang">Natural Language value</xref></c>
           <c>
             A natural-language, human-readable, plain-text name for the 
             object. HTML markup MUST NOT be included. An object MAY contain a 
@@ -342,158 +354,48 @@
         
       </section>
 
-      <section anchor="object-ext" title="Additional Object Properties">
+      <section anchor="lang" title="Natural Language Values">
         
         <t>
-           The following "additional properties" MAY be used with any 
-           JSON Object serialized within an Activity Stream document.
-         </t>
+          Natural Language values represent human-readable character 
+          sequences in one or more languages. They are expressed as
+          either: (1) a single JSON string or (2) a JSON dictionary 
+          mapping <xref target="RFC5646" /> Language tags to localized,
+          equivalent translations of the same string value. 
+        </t>
         
-        <texttable>
-          <ttcol align="left" width="15%">Property</ttcol>
-          <ttcol align="left" width="21%">Value</ttcol>
-          <ttcol align="left">Description</ttcol>
-
-          <c>"attachments"</c>
-          <c><xref target="link">Link</xref> value</c>
-          <c>
-            A <xref target="link">Link</xref> value referencing one or more 
-            objects associated with the containing object. These are similiar 
-            in concept to files attached to an email message.
-          </c>
-
-          <c>"author"</c>
-          <c><xref target="link">Link</xref> value</c>
-          <c>
-            A <xref target="link">Link</xref> value referencing one or more
-            entity that created or authored the object.
-          </c>
-
-          <c>"content"</c>
-          <c>String</c>
-          <c>
-            A Natural-language description of the object encoded as a single
-            JSON String containing HTML markup. Visual elements such as 
-            thumbnail images MAY be included.
-          </c>
-
-          <c>"duplicate"</c>
-          <c><xref target="link">Link</xref> value</c>
-          <c>
-            A <xref target="link">Link</xref>value referencing one or more
-            objects that are semantically equivalent to this object or duplicate 
-            this objects content. An object SHOULD contain a "duplicate" 
-            property when there are known objects, possibly in a different 
-            system, that are semantically equivalent or duplicate the content.
-          </c>
-
-          <c>"icon"</c>
-          <c><xref target="link">Link</xref> value</c>
-          <c>
-            A <xref target="link">Link</xref> value referencing one or more 
-            visual, graphic representations of the object, intended for human 
-            consumption. The visual element SHOULD have an aspect ratio of 
-            one (horizontal) to one (vertical) and SHOULD be suitable for 
-            presentation at a small size.
-          </c>
-
-          <c>"image"</c>
-          <c><xref target="link">Link</xref> value</c>
-          <c>
-            A <xref target="link">Link</xref> value referencing one or more
-            visual, graphic represenations of the object. Unlike the "icon"
-            property, there are no aspect ratio or display restrictions.
-          </c>
-          
-          <c>"location"</c>
-          <c><xref target="link">Link</xref> value</c>
-          <c>
-            A <xref target="link">Link</xref> value describing one or more 
-            physical or virtual locations associated with which the object.
-          </c>
-
-          <c>"published"</c>
-          <c><xref target="RFC3339"/> date-time</c>
-          <c>
-            The date and time at which the object was published.
-          </c>
-          
-          <c>"generator"</c>
-          <c><xref target="link">Link</xref> value</c>
-          <c>
-            A <xref target="link">Link</xref> value referencing the 
-            application that generated the object.
-          </c>
-          
-          <c>"provider"</c>
-          <c><xref target="link">Link</xref> value</c>
-          <c>
-            A <xref target="link">Link</xref> value referencing the application 
-            that published the object. Note that this is not necessarily the 
-            same entity that generated the object.
-          </c>
-
-          <c>"source"</c>
-          <c><xref target="link">Link</xref> value</c>
-          <c>
-            A <xref target="link">Link</xref> value referencing the original
-            source of this object. The source property is closely related to 
-            the generator and provider properties but serves the distinct 
-            purpose of identifying where the object was originally published as 
-            opposed to identifying the applications that generated or published it.
-          </c>
-
-          <c>"summary"</c>
-          <c>String</c>
-          <c>
-            A Natural-language summarization of the object encoded as a single
-            JSON String containing HTML markup. Visual elements such as 
-            thumbnail images can be included.
-          </c>
-
-          <c>"updated"</c>
-          <c><xref target="RFC3339"/> date-time</c>
-          <c>
-            The date and time at which a previously published object has
-            been modified.
-          </c>
-          
-          <c>"startTime"</c>
-          <c><xref target="RFC3339"/> date-time</c>
-          <c>
-            A date-time describing the actual or expected starting time of
-            the object. When used within an Activity object, for instance, 
-            the "startTime" specifies the moment the activity began or is 
-            scheduled to begin.
-          </c>
-          
-          <c>"endTime"</c>
-          <c><xref target="RFC3339" /> date-time</c>
-          <c>
-            A date-time describing the actual or expected ending time of
-            the object. When used within an Activity object, for instance,
-            the "endTime" specifies the moment the activity concluded or is
-            scheduled to conclude.
-          </c>
-          
-          <c>"rating"</c>
-          <c>Decimal Number between 1.0 and 5.0</c>
-          <c>
-            A quality rating expressed as a number between 1.0 and 5.0 
-            (inclusive) with one decimal place of precision.  
-          </c>
-          
-          <c>"tags"</c>
-          <c><xref target="link">Link</xref> value</c>
-          <c>
-            A <xref target="link">Link</xref> value referencing one or more 
-            resources that are loosely associated with the containing object.
-            The "tags" and "attachments" properties differ from one another
-            in that the "tags" property asserts "association by reference"
-            while "attachments" asserts "association by enclosure". 
-          </c>
-
-        </texttable>
+        <t>
+          For instance, the "name" property in all objects is a
+          Natural Language value. This means that the "name" can 
+          be expressed in one or more languages:
+        </t>
+        
+        <figure>
+          <preamble>A single String value using the default language:</preamble>
+          <artwork>
+  {
+    "@language": "en",
+    "name": "This is the name"
+  }
+          </artwork>
+        </figure>
+        
+        <figure>
+          <preamble>Multiple, language-specific values:</preamble>
+          <artwork>
+  {
+    "name": {
+      "en": "This is the name",
+      "fr": "C'est le nom",
+      "sp": "Este es el nombre"
+  }
+          </artwork>
+        </figure>
+        
+        <t>
+          Each key in the JSON dictionary MUST be an <xref target="RFC5646" />
+          Language Tag. The associated values MUST be Strings.
+        </t>
         
       </section>
 
@@ -511,8 +413,8 @@
         </t>
         
         <t>
-          For instance, as defined in the previous section, 
-          all <xref target="object">objects</xref> can contain an
+          For instance, as defined in previously, all 
+          <xref target="object">objects</xref> can contain an
           "image" property whose value describes a graphical 
           representation of the containing object. This property
           will typically be used to provide the URL to a JPEG,
@@ -580,41 +482,26 @@
         </t>
 
         <t>
-          RFC 5988 defines that all Links have a conceptual 
-          "link relation" that describes the contextual purpose
-          of the link. Within an Activity Streams document,
-          in the absence of a specific "rel" property within the 
-          link, the name of the property whose value is a link serves
-          as the "link relation". Any legal link relation value,
-          as defined by RFC 5988, can be used as a property with a
-          link value in any Activity Streams object, except where 
-          the link relation might conflict with any other property
+          RFC 5988 defines that all Links have a "link relation" 
+          that describes the contextual purpose of the link. Within 
+          an Activity Streams document, in the absence of a specific 
+          "rel" property within the link itself, the name of the property 
+          whose value is a link serves as the "link relation". Any legal 
+          link relation value, as defined by RFC 5988, can be used as a 
+          property with a link value in any Activity Streams object, except 
+          where the link relation might conflict with any other property
           defined by this specification. 
         </t>
         
         <t>
-          When represented as an <xref target="object">object</xref>, Link 
-          values may contain any of the following additional properties:
+          When an <xref target="object">object</xref> is used to represent
+          a Link value, the following additional properties MAY be used:
         </t>
         
         <texttable>
           <ttcol align="left" width="15%">Property</ttcol>
           <ttcol align="left" width="21%">Value</ttcol>
           <ttcol align="left">Description</ttcol>
-
-          <c>"duration"</c>
-          <c><xref target="RFC4627">JSON</xref> int</c>
-          <c>A hint to the consumer about the length, in seconds, of the
-          media resource identified by the "url" property. A media link MAY
-          contain a "duration" property when the target resource is a
-          time-based media item such as an audio or video.</c>
-
-          <c>"height"</c>
-          <c><xref target="RFC4627">JSON</xref> int</c>
-          <c>A hint to the consumer about the height, in pixels, of the
-          media resource identified by the "url" property. A media link MAY
-          contain a "height" property when the target resource is a visual
-          media item such as an image, video or embeddable HTML page.</c>
 
           <c>"rel"</c>
           <c>RFC 5988 Link Relation</c>
@@ -629,13 +516,6 @@
           <c>
             The MIME media type of the resource being referenced.
           </c>
-
-          <c>"width"</c>
-          <c><xref target="RFC4627">JSON</xref> int</c>
-          <c>A hint to the consumer about the width, in pixels, of the
-          media resource identified by the "url" property. A media link MAY
-          contain a "width" property when the target resource is a visual
-          media item such as an image, video or embeddable HTML page.</c>
 
         </texttable>
 
@@ -771,6 +651,185 @@
           </t>
           
         </section>
+        
+      </section>
+      
+      <section anchor="object-ext" title="Additional Object Properties">
+        
+        <t>
+           The following "additional properties" MAY be used with any 
+           JSON Object serialized within an Activity Stream document.
+         </t>
+        
+        <texttable>
+          <ttcol align="left" width="15%">Property</ttcol>
+          <ttcol align="left" width="21%">Value</ttcol>
+          <ttcol align="left">Description</ttcol>
+
+          <c>"attachment"</c>
+          <c><xref target="link">Link</xref> value</c>
+          <c>
+            A <xref target="link">Link</xref> value referencing one or more 
+            objects associated with the containing object. These are similiar 
+            in concept to files attached to an email message.
+          </c>
+
+          <c>"author"</c>
+          <c><xref target="link">Link</xref> value</c>
+          <c>
+            A <xref target="link">Link</xref> value referencing one or more
+            entity that created or authored the object.
+          </c>
+
+          <c>"content"</c>
+          <c><xref target="lang">Natural Language value</xref></c>
+          <c>
+            A Natural-language description of the object encoded as a single
+            JSON String containing HTML markup. Visual elements such as 
+            thumbnail images MAY be included.
+          </c>
+
+          <c>"duplicate"</c>
+          <c><xref target="link">Link</xref> value</c>
+          <c>
+            A <xref target="link">Link</xref>value referencing one or more
+            objects that are semantically equivalent to this object or duplicate 
+            this objects content. An object SHOULD contain a "duplicate" 
+            property when there are known objects, possibly in a different 
+            system, that are semantically equivalent or duplicate the content.
+          </c>
+
+          <c>"icon"</c>
+          <c><xref target="link">Link</xref> value</c>
+          <c>
+            A <xref target="link">Link</xref> value referencing one or more 
+            visual, graphic representations of the object, intended for human 
+            consumption. The visual element SHOULD have an aspect ratio of 
+            one (horizontal) to one (vertical) and SHOULD be suitable for 
+            presentation at a small size.
+          </c>
+
+          <c>"image"</c>
+          <c><xref target="link">Link</xref> value</c>
+          <c>
+            A <xref target="link">Link</xref> value referencing one or more
+            visual, graphic represenations of the object. Unlike the "icon"
+            property, there are no aspect ratio or display restrictions.
+          </c>
+          
+          <c>"location"</c>
+          <c><xref target="link">Link</xref> value</c>
+          <c>
+            A <xref target="link">Link</xref> value describing one or more 
+            physical or virtual locations associated with which the object.
+          </c>
+
+          <c>"published"</c>
+          <c><xref target="RFC3339"/> date-time</c>
+          <c>
+            The date and time at which the object was published.
+          </c>
+          
+          <c>"generator"</c>
+          <c><xref target="link">Link</xref> value</c>
+          <c>
+            A <xref target="link">Link</xref> value referencing the 
+            application that generated the object.
+          </c>
+          
+          <c>"provider"</c>
+          <c><xref target="link">Link</xref> value</c>
+          <c>
+            A <xref target="link">Link</xref> value referencing the application 
+            that published the object. Note that this is not necessarily the 
+            same entity that generated the object.
+          </c>
+
+          <c>"source"</c>
+          <c><xref target="link">Link</xref> value</c>
+          <c>
+            A <xref target="link">Link</xref> value referencing the original
+            source of this object. The source property is closely related to 
+            the generator and provider properties but serves the distinct 
+            purpose of identifying where the object was originally published as 
+            opposed to identifying the applications that generated or published it.
+          </c>
+
+          <c>"summary"</c>
+          <c><xref target="lang">Natural Language value</xref></c>
+          <c>
+            A Natural-language summarization of the object encoded as a single
+            JSON String containing HTML markup. Visual elements such as 
+            thumbnail images can be included.
+          </c>
+
+          <c>"updated"</c>
+          <c><xref target="RFC3339"/> date-time</c>
+          <c>
+            The date and time at which a previously published object has
+            been modified.
+          </c>
+          
+          <c>"startTime"</c>
+          <c><xref target="RFC3339"/> date-time</c>
+          <c>
+            A date-time describing the actual or expected starting time of
+            the object. When used within an Activity object, for instance, 
+            the "startTime" specifies the moment the activity began or is 
+            scheduled to begin.
+          </c>
+          
+          <c>"endTime"</c>
+          <c><xref target="RFC3339" /> date-time</c>
+          <c>
+            A date-time describing the actual or expected ending time of
+            the object. When used within an Activity object, for instance,
+            the "endTime" specifies the moment the activity concluded or is
+            scheduled to conclude.
+          </c>
+          
+          <c>"rating"</c>
+          <c>Decimal Number between 1.0 and 5.0</c>
+          <c>
+            A quality rating expressed as a number between 1.0 and 5.0 
+            (inclusive) with one decimal place of precision.  
+          </c>
+          
+          <c>"tag"</c>
+          <c><xref target="link">Link</xref> value</c>
+          <c>
+            A <xref target="link">Link</xref> value referencing one or more 
+            resources that are loosely associated with the containing object.
+            The "tag" and "attachment" properties differ from one another
+            in that the "tag" property asserts "association by reference"
+            while "attachment" asserts "association by enclosure". 
+          </c>
+          
+          <c>"duration"</c>
+          <c><xref target="RFC4627">JSON</xref> int</c>
+          <c>
+            When the object describes a time-based resource, such as audio 
+            or video, the "duration" property indicates the approximate 
+            length of time in seconds.
+          </c>
+
+          <c>"height"</c>
+          <c><xref target="RFC4627">JSON</xref> int</c>
+          <c>
+            When the object describes a visual resource, such as an 
+            image, video or embeddable HTML page, the "height" property
+            indicates the recommended display height in pixels.
+          </c>
+          
+          <c>"width"</c>
+          <c><xref target="RFC4627">JSON</xref> int</c>
+          <c>
+            When the object describes a visual resource, such as an 
+            image, video or embeddable HTML page, the "width" property
+            indicates the recommended display width in pixels.
+          </c>
+          
+        </texttable>
         
       </section>
 
@@ -1056,10 +1115,6 @@
 
     </section>
 
-    <section anchor="errata" title="Errata">
-      <t>Changes and clarifications to this document are available at
-      <eref target="http://activitystrea.ms/specs/json/1.0/errata" />.</t>
-    </section>
   </middle>
 
   <back>
@@ -1069,7 +1124,12 @@
       &rfc3987;
       &rfc4627;
       &rfc3339;
-      &rfc5988;      
+      &rfc5988;   
+      &rfc5646;  
+      &jsonld; 
+    </references>
+    <references title="Informational References">
+      &rfc6963;
     </references>
 
     <section anchor="acknowledgements" title="Acknowledgements">
