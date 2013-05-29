@@ -278,7 +278,7 @@
           "url": "http://example.org/album/",
           "@type": "photo-album",
           "@id": "urn:example.org:album:abc123",
-          "name": {
+          "title": {
             "en": "Martin's Photo Album",
             "ga": "Grianghraif Máirtín"
           },
