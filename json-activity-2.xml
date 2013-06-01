@@ -9,6 +9,7 @@
   <!ENTITY rfc5988 PUBLIC '' 'http://xml.resource.org/public/rfc/bibxml/reference.RFC.5988.xml'>
   <!ENTITY rfc6963 PUBLIC '' 'http://xml.resource.org/public/rfc/bibxml/reference.RFC.6963.xml'>
   <!ENTITY rfc5646 PUBLIC '' 'http://xml.resource.org/public/rfc/bibxml/reference.RFC.5646.xml'>
+  <!ENTITY rfc5226 PUBLIC '' 'http://xml.resource.org/public/rfc/bibxml/reference.RFC.5226.xml'>
   <!ENTITY jsonld  PUBLIC '' 'http://xml.resource.org/public/rfc/bibxml4/reference.W3C.WD-json-ld-20130411.xml'>
 ]>
 
@@ -22,38 +23,19 @@
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
-<?rfc private="Activity Streams Working Group"?>
-<rfc>
+<rfc category="std" ipr="noModificationTrust200902" docName="draft-snell-activitystreams-00.xml" >
   <front>
-    <title abbrev="ActivityStreams">Draft: JSON Activity Streams 2.0</title>
+    <title abbrev="ActivityStreams">JSON Activity Streams 2.0</title>
 
-    <author fullname="James M Snell" initials="J.M." surname="Snell">
+    <author fullname="James M Snell" initials="J." surname="Snell" role="editor">
       <organization>IBM</organization>
     </author>
 
-    <!--
-    <author fullname="Martin Atkins" initials="M." surname="Atkins">
-      <organization>SAY Media</organization>
-    </author>
-
-    <author fullname="Will Norris" initials="W." surname="Norris">
-      <organization>Google</organization>
-    </author>
-
-    <author fullname="Chris Messina" initials="C." surname="Messina">
-      <organization>Citizen Agency, Google</organization>
-    </author>
-
-    <author fullname="Monica Wilkinson" initials="M." surname="Wilkinson">
-      <organization>MySpace, Facebook, VMware</organization>
-    </author>
-
-    <author fullname="Rob Dolin" initials="R." surname="Dolin">
-      <organization>Microsoft</organization>
-    </author>
-      -->
-
     <date month="May" year="2013" />
+    <area>General</area> 
+    <workgroup>Activity Streams (http://activitystrea.ms)</workgroup>
+    <keyword>JSON</keyword>
+    <keyword>Activity Streams</keyword>
 
     <abstract>
       <t>
@@ -105,7 +87,8 @@
       <section title="Relationship to JSON Activity Streams 1.0" anchor="asms-1">
         
         <t>
-          The JSON Activity Streams 1.0 specification was published in May
+          The <eref target="http://activitystrea.ms/specs/json/1.0/">JSON Activity 
+          Streams 1.0</eref> specification was published in May
           of 2011 and provided a baseline extensible syntax for the expression
           of completed activities. This specification builds upon that 
           initial foundation by incorporating lessons learned through 
@@ -130,14 +113,13 @@
           serialization of semantically-rich metadata using the JSON format. 
           While the updated Activity Streams representation provided by this 
           document is not defined as a "JSON-LD Vocabulary", the syntax is 
-          designed to be closely compatible with JSON-LD such that 
-          implementations can utilize both with minimal conflict or confusion.
+          designed to be closely compatible with JSON-LD.
         </t>
         
         <t>
           Most significantly, the JSON Activity Streams 2.0 syntax  
-          directly leverages the "@id", "@type", and "@language" properties 
-          defined by JSON-LD.
+          directly leverages the "@id", "@type", and "@language" properties,
+          as well as the Language Map construct as defined by JSON-LD.
         </t>
         
         <t>
@@ -152,7 +134,7 @@
             <t>
               While it is possible to derive a JSON-LD "context" description
               for the Activity Streams 2.0 JSON syntax one is not normatively
-              provided.
+              provided by this specification.
             </t>
           </list>
         </t>
@@ -653,6 +635,119 @@
           
         </section>
         
+        <section anchor="audience-targeting" title="Audience Targeting Properties">
+      
+          <t>
+            Every Activity has both a Primary and Secondary audience. The 
+            Primary audience consists of those entities either directly 
+            involved in the performance of the activity or who "own" the 
+            objects involved. The Secondary audience consists of the 
+            collection of entities sharing an interest in the activity but 
+            who are not directly involved (e.g. "followers").
+          </t>
+
+          <t>
+            For instance, suppose a social network of three individuals: 
+            Bob, Joe and Jane. Bob and Joe are each friends with Jane but 
+            not friends with one another. Bob has chosen to "follow" activities 
+            for which Jane is directly involved. Jane shares a file with Joe.
+          </t>
+
+          <t>
+            In this example, Jane and Joe are each directly involved in the 
+            file sharing activity and together make up the Primary Audience 
+            for that event. Bob, having an interest in activities involving 
+            Jane, is the Secondary Audience. Knowing this, a system that 
+            produces or consumes the activity can intelligently notify each 
+            person of the event.
+          </t>
+
+          <t>
+            While there are means, based on the verb, actor, object and 
+            target of the activity, to infer the primary audience for many 
+            types of activities, those do not work in every case and do not
+            provide a means of identifying the secondary audience. The 
+            "to", "cc", "bto" and "bcc" properties MAY be used within an 
+            Activity to explicitly identify the Primary and Secondary 
+            audiences.
+          </t>
+      
+          <texttable>
+            <ttcol align="left" width="15%">Property</ttcol>
+            <ttcol align="left" width="21%">Value</ttcol>
+            <ttcol align="left">Description</ttcol>
+
+            <c>"to"</c>
+            <c><xref target="link">Link</xref> value</c>
+            <c>
+              Specifies the public primary audience.
+            </c>
+        
+            <c>"cc"</c>
+            <c><xref target="link">Link</xref> value</c>
+            <c>
+              Specifies the public secondary audience.
+            </c>
+        
+            <c>"bto"</c>
+            <c><xref target="link">Link</xref> value</c>
+            <c>
+              Specifies the private primary audience.
+            </c>
+        
+            <c>"bcc"</c>
+            <c><xref target="link">Link</xref> value</c>
+            <c>
+              Specifies the private secondary audience.
+            </c>
+        
+          </texttable>
+      
+          <t>
+            The prototypical use case for an Activity containing these
+            properties is the publication and redistribution of Activities 
+            through an intermediary. That is, an event source generates the 
+            activity and publishes it to the intermediary which determines 
+            a subset of events to display to specific individual users or 
+            groups. Such a determination can be made, in part, by identifying 
+            the Primary and Secondary Audiences for each activity.
+          </t>
+
+          <t>
+            When the event source generates the activity and specifies values 
+            for the to and cc fields, the intermediary SHOULD redistribute 
+            that event with the values of those fields intact, allowing any 
+            processor to see who the activity has been targeted to. This is 
+            precisely the same model used by the to and cc fields in email 
+            systems.
+          </t>
+
+          <t>
+            There are situations, however, in which disclosing the identity 
+            of specific members of the audience may be inappropriate. For 
+            instance, a user may not wish to let other users know that they 
+            are interested in various topics, individuals or types of events. 
+            To support this option, an event source generating an activity 
+            MAY use the "bto" and "bcc" properties to list entities to whom the 
+            activity should be privately targeted. When an intermediary 
+            receives an activity containing these properties, it MUST remove 
+            those values prior to redistributing the activity. The intent is
+            that systems MUST consider entities listed within the "bto" and
+            "bcc" properties as part of the Primary and Second audience but 
+            MUST NOT disclose that fact to any other party.
+          </t>
+      
+          <t>
+            Audience targeting information included within an Activity only 
+            describes the intent of the activity creator. With clear exception 
+            given to the appropriate handling of "bto" and "bcc", this 
+            specification leaves it up to implementations to determine how 
+            the audience targeting information is used.
+          </t>
+      
+        </section>
+
+                
       </section>
       
       <section anchor="object-ext" title="Additional Object Properties">
@@ -826,7 +921,7 @@
           </c>
           
           <c>"duration"</c>
-          <c><xref target="RFC4627">JSON</xref> int</c>
+          <c>Integer</c>
           <c>
             When the object describes a time-based resource, such as audio 
             or video, the "duration" property indicates the approximate 
@@ -834,7 +929,7 @@
           </c>
 
           <c>"height"</c>
-          <c><xref target="RFC4627">JSON</xref> int</c>
+          <c>Integer</c>
           <c>
             When the object describes a visual resource, such as an 
             image, video or embeddable HTML page, the "height" property
@@ -842,11 +937,19 @@
           </c>
           
           <c>"width"</c>
-          <c><xref target="RFC4627">JSON</xref> int</c>
+          <c>Integer</c>
           <c>
             When the object describes a visual resource, such as an 
             image, video or embeddable HTML page, the "width" property
             indicates the recommended display width in pixels.
+          </c>
+          
+          <c>"inReplyTo"</c>
+          <c><xref target="link">Link</xref> value</c>
+          <c>
+            A <xref target="link">Link</xref> value identifying one or 
+            more other objects to which the containing object can be 
+            considered a response.
           </c>
           
         </texttable>
@@ -990,6 +1093,66 @@
           </c>
           
         </texttable>
+        
+        <section anchor="summary-properties" title="Using Collections as Summary Values">
+          
+          <t>
+            It is a common practice to use Collection objects to provide 
+            summary information on the number of specific types of events
+            that have occurred with respect to any given object. For instance,
+            a "note" object may have been "shared" or "liked" a number of 
+            times by different individuals. In such cases, the Collection 
+            object is used as a property value with the "totalItems" field
+            used to indicate the total number of occurrences, the "items" 
+            property used to provide details for a subset of the most 
+            recent occurrences, and the "@id" property used to reference a 
+            separate Activity Streams document providing additional information.
+          </t>
+          
+          <t>
+            This specification defines the following properties that 
+            MAY be used within any <xref target="object">object</xref> 
+            as "summary values":
+          </t>
+          
+          <texttable>
+            <ttcol align="left" width="15%">Property</ttcol>
+            <ttcol align="left" width="21%">Value</ttcol>
+            <ttcol align="left">Description</ttcol>
+            <c>"replies"</c>
+            <c><xref target="collection">Collection</xref></c>
+            <c>
+              Provides information about the set of objects that can be 
+              considered to be replies to the containing object.
+            </c>
+          </texttable>
+          
+          <figure>
+            <preamble>In the following example, the "replies" property 
+              is used to indicate that a note has 10 responses, and 
+              provides information on the most recently received 
+              response:</preamble>
+            <artwork>{
+  "@type": "note",
+  "@id": "urn:example:note:1",
+  "name": "Note",
+  "title": "A Note about things",
+  "content": "blah blah blah",
+  "replies": {
+    "@id": "http://example.org/note/1/comments.json",
+    "mediaType": "application/activity+json",
+    "totalItems": 10,
+    "items": [
+      {
+        "@type": "note",
+        "@id": "urn:example:note:1:A",
+        "content": "That's profound, man."
+      }
+    ]
+  }
+}</artwork></figure>
+          
+        </section>
 
       </section>
 
@@ -1045,7 +1208,7 @@
       </t>
 
     </section>
-
+    
     <section anchor="security" title="Security Considerations">
       <t>
         Publishers or Consumers implementing Activity Streams as a stream of
@@ -1100,39 +1263,115 @@
     </section>
 
     <section anchor="iana" title="IANA Considerations">
-      <t>None.</t>
-    </section>
+      
+      <section anchor="media-type" title="application/activity+xml Media Type">
+        
+        <t>
+          This specification registers the application/activity+json 
+          MIME Media Type:
+        </t>
 
-    <section anchor="license" title="License">
-      <t>As of [date], the following persons or entities have made this
-      Specification available under the Open Web Foundation Agreement Version
-      1.0, which is available at
-      <eref target="http://www.openwebfoundation.org/legal/" />.
-
+        <t><list>
+        <t>Type name: application</t>
+        <t>Subtype name: activity+json</t>
+        <t>Required parameters: None</t>
+        <t>
+          Optional parameters: "charset" : Specifies the character set encoding.
+          If not specified, a default of "UTF-8" is assumed.
+        </t>
+        <t>
+          Encoding considerations: Resources that use the "application/activity+json"
+          media type are required to conform to the "application/json" Media Type
+          and are therefore subject to the same encoding considerations
+          specified in <xref target="RFC4627">Section 6</xref>.
+        </t>
+        <t>Security considerations: As defined in this specification</t>
+        <t>Published specification: This specification.</t>
+        <t>
+          Applications that use this media type: JSON Activity Streams are implemented
+          by a wide range of existing applications.
+        </t>
+        <t>Additional information:
         <list>
-          <t>[List of persons or entities]</t>
-        </list>
-      </t>
+        <t>Magic number(s): N/A</t>
+        <t>File extension(s): N/A</t>
+        <t>Macintosh file type code(s): TEXT</t>
+        </list></t>
+        <t>Person &amp; email address to contact for further information: James M Snell &lt;jasnell@gmail.com&gt;</t>
+        <t>Intended usage: COMMON</t>
+        <t>Restrictions on usage: None.</t>
+        <t>Author: James M Snell &lt;jasnell@gmail.com&gt;</t>
+        <t>Change controller: IESG</t>
+        </list></t>
+        
+      </section>
 
-      <t>You can review the signed copies of the Open Web Foundation Agreement
-      Version 1.0 for this Specification at
-      <eref target="http://activitystrea.ms/licensing/" />, which may also
-      include additional parties to those listed above.</t>
-
-      <t>Your use of this Specification may be subject to other third party
-      rights. THIS SPECIFICATION IS PROVIDED "AS IS." The contributors expressly
-      disclaim any warranties (express, implied, or otherwise), including
-      implied warranties of merchantability, non-infringement, fitness for a
-      particular purpose, or title, related to the Specification. The entire
-      risk as to implementing or otherwise using the Specification is assumed by
-      the Specification implementer and user. IN NO EVENT WILL ANY PARTY BE
-      LIABLE TO ANY OTHER PARTY FOR LOST PROFITS OR ANY FORM OF INDIRECT,
-      SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES OF ANY CHARACTER FROM ANY
-      CAUSES OF ACTION OF ANY KIND WITH RESPECT TO THIS SPECIFICATION OR ITS
-      GOVERNING AGREEMENT, WHETHER BASED ON BREACH OF CONTRACT, TORT (INCLUDING
-      NEGLIGENCE), OR OTHERWISE, AND WHETHER OR NOT THE OTHER PARTY HAS BEEN
-      ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</t>
-
+      <!-- TODO: Need to determine if we want this
+      <section anchor="registry" title="Activity Streams Type Registry">
+        
+        <t>
+          This document establishes a registry for Activity Streams @type 
+          property values. The "Activity Streams Type" registry operates 
+          under the <xref target="RFC5226">"Expert Review" policy</xref>.
+        </t>
+        
+        <t>
+          Entries included in the Activity Streams Type Registry include 
+          both "verb" and "object type" values. While previous versions
+          of the Activity Streams specification distinguished between 
+          "verbs" and "objectTypes", this specification and the registry
+          both eliminate many of the distinctions between these two 
+          concepts.
+        </t>
+        
+        <t>
+          Activity Streams Type Registrations MUST include the following
+          fields:
+          <list style="hanging">
+            <t hangText="Type:">
+              <vspace />
+              A type identifier suitable for use as the value of the 
+              "@type" property (<xref target="object" />). The value 
+              MUST either be an "isegment-nz-nc" or absolute "IRI" 
+              as defined in <xref target="RFC3987"/>. The use of a relative 
+              reference other than a simple name is not allowed.
+            </t>
+            <t hangText="Use:">
+              <vspace />
+              A required indication of the types intended use as either 
+              a "activity" or "object" type. The value MUST be one of either
+              "activity", "object" or "any".
+            </t>
+            <t hangText="Name:">
+              <vspace />
+              An optional short, plain-text, natural-language "common" name for the
+              Type registration.
+            </t>
+            <t hangText="Description:">
+              <vspace />
+              A required short, plain-text, natural-language, one-paragraph 
+              description of the object and it's intended use.
+            </t>
+            <t hangText="Aliases:">
+              <vspace />
+              An optional listing of one or more alternative identifiers for 
+              this type. These MUST be suitable for use as @type property
+              values.
+            </t>
+            <t hangText="Specification:">
+              <vspace />
+              A pointer to specification text defining the type, if available.
+              If the type being registered includes any special considerations,
+              including specific properties or processing requirements, then
+              a pointer to a specification is required.
+            </t>
+          </list> 
+        </t>
+        
+      </section>
+    -->
+       
+       
     </section>
 
   </middle>
@@ -1153,7 +1392,7 @@
     </references>
 
     <section anchor="acknowledgements" title="Acknowledgements">
-      <t>The authors wish to thank the Activity Streams community and
+      <t>The author wishes to thank the Activity Streams community and
       implementers for their support, encouragement, and enthusiasm including
       but not limited to: Abdul Qabiz, Adina Levin, Adrian Chan, Adriana Javier,
       Alan Hoffman, Alex Kessinger, Alexander Ovchinnikov, Alexander Zhuravlev,
@@ -1161,7 +1400,7 @@
       Marquez, Ari Steinberg, Arjan Scherpenisse, Arne Roomann-Kurrik, Beau
       Lebens, Ben Hedrington, Ben Metcalfe, Ben Werdmuller, Benjamin Goering,
       Bill de hÓra, Bo Xing, Bob Aman, Bob Wyman, Brett Slatkin, Brian Walsh,
-      Brynn Evans, Charlie Cauthen, Chris Chabot, Chris Toomey, Christian
+      Brynn Evans, Charlie Cauthen, Chris Chabot, Chris Messina, Chris Toomey, Christian
       Crumlish, Dan Brickley, Dan Scott, Daniel Chapman, Danny Ayers, Dare
       Obasanjo, Darren Bounds, David Cramer, David Nelson, David Recordon,
       DeWitt Clinton, Douglas Pearce, Ed Summers, Elias Bizannes, Elisabeth
@@ -1174,21 +1413,20 @@
       Holsten, Joseph Smarr, Josh Brewer, Jud Valeski, Julien Chaumond, Julien
       Genestoux, Jyri Engeström, Kaliya Hamlin, Kevin Marks, Laurent Eschenauer,
       Laurie Voss, Leah Culver, Libby Miller, Manu Mukerji, Mark Weitzel, Marko
-      Degenkolb, Marshall Kirkpatrick, Martin Svensson, Marty Alchin, Mary
+      Degenkolb, Marshall Kirkpatrick, Martin Atkins, Martin Svensson, Marty Alchin, Mary
       Hoder, Matt Leventi, Matt Wilkinson, Matthias Müller-Prove, Max Engel, Max
       Wegmueller, Melvin Carvalho, Michael Buckbee, Michael Chan, Michael
       Richardson, Michael Sullivan, Mike Macgirvin, Mislav Marohnić, Mo Jangda,
-      Nate Benes, NeilFred Picciotto, Nick Howard, Nick Lothian, Nissan
+      Monica Wilkinson, Nate Benes, NeilFred Picciotto, Nick Howard, Nick Lothian, Nissan
       Dookeran, Nitya Narasimhan, Pablo Martin, Pádraic Brady, Pat G.
       Cappalaere, Patrick Aljord, Peter Ferne, Peter Reiser, Peter Saint-Andre,
       Phil Wolff, Philip (flip) Kromer, Richard Cunningham, Richard Zhao, Rick
-      Severson, Robert Hall, Robert Langbert, Robin Cover, Ryan Boyd, Sam Sethi,
+      Severson, Robert Hall, Robert Langbert, Robert Dolin, Robin Cover, Ryan Boyd, Sam Sethi,
       Scott Raymond, Scott Seely, Simon Grant, Simon Wistow, Stephen Garcia,
       Stephen Sisk, Stephen Paul Weber, Steve Ivy, Steve Midgley, Steven
       Livingstone-Perez, Sylvain Carle, Sylvain Hellegouarch, Tantek Çelik, Tatu
       Saloranta, Tim Moore, Timothy Young, Todd Barnard, Tosh Meston, Tyler
-      Gillies, Zach Copley, and Zach Shepherd.</t>
+      Gillies, Will Norris, Zach Copley, and Zach Shepherd.</t>
     </section>
   </back>
 </rfc>
-<!-- vim: set expandtab sw=2 ts=2: -->
