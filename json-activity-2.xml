@@ -1444,29 +1444,27 @@
       
       <figure><artwork>
   {
-    '@context': {
-      '@id': 'http://schema.org',
-      'type': '@type',
-      'id': '@id',
-      'actor': 'http://schema.org/Action/performedBy',
-      'object': 'http://schema.org/BuyAction/bought',
-      'purchase': 'http://schema.org/BuyAction',
-      'person': 'http://schema.org/Person',
-      'book': 'http://schema.org/Book'
+    "@context": {
+      "@vocab": "http://activitystrea.ms/spec/2.0/",
+      "actor": "http://schema.org/Action/performedBy",
+      "object": "http://schema.org/BuyAction/bought",
+      "purchase": "http://schema.org/BuyAction",
+      "person": "http://schema.org/Person",
+      "book": "http://schema.org/Book"
     },
-    'type' : 'purchase',
-    'id' : 'urn:example:purchase:123/abc',
-    'title': 'John purchased "A Tale of Two Cities"',
-    'startTime' : '2013-04-02T12:31Z',
-    'endTime' : '2013-04-02T12:31Z',
-    'actor': {
-      'type': 'person',
-      'name': 'John Doe'
-    }
-    'status':'completed',
-    'object': {
-      'type': 'book',
-      'title': 'A Tale of Two Cities'
+    "type" : "purchase",
+    "id" : "urn:example:purchase:123/abc",
+    "title": "John purchased 'A Tale of Two Cities'",
+    "startTime" : "2013-04-02T12:31Z",
+    "endTime" : "2013-04-02T12:31Z",
+    "actor": {
+      "type": "person",
+      "name": "John Doe"
+    },
+    "status":"completed",
+    "object": {
+      "type": "book",
+      "title": "A Tale of Two Cities"
     }
   }
       </artwork></figure> 
