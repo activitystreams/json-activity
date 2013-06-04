@@ -51,6 +51,8 @@
         by Martin Atkins, Will Norris, Chris Messina, Monica Wilkinson, 
         Rob Dolin and James Snell. The author is very thankful for their 
         significant contributions and gladly stands on their shoulders.
+        Some portions of the original text of Activity Streams 1.0 have been
+        used in this document.
       </t>
     </note>
 
@@ -102,7 +104,7 @@
           extensions and fundamental model defined by that original 
           specification remain intact.
         </t>
-                
+        
       </section>
 
       <section title="Relationship to JSON-LD 1.0" anchor="json-ld" >
@@ -117,19 +119,17 @@
         </t>
         
         <t>
-          Most significantly, the JSON Activity Streams 2.0 syntax  
-          directly leverages the "@id", "@type", and "@language" properties,
-          as well as the Language Map construct as defined by JSON-LD.
-        </t>
-        
-        <t>
           There are a few differences between JSON-LD and the 
           serialization syntax described here, specifically:
           <list style="symbols">
             <t>
+              JSON-LD uses field names with a leading "@" character,
+              such as "@id", "@type" and "@language". In this 
+              specification, the leading "@" is omitted.
+            <t>
               While JSON-LD allows using relative IRI references
-              in the values of @id properties, this specification 
-              limits @id properties to absolute IRIs.
+              in the values of ID properties, this specification 
+              limits identifiers to absolute IRIs.
             </t>
             <t>
               While it is possible to derive a JSON-LD "context" description
@@ -165,7 +165,7 @@
           (1) when an IRI that is not also a URI is given for dereferencing, it
           MUST be mapped to a URI using the steps in Section 3.1 of
           <xref target="RFC3987"/> and (2) when an IRI is serving as
-          an "@id" value, it MUST NOT be so mapped.
+          an "id" value, it MUST NOT be so mapped.
         </t>
 
         <t>
@@ -187,26 +187,27 @@
 
 <figure><artwork><![CDATA[
   {
-    "@type": "post",
+    "type": "post",
     "published": "2011-02-10T15:04:55Z",
     "actor": {
-      "@type": "person",
-      "@id": "urn:example:person:martin",
+      "type": "person",
+      "id": "urn:example:person:martin",
       "name": "Martin Smith",
       "url": "http://example.org/martin",
       "image": {
-        "@id": "http://example.org/martin/image",
+        "id": "http://example.org/martin/image",
         "width": 250,
         "height": 250
       }
     },
     "object" : {
-      "@id": "urn:example:blog:abc123/xyz"
+      "type": "article",
+      "id": "urn:example:blog:abc123/xyz"
       "url": "http://example.org/blog/2011/02/entry"
     },
     "target" : {
-      "@type": "blog",
-      "@id": "urn:example:blog:abc123",
+      "type": "blog",
+      "id": "urn:example:blog:abc123",
       "name": "Martin's Blog",
       "url": "http://example.org/blog/"
     }
@@ -224,8 +225,8 @@
   {
     "items" : [
       {
-        "@type": "post",
-        "@language": "en",
+        "type": "post",
+        "language": "en",
         "published": "2011-02-10T15:04:55Z",
         "foo": "some extension property",
         "generator": "http://example.org/activities-app",
@@ -235,37 +236,37 @@
           "ga": "Martin phost le físeán nua a albam."
         },
         "actor": {
-          "@type": "person",
-          "@id": "urn:example:person:martin",
+          "type": "person",
+          "id": "urn:example:person:martin",
           "name": "Martin Smith",
           "url": "http://example.org/martin",
           "foo2": "some other extension property",
           "image": {
-            "@id": "http://example.org/martin/image",
+            "id": "http://example.org/martin/image",
             "width": 250,
             "height": 250
           }
         },
         "object" : {
-          "@type": "photo",
-          "@id": "urn:example:album:abc123/my_fluffy_cat",
+          "type": "photo",
+          "id": "urn:example:album:abc123/my_fluffy_cat",
           "url": "http://example.org/album/my_fluffy_cat.jpg",
           "image": {
-            "@id": "http://example.org/album/my_fluffy_cat_thumb.jpg",
+            "id": "http://example.org/album/my_fluffy_cat_thumb.jpg",
             "width": 250,
             "height": 250
           }
         },
         "target": {
           "url": "http://example.org/album/",
-          "@type": "photo-album",
-          "@id": "urn:example.org:album:abc123",
+          "type": "photo-album",
+          "id": "urn:example.org:album:abc123",
           "title": {
             "en": "Martin's Photo Album",
             "ga": "Grianghraif Máirtín"
           },
           "image": {
-            "@id": "http://example.org/album/thumbnail.jpg",
+            "id": "http://example.org/album/thumbnail.jpg",
             "width": 250,
             "height": 250
           }
@@ -290,31 +291,31 @@
           <ttcol align="left" width="15%">Property</ttcol>
           <ttcol align="left" width="21%">Value</ttcol>
           <ttcol align="left">Description</ttcol>     
-          <c>@id</c>
+          <c>id</c>
           <c>IRI</c>
           <c>
             Provides a permanent, universally unique identifier for the
             object in the form of an absolute IRI <xref target="RFC3987"/>.
-            Objects SHOULD contain a single "@id" property. If an object
+            Objects SHOULD contain a single "id" property. If an object
             does not contain an "id" property, consumers MAY use the value of
             the "url" property as a less-reliable, non-unique identifier.
           </c>
-          <c>@type</c>
+          <c>type</c>
           <c>IRI</c>
           <c>
-            Identifies the type of object. An object MAY contain a "@type"
+            Identifies the type of object. An object MAY contain a "type"
             property whose value matches either the "isegment-nz-nc" or the 
             "IRI" production in <xref target="RFC3987"/>. The use of a relative 
-            reference other than a simple name is not allowed. If no "@type" 
+            reference other than a simple name is not allowed. If no "type" 
             property is specified, the object has no specific type.
           </c>
           
-          <c>@language</c>
+          <c>language</c>
           <c><xref target="RFC5646"/> Language Tag</c>
           <c>
             Identifies the language for all human-readable, natural-language 
             metadata values included in the object. An object MAY contain a
-            "@language" property.
+            "language" property.
           </c>
           
           <c>name</c>
@@ -322,7 +323,7 @@
           <c>
             A simple human-readable, plain-text name for the 
             object. HTML markup MUST NOT be included. An object MAY contain a 
-            "name" property. If the object does not specify a "@type"
+            "name" property. If the object does not specify a "type"
             property, the object SHOULD specify a "name".
           </c>
           <c>url</c>
@@ -356,7 +357,7 @@
           <preamble>A single String value using the default language:</preamble>
           <artwork>
   {
-    "@language": "en",
+    "language": "en",
     "title": "This is the title"
   }
           </artwork>
@@ -414,23 +415,23 @@
           a simple JSON string containing an absolute or relative 
           IRI:</preamble><artwork>
   {
-    "@type": "application",
-    "@id": "http://example.org/application/123",
+    "type": "application",
+    "id": "http://example.org/application/123",
     "name": "My Application",
     "image": "http://example.org/application/123.png"
   }
         </artwork></figure>
           
         <figure><preamble>Alternatively, if additional metadata is required, 
-          the link can be expressed as an object that uses the @id or url 
+          the link can be expressed as an object that uses the id or url 
           property:</preamble>
           <artwork>
   {
-    "@type": "application",
-    "@id": "http://example.org/application/123",
+    "type": "application",
+    "id": "http://example.org/application/123",
     "name": "My Application",
     "image": {
-      "@id": "http://example.org/application/123.png",
+      "id": "http://example.org/application/123.png",
       "mediaType": "image/png",
       "height": 320,
       "width": 320
@@ -443,13 +444,13 @@
           A JSON Array with a mix of string and object elements can be 
           used:</preamble><artwork>
   {
-    "@type": "application",
-    "@id": "http://example.org/application/123",
+    "type": "application",
+    "id": "http://example.org/application/123",
     "name": "My Application",
     "image": [
       "http://example.org/application/abc.gif",
       {
-        "@id": "http://example.org/application/123.png",
+        "id": "http://example.org/application/123.png",
         "mediaType": "image/png",
         "height": 320,
         "width": 320
@@ -513,12 +514,12 @@
         </t>
         
         <t>
-          Within an Activity object, the "@type" property is used
+          Within an Activity object, the "type" property is used
           to identify the type of activity. Formerly, in JSON Activity
           Streams version 1.0, this was represented using the "verb" 
           property. All existing verb definitions used in JSON Activity
           Streams 1.0 implementations can continue to be used as values
-          of the "@type" property and retain their existing semantics.
+          of the "type" property and retain their existing semantics.
         </t>
 
         <t>
@@ -766,7 +767,7 @@
           <c>IRI</c>
           <c>
             Provides a contextually meaningful alternative label for the
-            object in addition to the "@id". For instance, within some 
+            object in addition to the "id". For instance, within some 
             systems, groups can be identified both by a unique global ID
             and a more "human-friendly" label such as "@friends" or "@network".
             The value of the "alias" property MUST match either the "isegment-nz-nc" 
@@ -980,7 +981,7 @@
         </t>
         
         <t>
-          The value of the Collection object's "@type" property MUST
+          The value of the Collection object's "type" property MUST
           be "collection" unless the fact that the object is a collection
           can be determined by context.
         </t>
@@ -1105,7 +1106,7 @@
             object is used as a property value with the "totalItems" field
             used to indicate the total number of occurrences, the "items" 
             property used to provide details for a subset of the most 
-            recent occurrences, and the "@id" property used to reference a 
+            recent occurrences, and the "id" property used to reference a 
             separate Activity Streams document providing additional information.
           </t>
           
@@ -1133,19 +1134,19 @@
               provides information on the most recently received 
               response:</preamble>
             <artwork>{
-  "@type": "note",
-  "@id": "urn:example:note:1",
+  "type": "note",
+  "id": "urn:example:note:1",
   "name": "Note",
   "title": "A Note about things",
   "content": "blah blah blah",
   "replies": {
-    "@id": "http://example.org/note/1/comments.json",
+    "id": "http://example.org/note/1/comments.json",
     "mediaType": "application/activity+json",
     "totalItems": 10,
     "items": [
       {
-        "@type": "note",
-        "@id": "urn:example:note:1:A",
+        "type": "note",
+        "id": "urn:example:note:1:A",
         "content": "That's profound, man."
       }
     ]
@@ -1182,7 +1183,7 @@
     <section anchor="id-comparison" title="Comparison of Identifier Values">
       <t>
         The values of multiple <xref target="object">Object</xref>
-        and <xref target="link">Link</xref> value's "@id" properties can be
+        and <xref target="link">Link</xref> value's "id" properties can be
         compared to determine if the objects represent duplicate content.
         Processors MUST compare these values on a character-by-character, 
         case-sensitive basis.  Comparison operations MUST be based solely
@@ -1310,7 +1311,7 @@
       <section anchor="registry" title="Activity Streams Type Registry">
         
         <t>
-          This document establishes a registry for Activity Streams @type 
+          This document establishes a registry for Activity Streams type 
           property values. The "Activity Streams Type" registry operates 
           under the <xref target="RFC5226">"Expert Review" policy</xref>.
         </t>
@@ -1331,7 +1332,7 @@
             <t hangText="Type:">
               <vspace />
               A type identifier suitable for use as the value of the 
-              "@type" property (<xref target="object" />). The value 
+              "type" property (<xref target="object" />). The value 
               MUST either be an "isegment-nz-nc" or absolute "IRI" 
               as defined in <xref target="RFC3987"/>. The use of a relative 
               reference other than a simple name is not allowed.
@@ -1355,7 +1356,7 @@
             <t hangText="Aliases:">
               <vspace />
               An optional listing of one or more alternative identifiers for 
-              this type. These MUST be suitable for use as @type property
+              this type. These MUST be suitable for use as type property
               values.
             </t>
             <t hangText="Specification:">
@@ -1428,5 +1429,48 @@
       Saloranta, Tim Moore, Timothy Young, Todd Barnard, Tosh Meston, Tyler
       Gillies, Will Norris, Zach Copley, and Zach Shepherd.</t>
     </section>
+    
+    <section anchor="Appendix-A" title="Processing as JSON-LD">
+      
+      <t>
+        While the Activity Streams 2.0 syntax is designed to be compatible 
+        with JSON-LD, in order to successfully process an Activity Streams
+        document as JSON-LD, a "@context" description needs to be provided.
+        The following example illustrates an Activity Streams document
+        that can be processed as JSON-LD containing Schema.org defined 
+        metadata elements.
+      </t>
+      
+      <figure><artwork>
+  {
+    '@context': {
+      '@id': 'http://schema.org',
+      'type': '@type',
+      'id': '@id',
+      'actor': 'http://schema.org/Action/performedBy',
+      'object': 'http://schema.org/BuyAction/bought',
+      'purchase': 'http://schema.org/BuyAction',
+      'person': 'http://schema.org/Person',
+      'book': 'http://schema.org/Book'
+    },
+    'type' : 'purchase',
+    'id' : 'urn:example:purchase:123/abc',
+    'title': 'John purchased "A Tale of Two Cities"',
+    'startTime' : '2013-04-02T12:31Z',
+    'endTime' : '2013-04-02T12:31Z',
+    'actor': {
+      'type': 'person',
+      'name': 'John Doe'
+    }
+    'status':'completed',
+    'object': {
+      'type': 'book',
+      'title': 'A Tale of Two Cities'
+    }
+  }
+      </artwork></figure> 
+
+    </section>
+    
   </back>
 </rfc>
