@@ -51,7 +51,7 @@
         by Martin Atkins, Will Norris, Chris Messina, Monica Wilkinson, 
         Rob Dolin and James Snell. The author is very thankful for their 
         significant contributions and gladly stands on their shoulders.
-        Some portions of the original text of Activity Streams 1.0 have been
+        Some portions of the original text of Activity Streams 1.0 are
         used in this document.
       </t>
     </note>
@@ -126,6 +126,7 @@
               JSON-LD uses field names with a leading "@" character,
               such as "@id", "@type" and "@language". In this 
               specification, the leading "@" is omitted.
+            </t>
             <t>
               While JSON-LD allows using relative IRI references
               in the values of ID properties, this specification 

@@ -22,7 +22,8 @@ Author's Note
    Streams 1.0 specification that was originally co-authored by Martin
    Atkins, Will Norris, Chris Messina, Monica Wilkinson, Rob Dolin and
    James Snell.  The author is very thankful for their significant
-   contributions and gladly stands on their shoulders.
+   contributions and gladly stands on their shoulders.  Some portions of
+   the original text of Activity Streams 1.0 are used in this document.
 
 Status of This Memo
 
@@ -49,15 +50,15 @@ Copyright Notice
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents
    (http://trustee.ietf.org/license-info) in effect on the date of
-   publication of this document.  Please review these documents
 
 
 
-Snell                  Expires November 02, 2013                [Page 1]
+Snell                   Expires November 02, 2013               [Page 1]
 
-Internet-Draft              ActivityStreams                     May 2013
+Internet-Draft               ActivityStreams                    May 2013
 
 
+   publication of this document.  Please review these documents
    carefully, as they describe your rights and restrictions with respect
    to this document.  Code Components extracted from this document must
    include Simplified BSD License text as described in Section 4.e of
@@ -95,7 +96,8 @@ Table of Contents
      9.1.  Normative References  . . . . . . . . . . . . . . . . . .  23
      9.2.  Informational References  . . . . . . . . . . . . . . . .  23
    Appendix A.  Acknowledgements . . . . . . . . . . . . . . . . . .  23
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  24
+   Appendix B.  Processing as JSON-LD  . . . . . . . . . . . . . . .  24
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  25
 
 1.  Introduction
 
@@ -104,16 +106,16 @@ Table of Contents
    activities express what can be done with any particular object, while
    in the latter case, they express what has already been done.
 
+
+
+
+Snell                   Expires November 02, 2013               [Page 2]
+
+Internet-Draft               ActivityStreams                    May 2013
+
+
    It is the goal of this specification to provide a JSON-based syntax
    that is sufficient to express metadata about activities in a rich,
-
-
-
-Snell                  Expires November 02, 2013                [Page 2]
-
-Internet-Draft              ActivityStreams                     May 2013
-
-
    human-friendly, machine-processable and extensible manner.  This may
    include constructing natural-language descriptions about the
    activity, visual representations about he activity, associating
@@ -148,27 +150,29 @@ Internet-Draft              ActivityStreams                     May 2013
    document is not defined as a "JSON-LD Vocabulary", the syntax is
    designed to be closely compatible with JSON-LD.
 
-   Most significantly, the JSON Activity Streams 2.0 syntax directly
-   leverages the "@id", "@type", and "@language" properties, as well as
-   the Language Map construct as defined by JSON-LD.
-
    There are a few differences between JSON-LD and the serialization
    syntax described here, specifically:
 
+   o  JSON-LD uses field names with a leading "@" character, such as
+      "@id", "@type" and "@language".  In this specification, the
+      leading "@" is omitted.
+
    o  While JSON-LD allows using relative IRI references in the values
-      of @id properties, this specification limits @id properties to
+      of ID properties, this specification limits identifiers to
       absolute IRIs.
+
+
+
+
+
+Snell                   Expires November 02, 2013               [Page 3]
+
+Internet-Draft               ActivityStreams                    May 2013
+
 
    o  While it is possible to derive a JSON-LD "context" description for
       the Activity Streams 2.0 JSON syntax one is not normatively
       provided by this specification.
-
-
-
-Snell                  Expires November 02, 2013                [Page 3]
-
-Internet-Draft              ActivityStreams                     May 2013
-
 
 1.3.  Syntax Conventions
 
@@ -187,7 +191,7 @@ Internet-Draft              ActivityStreams                     May 2013
    are two special considerations: (1) when an IRI that is not also a
    URI is given for dereferencing, it MUST be mapped to a URI using the
    steps in Section 3.1 of [RFC3987] and (2) when an IRI is serving as
-   an "@id" value, it MUST NOT be so mapped.
+   an "id" value, it MUST NOT be so mapped.
 
    Unless otherwise specified, all properties with date and time values
    MUST conform to the "date-time" production in [RFC3339], with an
@@ -201,34 +205,35 @@ Internet-Draft              ActivityStreams                     May 2013
    Following is a simple example of an activity:
 
    {
-     "@type": "post",
+     "type": "post",
      "published": "2011-02-10T15:04:55Z",
      "actor": {
-       "@type": "person",
-       "@id": "urn:example:person:martin",
+       "type": "person",
+       "id": "urn:example:person:martin",
        "name": "Martin Smith",
        "url": "http://example.org/martin",
        "image": {
-         "@id": "http://example.org/martin/image",
+         "id": "http://example.org/martin/image",
          "width": 250,
          "height": 250
        }
      },
+
+
+
+Snell                   Expires November 02, 2013               [Page 4]
+
+Internet-Draft               ActivityStreams                    May 2013
+
+
      "object" : {
-       "@id": "urn:example:blog:abc123/xyz"
+       "type": "article",
+       "id": "urn:example:blog:abc123/xyz"
        "url": "http://example.org/blog/2011/02/entry"
      },
-
-
-
-Snell                  Expires November 02, 2013                [Page 4]
-
-Internet-Draft              ActivityStreams                     May 2013
-
-
      "target" : {
-       "@type": "blog",
-       "@id": "urn:example:blog:abc123",
+       "type": "blog",
+       "id": "urn:example:blog:abc123",
        "name": "Martin's Blog",
        "url": "http://example.org/blog/"
      }
@@ -243,8 +248,8 @@ Internet-Draft              ActivityStreams                     May 2013
    {
      "items" : [
        {
-         "@type": "post",
-         "@language": "en",
+         "type": "post",
+         "language": "en",
          "published": "2011-02-10T15:04:55Z",
          "foo": "some extension property",
          "generator": "http://example.org/activities-app",
@@ -254,45 +259,45 @@ Internet-Draft              ActivityStreams                     May 2013
            "ga": "Martin phost le fisean nua a albam."
          },
          "actor": {
-           "@type": "person",
-           "@id": "urn:example:person:martin",
+           "type": "person",
+           "id": "urn:example:person:martin",
            "name": "Martin Smith",
            "url": "http://example.org/martin",
            "foo2": "some other extension property",
            "image": {
-             "@id": "http://example.org/martin/image",
+             "id": "http://example.org/martin/image",
              "width": 250,
              "height": 250
            }
          },
          "object" : {
-           "@type": "photo",
-           "@id": "urn:example:album:abc123/my_fluffy_cat",
+           "type": "photo",
+           "id": "urn:example:album:abc123/my_fluffy_cat",
            "url": "http://example.org/album/my_fluffy_cat.jpg",
+
+
+
+Snell                   Expires November 02, 2013               [Page 5]
+
+Internet-Draft               ActivityStreams                    May 2013
+
+
            "image": {
-             "@id": "http://example.org/album/my_fluffy_cat_thumb.jpg",
+             "id": "http://example.org/album/my_fluffy_cat_thumb.jpg",
              "width": 250,
              "height": 250
            }
-
-
-
-Snell                  Expires November 02, 2013                [Page 5]
-
-Internet-Draft              ActivityStreams                     May 2013
-
-
          },
          "target": {
            "url": "http://example.org/album/",
-           "@type": "photo-album",
-           "@id": "urn:example.org:album:abc123",
+           "type": "photo-album",
+           "id": "urn:example.org:album:abc123",
            "title": {
              "en": "Martin's Photo Album",
              "ga": "Grianghraif Mairtin"
            },
            "image": {
-             "@id": "http://example.org/album/thumbnail.jpg",
+             "id": "http://example.org/album/thumbnail.jpg",
              "width": 250,
              "height": 250
            }
@@ -309,51 +314,49 @@ Internet-Draft              ActivityStreams                     May 2013
    The following "core properties" apply to all JSON objects serialized
    within an Activity Stream document.
 
-   +------------+-------------+----------------------------------------+
-   | Property   | Value       | Description                            |
-   +------------+-------------+----------------------------------------+
-   | @id        | IRI         | Provides a permanent, universally      |
-   |            |             | unique identifier for the object in    |
-   |            |             | the form of an absolute IRI [RFC3987]. |
-   |            |             | Objects SHOULD contain a single "@id"  |
-   |            |             | property. If an object does not        |
-   |            |             | contain an "id" property, consumers    |
-   |            |             | MAY use the value of the "url"         |
-   |            |             | property as a less-reliable, non-      |
-   |            |             | unique identifier.                     |
-   | @type      | IRI         | Identifies the type of object. An      |
-   |            |             | object MAY contain a "@type" property  |
-   |            |             | whose value matches either the         |
-   |            |             | "isegment-nz-nc" or the "IRI"          |
-   |            |             | production in [RFC3987]. The use of a  |
-   |            |             | relative reference other than a simple |
-   |            |             | name is not allowed. If no "@type"     |
-   |            |             | property is specified, the object has  |
-   |            |             | no specific type.                      |
+   +----------+-------------+------------------------------------------+
+   | Property | Value       | Description                              |
+   +----------+-------------+------------------------------------------+
+   | id       | IRI         | Provides a permanent, universally unique |
+   |          |             | identifier for the object in the form of |
+   |          |             | an absolute IRI [RFC3987].  Objects      |
+   |          |             | SHOULD contain a single "id" property.   |
+   |          |             | If an object does not contain an "id"    |
+   |          |             | property, consumers MAY use the value of |
+   |          |             | the "url" property as a less-reliable,   |
+   |          |             | non-unique identifier.                   |
+   | type     | IRI         | Identifies the type of object. An object |
+   |          |             | MAY contain a "type" property whose      |
+   |          |             | value matches either the "isegment-nz-   |
+   |          |             | nc" or the "IRI" production in           |
+   |          |             | [RFC3987]. The use of a relative         |
 
 
 
-Snell                  Expires November 02, 2013                [Page 6]
+Snell                   Expires November 02, 2013               [Page 6]
 
-Internet-Draft              ActivityStreams                     May 2013
+Internet-Draft               ActivityStreams                    May 2013
 
 
-   | @language  | [RFC5646]   | Identifies the language for all human- |
-   |            | Language    | readable, natural-language metadata    |
-   |            | Tag         | values included in the object. An      |
-   |            |             | object MAY contain a "@language"       |
-   |            |             | property.                              |
-   | name       | String      | A simple human-readable, plain-text    |
-   |            |             | name for the object. HTML markup MUST  |
-   |            |             | NOT be included. An object MAY contain |
-   |            |             | a "name" property. If the object does  |
-   |            |             | not specify a "@type" property, the    |
-   |            |             | object SHOULD specify a "name".        |
-   | url        | Link        | A Link (Section 3.3) value describing  |
-   |            |             | a resource that provides a visual      |
-   |            |             | representation of the object. An       |
-   |            |             | object MAY contain a "url" property.   |
-   +------------+-------------+----------------------------------------+
+   |          |             | reference other than a simple name is    |
+   |          |             | not allowed. If no "type" property is    |
+   |          |             | specified, the object has no specific    |
+   |          |             | type.                                    |
+   | language | [RFC5646]   | Identifies the language for all human-   |
+   |          | Language    | readable, natural-language metadata      |
+   |          | Tag         | values included in the object. An object |
+   |          |             | MAY contain a "language" property.       |
+   | name     | String      | A simple human-readable, plain-text name |
+   |          |             | for the object. HTML markup MUST NOT be  |
+   |          |             | included. An object MAY contain a "name" |
+   |          |             | property. If the object does not specify |
+   |          |             | a "type" property, the object SHOULD     |
+   |          |             | specify a "name".                        |
+   | url      | Link        | A Link (Section 3.3) value describing a  |
+   |          |             | resource that provides a visual          |
+   |          |             | representation of the object. An object  |
+   |          |             | MAY contain a "url" property.            |
+   +----------+-------------+------------------------------------------+
 
 
 3.2.  Natural Language Values
@@ -370,12 +373,26 @@ Internet-Draft              ActivityStreams                     May 2013
    A single String value using the default language:
 
    {
-     "@language": "en",
+     "language": "en",
      "title": "This is the title"
    }
 
 
    Multiple, language-specific values:
+
+
+
+
+
+
+
+
+
+
+Snell                   Expires November 02, 2013               [Page 7]
+
+Internet-Draft               ActivityStreams                    May 2013
+
 
    {
      "title": {
@@ -384,14 +401,6 @@ Internet-Draft              ActivityStreams                     May 2013
        "sp": "Este es el titulo"
      }
    }
-
-
-
-
-
-Snell                  Expires November 02, 2013                [Page 7]
-
-Internet-Draft              ActivityStreams                     May 2013
 
 
    Each key in the JSON dictionary MUST be an [RFC5646] Language Tag.
@@ -422,40 +431,31 @@ Internet-Draft              ActivityStreams                     May 2013
    or relative IRI:
 
    {
-     "@type": "application",
-     "@id": "http://example.org/application/123",
+     "type": "application",
+     "id": "http://example.org/application/123",
      "name": "My Application",
      "image": "http://example.org/application/123.png"
    }
 
 
    Alternatively, if additional metadata is required, the link can be
-   expressed as an object that uses the @id or url property:
+   expressed as an object that uses the id or url property:
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-Snell                  Expires November 02, 2013                [Page 8]
+Snell                   Expires November 02, 2013               [Page 8]
 
-Internet-Draft              ActivityStreams                     May 2013
+Internet-Draft               ActivityStreams                    May 2013
 
 
    {
-     "@type": "application",
-     "@id": "http://example.org/application/123",
+     "type": "application",
+     "id": "http://example.org/application/123",
      "name": "My Application",
      "image": {
-       "@id": "http://example.org/application/123.png",
+       "id": "http://example.org/application/123.png",
        "mediaType": "image/png",
        "height": 320,
        "width": 320
@@ -467,13 +467,13 @@ Internet-Draft              ActivityStreams                     May 2013
    mix of string and object elements can be used:
 
    {
-     "@type": "application",
-     "@id": "http://example.org/application/123",
+     "type": "application",
+     "id": "http://example.org/application/123",
      "name": "My Application",
      "image": [
        "http://example.org/application/abc.gif",
        {
-         "@id": "http://example.org/application/123.png",
+         "id": "http://example.org/application/123.png",
          "mediaType": "image/png",
          "height": 320,
          "width": 320
@@ -501,9 +501,9 @@ Internet-Draft              ActivityStreams                     May 2013
 
 
 
-Snell                  Expires November 02, 2013                [Page 9]
+Snell                   Expires November 02, 2013               [Page 9]
 
-Internet-Draft              ActivityStreams                     May 2013
+Internet-Draft               ActivityStreams                    May 2013
 
 
    +---------------+--------------+------------------------------------+
@@ -524,11 +524,11 @@ Internet-Draft              ActivityStreams                     May 2013
    Activity objects are specializations of the base Object (Section 3.1)
    type that provide metadata about potential or completed actions.
 
-   Within an Activity object, the "@type" property is used to identify
+   Within an Activity object, the "type" property is used to identify
    the type of activity.  Formerly, in JSON Activity Streams version
    1.0, this was represented using the "verb" property.  All existing
    verb definitions used in JSON Activity Streams 1.0 implementations
-   can continue to be used as values of the "@type" property and retain
+   can continue to be used as values of the "type" property and retain
    their existing semantics.
 
    Activity objects extend the core object (Section 3.1) definition with
@@ -557,9 +557,9 @@ Internet-Draft              ActivityStreams                     May 2013
 
 
 
-Snell                  Expires November 02, 2013               [Page 10]
+Snell                   Expires November 02, 2013              [Page 10]
 
-Internet-Draft              ActivityStreams                     May 2013
+Internet-Draft               ActivityStreams                    May 2013
 
 
    |             |            | instance, in the activity, "John saved |
@@ -613,9 +613,9 @@ Internet-Draft              ActivityStreams                     May 2013
 
 
 
-Snell                  Expires November 02, 2013               [Page 11]
+Snell                   Expires November 02, 2013              [Page 11]
 
-Internet-Draft              ActivityStreams                     May 2013
+Internet-Draft               ActivityStreams                    May 2013
 
 
    utilize and expose the additional information in a number of
@@ -669,9 +669,9 @@ Internet-Draft              ActivityStreams                     May 2013
 
 
 
-Snell                  Expires November 02, 2013               [Page 12]
+Snell                   Expires November 02, 2013              [Page 12]
 
-Internet-Draft              ActivityStreams                     May 2013
+Internet-Draft               ActivityStreams                    May 2013
 
 
    |              | value              | audience.                     |
@@ -725,9 +725,9 @@ Internet-Draft              ActivityStreams                     May 2013
 
 
 
-Snell                  Expires November 02, 2013               [Page 13]
+Snell                   Expires November 02, 2013              [Page 13]
 
-Internet-Draft              ActivityStreams                     May 2013
+Internet-Draft               ActivityStreams                    May 2013
 
 
 3.5.  Additional Object Properties
@@ -740,7 +740,7 @@ Internet-Draft              ActivityStreams                     May 2013
    +--------------+-------------+--------------------------------------+
    | "alias"      | IRI         | Provides a contextually meaningful   |
    |              |             | alternative label for the object in  |
-   |              |             | addition to the "@id". For instance, |
+   |              |             | addition to the "id". For instance,  |
    |              |             | within some systems, groups can be   |
    |              |             | identified both by a unique global   |
    |              |             | ID and a more "human-friendly" label |
@@ -781,9 +781,9 @@ Internet-Draft              ActivityStreams                     May 2013
 
 
 
-Snell                  Expires November 02, 2013               [Page 14]
+Snell                   Expires November 02, 2013              [Page 14]
 
-Internet-Draft              ActivityStreams                     May 2013
+Internet-Draft               ActivityStreams                    May 2013
 
 
    |              |             | object, intended for human           |
@@ -837,9 +837,9 @@ Internet-Draft              ActivityStreams                     May 2013
 
 
 
-Snell                  Expires November 02, 2013               [Page 15]
+Snell                   Expires November 02, 2013              [Page 15]
 
-Internet-Draft              ActivityStreams                     May 2013
+Internet-Draft               ActivityStreams                    May 2013
 
 
    |              |             | "startTime" specifies the moment the |
@@ -893,9 +893,9 @@ Internet-Draft              ActivityStreams                     May 2013
 
 
 
-Snell                  Expires November 02, 2013               [Page 16]
+Snell                   Expires November 02, 2013              [Page 16]
 
-Internet-Draft              ActivityStreams                     May 2013
+Internet-Draft               ActivityStreams                    May 2013
 
 
 3.6.  Collection
@@ -915,7 +915,7 @@ Internet-Draft              ActivityStreams                     May 2013
    collections", with each serialized subset representing a single
    "page".
 
-   The value of the Collection object's "@type" property MUST be
+   The value of the Collection object's "type" property MUST be
    "collection" unless the fact that the object is a collection can be
    determined by context.
 
@@ -949,9 +949,9 @@ Internet-Draft              ActivityStreams                     May 2013
 
 
 
-Snell                  Expires November 02, 2013               [Page 17]
+Snell                   Expires November 02, 2013              [Page 17]
 
-Internet-Draft              ActivityStreams                     May 2013
+Internet-Draft               ActivityStreams                    May 2013
 
 
    | "itemsPerPage" | Integer      | A non-negative integer specifying |
@@ -1005,9 +1005,9 @@ Internet-Draft              ActivityStreams                     May 2013
 
 
 
-Snell                  Expires November 02, 2013               [Page 18]
+Snell                   Expires November 02, 2013              [Page 18]
 
-Internet-Draft              ActivityStreams                     May 2013
+Internet-Draft               ActivityStreams                    May 2013
 
 
 3.6.1.  Using Collections as Summary Values
@@ -1019,7 +1019,7 @@ Internet-Draft              ActivityStreams                     May 2013
    different individuals.  In such cases, the Collection object is used
    as a property value with the "totalItems" field used to indicate the
    total number of occurrences, the "items" property used to provide
-   details for a subset of the most recent occurrences, and the "@id"
+   details for a subset of the most recent occurrences, and the "id"
    property used to reference a separate Activity Streams document
    providing additional information.
 
@@ -1061,25 +1061,25 @@ Internet-Draft              ActivityStreams                     May 2013
 
 
 
-Snell                  Expires November 02, 2013               [Page 19]
+Snell                   Expires November 02, 2013              [Page 19]
 
-Internet-Draft              ActivityStreams                     May 2013
+Internet-Draft               ActivityStreams                    May 2013
 
 
    {
-     "@type": "note",
-     "@id": "urn:example:note:1",
+     "type": "note",
+     "id": "urn:example:note:1",
      "name": "Note",
      "title": "A Note about things",
      "content": "blah blah blah",
      "replies": {
-       "@id": "http://example.org/note/1/comments.json",
+       "id": "http://example.org/note/1/comments.json",
        "mediaType": "application/activity+json",
        "totalItems": 10,
        "items": [
          {
-           "@type": "note",
-           "@id": "urn:example:note:1:A",
+           "type": "note",
+           "id": "urn:example:note:1:A",
            "content": "That's profound, man."
          }
        ]
@@ -1103,7 +1103,7 @@ Internet-Draft              ActivityStreams                     May 2013
 5.  Comparison of Identifier Values
 
    The values of multiple Object (Section 3.1) and Link (Section 3.3)
-   value's "@id" properties can be compared to determine if the objects
+   value's "id" properties can be compared to determine if the objects
    represent duplicate content.  Processors MUST compare these values on
    a character-by-character, case-sensitive basis.  Comparison
    operations MUST be based solely on the IRI character strings and MUST
@@ -1117,9 +1117,9 @@ Internet-Draft              ActivityStreams                     May 2013
 
 
 
-Snell                  Expires November 02, 2013               [Page 20]
+Snell                   Expires November 02, 2013              [Page 20]
 
-Internet-Draft              ActivityStreams                     May 2013
+Internet-Draft               ActivityStreams                    May 2013
 
 
 6.  Extensibility
@@ -1173,9 +1173,9 @@ Internet-Draft              ActivityStreams                     May 2013
 
 
 
-Snell                  Expires November 02, 2013               [Page 21]
+Snell                   Expires November 02, 2013              [Page 21]
 
-Internet-Draft              ActivityStreams                     May 2013
+Internet-Draft               ActivityStreams                    May 2013
 
 
 8.  IANA Considerations
@@ -1229,9 +1229,9 @@ Internet-Draft              ActivityStreams                     May 2013
 
 
 
-Snell                  Expires November 02, 2013               [Page 22]
+Snell                   Expires November 02, 2013              [Page 22]
 
-Internet-Draft              ActivityStreams                     May 2013
+Internet-Draft               ActivityStreams                    May 2013
 
 
 9.  References
@@ -1285,9 +1285,9 @@ Appendix A.  Acknowledgements
 
 
 
-Snell                  Expires November 02, 2013               [Page 23]
+Snell                   Expires November 02, 2013              [Page 23]
 
-Internet-Draft              ActivityStreams                     May 2013
+Internet-Draft               ActivityStreams                    May 2013
 
 
    Crumlish, Dan Brickley, Dan Scott, Daniel Chapman, Danny Ayers, Dare
@@ -1320,6 +1320,51 @@ Internet-Draft              ActivityStreams                     May 2013
    Todd Barnard, Tosh Meston, Tyler Gillies, Will Norris, Zach Copley,
    and Zach Shepherd.
 
+Appendix B.  Processing as JSON-LD
+
+   While the Activity Streams 2.0 syntax is designed to be compatible
+   with JSON-LD, in order to successfully process an Activity Streams
+   document as JSON-LD, a "@context" description needs to be provided.
+   The following example illustrates an Activity Streams document that
+   can be processed as JSON-LD containing Schema.org defined metadata
+   elements.
+
+   {
+     '@context': {
+       '@id': 'http://schema.org',
+       'type': '@type',
+       'id': '@id',
+       'actor': 'http://schema.org/Action/performedBy',
+       'object': 'http://schema.org/BuyAction/bought',
+       'purchase': 'http://schema.org/BuyAction',
+       'person': 'http://schema.org/Person',
+
+
+
+Snell                   Expires November 02, 2013              [Page 24]
+
+Internet-Draft               ActivityStreams                    May 2013
+
+
+       'book': 'http://schema.org/Book'
+     },
+     'type' : 'purchase',
+     'id' : 'urn:example:purchase:123/abc',
+     'title': 'John purchased "A Tale of Two Cities"',
+     'startTime' : '2013-04-02T12:31Z',
+     'endTime' : '2013-04-02T12:31Z',
+     'actor': {
+       'type': 'person',
+       'name': 'John Doe'
+     }
+     'status':'completed',
+     'object': {
+       'type': 'book',
+       'title': 'A Tale of Two Cities'
+     }
+   }
+
+
 Author's Address
 
    James M Snell (editor)
@@ -1340,4 +1385,16 @@ Author's Address
 
 
 
-Snell                  Expires November 02, 2013               [Page 24]
+
+
+
+
+
+
+
+
+
+
+
+
+Snell                   Expires November 02, 2013              [Page 25]
