@@ -4,8 +4,8 @@
 
 Activity Streams (http://activitystrea.ms)                 J. Snell, Ed.
 Internet-Draft                                                       IBM
-Intended status: Standards Track                                May 2013
-Expires: November 02, 2013
+Intended status: Standards Track                           June 06, 2013
+Expires: December 08, 2013
 
 
                        JSON Activity Streams 2.0
@@ -40,7 +40,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on November 02, 2013.
+   This Internet-Draft will expire on December 08, 2013.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Snell                   Expires November 02, 2013               [Page 1]
+Snell                   Expires December 08, 2013               [Page 1]
 
-Internet-Draft               ActivityStreams                    May 2013
+Internet-Draft               ActivityStreams                   June 2013
 
 
    publication of this document.  Please review these documents
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Snell                   Expires November 02, 2013               [Page 2]
+Snell                   Expires December 08, 2013               [Page 2]
 
-Internet-Draft               ActivityStreams                    May 2013
+Internet-Draft               ActivityStreams                   June 2013
 
 
    It is the goal of this specification to provide a JSON-based syntax
@@ -165,9 +165,9 @@ Internet-Draft               ActivityStreams                    May 2013
 
 
 
-Snell                   Expires November 02, 2013               [Page 3]
+Snell                   Expires December 08, 2013               [Page 3]
 
-Internet-Draft               ActivityStreams                    May 2013
+Internet-Draft               ActivityStreams                   June 2013
 
 
    o  While it is possible to derive a JSON-LD "context" description for
@@ -221,9 +221,9 @@ Internet-Draft               ActivityStreams                    May 2013
 
 
 
-Snell                   Expires November 02, 2013               [Page 4]
+Snell                   Expires December 08, 2013               [Page 4]
 
-Internet-Draft               ActivityStreams                    May 2013
+Internet-Draft               ActivityStreams                   June 2013
 
 
      "object" : {
@@ -277,9 +277,9 @@ Internet-Draft               ActivityStreams                    May 2013
 
 
 
-Snell                   Expires November 02, 2013               [Page 5]
+Snell                   Expires December 08, 2013               [Page 5]
 
-Internet-Draft               ActivityStreams                    May 2013
+Internet-Draft               ActivityStreams                   June 2013
 
 
            "image": {
@@ -333,9 +333,9 @@ Internet-Draft               ActivityStreams                    May 2013
 
 
 
-Snell                   Expires November 02, 2013               [Page 6]
+Snell                   Expires December 08, 2013               [Page 6]
 
-Internet-Draft               ActivityStreams                    May 2013
+Internet-Draft               ActivityStreams                   June 2013
 
 
    |          |             | reference other than a simple name is    |
@@ -389,9 +389,9 @@ Internet-Draft               ActivityStreams                    May 2013
 
 
 
-Snell                   Expires November 02, 2013               [Page 7]
+Snell                   Expires December 08, 2013               [Page 7]
 
-Internet-Draft               ActivityStreams                    May 2013
+Internet-Draft               ActivityStreams                   June 2013
 
 
    {
@@ -445,9 +445,9 @@ Internet-Draft               ActivityStreams                    May 2013
 
 
 
-Snell                   Expires November 02, 2013               [Page 8]
+Snell                   Expires December 08, 2013               [Page 8]
 
-Internet-Draft               ActivityStreams                    May 2013
+Internet-Draft               ActivityStreams                   June 2013
 
 
    {
@@ -501,9 +501,9 @@ Internet-Draft               ActivityStreams                    May 2013
 
 
 
-Snell                   Expires November 02, 2013               [Page 9]
+Snell                   Expires December 08, 2013               [Page 9]
 
-Internet-Draft               ActivityStreams                    May 2013
+Internet-Draft               ActivityStreams                   June 2013
 
 
    +---------------+--------------+------------------------------------+
@@ -557,9 +557,9 @@ Internet-Draft               ActivityStreams                    May 2013
 
 
 
-Snell                   Expires November 02, 2013              [Page 10]
+Snell                   Expires December 08, 2013              [Page 10]
 
-Internet-Draft               ActivityStreams                    May 2013
+Internet-Draft               ActivityStreams                   June 2013
 
 
    |             |            | instance, in the activity, "John saved |
@@ -613,9 +613,9 @@ Internet-Draft               ActivityStreams                    May 2013
 
 
 
-Snell                   Expires November 02, 2013              [Page 11]
+Snell                   Expires December 08, 2013              [Page 11]
 
-Internet-Draft               ActivityStreams                    May 2013
+Internet-Draft               ActivityStreams                   June 2013
 
 
    utilize and expose the additional information in a number of
@@ -669,9 +669,9 @@ Internet-Draft               ActivityStreams                    May 2013
 
 
 
-Snell                   Expires November 02, 2013              [Page 12]
+Snell                   Expires December 08, 2013              [Page 12]
 
-Internet-Draft               ActivityStreams                    May 2013
+Internet-Draft               ActivityStreams                   June 2013
 
 
    |              | value              | audience.                     |
@@ -725,9 +725,9 @@ Internet-Draft               ActivityStreams                    May 2013
 
 
 
-Snell                   Expires November 02, 2013              [Page 13]
+Snell                   Expires December 08, 2013              [Page 13]
 
-Internet-Draft               ActivityStreams                    May 2013
+Internet-Draft               ActivityStreams                   June 2013
 
 
 3.5.  Additional Object Properties
@@ -781,9 +781,9 @@ Internet-Draft               ActivityStreams                    May 2013
 
 
 
-Snell                   Expires November 02, 2013              [Page 14]
+Snell                   Expires December 08, 2013              [Page 14]
 
-Internet-Draft               ActivityStreams                    May 2013
+Internet-Draft               ActivityStreams                   June 2013
 
 
    |               | (Section     | referencing one or more visual,    |
@@ -837,9 +837,9 @@ Internet-Draft               ActivityStreams                    May 2013
 
 
 
-Snell                   Expires November 02, 2013              [Page 15]
+Snell                   Expires December 08, 2013              [Page 15]
 
-Internet-Draft               ActivityStreams                    May 2013
+Internet-Draft               ActivityStreams                   June 2013
 
 
    |               |              | object. When used within an        |
@@ -893,9 +893,9 @@ Internet-Draft               ActivityStreams                    May 2013
 
 
 
-Snell                   Expires November 02, 2013              [Page 16]
+Snell                   Expires December 08, 2013              [Page 16]
 
-Internet-Draft               ActivityStreams                    May 2013
+Internet-Draft               ActivityStreams                   June 2013
 
 
    |               | (Section     | identifying one or more other      |
@@ -949,9 +949,9 @@ Internet-Draft               ActivityStreams                    May 2013
 
 
 
-Snell                   Expires November 02, 2013              [Page 17]
+Snell                   Expires December 08, 2013              [Page 17]
 
-Internet-Draft               ActivityStreams                    May 2013
+Internet-Draft               ActivityStreams                   June 2013
 
 
    |                |              | updated strictly after the date   |
@@ -1005,9 +1005,9 @@ Internet-Draft               ActivityStreams                    May 2013
 
 
 
-Snell                   Expires November 02, 2013              [Page 18]
+Snell                   Expires December 08, 2013              [Page 18]
 
-Internet-Draft               ActivityStreams                    May 2013
+Internet-Draft               ActivityStreams                   June 2013
 
 
    |                | 3.3) value   | the items that have been updated  |
@@ -1061,9 +1061,9 @@ Internet-Draft               ActivityStreams                    May 2013
 
 
 
-Snell                   Expires November 02, 2013              [Page 19]
+Snell                   Expires December 08, 2013              [Page 19]
 
-Internet-Draft               ActivityStreams                    May 2013
+Internet-Draft               ActivityStreams                   June 2013
 
 
    {
@@ -1117,9 +1117,9 @@ Internet-Draft               ActivityStreams                    May 2013
 
 
 
-Snell                   Expires November 02, 2013              [Page 20]
+Snell                   Expires December 08, 2013              [Page 20]
 
-Internet-Draft               ActivityStreams                    May 2013
+Internet-Draft               ActivityStreams                   June 2013
 
 
    1.  Implementations MUST use the "application/stream+json" MIME media
@@ -1173,9 +1173,9 @@ Internet-Draft               ActivityStreams                    May 2013
 
 
 
-Snell                   Expires November 02, 2013              [Page 21]
+Snell                   Expires December 08, 2013              [Page 21]
 
-Internet-Draft               ActivityStreams                    May 2013
+Internet-Draft               ActivityStreams                   June 2013
 
 
 6.  Comparison of Identifier Values
@@ -1229,9 +1229,9 @@ Internet-Draft               ActivityStreams                    May 2013
 
 
 
-Snell                   Expires November 02, 2013              [Page 22]
+Snell                   Expires December 08, 2013              [Page 22]
 
-Internet-Draft               ActivityStreams                    May 2013
+Internet-Draft               ActivityStreams                   June 2013
 
 
    Activity Streams are JSON Documents and are subject to the same
@@ -1285,9 +1285,9 @@ Internet-Draft               ActivityStreams                    May 2013
 
 
 
-Snell                   Expires November 02, 2013              [Page 23]
+Snell                   Expires December 08, 2013              [Page 23]
 
-Internet-Draft               ActivityStreams                    May 2013
+Internet-Draft               ActivityStreams                   June 2013
 
 
       Intended usage: COMMON
@@ -1341,9 +1341,9 @@ Internet-Draft               ActivityStreams                    May 2013
 
 
 
-Snell                   Expires November 02, 2013              [Page 24]
+Snell                   Expires December 08, 2013              [Page 24]
 
-Internet-Draft               ActivityStreams                    May 2013
+Internet-Draft               ActivityStreams                   June 2013
 
 
 10.2.  Informational References
@@ -1397,9 +1397,9 @@ Appendix A.  Acknowledgements
 
 
 
-Snell                   Expires November 02, 2013              [Page 25]
+Snell                   Expires December 08, 2013              [Page 25]
 
-Internet-Draft               ActivityStreams                    May 2013
+Internet-Draft               ActivityStreams                   June 2013
 
 
 Appendix B.  Processing as JSON-LD
@@ -1453,4 +1453,4 @@ Author's Address
 
 
 
-Snell                   Expires November 02, 2013              [Page 26]
+Snell                   Expires December 08, 2013              [Page 26]
