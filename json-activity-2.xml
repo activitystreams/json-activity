@@ -89,8 +89,8 @@
       <section title="Relationship to JSON Activity Streams 1.0" anchor="asms-1">
         
         <t>
-          The <eref target="http://activitystrea.ms/specs/json/1.0/">JSON Activity 
-          Streams 1.0</eref> specification was published in May
+          The <xref target="activitystreams-1.0">JSON Activity 
+          Streams 1.0</xref> specification was published in May
           of 2011 and provided a baseline extensible syntax for the expression
           of completed activities. This specification builds upon that 
           initial foundation by incorporating lessons learned through 
@@ -193,7 +193,7 @@
     "actor": {
       "type": "person",
       "id": "urn:example:person:martin",
-      "name": "Martin Smith",
+      "displayName": "Martin Smith",
       "url": "http://example.org/martin",
       "image": {
         "id": "http://example.org/martin/image",
@@ -209,7 +209,7 @@
     "target" : {
       "type": "blog",
       "id": "urn:example:blog:abc123",
-      "name": "Martin's Blog",
+      "displayName": "Martin's Blog",
       "url": "http://example.org/blog/"
     }
   }
@@ -239,7 +239,7 @@
         "actor": {
           "type": "person",
           "id": "urn:example:person:martin",
-          "name": "Martin Smith",
+          "displayName": "Martin Smith",
           "url": "http://example.org/martin",
           "foo2": "some other extension property",
           "image": {
@@ -324,8 +324,8 @@
           <c>
             A simple human-readable, plain-text name for the 
             object. HTML markup MUST NOT be included. An object MAY contain a 
-            "name" property. If the object does not specify a "type"
-            property, the object SHOULD specify a "name".
+            "displayName" property. If the object does not specify a "type"
+            property, the object SHOULD specify a "displayName".
           </c>
           <c>url</c>
           <c>Link</c>
@@ -350,7 +350,7 @@
         
         <t>
           For instance, the "title" property in all objects is a
-          Natural Language value. This means that the "name" can 
+          Natural Language value. This means that the "displayName" can 
           be expressed in one or more languages:
         </t>
         
@@ -418,7 +418,7 @@
   {
     "type": "application",
     "id": "http://example.org/application/123",
-    "name": "My Application",
+    "displayName": "My Application",
     "image": "http://example.org/application/123.png"
   }
         </artwork></figure>
@@ -430,7 +430,7 @@
   {
     "type": "application",
     "id": "http://example.org/application/123",
-    "name": "My Application",
+    "displayName": "My Application",
     "image": {
       "id": "http://example.org/application/123.png",
       "mediaType": "image/png",
@@ -447,7 +447,7 @@
   {
     "type": "application",
     "id": "http://example.org/application/123",
-    "name": "My Application",
+    "displayName": "My Application",
     "image": [
       "http://example.org/application/abc.gif",
       {
@@ -776,7 +776,7 @@
             relative reference other than a simple name is not allowed. 
           </c>
 
-          <c>"attachment"</c>
+          <c>"attachments"</c>
           <c><xref target="link">Link</xref> value</c>
           <c>
             A <xref target="link">Link</xref> value referencing one or more 
@@ -799,12 +799,12 @@
             thumbnail images MAY be included.
           </c>
 
-          <c>"duplicate"</c>
+          <c>"duplicates"</c>
           <c><xref target="link">Link</xref> value</c>
           <c>
             A <xref target="link">Link</xref>value referencing one or more
             objects that are semantically equivalent to this object or duplicate 
-            this objects content. An object SHOULD contain a "duplicate" 
+            this objects content. An object SHOULD contain a "duplicates" 
             property when there are known objects, possibly in a different 
             system, that are semantically equivalent or duplicate the content.
           </c>
@@ -905,14 +905,14 @@
             (inclusive) with one decimal place of precision.  
           </c>
           
-          <c>"tag"</c>
+          <c>"tags"</c>
           <c><xref target="link">Link</xref> value</c>
           <c>
             A <xref target="link">Link</xref> value referencing one or more 
             resources that are loosely associated with the containing object.
-            The "tag" and "attachment" properties differ from one another
-            in that the "tag" property asserts "association by reference"
-            while "attachment" asserts "association by enclosure". 
+            The "tags" and "attachments" properties differ from one another
+            in that the "tags" property asserts "association by reference"
+            while "attachments" asserts "association by enclosure". 
           </c>
           
           <c>"title"</c>
@@ -1137,7 +1137,7 @@
             <artwork>{
   "type": "note",
   "id": "urn:example:note:1",
-  "name": "Note",
+  "displayName": "Note",
   "title": "A Note about things",
   "content": "blah blah blah",
   "replies": {
@@ -1179,6 +1179,86 @@
         "application/activity+json".
       </t>
 
+    </section>
+    
+    <section anchor="deprecated-syntax" title="Deprecated Activity Streams 1.0 Syntax">
+      
+      <t>
+        The JSON syntax defined by this specification differs somewhat
+        from that defined in the original 
+        <xref target="activitystreams-1.0">JSON Activity Streams 1.0</xref> 
+        specification in ways that are not backwards compatible. Implementations
+        can choose to continue supporting the JSON Activity Streams 1.0 syntax
+        but SHOULD consider it to be deprecated. This means that while 
+        implementations MAY continue to consume the 1.0 syntax, they SHOULD NOT
+        output the 1.0 syntax unless specifically interacting with older 
+        non-2.0 compliant implementations.
+      </t>
+      
+      <t>
+        Specifically:
+        <list style="numbers">
+          <t>
+            Implementations MUST use the "application/stream+json" MIME media 
+            type when producing a JSON serialization of an Activity Object 
+            conforming to the 1.0 syntax, and "application/activity+json"
+            when producing a serialization conforming to the 2.0 syntax.
+          </t>
+          <t>
+            Implementations that process serializations of an Activity
+            Object identified using either the "application/stream+json" 
+            or more generic "application/json" MIME media type MUST follow 
+            the syntax and processing rules set by 
+            <xref target="activitystreams-1.0"/>. The 2.0 syntax and 
+            processing rules apply only when handling serializations 
+            using the "application/activity+json" media type.
+          </t>
+          <t>
+            This document combines the 1.0 "verb" and "objectType" 
+            concepts into a single type system. For backwards compatibility,
+            implementations MUST treat the "verb" and "objectType" properties
+            as aliases of the new "type" property. In situations where an 
+            object contains both "verb" and "objectType" properties, the 
+            "verb" will take precedence when mapping to the new "type" 
+            property.
+          </t>
+          <t>
+            This document redefines the "title", "content" and "summary" 
+            properties as <xref target="lang">Natural Language Values</xref>, 
+            which means their values can be expressed as either a 
+            String or a JSON-LD Language Map. In the 1.0 syntax, these are 
+            expressed solely as String values. Because the 1.0 values
+            are a valid subset allowed by this specification, implementations
+            are not required to take any specific action to continue supporting
+            those values.
+          </t>
+          <t>
+            This document redefines a large number of common properties 
+            defined originally in 1.0 as Objects as 
+            <xref target="link">Link values</xref>. This means the 
+            property values can be expressed as either an IRI String, 
+            an Object, or an Array of IRI Strings and Objects. Because the 1.0 
+            values are a valid subset allowed by this specification, 
+            implementations are not required to take any specific action to 
+            continue supporting those values.
+          </t>
+          <t>
+            This specification replaces the "upstreamDuplicates" and 
+            "downstreamDuplicates" properties defined in the 1.0 syntax
+            with a singular "duplicates" property with a 
+            <xref target="link">Link value</xref>. The "upstreamDuplicates"
+            and "downstreamDuplicates" property values in 1.0 are defined
+            as Arrays of strings. Implementations MUST consider the union 
+            of these two values as an alias for the "duplicates" property.
+          </t>
+        </list>
+      </t>
+      
+      <t>
+        By following these requirements, all JSON Activity Streams 1.0
+        serializations can be processed successfully by 2.0 implementations.
+      </t>
+      
     </section>
 
     <section anchor="id-comparison" title="Comparison of Identifier Values">
@@ -1388,6 +1468,47 @@
       &rfc5988;   
       &rfc5646;  
       &jsonld; 
+      
+      <reference anchor="activitystreams-1.0">
+        <front>
+          <title abbrev="ActivityStreams">JSON Activity Streams 1.0</title>
+
+          <author fullname="James M Snell" initials="J.M." surname="Snell">
+            <organization>IBM</organization>
+          </author>
+
+          <author fullname="Martin Atkins" initials="M." surname="Atkins">
+            <organization>SAY Media</organization>
+          </author>
+
+          <author fullname="Will Norris" initials="W." surname="Norris">
+            <organization>Google</organization>
+          </author>
+
+          <author fullname="Chris Messina" initials="C." surname="Messina">
+            <organization>Citizen Agency, Google</organization>
+          </author>
+
+          <author fullname="Monica Wilkinson" initials="M." surname="Wilkinson">
+            <organization>MySpace, Facebook, VMware</organization>
+          </author>
+
+          <author fullname="Rob Dolin" initials="R." surname="Dolin">
+            <organization>Microsoft</organization>
+          </author>
+
+          <date month="May" year="2011" />
+
+          <abstract>
+            <t>This specification details the serialization of a stream of social
+              activities using the JSON format. Activities are important in that
+              they allow individuals to process the latest news of people and things
+              they care about.</t>
+          </abstract>
+
+        </front>
+      </reference>
+      
     </references>
     <references title="Informational References">
       &rfc6963;
@@ -1459,7 +1580,7 @@
     "endTime" : "2013-04-02T12:31Z",
     "actor": {
       "type": "person",
-      "name": "John Doe"
+      "displayName": "John Doe"
     },
     "status":"completed",
     "object": {

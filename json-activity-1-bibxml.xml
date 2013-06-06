@@ -1,0 +1,39 @@
+<reference anchor="activitystreams-1.0">
+  <front>
+    <title abbrev="ActivityStreams">JSON Activity Streams 1.0</title>
+
+    <author fullname="James M Snell" initials="J.M." surname="Snell">
+      <organization>IBM</organization>
+    </author>
+
+    <author fullname="Martin Atkins" initials="M." surname="Atkins">
+      <organization>SAY Media</organization>
+    </author>
+
+    <author fullname="Will Norris" initials="W." surname="Norris">
+      <organization>Google</organization>
+    </author>
+
+    <author fullname="Chris Messina" initials="C." surname="Messina">
+      <organization>Citizen Agency, Google</organization>
+    </author>
+
+    <author fullname="Monica Wilkinson" initials="M." surname="Wilkinson">
+      <organization>MySpace, Facebook, VMware</organization>
+    </author>
+
+    <author fullname="Rob Dolin" initials="R." surname="Dolin">
+      <organization>Microsoft</organization>
+    </author>
+
+    <date month="May" year="2011" />
+
+    <abstract>
+      <t>This specification details the serialization of a stream of social
+        activities using the JSON format. Activities are important in that
+        they allow individuals to process the latest news of people and things
+        they care about.</t>
+    </abstract>
+
+  </front>
+</reference>
