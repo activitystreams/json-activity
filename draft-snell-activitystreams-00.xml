@@ -23,7 +23,7 @@
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
-<rfc category="std" ipr="noModificationTrust200902" docName="draft-snell-activitystreams-00.xml" >
+<rfc category="std" ipr="trust200902" docName="draft-snell-activitystreams-00" >
   <front>
     <title abbrev="ActivityStreams">JSON Activity Streams 2.0</title>
 
@@ -31,7 +31,7 @@
       <organization>IBM</organization>
     </author>
 
-    <date month="June" year="2013" />
+    <date month="July" year="2013" />
     <area>General</area> 
     <workgroup>Activity Streams (http://activitystrea.ms)</workgroup>
     <keyword>JSON</keyword>
@@ -54,6 +54,14 @@
         Some portions of the original text of Activity Streams 1.0 are
         used in this document.
       </t>
+      <t>
+        The Activity Streams 1.0 and 2.0 specifications are works produced 
+        by the Activity Streams Working Group (http://activitystrea.ms/) 
+        operating independently of the IETF. Discussion and feedback about 
+        this specification is invited and should be directed to the Activity 
+        Streams Mailing List (see  
+        https://groups.google.com/forum/#!forum/activity-streams). 
+      </t>
     </note>
 
   </front>
@@ -73,8 +81,8 @@
         It is the goal of this specification to provide a JSON-based syntax
         that is sufficient to express metadata about activities in a rich,
         human-friendly, machine-processable and extensible manner. This may
-        include constructing natural-language descriptions about the activity,
-        visual representations about he activity, associating actionable 
+        include constructing natural-language descriptions or visual 
+        representations about the activity, associating actionable 
         information with various types of objects, communicating or recording 
         activity logs, or delegation of potential actions to other applications.
       </t>
@@ -316,7 +324,8 @@
           <c>
             Identifies the language for all human-readable, natural-language 
             metadata values included in the object. An object MAY contain a
-            "language" property.
+            "language" property whose value MUST be a <xref target="RFC5646"/>
+            Language-Tag.
           </c>
           
           <c>name</c>
@@ -344,14 +353,13 @@
           Natural Language values represent human-readable character 
           sequences in one or more languages. They are expressed as
           either: (1) a single JSON string or (2) a JSON dictionary 
-          mapping <xref target="RFC5646" /> Language tags to localized,
+          mapping <xref target="RFC5646" /> Language-Tags to localized,
           equivalent translations of the same string value. 
         </t>
         
         <t>
           For instance, the "title" property in all objects is a
-          Natural Language value. This means that the "displayName" can 
-          be expressed in one or more languages:
+          Natural Language value.
         </t>
         
         <figure>
@@ -621,8 +629,8 @@
           </t>
           
           <t>
-            Many existing systems do not typically represent priority values as
-            numeric ranges.  Such systems typically use fixed, labeled brackets
+            Many existing systems do not represent priority values as
+            numeric ranges.  Such systems might use fixed, labeled brackets
             such as "low", "normal" and "high" or "urgent".  Similar mechanisms
             can be established, by convention, when using the "priority"
             property.  In typical use, it is RECOMMENDED that implementations
@@ -1234,7 +1242,7 @@
           </t>
           <t>
             This document redefines a large number of common properties 
-            defined originally in 1.0 as Objects as 
+            defined originally as Objects in 1.0 as 
             <xref target="link">Link values</xref>. This means the 
             property values can be expressed as either an IRI String, 
             an Object, or an Array of IRI Strings and Objects. Because the 1.0 
@@ -1300,8 +1308,8 @@
         implementations.
       </t>
 
-      <t
-        >Publishers should take reasonable measures to make sure potentially
+      <t>
+        Publishers should take reasonable measures to ensure potentially
         malicious user input such as cross-site scripting attacks are not
         included in the Activity Streams data they publish.
       </t>
@@ -1388,72 +1396,6 @@
         
       </section>
 
-      <!-- TODO: Need to determine if we want this
-      <section anchor="registry" title="Activity Streams Type Registry">
-        
-        <t>
-          This document establishes a registry for Activity Streams type 
-          property values. The "Activity Streams Type" registry operates 
-          under the <xref target="RFC5226">"Expert Review" policy</xref>.
-        </t>
-        
-        <t>
-          Entries included in the Activity Streams Type Registry include 
-          both "verb" and "object type" values. While previous versions
-          of the Activity Streams specification distinguished between 
-          "verbs" and "objectTypes", this specification and the registry
-          both eliminate many of the distinctions between these two 
-          concepts.
-        </t>
-        
-        <t>
-          Activity Streams Type Registrations MUST include the following
-          fields:
-          <list style="hanging">
-            <t hangText="Type:">
-              <vspace />
-              A type identifier suitable for use as the value of the 
-              "type" property (<xref target="object" />). The value 
-              MUST either be an "isegment-nz-nc" or absolute "IRI" 
-              as defined in <xref target="RFC3987"/>. The use of a relative 
-              reference other than a simple name is not allowed.
-            </t>
-            <t hangText="Use:">
-              <vspace />
-              A required indication of the types intended use as either 
-              a "activity" or "object" type. The value MUST be one of either
-              "activity", "object" or "any".
-            </t>
-            <t hangText="Name:">
-              <vspace />
-              An optional short, plain-text, natural-language "common" name for the
-              Type registration.
-            </t>
-            <t hangText="Description:">
-              <vspace />
-              A required short, plain-text, natural-language, one-paragraph 
-              description of the object and it's intended use.
-            </t>
-            <t hangText="Aliases:">
-              <vspace />
-              An optional listing of one or more alternative identifiers for 
-              this type. These MUST be suitable for use as type property
-              values.
-            </t>
-            <t hangText="Specification:">
-              <vspace />
-              A pointer to specification text defining the type, if available.
-              If the type being registered includes any special considerations,
-              including specific properties or processing requirements, then
-              a pointer to a specification is required.
-            </t>
-          </list> 
-        </t>
-        
-      </section>
-    -->
-       
-       
     </section>
 
   </middle>

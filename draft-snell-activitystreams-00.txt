@@ -4,12 +4,12 @@
 
 Activity Streams (http://activitystrea.ms)                 J. Snell, Ed.
 Internet-Draft                                                       IBM
-Intended status: Standards Track                           June 06, 2013
-Expires: December 08, 2013
+Intended status: Standards Track                           July 11, 2013
+Expires: January 12, 2014
 
 
                        JSON Activity Streams 2.0
-                   draft-snell-activitystreams-00.xml
+                    draft-snell-activitystreams-00
 
 Abstract
 
@@ -24,6 +24,13 @@ Author's Note
    James Snell.  The author is very thankful for their significant
    contributions and gladly stands on their shoulders.  Some portions of
    the original text of Activity Streams 1.0 are used in this document.
+
+   The Activity Streams 1.0 and 2.0 specifications are works produced by
+   the Activity Streams Working Group (http://activitystrea.ms/)
+   operating independently of the IETF.  Discussion and feedback about
+   this specification is invited and should be directed to the Activity
+   Streams Mailing List (see https://groups.google.com/forum/#!forum/
+   activity-streams).
 
 Status of This Memo
 
@@ -40,7 +47,16 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on December 08, 2013.
+   This Internet-Draft will expire on January 12, 2014.
+
+
+
+
+
+Snell                   Expires January 12, 2014                [Page 1]
+
+Internet-Draft               ActivityStreams                   July 2013
+
 
 Copyright Notice
 
@@ -50,24 +66,12 @@ Copyright Notice
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents
    (http://trustee.ietf.org/license-info) in effect on the date of
-
-
-
-Snell                   Expires December 08, 2013               [Page 1]
-
-Internet-Draft               ActivityStreams                   June 2013
-
-
    publication of this document.  Please review these documents
    carefully, as they describe your rights and restrictions with respect
    to this document.  Code Components extracted from this document must
    include Simplified BSD License text as described in Section 4.e of
    the Trust Legal Provisions and are provided without warranty as
    described in the Simplified BSD License.
-
-   This document may not be modified, and derivative works of it may not
-   be created, except to format it for publication as an RFC or to
-   translate it into languages other than English.
 
 Table of Contents
 
@@ -102,26 +106,27 @@ Table of Contents
 
 1.  Introduction
 
+
+
+
+Snell                   Expires January 12, 2014                [Page 2]
+
+Internet-Draft               ActivityStreams                   July 2013
+
+
    In the most basic sense, an "activity" is a semantic description of
    either a potential or completed action.  In the former case,
    activities express what can be done with any particular object, while
    in the latter case, they express what has already been done.
 
-
-
-Snell                   Expires December 08, 2013               [Page 2]
-
-Internet-Draft               ActivityStreams                   June 2013
-
-
    It is the goal of this specification to provide a JSON-based syntax
    that is sufficient to express metadata about activities in a rich,
    human-friendly, machine-processable and extensible manner.  This may
-   include constructing natural-language descriptions about the
-   activity, visual representations about he activity, associating
-   actionable information with various types of objects, communicating
-   or recording activity logs, or delegation of potential actions to
-   other applications.
+   include constructing natural-language descriptions or visual
+   representations about the activity, associating actionable
+   information with various types of objects, communicating or recording
+   activity logs, or delegation of potential actions to other
+   applications.
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
@@ -157,18 +162,17 @@ Internet-Draft               ActivityStreams                   June 2013
       "@id", "@type" and "@language".  In this specification, the
       leading "@" is omitted.
 
+
+
+
+Snell                   Expires January 12, 2014                [Page 3]
+
+Internet-Draft               ActivityStreams                   July 2013
+
+
    o  While JSON-LD allows using relative IRI references in the values
       of ID properties, this specification limits identifiers to
       absolute IRIs.
-
-
-
-
-
-Snell                   Expires December 08, 2013               [Page 3]
-
-Internet-Draft               ActivityStreams                   June 2013
-
 
    o  While it is possible to derive a JSON-LD "context" description for
       the Activity Streams 2.0 JSON syntax one is not normatively
@@ -214,18 +218,18 @@ Internet-Draft               ActivityStreams                   June 2013
        "url": "http://example.org/martin",
        "image": {
          "id": "http://example.org/martin/image",
+
+
+
+Snell                   Expires January 12, 2014                [Page 4]
+
+Internet-Draft               ActivityStreams                   July 2013
+
+
          "width": 250,
          "height": 250
        }
      },
-
-
-
-Snell                   Expires December 08, 2013               [Page 4]
-
-Internet-Draft               ActivityStreams                   June 2013
-
-
      "object" : {
        "type": "article",
        "id": "urn:example:blog:abc123/xyz"
@@ -270,18 +274,18 @@ Internet-Draft               ActivityStreams                   June 2013
              "height": 250
            }
          },
+
+
+
+Snell                   Expires January 12, 2014                [Page 5]
+
+Internet-Draft               ActivityStreams                   July 2013
+
+
          "object" : {
            "type": "photo",
            "id": "urn:example:album:abc123/my_fluffy_cat",
            "url": "http://example.org/album/my_fluffy_cat.jpg",
-
-
-
-Snell                   Expires December 08, 2013               [Page 5]
-
-Internet-Draft               ActivityStreams                   June 2013
-
-
            "image": {
              "id": "http://example.org/album/my_fluffy_cat_thumb.jpg",
              "width": 250,
@@ -326,18 +330,18 @@ Internet-Draft               ActivityStreams                   June 2013
    |          |             | the "url" property as a less-reliable,   |
    |          |             | non-unique identifier.                   |
    | type     | IRI         | Identifies the type of object. An object |
+
+
+
+Snell                   Expires January 12, 2014                [Page 6]
+
+Internet-Draft               ActivityStreams                   July 2013
+
+
    |          |             | MAY contain a "type" property whose      |
    |          |             | value matches either the "isegment-nz-   |
    |          |             | nc" or the "IRI" production in           |
    |          |             | [RFC3987]. The use of a relative         |
-
-
-
-Snell                   Expires December 08, 2013               [Page 6]
-
-Internet-Draft               ActivityStreams                   June 2013
-
-
    |          |             | reference other than a simple name is    |
    |          |             | not allowed. If no "type" property is    |
    |          |             | specified, the object has no specific    |
@@ -345,7 +349,8 @@ Internet-Draft               ActivityStreams                   June 2013
    | language | [RFC5646]   | Identifies the language for all human-   |
    |          | Language    | readable, natural-language metadata      |
    |          | Tag         | values included in the object. An object |
-   |          |             | MAY contain a "language" property.       |
+   |          |             | MAY contain a "language" property whose  |
+   |          |             | value MUST be a [RFC5646] Language-Tag.  |
    | name     | String      | A simple human-readable, plain-text name |
    |          |             | for the object. HTML markup MUST NOT be  |
    |          |             | included. An object MAY contain a        |
@@ -363,12 +368,11 @@ Internet-Draft               ActivityStreams                   June 2013
 
    Natural Language values represent human-readable character sequences
    in one or more languages.  They are expressed as either: (1) a single
-   JSON string or (2) a JSON dictionary mapping [RFC5646] Language tags
+   JSON string or (2) a JSON dictionary mapping [RFC5646] Language-Tags
    to localized, equivalent translations of the same string value.
 
    For instance, the "title" property in all objects is a Natural
-   Language value.  This means that the "displayName" can be expressed
-   in one or more languages:
+   Language value.
 
    A single String value using the default language:
 
@@ -385,13 +389,9 @@ Internet-Draft               ActivityStreams                   June 2013
 
 
 
-
-
-
-
-Snell                   Expires December 08, 2013               [Page 7]
+Snell                   Expires January 12, 2014                [Page 7]
 
-Internet-Draft               ActivityStreams                   June 2013
+Internet-Draft               ActivityStreams                   July 2013
 
 
    {
@@ -445,9 +445,9 @@ Internet-Draft               ActivityStreams                   June 2013
 
 
 
-Snell                   Expires December 08, 2013               [Page 8]
+Snell                   Expires January 12, 2014                [Page 8]
 
-Internet-Draft               ActivityStreams                   June 2013
+Internet-Draft               ActivityStreams                   July 2013
 
 
    {
@@ -501,9 +501,9 @@ Internet-Draft               ActivityStreams                   June 2013
 
 
 
-Snell                   Expires December 08, 2013               [Page 9]
+Snell                   Expires January 12, 2014                [Page 9]
 
-Internet-Draft               ActivityStreams                   June 2013
+Internet-Draft               ActivityStreams                   July 2013
 
 
    +---------------+--------------+------------------------------------+
@@ -557,9 +557,9 @@ Internet-Draft               ActivityStreams                   June 2013
 
 
 
-Snell                   Expires December 08, 2013              [Page 10]
+Snell                   Expires January 12, 2014               [Page 10]
 
-Internet-Draft               ActivityStreams                   June 2013
+Internet-Draft               ActivityStreams                   July 2013
 
 
    |             |            | instance, in the activity, "John saved |
@@ -613,27 +613,27 @@ Internet-Draft               ActivityStreams                   June 2013
 
 
 
-Snell                   Expires December 08, 2013              [Page 11]
+Snell                   Expires January 12, 2014               [Page 11]
 
-Internet-Draft               ActivityStreams                   June 2013
+Internet-Draft               ActivityStreams                   July 2013
 
 
    utilize and expose the additional information in a number of
    different ways depending on the unique requirements of each
    application use case.
 
-   Many existing systems do not typically represent priority values as
-   numeric ranges.  Such systems typically use fixed, labeled brackets
-   such as "low", "normal" and "high" or "urgent".  Similar mechanisms
-   can be established, by convention, when using the "priority"
-   property.  In typical use, it is RECOMMENDED that implementations
-   wishing to work with such defined categories treat "priority"
-   property values in the range 0.00 to 0.25 as "low" priority; values
-   greater than 0.25 to 0.75 as "normal" priority; and values greater
-   than 0.75 to 1.00 as "high" priority.  Specific implementations are
-   free to establish alternative conventions for the grouping of
-   priority values with the caveat that such conventions likely will not
-   be understood by all implementations.
+   Many existing systems do not represent priority values as numeric
+   ranges.  Such systems might use fixed, labeled brackets such as
+   "low", "normal" and "high" or "urgent".  Similar mechanisms can be
+   established, by convention, when using the "priority" property.  In
+   typical use, it is RECOMMENDED that implementations wishing to work
+   with such defined categories treat "priority" property values in the
+   range 0.00 to 0.25 as "low" priority; values greater than 0.25 to
+   0.75 as "normal" priority; and values greater than 0.75 to 1.00 as
+   "high" priority.  Specific implementations are free to establish
+   alternative conventions for the grouping of priority values with the
+   caveat that such conventions likely will not be understood by all
+   implementations.
 
 3.4.2.  Audience Targeting Properties
 
@@ -669,9 +669,9 @@ Internet-Draft               ActivityStreams                   June 2013
 
 
 
-Snell                   Expires December 08, 2013              [Page 12]
+Snell                   Expires January 12, 2014               [Page 12]
 
-Internet-Draft               ActivityStreams                   June 2013
+Internet-Draft               ActivityStreams                   July 2013
 
 
    |              | value              | audience.                     |
@@ -725,9 +725,9 @@ Internet-Draft               ActivityStreams                   June 2013
 
 
 
-Snell                   Expires December 08, 2013              [Page 13]
+Snell                   Expires January 12, 2014               [Page 13]
 
-Internet-Draft               ActivityStreams                   June 2013
+Internet-Draft               ActivityStreams                   July 2013
 
 
 3.5.  Additional Object Properties
@@ -781,9 +781,9 @@ Internet-Draft               ActivityStreams                   June 2013
 
 
 
-Snell                   Expires December 08, 2013              [Page 14]
+Snell                   Expires January 12, 2014               [Page 14]
 
-Internet-Draft               ActivityStreams                   June 2013
+Internet-Draft               ActivityStreams                   July 2013
 
 
    |               | (Section     | referencing one or more visual,    |
@@ -837,9 +837,9 @@ Internet-Draft               ActivityStreams                   June 2013
 
 
 
-Snell                   Expires December 08, 2013              [Page 15]
+Snell                   Expires January 12, 2014               [Page 15]
 
-Internet-Draft               ActivityStreams                   June 2013
+Internet-Draft               ActivityStreams                   July 2013
 
 
    |               |              | object. When used within an        |
@@ -893,9 +893,9 @@ Internet-Draft               ActivityStreams                   June 2013
 
 
 
-Snell                   Expires December 08, 2013              [Page 16]
+Snell                   Expires January 12, 2014               [Page 16]
 
-Internet-Draft               ActivityStreams                   June 2013
+Internet-Draft               ActivityStreams                   July 2013
 
 
    |               | (Section     | identifying one or more other      |
@@ -949,9 +949,9 @@ Internet-Draft               ActivityStreams                   June 2013
 
 
 
-Snell                   Expires December 08, 2013              [Page 17]
+Snell                   Expires January 12, 2014               [Page 17]
 
-Internet-Draft               ActivityStreams                   June 2013
+Internet-Draft               ActivityStreams                   July 2013
 
 
    |                |              | updated strictly after the date   |
@@ -1005,9 +1005,9 @@ Internet-Draft               ActivityStreams                   June 2013
 
 
 
-Snell                   Expires December 08, 2013              [Page 18]
+Snell                   Expires January 12, 2014               [Page 18]
 
-Internet-Draft               ActivityStreams                   June 2013
+Internet-Draft               ActivityStreams                   July 2013
 
 
    |                | 3.3) value   | the items that have been updated  |
@@ -1061,9 +1061,9 @@ Internet-Draft               ActivityStreams                   June 2013
 
 
 
-Snell                   Expires December 08, 2013              [Page 19]
+Snell                   Expires January 12, 2014               [Page 19]
 
-Internet-Draft               ActivityStreams                   June 2013
+Internet-Draft               ActivityStreams                   July 2013
 
 
    {
@@ -1117,9 +1117,9 @@ Internet-Draft               ActivityStreams                   June 2013
 
 
 
-Snell                   Expires December 08, 2013              [Page 20]
+Snell                   Expires January 12, 2014               [Page 20]
 
-Internet-Draft               ActivityStreams                   June 2013
+Internet-Draft               ActivityStreams                   July 2013
 
 
    1.  Implementations MUST use the "application/stream+json" MIME media
@@ -1151,7 +1151,7 @@ Internet-Draft               ActivityStreams                   June 2013
        any specific action to continue supporting those values.
 
    5.  This document redefines a large number of common properties
-       defined originally in 1.0 as Objects as Link values
+       defined originally as Objects in 1.0 as Link values
        (Section 3.3).  This means the property values can be expressed
        as either an IRI String, an Object, or an Array of IRI Strings
        and Objects.  Because the 1.0 values are a valid subset allowed
@@ -1173,9 +1173,9 @@ Internet-Draft               ActivityStreams                   June 2013
 
 
 
-Snell                   Expires December 08, 2013              [Page 21]
+Snell                   Expires January 12, 2014               [Page 21]
 
-Internet-Draft               ActivityStreams                   June 2013
+Internet-Draft               ActivityStreams                   July 2013
 
 
 6.  Comparison of Identifier Values
@@ -1208,7 +1208,7 @@ Internet-Draft               ActivityStreams                   June 2013
    to recognize such content and either identify it or not include it in
    their implementations.
 
-   Publishers should take reasonable measures to make sure potentially
+   Publishers should take reasonable measures to ensure potentially
    malicious user input such as cross-site scripting attacks are not
    included in the Activity Streams data they publish.
 
@@ -1229,9 +1229,9 @@ Internet-Draft               ActivityStreams                   June 2013
 
 
 
-Snell                   Expires December 08, 2013              [Page 22]
+Snell                   Expires January 12, 2014               [Page 22]
 
-Internet-Draft               ActivityStreams                   June 2013
+Internet-Draft               ActivityStreams                   July 2013
 
 
    Activity Streams are JSON Documents and are subject to the same
@@ -1285,9 +1285,9 @@ Internet-Draft               ActivityStreams                   June 2013
 
 
 
-Snell                   Expires December 08, 2013              [Page 23]
+Snell                   Expires January 12, 2014               [Page 23]
 
-Internet-Draft               ActivityStreams                   June 2013
+Internet-Draft               ActivityStreams                   July 2013
 
 
       Intended usage: COMMON
@@ -1341,9 +1341,9 @@ Internet-Draft               ActivityStreams                   June 2013
 
 
 
-Snell                   Expires December 08, 2013              [Page 24]
+Snell                   Expires January 12, 2014               [Page 24]
 
-Internet-Draft               ActivityStreams                   June 2013
+Internet-Draft               ActivityStreams                   July 2013
 
 
 10.2.  Informational References
@@ -1397,9 +1397,9 @@ Appendix A.  Acknowledgements
 
 
 
-Snell                   Expires December 08, 2013              [Page 25]
+Snell                   Expires January 12, 2014               [Page 25]
 
-Internet-Draft               ActivityStreams                   June 2013
+Internet-Draft               ActivityStreams                   July 2013
 
 
 Appendix B.  Processing as JSON-LD
@@ -1453,4 +1453,4 @@ Author's Address
 
 
 
-Snell                   Expires December 08, 2013              [Page 26]
+Snell                   Expires January 12, 2014               [Page 26]
