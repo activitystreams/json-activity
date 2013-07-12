@@ -23,12 +23,15 @@
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
-<rfc category="std" ipr="trust200902" docName="draft-snell-activitystreams-00" >
+<rfc category="std" ipr="trust200902" docName="draft-snell-activitystreams-01" >
   <front>
     <title abbrev="ActivityStreams">JSON Activity Streams 2.0</title>
 
     <author fullname="James M Snell" initials="J." surname="Snell" role="editor">
       <organization>IBM</organization>
+      <address> 
+        <email>jasnell@gmail.com</email> 
+      </address> 
     </author>
 
     <date month="July" year="2013" />
@@ -196,7 +199,7 @@
 
 <figure><artwork><![CDATA[
   {
-    "type": "post",
+    "verb": "post",
     "published": "2011-02-10T15:04:55Z",
     "actor": {
       "type": "person",
@@ -234,7 +237,7 @@
   {
     "items" : [
       {
-        "type": "post",
+        "verb": "post",
         "language": "en",
         "published": "2011-02-10T15:04:55Z",
         "foo": "some extension property",
@@ -322,13 +325,13 @@
           <c>language</c>
           <c><xref target="RFC5646"/> Language Tag</c>
           <c>
-            Identifies the language for all human-readable, natural-language 
-            metadata values included in the object. An object MAY contain a
-            "language" property whose value MUST be a <xref target="RFC5646"/>
-            Language-Tag.
+            Establishes the default language assumed for human-readable, 
+            natural-language metadata values included in the object. An 
+            object MAY contain a "language" property whose value MUST be a 
+            <xref target="RFC5646"/> Language-Tag.
           </c>
           
-          <c>name</c>
+          <c>displayName</c>
           <c>String</c>
           <c>
             A simple human-readable, plain-text name for the 
@@ -336,6 +339,7 @@
             "displayName" property. If the object does not specify a "type"
             property, the object SHOULD specify a "displayName".
           </c>
+          
           <c>url</c>
           <c>Link</c>
           <c>
@@ -496,7 +500,7 @@
           <ttcol align="left" width="21%">Value</ttcol>
           <ttcol align="left">Description</ttcol>
 
-          <c>"rel"</c>
+          <c>rel</c>
           <c>RFC 5988 Link Relation</c>
           <c>
             The RFC 5988 Link Relation associated with this link value.
@@ -504,7 +508,7 @@
             the link relation. 
           </c>
           
-          <c>"mediaType"</c>
+          <c>mediaType</c>
           <c>MIME Media Type</c>
           <c>
             The MIME media type of the resource being referenced.
@@ -523,12 +527,12 @@
         </t>
         
         <t>
-          Within an Activity object, the "type" property is used
-          to identify the type of activity. Formerly, in JSON Activity
-          Streams version 1.0, this was represented using the "verb" 
-          property. All existing verb definitions used in JSON Activity
-          Streams 1.0 implementations can continue to be used as values
-          of the "type" property and retain their existing semantics.
+          Within an Activity object, the "verb" property is used
+          to identify the type of activity. All existing verb definitions 
+          used in JSON Activity Streams 1.0 implementations can continue 
+          to be used and retain their existing semantics. If the "verb" 
+          is not specified, the "type" property MAY be used as an 
+          alternative means of determining the activity type.
         </t>
 
         <t>
@@ -541,14 +545,33 @@
           <ttcol align="left" width="21%">Value</ttcol>
           <ttcol align="left">Description</ttcol>
 
-          <c>"actor"</c>
-          <c><xref target="link">Link</xref> value</c>
+          <c>verb</c>
+          <c>IRI</c>
           <c>
-            Describes the entity that either peformed or is expected to 
-            perform the Activity.
+            Identifies the type of activity. An activity SHOULD contain a "verb"
+            property whose value matches either the "isegment-nz-nc" or the 
+            "IRI" production in <xref target="RFC3987"/>. The use of a relative 
+            reference other than a simple name is not allowed. If the "verb"
+            property is not specified, the activity MUST contain a "type" 
+            property.
           </c>
 
-          <c>"object"</c>
+          <c>actor</c>
+          <c><xref target="link">Link</xref> value</c>
+          <c>
+            Describes one or more entities that either peformed or are 
+            expected to perform the activity.
+          </c>
+          
+          <c>with</c>
+          <c><xref target="link">Link</xref> value</c>
+          <c>
+            Describes one or more entities involved with the performance
+            of the activity who are not the primary performer as specified
+            by "actor".
+          </c>
+
+          <c>object</c>
           <c><xref target="link">Link</xref> value</c>
           <c>
             Describes the primary object of the activity. For instance,
@@ -558,7 +581,7 @@
             primary object of the activity MAY be implied by context.
           </c>
 
-          <c>"target"</c>
+          <c>target</c>
           <c><xref target="link">Link</xref> value</c>
           <c>
             Describes the target of the activity. The precise meaning of the
@@ -570,7 +593,7 @@
             not a target of the activity.
           </c>
 
-          <c>"result"</c>
+          <c>result</c>
           <c><xref target="link">Link</xref> value</c>
           <c>
             Describes the result of the activity. For instance, if a particular
@@ -578,7 +601,7 @@
             property can be used to describe that new resource.
           </c>
           
-          <c>"context"</c>
+          <c>context</c>
           <c><xref target="link">Link</xref> value</c>
           <c>
             The "context" property allows the Activity to further include 
@@ -588,15 +611,7 @@
             <xref target="link">Link</xref> value.
           </c>
           
-          <c>"status"</c>
-          <c>String</c>
-          <c>
-            A string value indicating the current status of the activity.
-            The value MUST be one of: "tentative", "pending", "completed",
-            or "canceled".
-          </c>
-          
-          <c>"priority"</c>
+          <c>priority</c>
           <c>Decimal Number between 0.00 and 1.00</c>
           <c>
             An indicator of the relative priority or importance that
@@ -687,25 +702,25 @@
             <ttcol align="left" width="21%">Value</ttcol>
             <ttcol align="left">Description</ttcol>
 
-            <c>"to"</c>
+            <c>to</c>
             <c><xref target="link">Link</xref> value</c>
             <c>
               Specifies the public primary audience.
             </c>
         
-            <c>"cc"</c>
+            <c>cc</c>
             <c><xref target="link">Link</xref> value</c>
             <c>
               Specifies the public secondary audience.
             </c>
         
-            <c>"bto"</c>
+            <c>bto</c>
             <c><xref target="link">Link</xref> value</c>
             <c>
               Specifies the private primary audience.
             </c>
         
-            <c>"bcc"</c>
+            <c>bcc</c>
             <c><xref target="link">Link</xref> value</c>
             <c>
               Specifies the private secondary audience.
@@ -772,7 +787,7 @@
           <ttcol align="left" width="21%">Value</ttcol>
           <ttcol align="left">Description</ttcol>
 
-          <c>"alias"</c>
+          <c>alias</c>
           <c>IRI</c>
           <c>
             Provides a contextually meaningful alternative label for the
@@ -784,7 +799,7 @@
             relative reference other than a simple name is not allowed. 
           </c>
 
-          <c>"attachments"</c>
+          <c>attachments</c>
           <c><xref target="link">Link</xref> value</c>
           <c>
             A <xref target="link">Link</xref> value referencing one or more 
@@ -792,14 +807,14 @@
             in concept to files attached to an email message.
           </c>
 
-          <c>"author"</c>
+          <c>author</c>
           <c><xref target="link">Link</xref> value</c>
           <c>
             A <xref target="link">Link</xref> value referencing one or more
             entity that created or authored the object.
           </c>
 
-          <c>"content"</c>
+          <c>content</c>
           <c><xref target="lang">Natural Language value</xref></c>
           <c>
             A Natural-language description of the object encoded as a single
@@ -807,7 +822,7 @@
             thumbnail images MAY be included.
           </c>
 
-          <c>"duplicates"</c>
+          <c>duplicates</c>
           <c><xref target="link">Link</xref> value</c>
           <c>
             A <xref target="link">Link</xref>value referencing one or more
@@ -817,7 +832,7 @@
             system, that are semantically equivalent or duplicate the content.
           </c>
 
-          <c>"icon"</c>
+          <c>icon</c>
           <c><xref target="link">Link</xref> value</c>
           <c>
             A <xref target="link">Link</xref> value referencing one or more 
@@ -827,7 +842,7 @@
             presentation at a small size.
           </c>
 
-          <c>"image"</c>
+          <c>image</c>
           <c><xref target="link">Link</xref> value</c>
           <c>
             A <xref target="link">Link</xref> value referencing one or more
@@ -835,27 +850,27 @@
             property, there are no aspect ratio or display restrictions.
           </c>
           
-          <c>"location"</c>
+          <c>location</c>
           <c><xref target="link">Link</xref> value</c>
           <c>
             A <xref target="link">Link</xref> value describing one or more 
             physical or virtual locations associated with which the object.
           </c>
 
-          <c>"published"</c>
+          <c>published</c>
           <c><xref target="RFC3339"/> date-time</c>
           <c>
             The date and time at which the object was published.
           </c>
           
-          <c>"generator"</c>
+          <c>generator</c>
           <c><xref target="link">Link</xref> value</c>
           <c>
             A <xref target="link">Link</xref> value referencing the 
             application that generated the object.
           </c>
           
-          <c>"provider"</c>
+          <c>provider</c>
           <c><xref target="link">Link</xref> value</c>
           <c>
             A <xref target="link">Link</xref> value referencing the application 
@@ -863,7 +878,7 @@
             same entity that generated the object.
           </c>
 
-          <c>"source"</c>
+          <c>source</c>
           <c><xref target="link">Link</xref> value</c>
           <c>
             A <xref target="link">Link</xref> value referencing the original
@@ -873,7 +888,7 @@
             opposed to identifying the applications that generated or published it.
           </c>
 
-          <c>"summary"</c>
+          <c>summary</c>
           <c><xref target="lang">Natural Language value</xref></c>
           <c>
             A Natural-language summarization of the object encoded as a single
@@ -881,14 +896,14 @@
             thumbnail images can be included.
           </c>
 
-          <c>"updated"</c>
+          <c>updated</c>
           <c><xref target="RFC3339"/> date-time</c>
           <c>
             The date and time at which a previously published object has
             been modified.
           </c>
           
-          <c>"startTime"</c>
+          <c>startTime</c>
           <c><xref target="RFC3339"/> date-time</c>
           <c>
             A date-time describing the actual or expected starting time of
@@ -897,7 +912,7 @@
             scheduled to begin.
           </c>
           
-          <c>"endTime"</c>
+          <c>endTime</c>
           <c><xref target="RFC3339" /> date-time</c>
           <c>
             A date-time describing the actual or expected ending time of
@@ -906,14 +921,14 @@
             scheduled to conclude.
           </c>
           
-          <c>"rating"</c>
+          <c>rating</c>
           <c>Decimal Number between 1.0 and 5.0</c>
           <c>
             A quality rating expressed as a number between 1.0 and 5.0 
             (inclusive) with one decimal place of precision.  
           </c>
           
-          <c>"tags"</c>
+          <c>tags</c>
           <c><xref target="link">Link</xref> value</c>
           <c>
             A <xref target="link">Link</xref> value referencing one or more 
@@ -923,22 +938,24 @@
             while "attachments" asserts "association by enclosure". 
           </c>
           
-          <c>"title"</c>
+          <c>title</c>
           <c><xref target="lang">Natural Language</xref> value</c>
           <c>
             A Natural-language title of the object encoded as a single
             JSON String containing HTML markup.
           </c>
           
-          <c>"duration"</c>
-          <c>Integer</c>
+          <c>duration</c>
+          <c>Integer or <xref target="RFC3339" /> duration</c>
           <c>
             When the object describes a time-based resource, such as audio 
             or video, the "duration" property indicates the approximate 
-            length of time in seconds.
+            duration of time expressed as an either an RFC 3339 "duration" (e.g. 
+            a duration of 5 seconds is represented as "PT5S") or as a
+            non-negative integer specifying the duration in seconds.
           </c>
 
-          <c>"height"</c>
+          <c>height</c>
           <c>Integer</c>
           <c>
             When the object describes a visual resource, such as an 
@@ -946,7 +963,7 @@
             indicates the recommended display height in pixels.
           </c>
           
-          <c>"width"</c>
+          <c>width</c>
           <c>Integer</c>
           <c>
             When the object describes a visual resource, such as an 
@@ -954,7 +971,7 @@
             indicates the recommended display width in pixels.
           </c>
           
-          <c>"inReplyTo"</c>
+          <c>inReplyTo</c>
           <c><xref target="link">Link</xref> value</c>
           <c>
             A <xref target="link">Link</xref> value identifying one or 
@@ -1005,7 +1022,7 @@
           <ttcol align="left" width="21%">Value</ttcol>
           <ttcol align="left">Description</ttcol>
 
-          <c>"totalItems"</c>
+          <c>totalItems</c>
           <c>Integer</c>
           <c>
             Non-negative integer specifying the total number of objects
@@ -1014,7 +1031,7 @@
             the Collection object instance.
           </c>
 
-          <c>"items"</c>
+          <c>items</c>
           <c>
             Array of <xref target="object">Objects</xref>
           </c>
@@ -1023,7 +1040,7 @@
             of any type.
           </c>
 
-          <c>"itemsAfter"</c>
+          <c>itemsAfter</c>
           <c><xref target="RFC3339" /> date-time</c>
           <c>
             A RFC 3339 date-time that indicates that the collection contains
@@ -1031,7 +1048,7 @@
             specified.
           </c>
           
-          <c>"itemsBefore"</c>
+          <c>itemsBefore</c>
           <c><xref target="RFC3339" /> date-time</c>
           <c>
             A RFC 3339 date-time that indicates that the collection contains
@@ -1039,14 +1056,14 @@
             specified.
           </c>
           
-          <c>"itemsPerPage"</c>
+          <c>itemsPerPage</c>
           <c>Integer</c>
           <c>
             A non-negative integer specifying the maximum number of items 
             that will be included in the value of the items array.
           </c>
           
-          <c>"startIndex"</c>
+          <c>startIndex</c>
           <c>Integer</c>
           <c>
             A non-negative integer value identifying the relative position 
@@ -1057,21 +1074,21 @@
             property, the value of startIndex would be 10.
           </c>
           
-          <c>"first"</c>
+          <c>first</c>
           <c><xref target="link">Link</xref> value</c>
           <c>
             A <xref target="link">Link</xref> value referencing the 
             furthest preceeding page of a multi-page collection.
           </c>
           
-          <c>"last"</c>
+          <c>last</c>
           <c><xref target="link">Link</xref> value</c>
           <c>
             A <xref target="link">Link</xref> value referencing the 
             furthest following page of a multi-page collection.
           </c>
           
-          <c>"prev"</c>
+          <c>prev</c>
           <c><xref target="link">Link</xref> value</c>
           <c>
             A <xref target="link">Link</xref> value referencing the 
@@ -1081,14 +1098,14 @@
             NOT use both prev AND previous within the same collection.
           </c>
           
-          <c>"next"</c>
+          <c>next</c>
           <c><xref target="link">Link</xref> value</c>
           <c>
             A <xref target="link">Link</xref> value referencing the immediately 
             following page of the multi-page collection.
           </c>      
           
-          <c>"current"</c>
+          <c>current</c>
           <c><xref target="link">Link</xref> value</c>
           <c>
             A <xref target="link">Link</xref> value referencing the page 
@@ -1096,7 +1113,7 @@
             recently.
           </c>    
           
-          <c>"self"</c>
+          <c>self</c>
           <c><xref target="link">Link</xref> value</c>
           <c>
             A <xref target="link">Link</xref> value referencing this page.
@@ -1129,7 +1146,7 @@
             <ttcol align="left" width="15%">Property</ttcol>
             <ttcol align="left" width="21%">Value</ttcol>
             <ttcol align="left">Description</ttcol>
-            <c>"replies"</c>
+            <c>replies</c>
             <c><xref target="collection">Collection</xref></c>
             <c>
               Provides information about the set of objects that can be 
@@ -1149,7 +1166,7 @@
   "title": "A Note about things",
   "content": "blah blah blah",
   "replies": {
-    "id": "http://example.org/note/1/comments.json",
+    "url": "http://example.org/note/1/comments.json",
     "mediaType": "application/activity+json",
     "totalItems": 10,
     "items": [
@@ -1222,13 +1239,10 @@
             using the "application/activity+json" media type.
           </t>
           <t>
-            This document combines the 1.0 "verb" and "objectType" 
-            concepts into a single type system. For backwards compatibility,
-            implementations MUST treat the "verb" and "objectType" properties
-            as aliases of the new "type" property. In situations where an 
-            object contains both "verb" and "objectType" properties, the 
-            "verb" will take precedence when mapping to the new "type" 
-            property.
+            This document renames the 1.0 "objectType" property to "type"
+            to better align syntactically with JSON-LD. For backwards 
+            compatibility, implementations MUST treat "objectType"
+            as an alias of "type".
           </t>
           <t>
             This document redefines the "title", "content" and "summary" 
@@ -1509,13 +1523,14 @@
   {
     "@context": {
       "@vocab": "http://activitystrea.ms/spec/2.0/",
+      "verb": "http://schema.org/Action/@type",
       "actor": "http://schema.org/Action/performedBy",
       "object": "http://schema.org/BuyAction/bought",
       "purchase": "http://schema.org/BuyAction",
       "person": "http://schema.org/Person",
       "book": "http://schema.org/Book"
     },
-    "type" : "purchase",
+    "verb" : "purchase",
     "id" : "urn:example:purchase:123/abc",
     "title": "John purchased 'A Tale of Two Cities'",
     "startTime" : "2013-04-02T12:31Z",
@@ -1524,7 +1539,6 @@
       "type": "person",
       "displayName": "John Doe"
     },
-    "status":"completed",
     "object": {
       "type": "book",
       "title": "A Tale of Two Cities"
