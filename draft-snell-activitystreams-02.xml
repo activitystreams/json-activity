@@ -23,7 +23,7 @@
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
-<rfc category="std" ipr="trust200902" docName="draft-snell-activitystreams-01" >
+<rfc category="std" ipr="trust200902" docName="draft-snell-activitystreams-02" >
   <front>
     <title abbrev="ActivityStreams">JSON Activity Streams 2.0</title>
 
@@ -74,9 +74,9 @@
 
       <t>
         In the most basic sense, an "activity" is a semantic description
-        of either a potential or completed action. In the former case, 
-        activities express what can be done with any particular object, 
-        while in the latter case, they express what has already been 
+        of potential or completed actions. In the former case, 
+        the activity expresses what can be done with a particular object, 
+        while in the latter case, it expresses what has already been 
         done.
       </t>
 
@@ -140,7 +140,7 @@
             </t>
             <t>
               While JSON-LD allows using relative IRI references
-              in the values of ID properties, this specification 
+              in the values of "id" properties, this specification 
               limits identifiers to absolute IRIs.
             </t>
             <t>
@@ -161,8 +161,8 @@
         </t>
         
         <t>
-          When serialized, absent properties are represented either
-          by setting the property value to null or by omitting the 
+          When serialized, absent properties are represented by either
+          (a) setting the property value to null, or (b) by omitting the 
           property declaration altogether at the option of the publisher; 
           these representations are semantically equivalent. If a
           property has an array value, the absence of any items in that array 
@@ -173,7 +173,7 @@
         <t>
           This specification uses IRIs <xref target="RFC3987"/>.
           Every URI <xref target="RFC3986" /> is also an IRI, so a URI may be used
-          wherever below an IRI is named.  There are two special considerations:
+          wherever an IRI is named.  There are two special considerations:
           (1) when an IRI that is not also a URI is given for dereferencing, it
           MUST be mapped to a URI using the steps in Section 3.1 of
           <xref target="RFC3987"/> and (2) when an IRI is serving as
@@ -260,7 +260,10 @@
           }
         },
         "object" : {
-          "type": "photo",
+          "type": {
+            "id": "http://example.org/Photo",
+            "displayName": "Photo"
+          },
           "id": "urn:example:album:abc123/my_fluffy_cat",
           "url": "http://example.org/album/my_fluffy_cat.jpg",
           "image": {
@@ -271,7 +274,10 @@
         },
         "target": {
           "url": "http://example.org/album/",
-          "type": "photo-album",
+          "type": {
+            "id": "photo-album",
+            "displayName": "Photo-Album"
+          },
           "id": "urn:example.org:album:abc123",
           "title": {
             "en": "Martin's Photo Album",
@@ -313,13 +319,11 @@
             the "url" property as a less-reliable, non-unique identifier.
           </c>
           <c>type</c>
-          <c>IRI</c>
+          <c><xref target="type-value">Type value</xref></c>
           <c>
             Identifies the type of object. An object MAY contain a "type"
-            property whose value matches either the "isegment-nz-nc" or the 
-            "IRI" production in <xref target="RFC3987"/>. The use of a relative 
-            reference other than a simple name is not allowed. If no "type" 
-            property is specified, the object has no specific type.
+            property whose value is a <xref target="type-value">Type value</xref>. 
+            If no "type" property is specified, the object has no specific type.
           </c>
           
           <c>language</c>
@@ -356,7 +360,7 @@
         <t>
           Natural Language values represent human-readable character 
           sequences in one or more languages. They are expressed as
-          either: (1) a single JSON string or (2) a JSON dictionary 
+          either (1) a single JSON string or (2) a JSON dictionary 
           mapping <xref target="RFC5646" /> Language-Tags to localized,
           equivalent translations of the same string value. 
         </t>
@@ -395,6 +399,96 @@
         </t>
         
       </section>
+      
+      <section anchor="type-value" title="Type Values">
+        
+        <t>
+          Type values represent references to or descriptions of an abstract 
+          type. They are expressed as either: (1) a String conforming to 
+          either the "isegment-nz-nc" or "IRI" productions in 
+          <xref target="RFC3987"/> or (2) an <xref target="object">Object</xref>. 
+          When represented as a String, the use of relative references other 
+          than a simple name is not allowed. When represented as an Object,
+          the "id" property MUST be specified and is used to communicate the 
+          identity of the verb.
+        </t>
+        
+        <t>
+          Within the Activity Streams 2.0 model, Type values are used only
+          by the "type" and "verb" properties.
+        </t>
+        
+        <figure><preamble>Object type with a simple name (isegment-nz-nc):</preamble><artwork>
+  {
+    "type": "person",
+    "displayName": "John"
+  }
+        </artwork></figure>
+        
+        <figure><preamble>Object type with an absolute IRI:</preamble><artwork>
+  {
+    "type": "http://example.org/Person",
+    "displayName": "John"
+  }
+        </artwork></figure>
+        
+        <figure><preamble>Object type as an object:</preamble><artwork>
+  {
+    "type": {
+      "id": "http://example.org/Person",
+      "displayName": "Person"
+    },
+    "displayName": "John"
+  }
+        </artwork></figure>
+        
+        <t>
+          Because the second and third example above each specify
+          "http://example.org/Person", the two examples are considered
+          to specify the same type.
+        </t>
+        
+        <figure><preamble>Verb as a simple name (isegment-nz-nc):</preamble><artwork>
+  {
+    "verb": "post",
+    "actor": "acct:john.doe@example.org",
+    "object": "http://example.org/123"
+  }
+        </artwork></figure>
+        
+        <figure><preamble>Verb with an absolute IRI:</preamble><artwork>
+  {
+    "verb": "http://example.com/Upload",
+    "actor": "acct:john.doe@example.org",
+    "object": "http://example.org/123"
+  }
+        </artwork></figure>
+        
+        <figure><preamble>Verb as an object:</preamble><artwork>
+  {
+    "verb": {
+      "id": "http://example.com/Upload",
+      "displayName": "Upload"
+    },
+    "actor": "acct:john.doe@example.org",
+    "object": "http://example.org/123"
+  }
+        </artwork></figure>
+        
+        <t>
+          Representing verbs and types as objects rather than simple names or 
+          IRIs is intended to simplify use of extensions that an implementation 
+          might not have encountered previously. The object properties provide 
+          additional information and metadata about the new verb or object type.
+        </t>
+        
+        <t>
+          It is important to note that because the "id" property is strictly
+          limited to absolute IRI values, the object representation cannot
+          be used to describe types with simple names.
+        </t>
+        
+      </section>
 
       <section anchor="link" title="Link Values">
 
@@ -410,7 +504,7 @@
         </t>
         
         <t>
-          For instance, as defined in previously, all 
+          For instance, as defined previously, all 
           <xref target="object">objects</xref> can contain an
           "image" property whose value describes a graphical 
           representation of the containing object. This property
@@ -436,15 +530,16 @@
         </artwork></figure>
           
         <figure><preamble>Alternatively, if additional metadata is required, 
-          the link can be expressed as an object that uses the id or url 
-          property:</preamble>
+          the link can be expressed as an object that uses the url 
+          property. If the url property is not specified, then the id
+          property MAY be used as an alternative.</preamble>
           <artwork>
   {
     "type": "application",
     "id": "http://example.org/application/123",
     "displayName": "My Application",
     "image": {
-      "id": "http://example.org/application/123.png",
+      "url": "http://example.org/application/123.png",
       "mediaType": "image/png",
       "height": 320,
       "width": 320
@@ -463,7 +558,7 @@
     "image": [
       "http://example.org/application/abc.gif",
       {
-        "id": "http://example.org/application/123.png",
+        "url": "http://example.org/application/123.png",
         "mediaType": "image/png",
         "height": 320,
         "width": 320
@@ -483,7 +578,7 @@
           that describes the contextual purpose of the link. Within 
           an Activity Streams document, in the absence of a specific 
           "rel" property within the link itself, the name of the property 
-          whose value is a link serves as the "link relation". Any legal 
+          whose value is a link serves as the "link relation". Any valid 
           link relation value, as defined by RFC 5988, can be used as a 
           property with a link value in any Activity Streams object, except 
           where the link relation might conflict with any other property
@@ -546,14 +641,12 @@
           <ttcol align="left">Description</ttcol>
 
           <c>verb</c>
-          <c>IRI</c>
+          <c><xref target="type-value">Type value</xref></c>
           <c>
             Identifies the type of activity. An activity SHOULD contain a "verb"
-            property whose value matches either the "isegment-nz-nc" or the 
-            "IRI" production in <xref target="RFC3987"/>. The use of a relative 
-            reference other than a simple name is not allowed. If the "verb"
-            property is not specified, the activity MUST contain a "type" 
-            property.
+            property whose value is a <xref target="type-value">Type value</xref>. 
+            If the "verb" property is not specified, the activity MUST contain a 
+            "type" property.
           </c>
 
           <c>actor</c>
@@ -562,15 +655,7 @@
             Describes one or more entities that either peformed or are 
             expected to perform the activity.
           </c>
-          
-          <c>with</c>
-          <c><xref target="link">Link</xref> value</c>
-          <c>
-            Describes one or more entities involved with the performance
-            of the activity who are not the primary performer as specified
-            by "actor".
-          </c>
-
+ 
           <c>object</c>
           <c><xref target="link">Link</xref> value</c>
           <c>
@@ -1232,7 +1317,7 @@
           <t>
             Implementations that process serializations of an Activity
             Object identified using either the "application/stream+json" 
-            or more generic "application/json" MIME media type MUST follow 
+            or the more generic "application/json" MIME media type MUST follow 
             the syntax and processing rules set by 
             <xref target="activitystreams-1.0"/>. The 2.0 syntax and 
             processing rules apply only when handling serializations 
@@ -1285,13 +1370,11 @@
 
     <section anchor="id-comparison" title="Comparison of Identifier Values">
       <t>
-        The values of multiple <xref target="object">Object</xref>
-        and <xref target="link">Link</xref> value's "id" properties can be
-        compared to determine if the objects represent duplicate content.
-        Processors MUST compare these values on a character-by-character, 
-        case-sensitive basis.  Comparison operations MUST be based solely
-        on the IRI character strings and MUST NOT rely on dereferencing the
-        IRIs or URIs mapped from them.
+        The values of "id" properties can be compared to determine if the 
+        identifiers represent duplicate content. The values MUST be compared 
+        on a character-by-character, case-sensitive basis.  Comparisons 
+        MUST be based solely on the character strings themselves and MUST NOT 
+        rely on dereferencing the IRIs or URIs mapped from them.
       </t>
 
       <t>
@@ -1507,7 +1590,7 @@
       Saloranta, Tim Moore, Timothy Young, Todd Barnard, Tosh Meston, Tyler
       Gillies, Will Norris, Zach Copley, and Zach Shepherd.</t>
     </section>
-    
+  
     <section anchor="Appendix-A" title="Processing as JSON-LD">
       
       <t>
@@ -1523,7 +1606,9 @@
   {
     "@context": {
       "@vocab": "http://activitystrea.ms/spec/2.0/",
-      "verb": "http://schema.org/Action/@type",
+      "verb": "@type",
+      "type": "@type",
+      "id": "@id",
       "actor": "http://schema.org/Action/performedBy",
       "object": "http://schema.org/BuyAction/bought",
       "purchase": "http://schema.org/BuyAction",
