@@ -80,32 +80,32 @@ Table of Contents
      1.2.  Relationship to JSON-LD 1.0 . . . . . . . . . . . . . . .   3
      1.3.  Syntax Conventions  . . . . . . . . . . . . . . . . . . .   4
    2.  Example Activities  . . . . . . . . . . . . . . . . . . . . .   4
-   3.  Object Model  . . . . . . . . . . . . . . . . . . . . . . . .   6
-     3.1.  Object  . . . . . . . . . . . . . . . . . . . . . . . . .   6
-     3.2.  Natural Language Values . . . . . . . . . . . . . . . . .   7
-     3.3.  Type Values . . . . . . . . . . . . . . . . . . . . . . .   8
+     2.1.  Example 1: Minimal Activity . . . . . . . . . . . . . . .   4
+     2.2.  Example 2: Basic activity with some additional detail . .   5
+     2.3.  Example 3: An extended activity . . . . . . . . . . . . .   5
+   3.  Object Model  . . . . . . . . . . . . . . . . . . . . . . . .   7
+     3.1.  Object  . . . . . . . . . . . . . . . . . . . . . . . . .   7
+     3.2.  Natural Language Values . . . . . . . . . . . . . . . . .   8
+     3.3.  Type Values . . . . . . . . . . . . . . . . . . . . . . .   9
      3.4.  Link Values . . . . . . . . . . . . . . . . . . . . . . .  10
-     3.5.  Activity  . . . . . . . . . . . . . . . . . . . . . . . .  12
+     3.5.  Activity  . . . . . . . . . . . . . . . . . . . . . . . .  13
        3.5.1.  Considerations on the use of "priority" . . . . . . .  14
-       3.5.2.  Audience Targeting Properties . . . . . . . . . . . .  14
+       3.5.2.  Audience Targeting Properties . . . . . . . . . . . .  15
      3.6.  Additional Object Properties  . . . . . . . . . . . . . .  16
      3.7.  Collection  . . . . . . . . . . . . . . . . . . . . . . .  19
        3.7.1.  Using Collections as Summary Values . . . . . . . . .  21
    4.  The Activity Stream JSON Document . . . . . . . . . . . . . .  22
    5.  Deprecated Activity Streams 1.0 Syntax  . . . . . . . . . . .  22
-   6.  Comparison of Identifier Values . . . . . . . . . . . . . . .  23
+   6.  Comparison of Identifier Values . . . . . . . . . . . . . . .  24
    7.  Extensibility . . . . . . . . . . . . . . . . . . . . . . . .  24
    8.  Security Considerations . . . . . . . . . . . . . . . . . . .  24
    9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  25
      9.1.  application/activity+xml Media Type . . . . . . . . . . .  25
    10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  26
      10.1.  Normative References . . . . . . . . . . . . . . . . . .  26
-     10.2.  Informational References . . . . . . . . . . . . . . . .  26
-   Appendix A.  Acknowledgements . . . . . . . . . . . . . . . . . .  26
-   Appendix B.  Processing as JSON-LD  . . . . . . . . . . . . . . .  27
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  28
-
-
+     10.2.  Informational References . . . . . . . . . . . . . . . .  27
+   Appendix A.  Acknowledgements . . . . . . . . . . . . . . . . . .  27
+   Appendix B.  Processing as JSON-LD  . . . . . . . . . . . . . . .  28
 
 
 
@@ -113,6 +113,8 @@ Snell                   Expires January 19, 2014                [Page 2]
 
 Internet-Draft               ActivityStreams                   July 2013
 
+
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  28
 
 1.  Introduction
 
@@ -163,8 +165,6 @@ Internet-Draft               ActivityStreams                   July 2013
 
 
 
-
-
 Snell                   Expires January 19, 2014                [Page 3]
 
 Internet-Draft               ActivityStreams                   July 2013
@@ -178,8 +178,8 @@ Internet-Draft               ActivityStreams                   July 2013
       of "id" properties, this specification limits identifiers to
       absolute IRIs.
 
-   o  While it is possible to derive a JSON-LD "context" description for
-      the Activity Streams 2.0 JSON syntax one is not normatively
+   o  While it is possible to derive a JSON-LD "@context" description
+      for the Activity Streams 2.0 JSON syntax one is not normatively
       provided by this specification.
 
 1.3.  Syntax Conventions
@@ -211,13 +211,13 @@ Internet-Draft               ActivityStreams                   July 2013
 
 2.  Example Activities
 
-   Following is a simple example of an activity:
+   Following are three examples of activities with varying degrees of
+   detail.
 
-   {
-     "verb": "post",
-     "published": "2011-02-10T15:04:55Z",
-     "actor": {
-       "type": "person",
+2.1.  Example 1: Minimal Activity
+
+   Expresses the statement "'urn:example:person:martin' posted 'http://
+   example.org/foo.jpg'".  No additional detail is given.
 
 
 
@@ -226,11 +226,31 @@ Snell                   Expires January 19, 2014                [Page 4]
 Internet-Draft               ActivityStreams                   July 2013
 
 
+   {
+     "verb": "post",
+     "actor": "urn:example:person:martin",
+     "object": "http://example.org/foo.jpg"
+   }
+
+
+2.2.  Example 2: Basic activity with some additional detail
+
+   Expresses the statement "Martin Smith posted an article to the blog
+   'Martin's Blog' at 3:04 PM GMT on February 2, 2011."  Some additional
+   details about the article, actor and target blog are given.
+
+   {
+     "verb": "post",
+     "published": "2011-02-10T15:04:55Z",
+     "language": "en",
+     "actor": {
+       "type": "person",
        "id": "urn:example:person:martin",
        "displayName": "Martin Smith",
        "url": "http://example.org/martin",
        "image": {
-         "id": "http://example.org/martin/image",
+         "url": "http://example.org/martin/image.jpg",
+         "mediaType": "image/jpeg",
          "width": 250,
          "height": 250
        }
@@ -238,7 +258,8 @@ Internet-Draft               ActivityStreams                   July 2013
      "object" : {
        "type": "article",
        "id": "urn:example:blog:abc123/xyz"
-       "url": "http://example.org/blog/2011/02/entry"
+       "url": "http://example.org/blog/2011/02/entry",
+       "displayName": "Why I love Activity Streams"
      },
      "target" : {
        "type": "blog",
@@ -249,12 +270,23 @@ Internet-Draft               ActivityStreams                   July 2013
    }
 
 
+2.3.  Example 3: An extended activity
+
    A more extensive, single-entry "Activity Stream" follows.  In
    addition to containing a number of required and optional core
+
+
+
+Snell                   Expires January 19, 2014                [Page 5]
+
+Internet-Draft               ActivityStreams                   July 2013
+
+
    properties, the example contains the additional, undefined extension
    properties "foo" and "foo2" for illustrative purposes only.
 
    {
+     "totalItems": 1,
      "items" : [
        {
          "verb": "post",
@@ -263,7 +295,7 @@ Internet-Draft               ActivityStreams                   July 2013
          "foo": "some extension property",
          "generator": "http://example.org/activities-app",
          "provider": "http://example.org/activity-stream",
-         "title": {
+         "displayName": {
            "en": "Martin posted a new video to his album.",
            "ga": "Martin phost le fisean nua a albam."
          },
@@ -274,15 +306,8 @@ Internet-Draft               ActivityStreams                   July 2013
            "url": "http://example.org/martin",
            "foo2": "some other extension property",
            "image": {
-
-
-
-Snell                   Expires January 19, 2014                [Page 5]
-
-Internet-Draft               ActivityStreams                   July 2013
-
-
-             "id": "http://example.org/martin/image",
+             "url": "http://example.org/martin/image",
+             "mediaType": "image/jpeg",
              "width": 250,
              "height": 250
            }
@@ -295,24 +320,34 @@ Internet-Draft               ActivityStreams                   July 2013
            "id": "urn:example:album:abc123/my_fluffy_cat",
            "url": "http://example.org/album/my_fluffy_cat.jpg",
            "image": {
-             "id": "http://example.org/album/my_fluffy_cat_thumb.jpg",
+             "url": "http://example.org/album/my_fluffy_cat_thumb.jpg",
+             "mediaType": "image/jpeg",
              "width": 250,
              "height": 250
            }
          },
          "target": {
-           "url": "http://example.org/album/",
            "type": {
-             "id": "photo-album",
+             "id": "http://example.org/PhotoAlbum",
              "displayName": "Photo-Album"
+
+
+
+Snell                   Expires January 19, 2014                [Page 6]
+
+Internet-Draft               ActivityStreams                   July 2013
+
+
            },
            "id": "urn:example.org:album:abc123",
-           "title": {
+           "url": "http://example.org/album/",
+           "displayName": {
              "en": "Martin's Photo Album",
              "ga": "Grianghraif Mairtin"
            },
            "image": {
-             "id": "http://example.org/album/thumbnail.jpg",
+             "url": "http://example.org/album/thumbnail.jpg",
+             "mediaType": "image/jpeg",
              "width": 250,
              "height": 250
            }
@@ -328,15 +363,6 @@ Internet-Draft               ActivityStreams                   July 2013
 
    The following "core properties" apply to all JSON objects serialized
    within an Activity Stream document.
-
-
-
-
-
-Snell                   Expires January 19, 2014                [Page 6]
-
-Internet-Draft               ActivityStreams                   July 2013
-
 
    +--------------+-------------+--------------------------------------+
    | Property     | Value       | Description                          |
@@ -360,20 +386,27 @@ Internet-Draft               ActivityStreams                   July 2013
    |              | Language    | assumed for human-readable, natural- |
    |              | Tag         | language metadata values included in |
    |              |             | the object. An object MAY contain a  |
+
+
+
+Snell                   Expires January 19, 2014                [Page 7]
+
+Internet-Draft               ActivityStreams                   July 2013
+
+
    |              |             | "language" property whose value MUST |
    |              |             | be a [RFC5646] Language-Tag.         |
-   | displayName  | String      | A simple human-readable, plain-text  |
-   |              |             | name for the object. HTML markup     |
-   |              |             | MUST NOT be included. An object MAY  |
-   |              |             | contain a "displayName" property. If |
-   |              |             | the object does not specify a "type" |
+   | displayName  | Natural     | A simple human-readable, plain-text  |
+   |              | Language    | name for the object. HTML markup     |
+   |              | value       | MUST NOT be included. An object MAY  |
+   |              | (Section    | contain a "displayName" property. If |
+   |              | 3.2)        | the object does not specify a "type" |
    |              |             | property, the object SHOULD specify  |
    |              |             | a "displayName".                     |
    | url          | Link        | A Link (Section 3.4) value           |
    |              |             | describing a resource that provides  |
-   |              |             | a visual representation of the       |
-   |              |             | object. An object MAY contain a      |
-   |              |             | "url" property.                      |
+   |              |             | a representation of the object. An   |
+   |              |             | object MAY contain a "url" property. |
    +--------------+-------------+--------------------------------------+
 
 
@@ -384,28 +417,21 @@ Internet-Draft               ActivityStreams                   July 2013
    JSON string or (2) a JSON dictionary mapping [RFC5646] Language-Tags
    to localized, equivalent translations of the same string value.
 
-   For instance, the "title" property in all objects is a Natural
+   For instance, the "displayName" property in all objects is a Natural
    Language value.
-
-
-
-Snell                   Expires January 19, 2014                [Page 7]
-
-Internet-Draft               ActivityStreams                   July 2013
-
 
    A single String value using the default language:
 
    {
      "language": "en",
-     "title": "This is the title"
+     "displayName": "This is the title"
    }
 
 
    Multiple, language-specific values:
 
    {
-     "title": {
+     "displayName": {
        "en": "This is the name",
        "fr": "C'est le titre",
        "sp": "Este es el titulo"
@@ -416,32 +442,6 @@ Internet-Draft               ActivityStreams                   July 2013
    Each key in the JSON dictionary MUST be an [RFC5646] Language Tag.
    The associated values MUST be Strings.
 
-3.3.  Type Values
-
-   Type values represent references to or descriptions of an abstract
-   type.  They are expressed as either: (1) a String conforming to
-   either the "isegment-nz-nc" or "IRI" productions in [RFC3987] or (2)
-   an Object (Section 3.1).  When represented as a String, the use of
-   relative references other than a simple name is not allowed.  When
-   represented as an Object, the "id" property MUST be specified and is
-   used to communicate the identity of the verb.
-
-   Within the Activity Streams 2.0 model, Type values are used only by
-   the "type" and "verb" properties.
-
-   Object type with a simple name (isegment-nz-nc):
-
-   {
-     "type": "person",
-     "displayName": "John"
-   }
-
-
-   Object type with an absolute IRI:
-
-
-
-
 
 
 
@@ -449,6 +449,28 @@ Snell                   Expires January 19, 2014                [Page 8]
 
 Internet-Draft               ActivityStreams                   July 2013
 
+
+3.3.  Type Values
+
+   Type values represent references to or descriptions of an abstract
+   type.  They are expressed as either: (1) a String conforming to
+   either the "isegment-nz-nc" or "IRI" productions in [RFC3987] or (2)
+   an Object (Section 3.1).  When represented as a String, the use of
+   relative references other than a simple name is not allowed.  When
+   represented as an Object, the "id" property MUST be specified.
+
+   Within the Activity Streams 2.0, Type values are used only by the
+   "type" and "verb" properties.
+
+   Object type as a simple name (isegment-nz-nc):
+
+   {
+     "type": "person",
+     "displayName": "John"
+   }
+
+
+   Object type as an absolute IRI:
 
    {
      "type": "http://example.org/Person",
@@ -467,33 +489,11 @@ Internet-Draft               ActivityStreams                   July 2013
    }
 
 
-   Because the second and third example above each specify "http://
+   Because the second and third examples above each specify "http://
    example.org/Person", the two examples are considered to specify the
    same type.
 
    Verb as a simple name (isegment-nz-nc):
-
-   {
-     "verb": "post",
-     "actor": "acct:john.doe@example.org",
-     "object": "http://example.org/123"
-   }
-
-
-   Verb with an absolute IRI:
-
-   {
-     "verb": "http://example.com/Upload",
-     "actor": "acct:john.doe@example.org",
-     "object": "http://example.org/123"
-   }
-
-
-   Verb as an object:
-
-
-
-
 
 
 
@@ -507,6 +507,24 @@ Internet-Draft               ActivityStreams                   July 2013
 
 
    {
+     "verb": "post",
+     "actor": "acct:john.doe@example.org",
+     "object": "http://example.org/123"
+   }
+
+
+   Verb as an absolute IRI:
+
+   {
+     "verb": "http://example.com/Upload",
+     "actor": "acct:john.doe@example.org",
+     "object": "http://example.org/123"
+   }
+
+
+   Verb as an object:
+
+   {
      "verb": {
        "id": "http://example.com/Upload",
        "displayName": "Upload"
@@ -516,11 +534,11 @@ Internet-Draft               ActivityStreams                   July 2013
    }
 
 
-   Representing verbs and types as objects rather than simple names or
-   IRIs is intended to simplify use of extensions that an implementation
-   might not have encountered previously.  The object properties provide
-   additional information and metadata about the new verb or object
-   type.
+   Allowing verbs and object types to be represented as objects rather
+   than simple names or IRIs is intended to simplify the use of
+   extensions that an implementation might not have encountered
+   previously.  The object properties provide additional information and
+   metadata about the new verb or object type.
 
    It is important to note that because the "id" property is strictly
    limited to absolute IRI values, the object representation cannot be
@@ -533,25 +551,7 @@ Internet-Draft               ActivityStreams                   July 2013
    relative IRI, (2) an Object (Section 3.1), or (3) a JSON Array
    containing a mixture of IRIs or Objects (Section 3.1).  Link values
    are closely related to the conceptual model of Links as established
-   in [RFC5988], but have a serialization that is compatible with the
-   JSON-serialization for Linked Data.
-
-   For instance, as defined previously, all objects (Section 3.1) can
-   contain an "image" property whose value describes a graphical
-   representation of the containing object.  This property will
-   typically be used to provide the URL to a JPEG, GIF or PNG type
-   resource that can be displayed to the user.  Any given object might
-   have multiple such visual representations -- multiple screenshots,
-   for instance, or the same image at different resolutions.  Based on
-   the JSON-LD approach, there are essentially three ways of describing
-   these references.
-
-   To reference a single image without any additional metadata, the link
-   value can be expressed as a simple JSON string containing an absolute
-   or relative IRI:
-
-
-
+   in [RFC5988].
 
 
 
@@ -562,6 +562,20 @@ Snell                   Expires January 19, 2014               [Page 10]
 Internet-Draft               ActivityStreams                   July 2013
 
 
+   For example, as defined previously, all objects (Section 3.1) can
+   contain an "image" property whose value describes a graphical
+   representation of the containing object.  This property will
+   typically be used to provide the URL to a JPEG, GIF or PNG type
+   resource that can be displayed to the user.  Any given object might
+   have multiple such visual representations -- multiple screenshots,
+   for instance, or the same image at different resolutions.  Using Link
+   values, there are essentially three ways of describing such
+   references.
+
+   To reference a single image without any additional metadata, the link
+   value can be expressed as a simple JSON string containing an absolute
+   or relative IRI:
+
    {
      "type": "application",
      "id": "http://example.org/application/123",
@@ -571,9 +585,7 @@ Internet-Draft               ActivityStreams                   July 2013
 
 
    Alternatively, if additional metadata is required, the link can be
-   expressed as an object that uses the url property.  If the url
-   property is not specified, then the id property MAY be used as an
-   alternative.
+   expressed as an object containing the url property.
 
    {
      "type": "application",
@@ -591,6 +603,21 @@ Internet-Draft               ActivityStreams                   July 2013
    If more than one link value is to be expressed, A JSON Array with a
    mix of string and object elements can be used:
 
+
+
+
+
+
+
+
+
+
+
+Snell                   Expires January 19, 2014               [Page 11]
+
+Internet-Draft               ActivityStreams                   July 2013
+
+
    {
      "type": "application",
      "id": "http://example.org/application/123",
@@ -607,28 +634,45 @@ Internet-Draft               ActivityStreams                   July 2013
    }
 
 
-   Individual items contained in such an array value are independent of
-   the others and no significance is given to the order of items in the
-   array.
-
-
-
-Snell                   Expires January 19, 2014               [Page 11]
-
-Internet-Draft               ActivityStreams                   July 2013
-
+   Individual items contained in such an array are independent of the
+   others and no significance is given to the ordering of those items.
 
    RFC 5988 defines that all Links have a "link relation" that describes
-   the contextual purpose of the link.  Within an Activity Streams
-   document, in the absence of a specific "rel" property within the link
+   the contextual purpose of the link.  Within an object (Section 3.1),
+   in the absence of a specific "rel" property within the link object
    itself, the name of the property whose value is a link serves as the
    "link relation".  Any valid link relation value, as defined by RFC
    5988, can be used as a property with a link value in any Activity
    Streams object, except where the link relation might conflict with
    any other property defined by this specification.
 
+   In the following example, two separate links are provided.  The link
+   relation of the first is "image", while the link relation of the
+   second is "preview".  Both links, however, can be used as alternative
+   visual representations of the "application" object.
+
+   {
+     "type": "application",
+     "image": [
+       "http://example.org/foo.jpg",
+       {
+         "url": "http://example.org/screens/1.jpg",
+         "rel": "preview",
+         "mediaType": "image/jpeg"
+       }
+     ]
+   }
+
+
    When an object (Section 3.1) is used to represent a Link value, the
    following additional properties MAY be used:
+
+
+
+Snell                   Expires January 19, 2014               [Page 12]
+
+Internet-Draft               ActivityStreams                   July 2013
+
 
    +-------------+--------------+--------------------------------------+
    | Property    | Value        | Description                          |
@@ -666,14 +710,6 @@ Internet-Draft               ActivityStreams                   July 2013
    |            | 3.3)       | property whose value is a Type value    |
    |            |            | (Section 3.3).  If the "verb" property  |
    |            |            | is not specified, the activity MUST     |
-
-
-
-Snell                   Expires January 19, 2014               [Page 12]
-
-Internet-Draft               ActivityStreams                   July 2013
-
-
    |            |            | contain a "type" property.              |
    | actor      | Link       | Describes one or more entities that     |
    |            | (Section   | either peformed or are expected to      |
@@ -686,6 +722,14 @@ Internet-Draft               ActivityStreams                   July 2013
    |            |            | an "object" property. If the "object"   |
    |            |            | property is not contained, the primary  |
    |            |            | object of the activity MAY be implied   |
+
+
+
+Snell                   Expires January 19, 2014               [Page 13]
+
+Internet-Draft               ActivityStreams                   July 2013
+
+
    |            |            | by context.                             |
    | target     | Link       | Describes the target of the activity.   |
    |            | (Section   | The precise meaning of the activity's   |
@@ -703,31 +747,18 @@ Internet-Draft               ActivityStreams                   July 2013
    |            | 3.4) value | results in the creation of a new        |
    |            |            | resource, the "result" property can be  |
    |            |            | used to describe that new resource.     |
-   | context    | Link       | The "context" property allows the       |
-   |            | (Section   | Activity to further include information |
-   |            | 3.4) value | about why a particular action occurred  |
-   |            |            | by providing details about the context  |
-   |            |            | within which a particular action was    |
-   |            |            | performed. The value of the context     |
-   |            |            | property is Link (Section 3.4) value.   |
    | priority   | Decimal    | An indicator of the relative priority   |
    |            | Number     | or importance that the creator of an    |
-   |            | between    | Activity object considers the object to |
-   |            | 0.00 and   | have. Represented as a numeric decimal  |
+   |            | between    | activity considers the it to have.      |
+   |            | 0.00 and   | Represented as a numeric decimal        |
    |            | 1.00       | between 0.00 and 1.00, with two decimal |
    |            |            | places of precision. If the property is |
-   |            |            | omitted, or expicitly set to null, the  |
-   |            |            | assumption is that no explicit priority |
-   |            |            | or importance can be assumed. All other |
-   |            |            | values falling between 0.00 and 1.00    |
-   |            |            | indicate increasing priority.           |
+   |            |            | omitted or set to null, the assumption  |
+   |            |            | is that a default priority can be       |
+   |            |            | assumed. The value 0.00 represents the  |
+   |            |            | lowest possible priority while 1.00     |
+   |            |            | represents the highest.                 |
    +------------+------------+-----------------------------------------+
-
-
-
-Snell                   Expires January 19, 2014               [Page 13]
-
-Internet-Draft               ActivityStreams                   July 2013
 
 
 3.5.1.  Considerations on the use of "priority"
@@ -747,6 +778,14 @@ Internet-Draft               ActivityStreams                   July 2013
    Many existing systems do not represent priority values as numeric
    ranges.  Such systems might use fixed, labeled brackets such as
    "low", "normal" and "high" or "urgent".  Similar mechanisms can be
+
+
+
+Snell                   Expires January 19, 2014               [Page 14]
+
+Internet-Draft               ActivityStreams                   July 2013
+
+
    established, by convention, when using the "priority" property.  In
    typical use, it is RECOMMENDED that implementations wishing to work
    with such defined categories treat "priority" property values in the
@@ -777,15 +816,6 @@ Internet-Draft               ActivityStreams                   July 2013
    Secondary Audience.  Knowing this, a system that produces or consumes
    the activity can intelligently notify each person of the event.
 
-
-
-
-
-Snell                   Expires January 19, 2014               [Page 14]
-
-Internet-Draft               ActivityStreams                   July 2013
-
-
    While there are means, based on the verb, actor, object and target of
    the activity, to infer the primary audience for many types of
    activities, those do not work in every case and do not provide a
@@ -804,6 +834,14 @@ Internet-Draft               ActivityStreams                   July 2013
    |              | value              | audience.                     |
    | bcc          | Link (Section 3.4) | Specifies the private         |
    |              | value              | secondary audience.           |
+
+
+
+Snell                   Expires January 19, 2014               [Page 15]
+
+Internet-Draft               ActivityStreams                   July 2013
+
+
    +--------------+--------------------+-------------------------------+
 
 
@@ -834,14 +872,6 @@ Internet-Draft               ActivityStreams                   July 2013
    part of the Primary and Second audience but MUST NOT disclose that
    fact to any other party.
 
-
-
-
-Snell                   Expires January 19, 2014               [Page 15]
-
-Internet-Draft               ActivityStreams                   July 2013
-
-
    Audience targeting information included within an Activity only
    describes the intent of the activity creator.  With clear exception
    given to the appropriate handling of "bto" and "bcc", this
@@ -860,6 +890,14 @@ Internet-Draft               ActivityStreams                   July 2013
    |              |             | alternative label for the object in  |
    |              |             | addition to the "id". For instance,  |
    |              |             | within some systems, groups can be   |
+
+
+
+Snell                   Expires January 19, 2014               [Page 16]
+
+Internet-Draft               ActivityStreams                   July 2013
+
+
    |              |             | identified both by a unique global   |
    |              |             | ID and a more "human-friendly" label |
    |              |             | such as "@friends" or "@network".    |
@@ -890,14 +928,6 @@ Internet-Draft               ActivityStreams                   July 2013
    |              |             | content. An object SHOULD contain a  |
    |              |             | "duplicates" property when there are |
    |              |             | known objects, possibly in a         |
-
-
-
-Snell                   Expires January 19, 2014               [Page 16]
-
-Internet-Draft               ActivityStreams                   July 2013
-
-
    |              |             | different system, that are           |
    |              |             | semantically equivalent or duplicate |
    |              |             | the content.                         |
@@ -916,6 +946,14 @@ Internet-Draft               ActivityStreams                   July 2013
    |              |             | object. Unlike the "icon" property,  |
    |              |             | there are no aspect ratio or display |
    |              |             | restrictions.                        |
+
+
+
+Snell                   Expires January 19, 2014               [Page 17]
+
+Internet-Draft               ActivityStreams                   July 2013
+
+
    | location     | Link        | A Link (Section 3.4) value           |
    |              | (Section    | describing one or more physical or   |
    |              | 3.4) value  | virtual locations associated with    |
@@ -930,30 +968,12 @@ Internet-Draft               ActivityStreams                   July 2013
    |              | 3.4) value  | published the object. Note that this |
    |              |             | is not necessarily the same entity   |
    |              |             | that generated the object.           |
-   | source       | Link        | A Link (Section 3.4) value           |
-   |              | (Section    | referencing the original source of   |
-   |              | 3.4) value  | this object. The source property is  |
-   |              |             | closely related to the generator and |
-   |              |             | provider properties but serves the   |
-   |              |             | distinct purpose of identifying      |
-   |              |             | where the object was originally      |
-   |              |             | published as opposed to identifying  |
-   |              |             | the applications that generated or   |
-   |              |             | published it.                        |
    | summary      | Natural     | A Natural-language summarization of  |
    |              | Language    | the object encoded as a single JSON  |
-   |              | value       | String containing HTML markup.       |
-   |              | (Section    | Visual elements such as thumbnail    |
-   |              | 3.2)        | images can be included.              |
+   |              | value       | String containing a fragment of HTML |
+   |              | (Section    | markup. Visual elements such as      |
+   |              | 3.2)        | thumbnail images can be included.    |
    | updated      | [RFC3339]   | The date and time at which a         |
-
-
-
-Snell                   Expires January 19, 2014               [Page 17]
-
-Internet-Draft               ActivityStreams                   July 2013
-
-
    |              | date-time   | previously published object has been |
    |              |             | modified.                            |
    | startTime    | [RFC3339]   | A date-time describing the actual or |
@@ -982,11 +1002,23 @@ Internet-Draft               ActivityStreams                   July 2013
    |              |             | one another in that the "tags"       |
    |              |             | property asserts "association by     |
    |              |             | reference" while "attachments"       |
+
+
+
+Snell                   Expires January 19, 2014               [Page 18]
+
+Internet-Draft               ActivityStreams                   July 2013
+
+
    |              |             | asserts "association by enclosure".  |
-   | title        | Natural     | A Natural-language title of the      |
-   |              | Language    | object encoded as a single JSON      |
-   |              | (Section    | String containing HTML markup.       |
-   |              | 3.2) value  |                                      |
+   | title        | Natural     | A Natural-language title for the     |
+   |              | Language    | object expressed as a fragment of    |
+   |              | (Section    | HTML markup. The "title" and         |
+   |              | 3.2) value  | "displayName" properties are closely |
+   |              |             | related and overlap in function with |
+   |              |             | the key difference being that        |
+   |              |             | "title" is permitted to contain HTML |
+   |              |             | markup, while "displayName" is not.  |
    | duration     | Integer or  | When the object describes a time-    |
    |              | [RFC3339]   | based resource, such as audio or     |
    |              | duration    | video, the "duration" property       |
@@ -1002,14 +1034,6 @@ Internet-Draft               ActivityStreams                   July 2013
    |              |             | embeddable HTML page, the "height"   |
    |              |             | property indicates the recommended   |
    |              |             | display height in pixels.            |
-
-
-
-Snell                   Expires January 19, 2014               [Page 18]
-
-Internet-Draft               ActivityStreams                   July 2013
-
-
    | width        | Integer     | When the object describes a visual   |
    |              |             | resource, such as an image, video or |
    |              |             | embeddable HTML page, the "width"    |
@@ -1034,6 +1058,14 @@ Internet-Draft               ActivityStreams                   July 2013
    While the logical view of a collection might contain a large number
    of objects, any single serialized representation might include only a
    subset of those objects, with specific Link (Section 3.4) values used
+
+
+
+Snell                   Expires January 19, 2014               [Page 19]
+
+Internet-Draft               ActivityStreams                   July 2013
+
+
    to reference additional serialized representations that include
    additional subsets.  Such representations are known as "multi-page
    collections", with each serialized subset representing a single
@@ -1058,14 +1090,6 @@ Internet-Draft               ActivityStreams                   July 2013
    |              |              | object instance.                    |
    | items        | Array of     | An array containing a listing of    |
    |              | Objects      | Objects (Section 3.1) of any type.  |
-
-
-
-Snell                   Expires January 19, 2014               [Page 19]
-
-Internet-Draft               ActivityStreams                   July 2013
-
-
    |              | (Section     |                                     |
    |              | 3.1)         |                                     |
    | itemsAfter   | [RFC3339]    | A RFC 3339 date-time that indicates |
@@ -1090,6 +1114,14 @@ Internet-Draft               ActivityStreams                   July 2013
    |              |              | of a collection, but only the last  |
    |              |              | 10 of those items are included in   |
    |              |              | the items property, the value of    |
+
+
+
+Snell                   Expires January 19, 2014               [Page 20]
+
+Internet-Draft               ActivityStreams                   July 2013
+
+
    |              |              | startIndex would be 10.             |
    | first        | Link         | A Link (Section 3.4) value          |
    |              | (Section     | referencing the furthest preceeding |
@@ -1114,14 +1146,6 @@ Internet-Draft               ActivityStreams                   July 2013
    |              | (Section     | referencing the page containing the |
    |              | 3.4) value   | items that have been updated or     |
    |              |              | published most recently.            |
-
-
-
-Snell                   Expires January 19, 2014               [Page 20]
-
-Internet-Draft               ActivityStreams                   July 2013
-
-
    | self         | Link         | A Link (Section 3.4) value          |
    |              | (Section     | referencing this page.              |
    |              | 3.4) value   |                                     |
@@ -1146,6 +1170,14 @@ Internet-Draft               ActivityStreams                   July 2013
 
    +------------+-----------------+------------------------------------+
    | Property   | Value           | Description                        |
+
+
+
+Snell                   Expires January 19, 2014               [Page 21]
+
+Internet-Draft               ActivityStreams                   July 2013
+
+
    +------------+-----------------+------------------------------------+
    | replies    | Collection      | Provides information about the set |
    |            | (Section 3.7)   | of objects that can be considered  |
@@ -1158,31 +1190,10 @@ Internet-Draft               ActivityStreams                   July 2013
    that a note has 10 responses, and provides information on the most
    recently received response:
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Snell                   Expires January 19, 2014               [Page 21]
-
-Internet-Draft               ActivityStreams                   July 2013
-
-
    {
      "type": "note",
      "id": "urn:example:note:1",
-     "displayName": "Note",
-     "title": "A Note about things",
+     "displayName": "A note about things",
      "content": "blah blah blah",
      "replies": {
        "url": "http://example.org/note/1/comments.json",
@@ -1214,6 +1225,15 @@ Internet-Draft               ActivityStreams                   July 2013
 
 5.  Deprecated Activity Streams 1.0 Syntax
 
+
+
+
+
+Snell                   Expires January 19, 2014               [Page 22]
+
+Internet-Draft               ActivityStreams                   July 2013
+
+
    The JSON syntax defined by this specification differs somewhat from
    that defined in the original JSON Activity Streams 1.0
    [activitystreams-1.0] specification in ways that are not backwards
@@ -1225,14 +1245,6 @@ Internet-Draft               ActivityStreams                   July 2013
    implementations.
 
    Specifically:
-
-
-
-
-Snell                   Expires January 19, 2014               [Page 22]
-
-Internet-Draft               ActivityStreams                   July 2013
-
 
    1.  Implementations MUST use the "application/stream+json" MIME media
        type when producing a JSON serialization of an Activity Object
@@ -1251,13 +1263,14 @@ Internet-Draft               ActivityStreams                   July 2013
        compatibility, implementations MUST treat "objectType" as an
        alias of "type".
 
-   4.  This document redefines the "title", "content" and "summary"
-       properties as Natural Language Values (Section 3.2), which means
-       their values can be expressed as either a String or a JSON-LD
-       Language Map. In the 1.0 syntax, these are expressed solely as
-       String values.  Because the 1.0 values are a valid subset allowed
-       by this specification, implementations are not required to take
-       any specific action to continue supporting those values.
+   4.  This document redefines the "displayName", "title", "content" and
+       "summary" properties as Natural Language values (Section 3.2),
+       which means their values can be expressed as either a String or a
+       JSON-LD Language Map. In the 1.0 syntax, these are expressed
+       solely as String values.  Because the 1.0 values are a valid
+       subset allowed by this specification, implementations are not
+       required to take any specific action to continue supporting those
+       values.
 
    5.  This document redefines a large number of common properties
        defined originally as Objects in 1.0 as Link values
@@ -1269,6 +1282,14 @@ Internet-Draft               ActivityStreams                   July 2013
 
    6.  This specification replaces the "upstreamDuplicates" and
        "downstreamDuplicates" properties defined in the 1.0 syntax with
+
+
+
+Snell                   Expires January 19, 2014               [Page 23]
+
+Internet-Draft               ActivityStreams                   July 2013
+
+
        a singular "duplicates" property with a Link value (Section 3.4).
        The "upstreamDuplicates" and "downstreamDuplicates" property
        values in 1.0 are defined as Arrays of strings.  Implementations
@@ -1282,14 +1303,6 @@ Internet-Draft               ActivityStreams                   July 2013
 
    The values of "id" properties can be compared to determine if the
    identifiers represent duplicate content.  The values MUST be compared
-
-
-
-Snell                   Expires January 19, 2014               [Page 23]
-
-Internet-Draft               ActivityStreams                   July 2013
-
-
    on a character-by-character, case-sensitive basis.  Comparisons MUST
    be based solely on the character strings themselves and MUST NOT rely
    on dereferencing the IRIs or URIs mapped from them.
@@ -1325,6 +1338,14 @@ Internet-Draft               ActivityStreams                   July 2013
 
    Consumers that re-emit ingested content for crawling by search
    engines should take reasonable measures to limit any use of their
+
+
+
+Snell                   Expires January 19, 2014               [Page 24]
+
+Internet-Draft               ActivityStreams                   July 2013
+
+
    site as a Search Engine Optimization loophole.  This may include
    converting un-trusted hyperlinks to text or including a
    rel="nofollow" attribute.
@@ -1336,15 +1357,6 @@ Internet-Draft               ActivityStreams                   July 2013
 
    Activity Streams are JSON Documents and are subject to the same
    security considerations described in [RFC4627].
-
-
-
-
-
-Snell                   Expires January 19, 2014               [Page 24]
-
-Internet-Draft               ActivityStreams                   July 2013
-
 
    Activity Streams implementations handle URIs.  See Section 7 of
    [RFC3986].
@@ -1382,6 +1394,14 @@ Internet-Draft               ActivityStreams                   July 2013
 
       Additional information:
 
+
+
+
+Snell                   Expires January 19, 2014               [Page 25]
+
+Internet-Draft               ActivityStreams                   July 2013
+
+
          Magic number(s): N/A
 
          File extension(s): N/A
@@ -1394,13 +1414,6 @@ Internet-Draft               ActivityStreams                   July 2013
       Intended usage: COMMON
 
       Restrictions on usage: None.
-
-
-
-Snell                   Expires January 19, 2014               [Page 25]
-
-Internet-Draft               ActivityStreams                   July 2013
-
 
       Author: James M Snell <jasnell@gmail.com>
 
@@ -1437,6 +1450,14 @@ Internet-Draft               ActivityStreams                   July 2013
               April 2013,
               <http://www.w3.org/TR/2013/WD-json-ld-20130411>.
 
+
+
+
+Snell                   Expires January 19, 2014               [Page 26]
+
+Internet-Draft               ActivityStreams                   July 2013
+
+
    [activitystreams-1.0]
               Snell, J., Atkins, M., Norris, W., Messina, C., Wilkinson,
               M., and R. Dolin, "JSON Activity Streams 1.0", May 2011.
@@ -1450,14 +1471,6 @@ Appendix A.  Acknowledgements
 
    The author wishes to thank the Activity Streams community and
    implementers for their support, encouragement, and enthusiasm
-
-
-
-Snell                   Expires January 19, 2014               [Page 26]
-
-Internet-Draft               ActivityStreams                   July 2013
-
-
    including but not limited to: Abdul Qabiz, Adina Levin, Adrian Chan,
    Adriana Javier, Alan Hoffman, Alex Kessinger, Alexander Ovchinnikov,
    Alexander Zhuravlev, Alexandre Loureiro Solleiro, Amy Walgenbach,
@@ -1493,6 +1506,14 @@ Internet-Draft               ActivityStreams                   July 2013
    Wistow, Stephen Garcia, Stephen Sisk, Stephen Paul Weber, Steve Ivy,
    Steve Midgley, Steven Livingstone-Perez, Sylvain Carle, Sylvain
    Hellegouarch, Tantek Celik, Tatu Saloranta, Tim Moore, Timothy Young,
+
+
+
+Snell                   Expires January 19, 2014               [Page 27]
+
+Internet-Draft               ActivityStreams                   July 2013
+
+
    Todd Barnard, Tosh Meston, Tyler Gillies, Will Norris, Zach Copley,
    and Zach Shepherd.
 
@@ -1504,15 +1525,6 @@ Appendix B.  Processing as JSON-LD
    The following example illustrates an Activity Streams document that
    can be processed as JSON-LD containing Schema.org defined metadata
    elements.
-
-
-
-
-
-Snell                   Expires January 19, 2014               [Page 27]
-
-Internet-Draft               ActivityStreams                   July 2013
-
 
    {
      "@context": {
@@ -1528,7 +1540,7 @@ Internet-Draft               ActivityStreams                   July 2013
      },
      "verb" : "purchase",
      "id" : "urn:example:purchase:123/abc",
-     "title": "John purchased 'A Tale of Two Cities'",
+     "displayName": "John purchased 'A Tale of Two Cities'",
      "startTime" : "2013-04-02T12:31Z",
      "endTime" : "2013-04-02T12:31Z",
      "actor": {
@@ -1537,7 +1549,7 @@ Internet-Draft               ActivityStreams                   July 2013
      },
      "object": {
        "type": "book",
-       "title": "A Tale of Two Cities"
+       "displayName": "A Tale of Two Cities"
      }
    }
 
@@ -1548,18 +1560,6 @@ Author's Address
    IBM
 
    Email: jasnell@gmail.com
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

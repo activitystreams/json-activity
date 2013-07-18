@@ -144,7 +144,7 @@
               limits identifiers to absolute IRIs.
             </t>
             <t>
-              While it is possible to derive a JSON-LD "context" description
+              While it is possible to derive a JSON-LD "@context" description
               for the Activity Streams 2.0 JSON syntax one is not normatively
               provided by this specification.
             </t>
@@ -195,19 +195,52 @@
     
     <section anchor="examples" title="Example Activities">
 
-      <t>Following is a simple example of an activity:</t>
+      <t>
+        Following are three examples of activities with varying 
+        degrees of detail.
+      </t>
+
+      <section title="Example 1: Minimal Activity">
+        
+        <t>
+          Expresses the statement "'urn:example:person:martin' posted
+          'http://example.org/foo.jpg'". No additional detail is 
+          given.
+        </t>
+        
+        <figure>
+          <artwork><![CDATA[
+  {
+    "verb": "post",
+    "actor": "urn:example:person:martin",
+    "object": "http://example.org/foo.jpg"
+  }
+          ]]></artwork>
+        </figure>
+        
+      </section>
+      
+      <section title="Example 2: Basic activity with some additional detail">
+
+        <t>
+          Expresses the statement "Martin Smith posted an article to
+          the blog 'Martin's Blog' at 3:04 PM GMT on February 2, 2011."
+          Some additional details about the article, actor and target
+          blog are given.</t>
 
 <figure><artwork><![CDATA[
   {
     "verb": "post",
     "published": "2011-02-10T15:04:55Z",
+    "language": "en",
     "actor": {
       "type": "person",
       "id": "urn:example:person:martin",
       "displayName": "Martin Smith",
       "url": "http://example.org/martin",
       "image": {
-        "id": "http://example.org/martin/image",
+        "url": "http://example.org/martin/image.jpg",
+        "mediaType": "image/jpeg",
         "width": 250,
         "height": 250
       }
@@ -215,7 +248,8 @@
     "object" : {
       "type": "article",
       "id": "urn:example:blog:abc123/xyz"
-      "url": "http://example.org/blog/2011/02/entry"
+      "url": "http://example.org/blog/2011/02/entry",
+      "displayName": "Why I love Activity Streams"
     },
     "target" : {
       "type": "blog",
@@ -226,6 +260,10 @@
   }
 ]]></artwork></figure>
 
+        </section>
+
+        <section title="Example 3: An extended activity">
+
         <t>
           A more extensive, single-entry "Activity Stream"
           follows. In addition to containing a number of required and optional
@@ -235,6 +273,7 @@
 
 <figure><artwork><![CDATA[
   {
+    "totalItems": 1,
     "items" : [
       {
         "verb": "post",
@@ -243,7 +282,7 @@
         "foo": "some extension property",
         "generator": "http://example.org/activities-app",
         "provider": "http://example.org/activity-stream",
-        "title": {
+        "displayName": {
           "en": "Martin posted a new video to his album.",
           "ga": "Martin phost le físeán nua a albam."
         },
@@ -254,7 +293,8 @@
           "url": "http://example.org/martin",
           "foo2": "some other extension property",
           "image": {
-            "id": "http://example.org/martin/image",
+            "url": "http://example.org/martin/image",
+            "mediaType": "image/jpeg",
             "width": 250,
             "height": 250
           }
@@ -267,24 +307,26 @@
           "id": "urn:example:album:abc123/my_fluffy_cat",
           "url": "http://example.org/album/my_fluffy_cat.jpg",
           "image": {
-            "id": "http://example.org/album/my_fluffy_cat_thumb.jpg",
+            "url": "http://example.org/album/my_fluffy_cat_thumb.jpg",
+            "mediaType": "image/jpeg",
             "width": 250,
             "height": 250
           }
         },
         "target": {
-          "url": "http://example.org/album/",
           "type": {
-            "id": "photo-album",
+            "id": "http://example.org/PhotoAlbum",
             "displayName": "Photo-Album"
           },
           "id": "urn:example.org:album:abc123",
-          "title": {
+          "url": "http://example.org/album/",
+          "displayName": {
             "en": "Martin's Photo Album",
             "ga": "Grianghraif Máirtín"
           },
           "image": {
-            "id": "http://example.org/album/thumbnail.jpg",
+            "url": "http://example.org/album/thumbnail.jpg",
+            "mediaType": "image/jpeg",
             "width": 250,
             "height": 250
           }
@@ -293,6 +335,8 @@
     ]
   }
 ]]></artwork></figure>
+
+      </section>
 
     </section>
     
@@ -336,7 +380,7 @@
           </c>
           
           <c>displayName</c>
-          <c>String</c>
+          <c><xref target="lang">Natural Language value</xref></c>
           <c>
             A simple human-readable, plain-text name for the 
             object. HTML markup MUST NOT be included. An object MAY contain a 
@@ -348,7 +392,7 @@
           <c>Link</c>
           <c>
             A <xref target="link">Link</xref> value describing a resource 
-            that provides a visual representation of the object. An object 
+            that provides a representation of the object. An object 
             MAY contain a "url" property.
           </c>  
         </texttable>
@@ -366,7 +410,7 @@
         </t>
         
         <t>
-          For instance, the "title" property in all objects is a
+          For instance, the "displayName" property in all objects is a
           Natural Language value.
         </t>
         
@@ -375,7 +419,7 @@
           <artwork>
   {
     "language": "en",
-    "title": "This is the title"
+    "displayName": "This is the title"
   }
           </artwork>
         </figure>
@@ -384,7 +428,7 @@
           <preamble>Multiple, language-specific values:</preamble>
           <artwork>
   {
-    "title": {
+    "displayName": {
       "en": "This is the name",
       "fr": "C'est le titre",
       "sp": "Este es el título"
@@ -409,23 +453,22 @@
           <xref target="RFC3987"/> or (2) an <xref target="object">Object</xref>. 
           When represented as a String, the use of relative references other 
           than a simple name is not allowed. When represented as an Object,
-          the "id" property MUST be specified and is used to communicate the 
-          identity of the verb.
+          the "id" property MUST be specified.
         </t>
         
         <t>
-          Within the Activity Streams 2.0 model, Type values are used only
+          Within the Activity Streams 2.0, Type values are used only
           by the "type" and "verb" properties.
         </t>
         
-        <figure><preamble>Object type with a simple name (isegment-nz-nc):</preamble><artwork>
+        <figure><preamble>Object type as a simple name (isegment-nz-nc):</preamble><artwork>
   {
     "type": "person",
     "displayName": "John"
   }
         </artwork></figure>
         
-        <figure><preamble>Object type with an absolute IRI:</preamble><artwork>
+        <figure><preamble>Object type as an absolute IRI:</preamble><artwork>
   {
     "type": "http://example.org/Person",
     "displayName": "John"
@@ -443,7 +486,7 @@
         </artwork></figure>
         
         <t>
-          Because the second and third example above each specify
+          Because the second and third examples above each specify
           "http://example.org/Person", the two examples are considered
           to specify the same type.
         </t>
@@ -456,7 +499,7 @@
   }
         </artwork></figure>
         
-        <figure><preamble>Verb with an absolute IRI:</preamble><artwork>
+        <figure><preamble>Verb as an absolute IRI:</preamble><artwork>
   {
     "verb": "http://example.com/Upload",
     "actor": "acct:john.doe@example.org",
@@ -476,10 +519,11 @@
         </artwork></figure>
         
         <t>
-          Representing verbs and types as objects rather than simple names or 
-          IRIs is intended to simplify use of extensions that an implementation 
-          might not have encountered previously. The object properties provide 
-          additional information and metadata about the new verb or object type.
+          Allowing verbs and object types to be represented as objects rather 
+          than simple names or IRIs is intended to simplify the use of 
+          extensions that an implementation might not have encountered 
+          previously. The object properties provide additional information 
+          and metadata about the new verb or object type.
         </t>
         
         <t>
@@ -499,12 +543,11 @@
           or (3) a JSON Array containing a mixture of IRIs or 
           <xref target="object">Objects</xref>. Link values are closely related 
           to the conceptual model of Links as established in 
-          <xref target="RFC5988"/>, but have a serialization that is 
-          compatible with the JSON-serialization for Linked Data.
+          <xref target="RFC5988"/>.
         </t>
         
         <t>
-          For instance, as defined previously, all 
+          For example, as defined previously, all 
           <xref target="object">objects</xref> can contain an
           "image" property whose value describes a graphical 
           representation of the containing object. This property
@@ -512,9 +555,9 @@
           GIF or PNG type resource that can be displayed to 
           the user. Any given object might have multiple such visual 
           representations -- multiple screenshots, for instance, or 
-          the same image at different resolutions. Based on the 
-          JSON-LD approach, there are essentially three ways of 
-          describing these references.
+          the same image at different resolutions. Using Link values,
+          there are essentially three ways of describing such 
+          references.
         </t>
         
         <figure><preamble>To reference a single image without any 
@@ -530,9 +573,8 @@
         </artwork></figure>
           
         <figure><preamble>Alternatively, if additional metadata is required, 
-          the link can be expressed as an object that uses the url 
-          property. If the url property is not specified, then the id
-          property MAY be used as an alternative.</preamble>
+          the link can be expressed as an object containing the url 
+          property.</preamble>
           <artwork>
   {
     "type": "application",
@@ -568,22 +610,40 @@
         </artwork></figure>
         
         <t>
-          Individual items contained in such an array value are independent
-          of the others and no significance is given to the order of 
-          items in the array.
+          Individual items contained in such an array are independent
+          of the others and no significance is given to the ordering of 
+          those items.
         </t>
 
         <t>
           RFC 5988 defines that all Links have a "link relation" 
           that describes the contextual purpose of the link. Within 
-          an Activity Streams document, in the absence of a specific 
-          "rel" property within the link itself, the name of the property 
-          whose value is a link serves as the "link relation". Any valid 
-          link relation value, as defined by RFC 5988, can be used as a 
-          property with a link value in any Activity Streams object, except 
+          an <xref target="object">object</xref>, in the absence of a specific 
+          "rel" property within the link object itself, the name of the 
+          property whose value is a link serves as the "link relation". 
+          Any valid link relation value, as defined by RFC 5988, can be used 
+          as a property with a link value in any Activity Streams object, except 
           where the link relation might conflict with any other property
           defined by this specification. 
         </t>
+        
+        <figure><preamble>In the following example, two separate links are 
+          provided. The link relation of the first is "image", while the 
+          link relation of the second is "preview". Both links, however, can
+          be used as alternative visual representations of the 
+          "application" object.</preamble><artwork><![CDATA[
+  {
+    "type": "application",
+    "image": [
+      "http://example.org/foo.jpg",
+      {
+        "url": "http://example.org/screens/1.jpg",
+        "rel": "preview",
+        "mediaType": "image/jpeg"
+      }
+    ]
+  }
+        ]]></artwork></figure>
         
         <t>
           When an <xref target="object">object</xref> is used to represent
@@ -686,30 +746,19 @@
             property can be used to describe that new resource.
           </c>
           
-          <c>context</c>
-          <c><xref target="link">Link</xref> value</c>
-          <c>
-            The "context" property allows the Activity to further include 
-            information about why a particular action occurred by providing 
-            details about the context within which a particular action was 
-            performed. The value of the context property is 
-            <xref target="link">Link</xref> value.
-          </c>
-          
           <c>priority</c>
           <c>Decimal Number between 0.00 and 1.00</c>
           <c>
             An indicator of the relative priority or importance that
-            the creator of an Activity object considers the object to
+            the creator of an activity considers the it to
             have. Represented as a numeric decimal between 0.00 and 1.00,
             with two decimal places of precision. If the property is
-            omitted, or expicitly set to null, the assumption is that
-            no explicit priority or importance can be assumed. All other
-            values falling between 0.00 and 1.00 indicate increasing 
-            priority.
+            omitted or set to null, the assumption is that a default priority 
+            can be assumed. The value 0.00 represents the lowest possible
+            priority while 1.00 represents the highest.
           </c>
         </texttable>
-        
+                
         <section title="Considerations on the use of &quot;priority&quot;">
           
           <t>
@@ -947,7 +996,7 @@
           <c>
             The date and time at which the object was published.
           </c>
-          
+
           <c>generator</c>
           <c><xref target="link">Link</xref> value</c>
           <c>
@@ -958,27 +1007,18 @@
           <c>provider</c>
           <c><xref target="link">Link</xref> value</c>
           <c>
-            A <xref target="link">Link</xref> value referencing the application 
-            that published the object. Note that this is not necessarily the 
-            same entity that generated the object.
-          </c>
-
-          <c>source</c>
-          <c><xref target="link">Link</xref> value</c>
-          <c>
-            A <xref target="link">Link</xref> value referencing the original
-            source of this object. The source property is closely related to 
-            the generator and provider properties but serves the distinct 
-            purpose of identifying where the object was originally published as 
-            opposed to identifying the applications that generated or published it.
+            A <xref target="link">Link</xref> value referencing the 
+            application that published the object. Note that this 
+            is not necessarily the same entity that generated the 
+            object.
           </c>
 
           <c>summary</c>
           <c><xref target="lang">Natural Language value</xref></c>
           <c>
             A Natural-language summarization of the object encoded as a single
-            JSON String containing HTML markup. Visual elements such as 
-            thumbnail images can be included.
+            JSON String containing a fragment of HTML markup. Visual elements 
+            such as thumbnail images can be included.
           </c>
 
           <c>updated</c>
@@ -1026,8 +1066,11 @@
           <c>title</c>
           <c><xref target="lang">Natural Language</xref> value</c>
           <c>
-            A Natural-language title of the object encoded as a single
-            JSON String containing HTML markup.
+            A Natural-language title for the object expressed as a fragment 
+            of HTML markup. The "title" and "displayName" properties are closely 
+            related and overlap in function with the key difference being 
+            that "title" is permitted to contain HTML markup, while "displayName" 
+            is not.
           </c>
           
           <c>duration</c>
@@ -1247,8 +1290,7 @@
             <artwork>{
   "type": "note",
   "id": "urn:example:note:1",
-  "displayName": "Note",
-  "title": "A Note about things",
+  "displayName": "A note about things",
   "content": "blah blah blah",
   "replies": {
     "url": "http://example.org/note/1/comments.json",
@@ -1330,9 +1372,9 @@
             as an alias of "type".
           </t>
           <t>
-            This document redefines the "title", "content" and "summary" 
-            properties as <xref target="lang">Natural Language Values</xref>, 
-            which means their values can be expressed as either a 
+            This document redefines the "displayName", "title", "content" 
+            and "summary" properties as <xref target="lang">Natural Language 
+            values</xref>, which means their values can be expressed as either a 
             String or a JSON-LD Language Map. In the 1.0 syntax, these are 
             expressed solely as String values. Because the 1.0 values
             are a valid subset allowed by this specification, implementations
@@ -1617,7 +1659,7 @@
     },
     "verb" : "purchase",
     "id" : "urn:example:purchase:123/abc",
-    "title": "John purchased 'A Tale of Two Cities'",
+    "displayName": "John purchased 'A Tale of Two Cities'",
     "startTime" : "2013-04-02T12:31Z",
     "endTime" : "2013-04-02T12:31Z",
     "actor": {
@@ -1626,7 +1668,7 @@
     },
     "object": {
       "type": "book",
-      "title": "A Tale of Two Cities"
+      "displayName": "A Tale of Two Cities"
     }
   }
       </artwork></figure> 
