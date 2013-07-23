@@ -134,9 +134,9 @@
           serialization syntax described here, specifically:
           <list style="symbols">
             <t>
-              JSON-LD uses field names with a leading "@" character,
-              such as "@id", "@type" and "@language". In this 
-              specification, the leading "@" is omitted.
+              JSON-LD uses certain field names with a leading "@" character,
+              such as "@id" and "@language". In this specification, the 
+              leading "@" is omitted.
             </t>
             <t>
               While JSON-LD allows using relative IRI references
@@ -147,6 +147,38 @@
               While it is possible to derive a JSON-LD "@context" description
               for the Activity Streams 2.0 JSON syntax one is not normatively
               provided by this specification.
+            </t>
+          </list>
+        </t>
+        
+        <t>
+          When processing an Activity Streams document as JSON-LD, the 
+          following rules apply:
+          <list style="symbols">
+            <t>
+              The "objectType" property MUST be treated as an alias of 
+              JSON-LD "@type".
+            </t>
+            <t>
+              The "id" property MUST be treated as an alias of JSON-LD "@id".
+            </t>
+            <t>
+              The "language" property MUST be treated as an alias of JSON-LD 
+              "@language".
+            </t>
+            <t>
+              A JSON array used to convey <xref target="link">Link</xref> values
+              MUST be treated as an unordered JSON-LD @set (@container = @set).
+            </t>
+            <t>
+              The JSON array value for the "items" property defined in
+              <xref target="collection" /> MUST be treated as an ordered
+              JSON-LD @list (@container = @list).
+            </t>
+            <t>
+              The "displayName", "title", "content" and "summary" properties
+              defined in <xref target="object" /> and <xref target="object-ext" />
+              MUST be treated as JSON-LD Language Maps (@container = @language).
             </t>
           </list>
         </t>
@@ -234,7 +266,7 @@
     "published": "2011-02-10T15:04:55Z",
     "language": "en",
     "actor": {
-      "type": "person",
+      "objectType": "person",
       "id": "urn:example:person:martin",
       "displayName": "Martin Smith",
       "url": "http://example.org/martin",
@@ -246,13 +278,13 @@
       }
     },
     "object" : {
-      "type": "article",
+      "objectType": "article",
       "id": "urn:example:blog:abc123/xyz"
       "url": "http://example.org/blog/2011/02/entry",
       "displayName": "Why I love Activity Streams"
     },
     "target" : {
-      "type": "blog",
+      "objectType": "blog",
       "id": "urn:example:blog:abc123",
       "displayName": "Martin's Blog",
       "url": "http://example.org/blog/"
@@ -287,7 +319,7 @@
           "ga": "Martin phost le físeán nua a albam."
         },
         "actor": {
-          "type": "person",
+          "objectType": "person",
           "id": "urn:example:person:martin",
           "displayName": "Martin Smith",
           "url": "http://example.org/martin",
@@ -300,7 +332,7 @@
           }
         },
         "object" : {
-          "type": {
+          "objectType": {
             "id": "http://example.org/Photo",
             "displayName": "Photo"
           },
@@ -314,7 +346,7 @@
           }
         },
         "target": {
-          "type": {
+          "objectType": {
             "id": "http://example.org/PhotoAlbum",
             "displayName": "Photo-Album"
           },
@@ -362,12 +394,12 @@
             does not contain an "id" property, consumers MAY use the value of
             the "url" property as a less-reliable, non-unique identifier.
           </c>
-          <c>type</c>
+          <c>objectType</c>
           <c><xref target="type-value">Type value</xref></c>
           <c>
-            Identifies the type of object. An object MAY contain a "type"
+            Identifies the type of object. An object MAY contain a "objectType"
             property whose value is a <xref target="type-value">Type value</xref>. 
-            If no "type" property is specified, the object has no specific type.
+            If no "objectType" property is specified, the object has no specific type.
           </c>
           
           <c>language</c>
@@ -384,7 +416,7 @@
           <c>
             A simple human-readable, plain-text name for the 
             object. HTML markup MUST NOT be included. An object MAY contain a 
-            "displayName" property. If the object does not specify a "type"
+            "displayName" property. If the object does not specify a "objectType"
             property, the object SHOULD specify a "displayName".
           </c>
           
@@ -458,26 +490,26 @@
         
         <t>
           Within the Activity Streams 2.0, Type values are used only
-          by the "type" and "verb" properties.
+          by the "objectType" and "verb" properties.
         </t>
         
         <figure><preamble>Object type as a simple name (isegment-nz-nc):</preamble><artwork>
   {
-    "type": "person",
+    "objectType": "person",
     "displayName": "John"
   }
         </artwork></figure>
         
         <figure><preamble>Object type as an absolute IRI:</preamble><artwork>
   {
-    "type": "http://example.org/Person",
+    "objectType": "http://example.org/Person",
     "displayName": "John"
   }
         </artwork></figure>
         
         <figure><preamble>Object type as an object:</preamble><artwork>
   {
-    "type": {
+    "objectType": {
       "id": "http://example.org/Person",
       "displayName": "Person"
     },
@@ -565,7 +597,7 @@
           a simple JSON string containing an absolute or relative 
           IRI:</preamble><artwork>
   {
-    "type": "application",
+    "objectType": "application",
     "id": "http://example.org/application/123",
     "displayName": "My Application",
     "image": "http://example.org/application/123.png"
@@ -577,7 +609,7 @@
           property.</preamble>
           <artwork>
   {
-    "type": "application",
+    "objectType": "application",
     "id": "http://example.org/application/123",
     "displayName": "My Application",
     "image": {
@@ -594,7 +626,7 @@
           A JSON Array with a mix of string and object elements can be 
           used:</preamble><artwork>
   {
-    "type": "application",
+    "objectType": "application",
     "id": "http://example.org/application/123",
     "displayName": "My Application",
     "image": [
@@ -633,7 +665,7 @@
           be used as alternative visual representations of the 
           "application" object.</preamble><artwork><![CDATA[
   {
-    "type": "application",
+    "objectType": "application",
     "image": [
       "http://example.org/foo.jpg",
       {
@@ -686,7 +718,7 @@
           to identify the type of activity. All existing verb definitions 
           used in JSON Activity Streams 1.0 implementations can continue 
           to be used and retain their existing semantics. If the "verb" 
-          is not specified, the "type" property MAY be used as an 
+          is not specified, the "objectType" property MAY be used as an 
           alternative means of determining the activity type.
         </t>
 
@@ -706,7 +738,7 @@
             Identifies the type of activity. An activity SHOULD contain a "verb"
             property whose value is a <xref target="type-value">Type value</xref>. 
             If the "verb" property is not specified, the activity MUST contain a 
-            "type" property.
+            "objectType" property.
           </c>
 
           <c>actor</c>
@@ -1135,7 +1167,7 @@
         </t>
         
         <t>
-          The value of the Collection object's "type" property MUST
+          The value of the Collection object's "objectType" property MUST
           be "collection" unless the fact that the object is a collection
           can be determined by context.
         </t>
@@ -1288,7 +1320,7 @@
               provides information on the most recently received 
               response:</preamble>
             <artwork>{
-  "type": "note",
+  "objectType": "note",
   "id": "urn:example:note:1",
   "displayName": "A note about things",
   "content": "blah blah blah",
@@ -1298,7 +1330,7 @@
     "totalItems": 10,
     "items": [
       {
-        "type": "note",
+        "objectType": "note",
         "id": "urn:example:note:1:A",
         "content": "That's profound, man."
       }
@@ -1366,10 +1398,10 @@
             using the "application/activity+json" media type.
           </t>
           <t>
-            This document renames the 1.0 "objectType" property to "type"
+            This document renames the 1.0 "objectType" property to "objectType"
             to better align syntactically with JSON-LD. For backwards 
             compatibility, implementations MUST treat "objectType"
-            as an alias of "type".
+            as an alias of "objectType".
           </t>
           <t>
             This document redefines the "displayName", "title", "content" 
@@ -1649,7 +1681,7 @@
     "@context": {
       "@vocab": "http://activitystrea.ms/spec/2.0/",
       "verb": "@type",
-      "type": "@type",
+      "objectType": "@type",
       "id": "@id",
       "actor": "http://schema.org/Action/performedBy",
       "object": "http://schema.org/BuyAction/bought",
@@ -1663,16 +1695,332 @@
     "startTime" : "2013-04-02T12:31Z",
     "endTime" : "2013-04-02T12:31Z",
     "actor": {
-      "type": "person",
+      "objectType": "person",
       "displayName": "John Doe"
     },
     "object": {
-      "type": "book",
+      "objectType": "book",
       "displayName": "A Tale of Two Cities"
     }
   }
       </artwork></figure> 
 
+    </section>
+    
+    <section anchor="Appendix-B" title="Motivational Use Cases">
+      
+      <t>
+        This specification defines a number of syntax changes relative
+        to the JSON Activity Streams 1.0 specification. The sections that
+        follow describe some of the general motivations for these changes
+        with illustrative examples.
+      </t>
+      
+      <section title="Internationalization (i18n)">
+        
+        <t>
+          The JSON Activity Streams 1.0 syntax has no inherent notion 
+          of a "language context". That is, the core syntax has no 
+          internal mechanism a publisher can use to identify the language
+          used when constructing the Activity Streams document. Nor are
+          there any existing mechanisms at the JSON syntax level that an
+          Activity Streams implementation can inherit. This specification
+          introduces the "language" property and Natural Language Value
+          concepts to fill this gap.
+        </t>
+        
+        <t>
+          Imagine a scenario with a service that receives Activity objects
+          from users and republishes those to a distributed audience of 
+          interested parties. This service spans international boundaries
+          and the users speak a multitude of different languages. Within this
+          system, a native English speaker might subscribe to notifications
+          about activities posted by a native French speaker.
+        </t>
+        
+        <t>
+          For instance, let's suppose that our native French speaker posts
+          the following activity to this system:
+        </t>
+        
+        <figure><artwork><![CDATA[
+  POST /activity/feed HTTP/1.1
+  Content-Type: application/activity+xml
+  
+  {
+    "verb": "post",
+    "language": "fr",
+    "object": {
+      "objectType": "article",
+      "displayName": "Un exemple basique",
+      ...
+    }
+  }
+        ]]></artwork></figure>
+        
+        <t>
+          The system receives this activity post and prepares to notify 
+          our native English speaking user. Knowing that this user prefers
+          English and does not speak a word of French, the system can 
+          inspect the Activity and detect automatically that a translation
+          ought to be provided. Rather than replacing the original French
+          text, however, the service can simply add in the English translation
+          along side it.
+        </t>
+        
+        <figure><artwork><![CDATA[
+  {
+    "verb": "post",
+    "language": "fr",
+    "actor": {
+      "id": "urn:example:person:abc",
+      "displayName": "Jean Valjean"
+    },
+    "object": {
+      "type": "article",
+      "displayName": {
+        "fr": "Un exemple basique",
+        "en": "A basic example"
+      }
+      ...
+    }
+  }
+        ]]></artwork></figure>
+  
+      </section>
+  
+      <section title="Extensibility (e11y)">
+        
+        <t>
+          Arguably, the two most important extensibility points in 
+          the Activity Streams format are the object type and verb 
+          properties. Implementations are free to come up with their
+          own types and verbs at any point. While such extensibility
+          is extremely powerful, it comes with a cost. Namely, 
+          implementations that encounter previously unknown verbs and
+          object types may not have enough to knowledge about those
+          to do anything significant with them.
+        </t>
+        
+        <t>
+          For instance, the most common use case for Activity Streams 
+          today is the generation of a human-readable "activity feed"
+          that translates Activity objects into sentences just as 
+          "John uploaded a new photo" or "Jane checked in at a hotel",
+          etc. Given an extension verb such as "http://example.org/whatever",
+          an implementation might not have sufficient information about 
+          that verb to generate a readable sentence describing the 
+          activity that occurred. 
+        </t>
+        
+        <t>
+          With Activity Streams 1.0, a number of different approaches have
+          been tried to address this problem, but all of the solutions
+          essentially deal with the need to provide additional metadata
+          about extension verbs and object types so that an implementation
+          can dynamically learn and adapt. The notion of "type values" 
+          is added by this specification to specifically deal with this
+          issue.
+        </t>
+        
+        <t>
+          For example, suppose I have an implementation that generates 
+          Activity objects that use a new extension verb 
+          "urn:example:verbs:upload". Knowing that consumers of these
+          objects might not have encountered this verb before, I want 
+          to make it possible for those implementations to automatically
+          discover metadata about the new verb. To do so, I can use 
+          a type value to provide some basic information.
+        </t>
+        
+        <figure><artwork><![CDATA[
+  {
+    "verb": {
+      "id": "urn:example:verbs:upload",
+      "url": "http://example.org/verbs.json",
+      "mediaType": "application/ld+json",
+      "displayName": {
+        "en": "upload",
+        "fr": "televersement"
+      },
+      "alias": "post"
+    },
+    "actor": {
+      "type": "person",
+      "displayName": "John"
+    },
+    "object": {
+      "type": "photo",
+      "displayName": "cats.jpg"
+    }
+  }
+        ]]></artwork></figure>
+        
+        <t>
+          An implementation receiving this has several choices. It could
+          choose to ignore everything other than the verb's identifier, 
+          treating it generically as one would have to today using the 
+          1.0 syntax; or, it could inspect the metadata provided and notice
+          that the extension verb can be treated generally as an alias of
+          "post" or displayed in English as "upload" and in French as 
+          "televersement"; or, it can choose to attempt discovering more
+          information about the verb by dereferencing the provided URL.
+        </t>
+        
+        <t>
+          The point is, these options are built into the core syntax, 
+          making extension verbs and object types significantly more 
+          usable, particularly when combined with the new language 
+          context features.
+        </t>
+        
+      </section>
+      
+      <section title="First Class Links">
+        
+        <t>
+          Linking in the 1.0 syntax is largely undefined and inconsistent.
+          There is a general notion of Media Link objects that are used for 
+          some things like images and videos, along with a "url" property 
+          that in some cases is used to always point to HTML represenations
+          while in other cases might point to JSON documents or image files,
+          and there is no reusable concept of a generic link provided for 
+          extensions to leverage which has led to inconsistent implementation.
+          The 2.0 syntax introduced here deals with these issues by introducing
+          a clear, consistent, reusable first class linking model.
+        </t>
+        
+        <t>
+          For instance, using the 2.0 syntax, an "image" object type can
+          be represented simply as:
+        </t>
+        
+        <figure><artwork><![CDATA[
+  {
+    "objectType": "image",
+    "url": "http://example.org/cats.jpg",
+    "mediaType": "image/jpeg",
+    "displayName": "A picture of my cats",
+    "alternate": {
+      "url": "http://example.org/gallery?i=cats.jpg",
+      "mediaType": "text/html"
+    }
+    "preview": "http://example.org/thumbnails/cats.jpg"
+  }
+        ]]></artwork></figure>
+        
+        <t>
+          Essentially, any 2.0 object that contains a "url" property can 
+          be interpreted as a link. That "url" property points to a 
+          representation of the object, while the "mediaType" property 
+          identifies the content type of that linked resource. RFC 5988
+          Link Relations can be used directly within the 2.0 syntax to 
+          provide additional data -- in this case, an alternative HTML
+          representation of the image as well as a thumbnail preview.
+        </t>
+        
+        <t>
+          Another case that the more flexible linking approach allows us 
+          to address is providing multiple links for a single property. 
+          For instance, it is not uncommon for there to be several alternative 
+          versions of an image resource offered at various resolutions to 
+          support multiple types of devices. With the 2.0 syntax, multiple 
+          choices for a single link can be easily provided.
+        </t>
+        
+        <figure><artwork><![CDATA[
+  {
+    "objectType": "application",
+    "displayName": "My application",
+    "icon": [
+      {
+        "url": "http://example.org/sd/icon.png",
+        "width": 57,
+        "height": 57
+      },
+      {
+        "url": "http://example.org/hd/icon.png",
+        "width": 114,
+        "height": 114
+      }
+    ],
+    "preview": [
+      "http://www.example.org/screenshots/1.jpg",
+      "http://www.example.org/screenshots/2.jpg",
+      "http://www.example.org/screenshots/3.jpg"
+    ]
+  }  
+        ]]></artwork></figure>
+              
+      </section>
+      
+      <section title="Use of External Vocabularies">
+        
+        <t>
+          Use of an "external vocabulary" within Activity Streams means
+          using object types, verbs and properties that are not defined
+          by the core Activity Streams specification. An example would be
+          using concepts defined within a microdata vocabulary such as 
+          that defined by Schema.org (http://schema.org).
+        </t>
+        
+        <t>
+          Implementations that wish to use a Activity Streams with such 
+          external vocabularies face the challenge that, often times, 
+          identical or overlapping concepts can be expressed in a multitude
+          of ways depending on which vocabulary is selected. This can 
+          make it difficult to map abstract data models into a specific 
+          JSON serialization.
+        </t>
+        
+        <t>
+          For instance, suppose an application uses the Schema.org model
+          to represent an article, described here: http://schema.org/Article.
+          Within this model, there are several properties defined that directly
+          overlap properties defined by the core Activity Streams syntax.
+          Such properties include "name", "contentLocation", and "articleBody". In 
+          order to encode the abstact model of a Schema.org/Article into the
+          JSON Activity Streams model, the application needs to determine 
+          precisely how to map the abstract properties to the serialized 
+          format. In Activity Streams 1.0, no guidance was given on how to
+          achieve such a mapping, within the 2.0 syntax, the JSON Serialization
+          for Linked Data (JSON-LD) provides a foundation.
+        </t>
+        
+        <t>
+          Using JSON-LD I can maintain basic Activity Streams 2.0 syntax 
+          while mapping the physical serialization to the abstract model
+          inline.
+        </t>
+        
+        <figure><artwork><![CDATA[
+  {
+    "objectType": "article",
+    "displayName": "My article about things",
+    "content": "This is my article",
+    "@context": {
+      "objectType": "@type",
+      "article": "http://schema.org/Article",
+      "displayName": "http://schema.org/name",
+      "content": "http://schema.org/Article/articleBody"
+    }
+  }  
+        ]]></artwork></figure>
+        
+        <t>
+          For any non-JSON-LD aware implementation, this can be processed just
+          as if it were an ordinary Activity Streams object, without any 
+          additional consideration given. For a JSON-Ld aware implementation,
+          however, the addition of the "@context" property allows the 
+          serialized JSON to be unambiguously mapped to the Schema.org 
+          concept of an "Article". The fact that we can support such a mapping
+          allows the Activity Streams format to extend to a broader range of
+          scenarios without requiring alternative, incompatible vocabulary 
+          specific models of "actions" or "activities" to be developed.
+        </t>
+        
+      </section>
+      
     </section>
     
   </back>
