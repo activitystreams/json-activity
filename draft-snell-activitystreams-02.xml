@@ -1350,7 +1350,7 @@
         The above defined JSON serialization can be used to represent
         activities, objects and media links in any context. This section
         defines one particular use of the above formats to publish a JSON
-        document representing a stream of activities.
+        document representing an ordered listing of Activity objects.
       </t>
 
       <t>

@@ -4,8 +4,8 @@
 
 Activity Streams (http://activitystrea.ms)                 J. Snell, Ed.
 Internet-Draft                                                       IBM
-Intended status: Standards Track                           July 23, 2013
-Expires: January 24, 2014
+Intended status: Standards Track                           July 30, 2013
+Expires: January 31, 2014
 
 
                        JSON Activity Streams 2.0
@@ -47,13 +47,13 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on January 24, 2014.
+   This Internet-Draft will expire on January 31, 2014.
 
 
 
 
 
-Snell                   Expires January 24, 2014                [Page 1]
+Snell                   Expires January 31, 2014                [Page 1]
 
 Internet-Draft               ActivityStreams                   July 2013
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Snell                   Expires January 24, 2014                [Page 2]
+Snell                   Expires January 31, 2014                [Page 2]
 
 Internet-Draft               ActivityStreams                   July 2013
 
@@ -165,7 +165,7 @@ Internet-Draft               ActivityStreams                   July 2013
 
 
 
-Snell                   Expires January 24, 2014                [Page 3]
+Snell                   Expires January 31, 2014                [Page 3]
 
 Internet-Draft               ActivityStreams                   July 2013
 
@@ -221,7 +221,7 @@ Internet-Draft               ActivityStreams                   July 2013
 
 
 
-Snell                   Expires January 24, 2014                [Page 4]
+Snell                   Expires January 31, 2014                [Page 4]
 
 Internet-Draft               ActivityStreams                   July 2013
 
@@ -277,7 +277,7 @@ Internet-Draft               ActivityStreams                   July 2013
 
 
 
-Snell                   Expires January 24, 2014                [Page 5]
+Snell                   Expires January 31, 2014                [Page 5]
 
 Internet-Draft               ActivityStreams                   July 2013
 
@@ -333,7 +333,7 @@ Internet-Draft               ActivityStreams                   July 2013
 
 
 
-Snell                   Expires January 24, 2014                [Page 6]
+Snell                   Expires January 31, 2014                [Page 6]
 
 Internet-Draft               ActivityStreams                   July 2013
 
@@ -389,7 +389,7 @@ Internet-Draft               ActivityStreams                   July 2013
 
 
 
-Snell                   Expires January 24, 2014                [Page 7]
+Snell                   Expires January 31, 2014                [Page 7]
 
 Internet-Draft               ActivityStreams                   July 2013
 
@@ -445,7 +445,7 @@ Internet-Draft               ActivityStreams                   July 2013
 
 
 
-Snell                   Expires January 24, 2014                [Page 8]
+Snell                   Expires January 31, 2014                [Page 8]
 
 Internet-Draft               ActivityStreams                   July 2013
 
@@ -501,7 +501,7 @@ Internet-Draft               ActivityStreams                   July 2013
 
 
 
-Snell                   Expires January 24, 2014                [Page 9]
+Snell                   Expires January 31, 2014                [Page 9]
 
 Internet-Draft               ActivityStreams                   July 2013
 
@@ -557,7 +557,7 @@ Internet-Draft               ActivityStreams                   July 2013
 
 
 
-Snell                   Expires January 24, 2014               [Page 10]
+Snell                   Expires January 31, 2014               [Page 10]
 
 Internet-Draft               ActivityStreams                   July 2013
 
@@ -613,7 +613,7 @@ Internet-Draft               ActivityStreams                   July 2013
 
 
 
-Snell                   Expires January 24, 2014               [Page 11]
+Snell                   Expires January 31, 2014               [Page 11]
 
 Internet-Draft               ActivityStreams                   July 2013
 
@@ -669,7 +669,7 @@ Internet-Draft               ActivityStreams                   July 2013
 
 
 
-Snell                   Expires January 24, 2014               [Page 12]
+Snell                   Expires January 31, 2014               [Page 12]
 
 Internet-Draft               ActivityStreams                   July 2013
 
@@ -725,7 +725,7 @@ Internet-Draft               ActivityStreams                   July 2013
 
 
 
-Snell                   Expires January 24, 2014               [Page 13]
+Snell                   Expires January 31, 2014               [Page 13]
 
 Internet-Draft               ActivityStreams                   July 2013
 
@@ -781,7 +781,7 @@ Internet-Draft               ActivityStreams                   July 2013
 
 
 
-Snell                   Expires January 24, 2014               [Page 14]
+Snell                   Expires January 31, 2014               [Page 14]
 
 Internet-Draft               ActivityStreams                   July 2013
 
@@ -837,7 +837,7 @@ Internet-Draft               ActivityStreams                   July 2013
 
 
 
-Snell                   Expires January 24, 2014               [Page 15]
+Snell                   Expires January 31, 2014               [Page 15]
 
 Internet-Draft               ActivityStreams                   July 2013
 
@@ -893,7 +893,7 @@ Internet-Draft               ActivityStreams                   July 2013
 
 
 
-Snell                   Expires January 24, 2014               [Page 16]
+Snell                   Expires January 31, 2014               [Page 16]
 
 Internet-Draft               ActivityStreams                   July 2013
 
@@ -949,7 +949,7 @@ Internet-Draft               ActivityStreams                   July 2013
 
 
 
-Snell                   Expires January 24, 2014               [Page 17]
+Snell                   Expires January 31, 2014               [Page 17]
 
 Internet-Draft               ActivityStreams                   July 2013
 
@@ -1005,7 +1005,7 @@ Internet-Draft               ActivityStreams                   July 2013
 
 
 
-Snell                   Expires January 24, 2014               [Page 18]
+Snell                   Expires January 31, 2014               [Page 18]
 
 Internet-Draft               ActivityStreams                   July 2013
 
@@ -1061,7 +1061,7 @@ Internet-Draft               ActivityStreams                   July 2013
 
 
 
-Snell                   Expires January 24, 2014               [Page 19]
+Snell                   Expires January 31, 2014               [Page 19]
 
 Internet-Draft               ActivityStreams                   July 2013
 
@@ -1117,7 +1117,7 @@ Internet-Draft               ActivityStreams                   July 2013
 
 
 
-Snell                   Expires January 24, 2014               [Page 20]
+Snell                   Expires January 31, 2014               [Page 20]
 
 Internet-Draft               ActivityStreams                   July 2013
 
@@ -1173,7 +1173,7 @@ Internet-Draft               ActivityStreams                   July 2013
 
 
 
-Snell                   Expires January 24, 2014               [Page 21]
+Snell                   Expires January 31, 2014               [Page 21]
 
 Internet-Draft               ActivityStreams                   July 2013
 
@@ -1229,7 +1229,7 @@ Internet-Draft               ActivityStreams                   July 2013
 
 
 
-Snell                   Expires January 24, 2014               [Page 22]
+Snell                   Expires January 31, 2014               [Page 22]
 
 Internet-Draft               ActivityStreams                   July 2013
 
@@ -1285,7 +1285,7 @@ Internet-Draft               ActivityStreams                   July 2013
 
 
 
-Snell                   Expires January 24, 2014               [Page 23]
+Snell                   Expires January 31, 2014               [Page 23]
 
 Internet-Draft               ActivityStreams                   July 2013
 
@@ -1341,7 +1341,7 @@ Internet-Draft               ActivityStreams                   July 2013
 
 
 
-Snell                   Expires January 24, 2014               [Page 24]
+Snell                   Expires January 31, 2014               [Page 24]
 
 Internet-Draft               ActivityStreams                   July 2013
 
@@ -1397,7 +1397,7 @@ Internet-Draft               ActivityStreams                   July 2013
 
 
 
-Snell                   Expires January 24, 2014               [Page 25]
+Snell                   Expires January 31, 2014               [Page 25]
 
 Internet-Draft               ActivityStreams                   July 2013
 
@@ -1453,7 +1453,7 @@ Internet-Draft               ActivityStreams                   July 2013
 
 
 
-Snell                   Expires January 24, 2014               [Page 26]
+Snell                   Expires January 31, 2014               [Page 26]
 
 Internet-Draft               ActivityStreams                   July 2013
 
@@ -1509,7 +1509,7 @@ Appendix A.  Acknowledgements
 
 
 
-Snell                   Expires January 24, 2014               [Page 27]
+Snell                   Expires January 31, 2014               [Page 27]
 
 Internet-Draft               ActivityStreams                   July 2013
 
@@ -1565,7 +1565,7 @@ Appendix B.  Processing as JSON-LD
 
 
 
-Snell                   Expires January 24, 2014               [Page 28]
+Snell                   Expires January 31, 2014               [Page 28]
 
 Internet-Draft               ActivityStreams                   July 2013
 
@@ -1621,7 +1621,7 @@ C.1.  Internationalization (i18n)
 
 
 
-Snell                   Expires January 24, 2014               [Page 29]
+Snell                   Expires January 31, 2014               [Page 29]
 
 Internet-Draft               ActivityStreams                   July 2013
 
@@ -1677,7 +1677,7 @@ Internet-Draft               ActivityStreams                   July 2013
 
 
 
-Snell                   Expires January 24, 2014               [Page 30]
+Snell                   Expires January 31, 2014               [Page 30]
 
 Internet-Draft               ActivityStreams                   July 2013
 
@@ -1733,7 +1733,7 @@ C.2.  Extensibility (e11y)
 
 
 
-Snell                   Expires January 24, 2014               [Page 31]
+Snell                   Expires January 31, 2014               [Page 31]
 
 Internet-Draft               ActivityStreams                   July 2013
 
@@ -1789,7 +1789,7 @@ C.3.  First Class Links
 
 
 
-Snell                   Expires January 24, 2014               [Page 32]
+Snell                   Expires January 31, 2014               [Page 32]
 
 Internet-Draft               ActivityStreams                   July 2013
 
@@ -1845,7 +1845,7 @@ C.4.  Use of External Vocabularies
 
 
 
-Snell                   Expires January 24, 2014               [Page 33]
+Snell                   Expires January 31, 2014               [Page 33]
 
 Internet-Draft               ActivityStreams                   July 2013
 
@@ -1901,7 +1901,7 @@ Internet-Draft               ActivityStreams                   July 2013
 
 
 
-Snell                   Expires January 24, 2014               [Page 34]
+Snell                   Expires January 31, 2014               [Page 34]
 
 Internet-Draft               ActivityStreams                   July 2013
 
@@ -1957,4 +1957,4 @@ Author's Address
 
 
 
-Snell                   Expires January 24, 2014               [Page 35]
+Snell                   Expires January 31, 2014               [Page 35]
