@@ -1,0 +1,15 @@
+<reference anchor="ID-draft-snell-activitystreams">
+  <front>
+    <title abbrev="ActivityStreams">JSON Activity Streams 2.0</title>
+    <author fullname="James M Snell" initials="J." surname="Snell" role="editor">
+      <organization>IBM</organization>
+    </author>
+    <date month="May" year="2013" />
+    <abstract>
+      <t>
+        This specification details a model for representing potential and 
+        completed activities using the JSON format.
+      </t>
+    </abstract>
+  </front>
+</reference>
