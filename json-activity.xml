@@ -57,7 +57,7 @@
       <t>In its simplest form, an <spanx style="verb">activity</spanx> consists
       of an <spanx style="verb">actor</spanx>, a
       <spanx style="verb">verb</spanx>, an
-      an <spanx style="verb">object</spanx>, and a <spanx style="verb">target</spanx>.
+      <spanx style="verb">object</spanx>, and a <spanx style="verb">target</spanx>.
       It tells the story of a person performing an action on or with an object --
       "Geraldine posted a photo to her album"
       or "John shared a video". In most cases these components will be
@@ -293,10 +293,10 @@
           <c><xref target="object">Object</xref></c>
           <c>Describes the target of the activity. The precise meaning of the
           activity's target is dependent on the activities <spanx style="verb">verb</spanx>,
-          but will often be the object the English preposition "to".
+          but will often be the object of the English preposition "to".
           For instance, in the activity, "John saved a movie to his
           wishlist", the target of the activity is "wishlist". The activity
-          target MUST NOT be used to identity an indirect object that is
+          target MUST NOT be used to identify an indirect object that is
           not a target of the activity. An activity MAY contain a <spanx style="verb">target</spanx>
           property whose value is a single <xref target="object">Object</xref>.</c>
 
