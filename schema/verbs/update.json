@@ -1,0 +1,26 @@
+{
+  "type" : "object",
+  "title" : "Update",
+  "description" : "To update a property on an object. Ex: Monica updated her street address to 234 Awesome St.",
+  "notes" : "The new property value can be a scalar value or an object. See the property object type",
+  "extends": {"$ref":"http://activitystrea.ms/json-schema/activity.json"},
+  "properties" :{
+    "verb" :{
+      "type" : "string",
+      "default" : "update"
+    },
+    "title" : {
+      "type" : "string",
+      "default" : "{actor.displayName} updated {target.displayName}'s {object.displayName} to {object.value}"
+    },
+    "object" : {
+      "type" : "object",
+      "properties" : {"$ref":"http://activitystrea.ms/json-schema/objectTypes/property.json"}
+    },
+    "target" : {
+      "type" : "object",
+      "optional" : true,
+      "properties" : {"$ref":"http://activitystrea.ms/json-schema/core-object.json"}
+    }
+  }
+}

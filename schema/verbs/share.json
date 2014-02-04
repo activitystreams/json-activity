@@ -1,0 +1,16 @@
+{
+  "type" : "object",
+  "title" : "Share",
+  "description" : "To share an object.",
+  "extends": {"$ref":"http://activitystrea.ms/json-schema/activity.json"},
+  "properties" :{
+    "verb" :{
+      "type" : "string",
+      "default" : "share"
+    },
+    "title" : {
+      "type" : "string",
+      "default" : "{actor.displayName} shared {object.displayName}"
+    }
+  }
+}

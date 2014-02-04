@@ -1,0 +1,15 @@
+{
+  "type" : "object",
+  "title" : "photo",
+  "extends": {"$ref":"http://activitystrea.ms/json-schema/objectTypes/file.json"},
+  "properties" :{
+    "objectType" :{
+      "type" :"string",
+      "default" : "photo"
+    },
+    "displayName" : {
+      "type" : "string",
+      "default" : "a photo"
+    }
+  }
+}

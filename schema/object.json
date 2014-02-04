@@ -1,0 +1,77 @@
+{
+  "type" : "object",
+  "title" : "object",
+  "description" : "Basic object on the web. The only required property is the id",
+  "properties" : {
+    "id" : {
+      "type" : "string",
+      "description" : "Provides a permanent, universally unique identifier for the object in the form of an absolute IRI [RFC3987]. An object SHOULD contain a single id property. If an object does not contain an id property, consumers MAY use the value of the url property as a less-reliable, non-unique identifier.",
+      "default" : "{link}"
+    },
+    "image" : {
+      "format":"image",
+      "type":"object",
+      "properties" :{"$ref":"./media_link.json#properties"},
+      "description" : "Description of a resource providing a visual representation of the object, intended for human consumption. An object MAY contain an image property whose value is a Media Link."
+    },
+    "displayName" : {
+      "type":"string",
+      "description" : "A natural-language, human-readable and plain-text name for the object. HTML markup MUST NOT be included. An object MAY contain a displayName property. If the object does not specify an objectType property, the object SHOULD specify a displayName"
+    },
+    "summary" : {
+      "type" : "string",
+      "description" : "Natural-language summary of the object encoded as a single JSON String containing HTML markup. Visual elements such as thumbnail images MAY be included. An activity MAY contain a summary property"
+    },
+    "content" : {
+      "type" : "string",
+      "description" : "Natural-language description of the object encoded as a single JSON String containing HTML markup. Visual elements such as thumbnail images MAY be included. An object MAY contain a content property"
+    },
+    "url" : {
+      "type" : "string",
+      "format" : "url",
+      "description" : "An IRI [RFC3987] identifying a resource providing an HTML representation of the object. An object MAY contain a url property"
+    },
+    "objectType" :{
+      "type" : "string",
+      "description" : "Identifies the type of object. An object MAY contain an objectType property whose value is a JSON String that is non-empty and matches either the \"isegment-nz-nc\" or the \"IRI\" production in [RFC3987]. Note that the use of a relative reference other than a simple name is not allowed. If no objectType property is contained, the object has no specific type."
+    },
+    "author" : {
+      "type" : "object",
+      "description" : "Describes the entity that created or authored the object. An object MAY contain a single author property whose value is an Object of any type. Note that the author field identifies the entity that created the object and does not necessarily identify the entity that published the object. For instance, it may be the case that an object created by one person is posted and published to a system by an entirely different entity",
+      "properties" : {"$ref":"#properties"}
+    },
+    "published" : {
+      "type" : "string",
+      "description": "[RFC3339] date-time. The date and time at which the object was published. An object MAY contain a published property",
+      "format" : "date-time"
+    },
+    "updated" : {
+      "type" : "string",
+      "description": "[RFC3339] date-time. The date and time at which a previously published object has been modified. An Object MAY contain an updated property.",
+      "format" : "date-time"
+    },
+    "attachments":{
+      "title" : "Related objects",
+      "description" : "A collection of one or more additional, associated objects, similar to the concept of attached files in an email message. An object MAY have an attachedObjects property whose value is a JSON Array of Objects.",
+      "type" : "array",
+      "items": {
+        "type" : "object",
+        "properties" :{"$ref":"./core#properties"}
+      }
+    },
+    "upstreamDuplicates":{
+      "type" : "array",
+      "description" : "A JSON Array of one or more absolute IRI's [RFC3987] identifying objects that duplicate this object's content. An object SHOULD contain an upstreamDuplicates property when a publisher is knowingly duplicating with a new ID the content from another object. This MAY be used as a hint for consumers to use when resolving duplicates between objects received from different sources",
+      "items": {"type" : "string"}
+    },
+    "downstreamDuplicates":{
+      "type" : "array",
+      "description" : "A JSON Array of one or more absolute IRI's [RFC3987] identifying objects that duplicate this object's content. An object SHOULD contain a downstreamDuplicates property when there are known objects, possibly in a different system, that duplicate the content in this object. This MAY be used as a hint for consumers to use when resolving duplicates between objects received from different sources.",
+      "items": {"type" : "string"}
+    }
+  },
+  "additionalProperties" : true,
+  "links": [
+       {"rel": "describedby", "href": "./objectType/{objectType}.json"}
+     ]
+}

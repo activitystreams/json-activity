@@ -1,0 +1,42 @@
+{
+  "type" : "object",
+  "title" : "property",
+  "description" : "A property describes name, path and value. Can be used with delete, update or post verbs",
+  "extends": {"$ref":"http://activitystrea.ms/json-schema/object.json"},
+  "properties" :{
+    "objectType" :{
+      "type" :"string",
+      "default" : "property"
+    },
+    "displayName" : {
+      "type" : "string",
+      "description" : "The human readable name of the property in the appropriate language",
+      "optional" : true
+    },
+    "path" : {
+      "type" : "string",
+      "description" : "dot delimited path to the property in the target. Ex: streetAddress"
+    },
+    "content" : {
+      "type" : "any",
+      "description" : "Value of the property it can be a scalar or an object"
+    }
+  },
+  "example" : {
+    "actor" : {"id":1212, "displayName" : "Peter"},
+    "verb" : "update",
+    "time" : "2010-08-02T15:29:00Z",
+    "object" :
+     {
+      "objectType" : "property",
+      "displayName" : "street address",
+      "path" : "streetAddress",
+      "content" : "234 Amazing St"
+    },
+    "target" : {
+      "id": 12121,
+      "time" : "2010-08-02T15:29:00Z",
+      "displayName" : "Peter's House"
+    }
+  }
+}

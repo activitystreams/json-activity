@@ -1,0 +1,16 @@
+{
+  "type" : "object",
+  "title" : "Rsvp No",
+  "description" : "To indicate that the actor will not attend an event",
+  "extends": {"$ref":"http://activitystrea.ms/json-schema/activity.json"},
+  "properties" :{
+    "verb" :{
+      "type" : "string",
+      "default" : "rsvp-no"
+    },
+    "title" : {
+      "type" : "string",
+      "default" : "{actor.displayName} will not attend {object.displayName}"
+    }
+  }
+}

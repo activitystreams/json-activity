@@ -1,0 +1,85 @@
+{
+  "type" : "object",
+  "title" : "activity",
+  "description" : "An activity construct recounts what an actor did to an object in the past. If there is no actor it simply describes the change.",
+  "properties": {
+    "id" :{
+      "type" : "string",
+      "description" : "Uniquely identifies each activity within the service",
+      "default" :"{url}"
+    },
+    "actor" : {
+      "type": "object",
+      "required": true,
+      "description": "Describes the entity that performed the activity. An activity MUST contain one actor property whose value is a single Object.",
+      "properties" : {"$ref":"./object.json#properties"}
+    },
+    "verb" : {
+      "title" : "verb",
+      "type" : "string",
+      "default": "post",
+      "required": true,
+      "description" :"Identifies the action that the activity describes. An activity MUST contain a verb property whose value is a JSON String that is non-empty and matches either the \"isegment-nz-nc\" or the \"IRI\" production in [RFC3987]. Note that the use of a relative reference other than a simple name is not allowed."
+    },
+    "object" : {
+      "type": "object",
+      "required" : true,
+      "description" : "Describes the primary object of the activity. For instance, in the activity, \"John saved a movie to his wishlist\", the object of the activity is \"movie\". An activity SHOULD contain an object property whose value is a single Object. If the object property is not contained, the primary object of the activity MAY be implied by context.",
+      "properties" : {"$ref":"./object.json#properties"}
+    },
+    "target" : {
+      "type": "object",
+      "description" : "Describes the target of the activity. The precise meaning of the activity's target is dependent on the activities verb, but will often be the object the English preposition \"to\". For instance, in the activity, \"John saved a movie to his wishlist\", the target of the activity is \"wishlist\". The activity target MUST NOT be used to identity an indirect object that is not a target of the activity. An activity MAY contain a target property whose value is a single Object.",
+      "properties" : {"$ref":"./object.json#properties"}
+    },
+    "published" : {
+      "type" : "string",
+      "description": "The date and time at which the activity occurred. It is important to note that this is not necessarily the same as the time at which the activity was published. An activity MUST contain a postedTime property.",
+      "format" : "date-time"
+    },
+	"updated" : {
+      "type" : "string",
+      "description": "The date and time at which a previously published activity has been modified. An Activity MAY contain an updatedTime property",
+      "format" : "date-time"
+    },
+    "generator" : {
+      "type": "object",
+      "description": "Describes the application that generated the activity. An activity MAY contain a generator property whose value is a single Object.",
+      "properties" : {"$ref":"./object.json#properties"}
+    },
+    "icon" : {
+      "type": "object",
+      "properties" :{"$ref":"./media_link.json#properties"},
+      "description": "An IRI[RFC3987] identifying an image resource provides a visual representation of the activity, intended for human consumption. The image SHOULD have an aspect ratio of one (horizontal) to one (vertical) and SHOULD be suitable for presentation at a small size. An activity MAY have an icon property"
+    },
+    "provider" : {
+      "type": "object",
+      "description" : "Describes the application that published the activity. Note that this is not necessarily the same entity that generated the activity. An activity MAY contain a provider property whose value is a single Object",
+      "properties" : {"$ref":"./object.json#properties"}
+    },
+    "title" : {
+      "type" : "string",
+      "description" : "Natural-language title or headline for the activity encoded as a single JSON String containing HTML markup. An activity MAY contain a title property",
+      "format": "html"
+    },
+    "content" : {
+      "type" : "string",
+      "description" : "Natural-language description of the activity encoded as a single JSON String containing HTML markup. Visual elements such as thumbnail images MAY be included. An activity MAY contain a content property",
+      "format" : "html"
+    },
+    "url" : {
+      "type" : "string",
+      "description" : "An IRI [RFC3987] identifying a resource providing an HTML representation of the activity. An activity MAY contain a url property",
+      "format" : "url"
+    },
+    "links" : {
+      "type" : "array",
+      "description" :"Links between this object and other resources as defined in Web Linking",
+      "note": "Tell JSON schema team to not put links inside http://json-schema.org/hyper-schema#properties",
+      "properties" : {"$ref" : "http://json-schema.org/links#properties"}
+    }
+  },
+  "links": [
+       {"rel": "describedby", "href": "./verbs/{verb}.json"}
+     ]
+}

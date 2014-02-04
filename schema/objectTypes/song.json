@@ -1,0 +1,11 @@
+{
+  "type" : "object",
+  "title" : "song",
+  "extends": {"$ref":"http://activitystrea.ms/json-schema/objectTypes/audio.json"},
+  "properties" :{
+    "objectType" :{
+      "type" :"string",
+      "default" : "song"
+     }
+  }
+}

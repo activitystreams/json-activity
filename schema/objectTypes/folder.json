@@ -1,0 +1,11 @@
+{
+  "type" : "object",
+  "title" : "folder",
+  "extends": {"$ref":"http://activitystrea.ms/json-schema/object.json"},
+  "properties" :{
+    "objectType" :{
+      "type" :"string",
+      "default" : "folder"
+    }
+  }
+}

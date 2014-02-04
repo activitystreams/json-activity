@@ -1,0 +1,16 @@
+{
+  "type" : "object",
+  "title" : "Befriend",
+  "description" : "To friend an object. Usually a person",
+  "extends": {"$ref":"http://activitystrea.ms/json-schema/activity.json"},
+  "properties" :{
+    "verb" :{
+      "type" : "string",
+      "default" : "make-friend"
+    },
+    "title" : {
+      "type" : "string",
+      "default" : "{actor.displayName} is now friends with {object.displayName}"
+    }
+  }
+}

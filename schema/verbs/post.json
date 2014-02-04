@@ -1,0 +1,16 @@
+{
+  "type" : "object",
+  "title" : "Post",
+  "description" : "To publish an object",
+  "extends": {"$ref":"http://activitystrea.ms/json-schema/activity.json"},
+  "properties" :{
+    "verb" :{
+      "type" : "string",
+      "default" : "post"
+    },
+    "title" : {
+      "type" : "string",
+      "default" : "{actor.displayName} posted {object.displayName}"
+    }
+  }
+}

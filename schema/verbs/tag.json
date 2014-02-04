@@ -1,0 +1,16 @@
+{
+  "type" : "object",
+  "title" : "Tag",
+  "description" : "To tag an object. Ex: A person being tagged in a photo",
+  "extends": {"$ref":"http://activitystrea.ms/json-schema/activity.json"},
+  "properties" :{
+    "verb" :{
+      "type" : "string",
+      "default" : "tag"
+    },
+    "title" : {
+      "type" : "string",
+      "default" : "{actor.displayName} tagged {object.displayName} in {target.displayName}"
+    }
+  }
+}

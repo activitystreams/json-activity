@@ -1,3 +1,12 @@
-This repository does contain a few specifications about publishing 
-activity streams.
+This repository contains the JSON activity streams specification version 1.0
  
+It also contains json-schema documents which map to all the constructs in the spec.
+
+The syntax of the schema is defined at
+http://json-schema.org/
+
+To test you can use the following library:
+https://github.com/Constellation/ruby-jsonchema
+
+More libraries available in http://json-schema.org/
+
